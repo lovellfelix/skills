@@ -118,6 +118,16 @@ Maps skill to runtime adapters and versioning.
 - `import`: Runtime imports via reference
 - `include`: Runtime embeds in context
 
+## Canonical Metadata Sources
+
+When fields appear in both `manifest.json` and `SKILL.md` frontmatter, follow this guidance:
+
+- **`manifest.json` is authoritative** for runtime loading, adapter resolution, and version control.
+- **`SKILL.md` frontmatter is authoritative** for discovery-facing metadata that appears in documentation and IDE search results.
+- **Keep overlapping fields in sync** (name, version, portable, tags) to prevent discovery/runtime mismatch.
+
+This split ensures runtimes can load skills reliably while discovery tools surface current, accurate metadata.
+
 ## Trigger Documentation
 
 Triggers describe when and how a skill is invoked.

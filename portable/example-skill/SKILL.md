@@ -1,6 +1,9 @@
 ---
 name: example-skill
 description: Portable starter skill package for defining concise, tool-agnostic workflows.
+version: 0.1.0
+portable: true
+tags: [starter, template, portable]
 ---
 
 # Example Skill

@@ -1,6 +1,8 @@
 ---
 name: obsidian-work-notes
 description: Official Obsidian CLI-first workflow for work notes, with local wrapper fallback for custom search, writes, and graph operations
+version: 0.1.0
+portable: false
 tags: [obsidian, notes, knowledge, work-notes, search, backlinks, graph, vault]
 applies_to: [notes, ask, kb, engineering, personal-assistant]
 ---

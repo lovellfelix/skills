@@ -1,6 +1,9 @@
 ---
 name: email-best-practices
 description: Use when building email features, emails going to spam, high bounce rates, setting up SPF/DKIM/DMARC authentication, implementing email capture, ensuring compliance (CAN-SPAM, GDPR, CASL), handling webhooks, retry logic, or deciding transactional vs marketing.
+version: 0.1.0
+portable: true
+tags: [email, deliverability, compliance, portable]
 ---
 
 # Email Best Practices

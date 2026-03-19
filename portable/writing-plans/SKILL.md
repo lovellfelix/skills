@@ -1,6 +1,9 @@
 ---
 name: writing-plans
 description: Use when you have a spec or requirements for a multi-step task, before touching code
+version: 0.1.0
+portable: true
+tags: [planning, workflow, portable]
 ---
 
 # Writing Plans

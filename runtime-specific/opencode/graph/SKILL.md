@@ -1,6 +1,9 @@
 ---
 name: graph
 description: Work item graph - track issues, PRs, JIRA tickets and their relationships across sessions. Use when the user says "graph", "track this", "what was I working on", or asks about work item status.
+version: 0.1.0
+portable: false
+tags: [graph, tracking, github, jira, opencode]
 ---
 
 # Work Item Graph

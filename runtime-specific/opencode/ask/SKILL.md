@@ -1,6 +1,9 @@
 ---
 name: ask
 description: OpenCode ask overlay - search work notes first, then session memory, codebase, and web.
+version: 0.1.0
+portable: false
+tags: [qa, knowledge-search, opencode, obsidian]
 ---
 
 # Ask - OpenCode Overlay

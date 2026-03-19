@@ -1,6 +1,9 @@
 ---
 name: refactoring
 description: Simplify and refine code for clarity, consistency, and maintainability while preserving functionality. Use when code needs cleanup, after features are implemented, or during review.
+version: 0.1.0
+portable: true
+tags: [refactoring, maintainability, portable]
 ---
 
 ## Purpose

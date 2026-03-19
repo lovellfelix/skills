@@ -1,6 +1,9 @@
 ---
 name: documentation
 description: Generate and update documentation with language-aware formatting and conventions.
+version: 0.1.0
+portable: true
+tags: [documentation, writing, portable]
 ---
 
 What I do

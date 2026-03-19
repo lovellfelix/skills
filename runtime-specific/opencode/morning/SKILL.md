@@ -1,6 +1,9 @@
 ---
 name: morning
 description: Morning briefing — calendar, reminders, weather, GitHub issues, priorities. Use when the user says "morning", "briefing", "start my day", or asks what's on today.
+version: 0.1.0
+portable: false
+tags: [morning, briefing, calendar, reminders, opencode]
 ---
 
 # Morning Briefing

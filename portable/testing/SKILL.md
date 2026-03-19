@@ -1,6 +1,9 @@
 ---
 name: testing
 description: Universal testing with framework auto-detection for Python, JS, TS, Go, and Kotlin.
+version: 0.1.0
+portable: true
+tags: [testing, quality, portable]
 ---
 
 What I do

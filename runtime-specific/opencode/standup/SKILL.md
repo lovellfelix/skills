@@ -1,6 +1,9 @@
 ---
 name: standup
 description: Generate standup update from git activity, session memory, GitHub, and tasks. Use when the user says "standup", "daily update", or asks for a summary of recent work.
+version: 0.1.0
+portable: false
+tags: [standup, daily-update, github, tasks, opencode]
 ---
 
 # Standup Generator

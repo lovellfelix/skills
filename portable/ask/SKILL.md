@@ -1,6 +1,9 @@
 ---
 name: ask
 description: Quick Q&A workflow with source-priority search and concise, cited answers.
+version: 0.1.0
+portable: true
+tags: [qa, knowledge-search, troubleshooting, portable]
 ---
 
 # Ask - Knowledge-First Q&A (Portable Core)
