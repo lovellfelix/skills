@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "name": "graph-tracker",
+  "version": "0.1.0",
+  "portable": false,
+  "runtime": "opencode",
+  "entrypoint": "SKILL.md",
+  "tags": [
+    "graph",
+    "tracking",
+    "github",
+    "jira",
+    "opencode"
+  ],
+  "adapters": {
+    "opencode": {
+      "path": "SKILL.md",
+      "mode": "native"
+    }
+  }
+}

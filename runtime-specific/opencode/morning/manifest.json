@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "name": "morning",
+  "version": "0.1.0",
+  "portable": false,
+  "runtime": "opencode",
+  "entrypoint": "SKILL.md",
+  "tags": [
+    "morning",
+    "briefing",
+    "calendar",
+    "reminders",
+    "opencode"
+  ],
+  "adapters": {
+    "opencode": {
+      "path": "SKILL.md",
+      "mode": "native"
+    }
+  }
+}

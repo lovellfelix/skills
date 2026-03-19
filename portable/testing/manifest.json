@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "name": "testing",
+  "version": "0.1.0",
+  "portable": true,
+  "entrypoint": "SKILL.md",
+  "tags": [
+    "testing",
+    "quality",
+    "portable"
+  ],
+  "adapters": {
+    "opencode": {
+      "path": "SKILL.md",
+      "mode": "native"
+    },
+    "cursor": {
+      "path": "SKILL.md",
+      "mode": "import"
+    },
+    "claude": {
+      "path": "SKILL.md",
+      "mode": "include"
+    }
+  }
+}
