@@ -380,6 +380,50 @@
           }
         }
       },
+      "description": "Resume interrupted work and produce clean handoffs with clear blockers and next steps.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/handoff-resume/",
+      "name": "handoff-resume",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "workflow",
+        "continuity",
+        "handoff",
+        "resume",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Incident review and postmortem analysis with timeline, impact, root cause, and follow-ups.",
       "entrypoint": "SKILL.md",
       "location": "portable/incident-review/",
@@ -652,6 +696,50 @@
         "proposal",
         "architecture",
         "technical-decision"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Practical patterns for storing, retrieving, and maintaining high-signal session memory via MCP.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/session-memory-mcp/",
+      "name": "session-memory-mcp",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "mcp",
+        "memory",
+        "workflow",
+        "continuity",
+        "portable"
       ],
       "version": "0.1.0"
     },
