@@ -26,6 +26,7 @@ This directory is the canonical home for skills-first guidance in this repositor
 - Prefer creating new skills under `portable/`.
 - Keep `SKILL.md` concise and practical.
 - Keep runtime-specific behavior out of portable skill cores.
+- Follow `AUTHORING.md` for metadata and compatibility conventions.
 
 ## Validation & Scaffolding
 
@@ -39,17 +40,18 @@ Check all skills in `skills/` for required files, metadata completeness, and JSO
 
 ### Regenerate Skills Index
 
-`skills/INDEX.md` is generated from `skills/**/manifest.json` and `SKILL.md` frontmatter:
+`skills/INDEX.md` and `skills/registry.json` are generated from `skills/**/manifest.json` and `SKILL.md` frontmatter:
 
 ```bash
 python3 ./scripts/generate-skills-index.py
 ```
 
-CI runs this generator and fails if `skills/INDEX.md` is out of date.
+CI runs this generator and fails if generated artifacts are out of date.
 
 Validates:
 - `SKILL.md` frontmatter (name, description, version, portable flag, tags)
-- `manifest.json` structure and adapter definitions
+- `manifest.json` structure, adapter definitions, and compatibility metadata
+- Adapter path health (runtime link targets exist)
 - Directory naming conventions
 - Cross-references between files
 
@@ -90,6 +92,18 @@ By default it syncs links for OpenCode, Claude, and Cursor (when detected):
 - OpenCode: `~/.config/opencode/skills/portable` and `~/.config/opencode/skills/runtime`
 - Claude: `~/.claude/skills/portable`
 - Cursor: `~/.cursor/skills/portable`
+
+Personal-machine-only opt-in:
+
+- Skills with `"personal_machine_only": true` in `manifest.json` are skipped by default.
+- To enable locally, add the skill name to `~/.config/opencode/personal-machine-skills.txt`.
+- Example:
+
+```txt
+grenadianbuzz-api
+```
+
+- Override allowlist path with `SKILL_PERSONAL_ALLOWLIST_FILE=/path/to/file`.
 
 Target a runtime explicitly:
 

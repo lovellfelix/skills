@@ -1,13 +1,16 @@
 {
   "schema_version": "1.0",
-  "name": "writing-plans",
+  "name": "grenadianbuzz-api",
   "version": "0.1.0",
   "portable": true,
+  "personal_machine_only": true,
   "entrypoint": "SKILL.md",
   "tags": [
-    "planning",
-    "workflow",
-    "portable"
+    "api",
+    "openapi",
+    "prd",
+    "product",
+    "grenadianbuzz"
   ],
   "adapters": {
     "opencode": {

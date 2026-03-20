@@ -1,13 +1,15 @@
 {
   "schema_version": "1.0",
-  "name": "writing-plans",
+  "name": "rfc",
   "version": "0.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
-    "planning",
-    "workflow",
-    "portable"
+    "rfc",
+    "design",
+    "proposal",
+    "architecture",
+    "technical-decision"
   ],
   "adapters": {
     "opencode": {

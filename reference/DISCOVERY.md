@@ -109,9 +109,28 @@ Maps skill to runtime adapters and versioning.
       "path": "SKILL.md",
       "mode": "include"
     }
+  },
+  "compatibility": {
+    "runtimes": {
+      "opencode": {
+        "min_version": "*"
+      },
+      "cursor": {
+        "min_version": "*"
+      },
+      "claude": {
+        "min_version": "*"
+      }
+    }
   }
 }
 ```
+
+**Compatibility metadata:**
+- `compatibility.runtimes` must exist in `manifest.json`
+- Runtime keys should match `adapters` keys
+- `min_version` can be `*` (no minimum) or a runtime version constraint string
+- Optional `personal_machine_only: true` keeps a skill disabled unless enabled via local allowlist (`~/.config/opencode/personal-machine-skills.txt`)
 
 **Adapter modes:**
 - `native`: Runtime loads and executes directly
@@ -222,6 +241,8 @@ Checks:
 - Directory naming conventions
 - `manifest.json` JSON validity
 - Metadata field consistency
+- Adapter path health (`adapters.*.path` points to an existing file)
+- Compatibility coverage for adapter runtimes
 
 ### Quality Checks
 

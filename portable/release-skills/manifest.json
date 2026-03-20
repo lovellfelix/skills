@@ -23,5 +23,18 @@
       "path": "SKILL.md",
       "mode": "include"
     }
+  },
+  "compatibility": {
+    "runtimes": {
+      "opencode": {
+        "min_version": "*"
+      },
+      "cursor": {
+        "min_version": "*"
+      },
+      "claude": {
+        "min_version": "*"
+      }
+    }
   }
 }

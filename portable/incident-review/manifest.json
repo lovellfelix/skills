@@ -1,13 +1,15 @@
 {
   "schema_version": "1.0",
-  "name": "writing-plans",
+  "name": "incident-review",
   "version": "0.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
-    "planning",
-    "workflow",
-    "portable"
+    "incident",
+    "postmortem",
+    "root-cause-analysis",
+    "follow-up",
+    "retrospective"
   ],
   "adapters": {
     "opencode": {

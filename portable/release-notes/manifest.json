@@ -1,13 +1,15 @@
 {
   "schema_version": "1.0",
-  "name": "writing-plans",
+  "name": "release-notes",
   "version": "0.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
-    "planning",
-    "workflow",
-    "portable"
+    "release",
+    "changelog",
+    "version",
+    "notes",
+    "documentation"
   ],
   "adapters": {
     "opencode": {

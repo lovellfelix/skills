@@ -11,15 +11,20 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | Name | Location | Purpose |
 |------|----------|---------|
 | **ask** | `portable/ask/` | Quick Q&A workflow with source-priority search and concise, cited answers. |
+| **communication-style** | `portable/communication-style/` | Rewrite communication for clarity, tone, and audience across Slack, email, docs, and more. |
 | **documentation** | `portable/documentation/` | Generate and update documentation with language-aware formatting and conventions. |
 | **email-best-practices** | `portable/email-best-practices/` | Use when building email features, emails going to spam, high bounce rates, setting up SPF/DKIM/DMARC authentication, implementing email capture, ensuring compliance (CAN-SPAM, GDPR, CASL), handling webhooks, retry logic, or deciding transactional vs marketing. |
 | **example-skill** | `portable/example-skill/` | Portable starter skill package for defining concise, tool-agnostic workflows. |
 | **find-skills** | `portable/find-skills/` | Helps users discover and install agent skills when they ask questions like "how do I do X", "find a skill for X", "is there a skill that can...", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill. |
 | **frontend-design** | `portable/frontend-design/` | Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics. |
+| **grenadianbuzz-api** | `portable/grenadianbuzz-api/` | API design and PRD workflow for GrenadianBuzz products. |
+| **incident-review** | `portable/incident-review/` | Incident review and postmortem analysis with timeline, impact, root cause, and follow-ups. |
 | **mcp-builder** | `portable/mcp-builder/` | Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK). |
 | **python-code-style** | `portable/python-code-style/` | Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards. |
 | **refactoring** | `portable/refactoring/` | Simplify and refine code for clarity, consistency, and maintainability while preserving functionality. Use when code needs cleanup, after features are implemented, or during review. |
+| **release-notes** | `portable/release-notes/` | Draft and refine changelog and release notes from commits, PRs, and changes. |
 | **release-skills** | `portable/release-skills/` | Universal release workflow. Auto-detects version files and changelogs. Supports Node.js, Python, Rust, Claude Plugin, and generic projects. Use when user says "release", "发布", "new version", "bump version", "push", "推送". |
+| **rfc** | `portable/rfc/` | Draft and refine technical RFCs and design proposals. |
 | **shadcn-ui** | `portable/shadcn-ui/` | Complete shadcn/ui component library guide including installation, configuration, and implementation of accessible React components. Use when setting up shadcn/ui, installing components, building forms with React Hook Form and Zod, customizing themes with Tailwind CSS, or implementing UI patterns like buttons, dialogs, dropdowns, tables, and complex form layouts. |
 | **testing** | `portable/testing/` | Universal testing with framework auto-detection for Python, JS, TS, Go, and Kotlin. |
 | **writing-plans** | `portable/writing-plans/` | Use when you have a spec or requirements for a multi-step task, before touching code |
@@ -58,6 +63,7 @@ See [`reference/DISCOVERY.md`](./reference/DISCOVERY.md) for:
 1. Run `./scripts/new-skill.sh <skill-name>` (or add `--runtime <runtime>` for runtime-specific skills).
 2. Fill in `SKILL.md` and `manifest.json` metadata/content.
 3. Run `python3 ./scripts/generate-skills-index.py` to refresh this index.
-4. Validate with `./scripts/validate-skills.sh`.
+4. Confirm generated artifacts (`skills/INDEX.md` and `skills/registry.json`) are updated.
+5. Validate with `./scripts/validate-skills.sh`.
 
-See `reference/DISCOVERY.md` for detailed conventions.
+See `AUTHORING.md` and `reference/DISCOVERY.md` for detailed conventions.

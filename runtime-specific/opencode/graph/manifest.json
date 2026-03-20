@@ -17,5 +17,12 @@
       "path": "SKILL.md",
       "mode": "native"
     }
+  },
+  "compatibility": {
+    "runtimes": {
+      "opencode": {
+        "min_version": "*"
+      }
+    }
   }
 }

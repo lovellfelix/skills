@@ -1,0 +1,959 @@
+{
+  "schema_version": "1.0",
+  "skills": [
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Quick Q&A workflow with source-priority search and concise, cited answers.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/ask/",
+      "name": "ask",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "qa",
+        "knowledge-search",
+        "troubleshooting",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Rewrite communication for clarity, tone, and audience across Slack, email, docs, and more.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/communication-style/",
+      "name": "communication-style",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "communication",
+        "writing",
+        "clarity",
+        "tone",
+        "style",
+        "docs"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Generate and update documentation with language-aware formatting and conventions.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/documentation/",
+      "name": "documentation",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "documentation",
+        "writing",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Use when building email features, emails going to spam, high bounce rates, setting up SPF/DKIM/DMARC authentication, implementing email capture, ensuring compliance (CAN-SPAM, GDPR, CASL), handling webhooks, retry logic, or deciding transactional vs marketing.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/email-best-practices/",
+      "name": "email-best-practices",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "email",
+        "deliverability",
+        "compliance",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Portable starter skill package for defining concise, tool-agnostic workflows.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/example-skill/",
+      "name": "example-skill",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "starter",
+        "template",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/find-skills/",
+      "name": "find-skills",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "skills",
+        "discovery",
+        "tooling",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/frontend-design/",
+      "name": "frontend-design",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "frontend",
+        "ui",
+        "design",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "API design and PRD workflow for GrenadianBuzz products.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/grenadianbuzz-api/",
+      "name": "grenadianbuzz-api",
+      "personal_machine_only": true,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "api",
+        "openapi",
+        "prd",
+        "product",
+        "grenadianbuzz"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Incident review and postmortem analysis with timeline, impact, root cause, and follow-ups.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/incident-review/",
+      "name": "incident-review",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "incident",
+        "postmortem",
+        "root-cause-analysis",
+        "follow-up",
+        "retrospective"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).",
+      "entrypoint": "SKILL.md",
+      "location": "portable/mcp-builder/",
+      "name": "mcp-builder",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "mcp",
+        "protocol",
+        "server",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/python-code-style/",
+      "name": "python-code-style",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "python",
+        "style",
+        "documentation",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Simplify and refine code for clarity, consistency, and maintainability while preserving functionality. Use when code needs cleanup, after features are implemented, or during review.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/refactoring/",
+      "name": "refactoring",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "refactoring",
+        "maintainability",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Draft and refine changelog and release notes from commits, PRs, and changes.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/release-notes/",
+      "name": "release-notes",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "release",
+        "changelog",
+        "version",
+        "notes",
+        "documentation"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Universal release workflow. Auto-detects version files and changelogs. Supports Node.js, Python, Rust, Claude Plugin, and generic projects. Use when user says \"release\", \"\u53d1\u5e03\", \"new version\", \"bump version\", \"push\", \"\u63a8\u9001\".",
+      "entrypoint": "SKILL.md",
+      "location": "portable/release-skills/",
+      "name": "release-skills",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "release",
+        "versioning",
+        "changelog",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Draft and refine technical RFCs and design proposals.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/rfc/",
+      "name": "rfc",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "rfc",
+        "design",
+        "proposal",
+        "architecture",
+        "technical-decision"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Complete shadcn/ui component library guide including installation, configuration, and implementation of accessible React components. Use when setting up shadcn/ui, installing components, building forms with React Hook Form and Zod, customizing themes with Tailwind CSS, or implementing UI patterns like buttons, dialogs, dropdowns, tables, and complex form layouts.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/shadcn-ui/",
+      "name": "shadcn-ui",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "shadcn",
+        "react",
+        "ui",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Universal testing with framework auto-detection for Python, JS, TS, Go, and Kotlin.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/testing/",
+      "name": "testing",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "testing",
+        "quality",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Use when you have a spec or requirements for a multi-step task, before touching code",
+      "entrypoint": "SKILL.md",
+      "location": "portable/writing-plans/",
+      "name": "writing-plans",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "planning",
+        "workflow",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "OpenCode ask overlay - search work notes first, then session memory, codebase, and web.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/ask/",
+      "name": "ask",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "qa",
+        "knowledge-search",
+        "opencode",
+        "obsidian"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Persistent graph of nodes and relationships \u2014 engineering (GitHub issues, PRs, Jira) AND personal (family, reminders, events, notes). Enables work continuity, standup dashboards, personal knowledge graphs, and cross-session resumption.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/graph-tracker/",
+      "name": "graph-tracker",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "graph",
+        "tracking",
+        "github",
+        "jira",
+        "opencode"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Work item graph - track issues, PRs, JIRA tickets and their relationships across sessions. Use when the user says \"graph\", \"track this\", \"what was I working on\", or asks about work item status.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/graph/",
+      "name": "graph",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "graph",
+        "tracking",
+        "github",
+        "jira",
+        "opencode"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Morning briefing \u2014 calendar, reminders, weather, GitHub issues, priorities. Use when the user says \"morning\", \"briefing\", \"start my day\", or asks what's on today.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/morning/",
+      "name": "morning",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "morning",
+        "briefing",
+        "calendar",
+        "reminders",
+        "opencode"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Official Obsidian CLI-first workflow for work notes, with local wrapper fallback for custom search, writes, and graph operations",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/obsidian-work-notes/",
+      "name": "obsidian-work-notes",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "obsidian",
+        "notes",
+        "knowledgebase",
+        "graph",
+        "opencode"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Generate standup update from git activity, session memory, GitHub, and tasks. Use when the user says \"standup\", \"daily update\", or asks for a summary of recent work.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/standup/",
+      "name": "standup",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "standup",
+        "daily-update",
+        "github",
+        "tasks",
+        "opencode"
+      ],
+      "version": "0.1.0"
+    }
+  ]
+}
