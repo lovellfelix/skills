@@ -110,95 +110,43 @@ All core GrenadianBuzz patterns remain stable:
 - **Description**: Unified product and engineering skill across all surfaces
 - **Tags**: Added `product`, `mobile`, `android`, `frontend`
 
-## Migration Guide
+## Consolidation Update
 
-### For Existing Tools Using `grenadianbuzz-api`
+All GrenadianBuzz materials are now consolidated under the canonical package:
 
-**No changes required**. The old skill (`/skills/portable/grenadianbuzz-api/`) remains fully functional:
-- Same SKILL.md, templates, and reference guides
-- Same manifest.json and activation behavior
-- No breaking changes, no deprecation
+- `skills/portable/grenadianbuzz/`
 
-**To migrate to `grenadianbuzz` (optional)**:
-1. Update skill references in OpenCode configs or tool prompts from `grenadianbuzz-api` to `grenadianbuzz`
-2. All API content is identical; new sections (Android, CLI, dashboard, newsletter) are additive
-3. No code changes required; skill usage is the same
+The following deep guides were merged into the canonical package:
 
-### For New Features (Recommended)
-
-Use `grenadianbuzz` (v0.2.0) for:
-- Cross-platform feature design (API + Android + dashboard)
-- Mobile-first feature specifications
-- Newsletter and engagement strategy
-- Admin tooling and moderation workflows
-
-Use `grenadianbuzz-api` (v0.1.0) if:
-- Task is API-only with no mobile/dashboard/newsletter involvement
-- Prefer focused, API-centric guidance without cross-platform distraction
-- Integrating into existing API-only workflows
-
-## File Structure
-
-```
-skills/portable/
-├── grenadianbuzz/                    # NEW (v0.2.0)
-│   ├── SKILL.md                      # Unified product skill
-│   ├── manifest.json                 # v0.2.0 metadata
-│   ├── reference/
-│   │   ├── grenadianbuzz-android-context.md     # NEW Android guide
-│   │   ├── grenadianbuzz-api-patterns.md        # Copied from v0.1.0
-│   │   └── grenadianbuzz-domain-checklist.md    # Copied from v0.1.0
-│   └── templates/
-│       ├── api-prd-template.md       # Copied from v0.1.0
-│       └── quick-reference.md        # Copied from v0.1.0
-│
-└── grenadianbuzz-api/                # UNCHANGED (v0.1.0)
-    ├── SKILL.md
-    ├── manifest.json
-    ├── reference/
-    ├── templates/
-    └── UPDATE_SUMMARY.md
-```
+- `reference/grenadianbuzz-cli-guide.md`
+- `reference/grenadianbuzz-dashboard-guide.md`
+- `reference/grenadianbuzz-website-guide.md`
+- `INDEX.md` (navigation guide)
 
 ## Compatibility
 
-- **OpenCode**: ✓ Supported (all runtimes)
-- **Cursor**: ✓ Supported (portable mode)
-- **Claude**: ✓ Supported (include mode)
-- **Personal-only activation**: ✓ Enabled (`personal_machine_only: true`)
-- **Backward compatibility**: ✓ 100% (grenadianbuzz-api unchanged)
+`skills/portable/grenadianbuzz-api/` is now a thin compatibility shim:
 
-## Next Steps (Optional)
+- Keeps `manifest.json` and `SKILL.md` for backward compatibility.
+- Points users to `skills/portable/grenadianbuzz/` for all active references.
+- Preserves `personal_machine_only: true` behavior.
 
-To complete the unified product skill:
+## Canonical Structure
 
-1. **CLI reference guide** (`reference/grenadianbuzz-cli-context.md`)
-   - Commands, authentication, output formats
-   - Integration with API and app
-   - Admin operation workflows
-   - ~500-800 lines (similar depth to Android guide)
-
-2. **Dashboard reference guide** (`reference/grenadianbuzz-dashboard-context.md`)
-   - Analytics views, metrics, real-time updates
-   - Moderation queue UI, SLA tracking
-   - Creator tools, content promotion
-   - React/Vue patterns, state management
-   - ~400-600 lines
-
-3. **Website guide** (optional)
-   - Static site architecture (Surge CDN)
-   - Content structure, SEO considerations
-   - Integration with API (events, trending articles)
-   - ~300-400 lines
-
-These additions would provide **complete cross-platform coverage** (API, Android, CLI, dashboard, website, newsletter) while maintaining the unified workflow and domain context.
-
----
-
-## Questions?
-
-- **API patterns still apply?** Yes—all v0.1.0 content is included unchanged.
-- **Backward compatible?** Fully. Old skill remains untouched and functional.
-- **Do I need to use the new Android section?** Only if designing mobile-aware features. API-only tasks work as before.
-- **What about portability?** Templates and patterns are still reusable for other projects, not just GrenadianBuzz.
-- **Activation still personal-only?** Yes—no secrets in docs, so portability flag remains `true`.
+```
+skills/portable/grenadianbuzz/
+├── SKILL.md
+├── INDEX.md
+├── manifest.json
+├── UPDATE_SUMMARY.md
+├── reference/
+│   ├── grenadianbuzz-android-context.md
+│   ├── grenadianbuzz-api-patterns.md
+│   ├── grenadianbuzz-cli-guide.md
+│   ├── grenadianbuzz-dashboard-guide.md
+│   ├── grenadianbuzz-domain-checklist.md
+│   └── grenadianbuzz-website-guide.md
+└── templates/
+    ├── api-prd-template.md
+    └── quick-reference.md
+```

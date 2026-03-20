@@ -183,6 +183,10 @@ tags: [grenadianbuzz, product, mobile, api, backend, frontend, architecture]
 - **API Patterns**: `reference/grenadianbuzz-api-patterns.md` - Production patterns, versioning, moderation, engagement
 - **Domain Checklist**: `reference/grenadianbuzz-domain-checklist.md` - Design validations across surfaces
 - **Android Guide**: `reference/grenadianbuzz-android-context.md` - Kotlin, JetpackCompose, API integration, offline-first patterns
+- **CLI Guide**: `reference/grenadianbuzz-cli-guide.md` - Command patterns, admin workflows, automation scripts
+- **Dashboard Guide**: `reference/grenadianbuzz-dashboard-guide.md` - Moderation, analytics, creator tooling, responsive layouts
+- **Website Guide**: `reference/grenadianbuzz-website-guide.md` - Public pages, SEO/accessibility, engagement patterns
+- **Navigation Index**: `INDEX.md` - Start-here map for API, Android, CLI, dashboard, and website
 
 ## Practical Examples
 
