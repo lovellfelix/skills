@@ -80,6 +80,7 @@ Optional activation metadata:
 - `personal_machine_only`: boolean (manifest-only, default `false`)
 - When `true`, runtime link sync only enables the skill when the local allowlist includes the skill name.
 - Local allowlist path: `~/.config/opencode/personal-machine-skills.txt` (one skill name per line)
+- Validation requirement: when `personal_machine_only` is `true`, `SKILL.md` must include a `## Personal Machine Activation` section that explains allowlist setup and references `~/.config/opencode/personal-machine-skills.txt`.
 
 ## Versioning
 
@@ -113,7 +114,7 @@ Run validation before commit:
 ./scripts/validate-skills.sh
 ```
 
-Checks include metadata completeness, shared-field consistency, adapter link health, and compatibility coverage.
+Checks include metadata completeness, shared-field consistency, adapter link health, compatibility coverage, and personal-machine activation guidance for personal-only skills.
 
 ## Scaffold a New Skill
 

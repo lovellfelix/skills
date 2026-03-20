@@ -10,16 +10,27 @@ This skill provides deep, production-grounded guides for every major surface of 
 
 ### Start Here Based on Your Task
 
+**Need a quick cheat sheet for CLI commands?**
+→ See **CLI Quick Reference** (`quick-ref/CLI-QUICK-REFERENCE.md`) — 1-page command cheat sheet
+
+**Need to navigate the dashboard quickly?**
+→ See **Dashboard Quick Reference** (`quick-ref/DASHBOARD-QUICK-REFERENCE.md`) — 1-page task guide
+
+**Need to understand website navigation?**
+→ See **Website Quick Reference** (`quick-ref/WEBSITE-QUICK-REFERENCE.md`) — 1-page user flow guide
+
+---
+
 **Designing a new API or endpoint?**
 → See **API Patterns** (`reference/grenadianbuzz-api-patterns.md`)
 
-**Building CLI tools or scripts?**
+**Building CLI tools or scripts?** (Deep dive)
 → See **CLI Guide** (`reference/grenadianbuzz-cli-guide.md`)
 
-**Working on admin/creator dashboards?**
+**Working on admin/creator dashboards?** (Deep dive)
 → See **Dashboard Guide** (`reference/grenadianbuzz-dashboard-guide.md`)
 
-**Building public website pages?**
+**Building public website pages?** (Deep dive)
 → See **Website Guide** (`reference/grenadianbuzz-website-guide.md`)
 
 **Validating design against domain patterns?**
@@ -29,7 +40,19 @@ This skill provides deep, production-grounded guides for every major surface of 
 
 ## Complete Guide Map
 
+### Quick References (One-Page Cheat Sheets)
+
+**Fastest way to find what you need — perfect for busy admins and developers**
+
+| Reference | Coverage | Best For |
+|-----------|----------|----------|
+| **CLI Quick Ref** | 150 lines, 40+ common commands | Admin scripts, bulk ops, quick lookup |
+| **Dashboard Quick Ref** | 200 lines, all major sections | Content mgmt, moderation, analytics tasks |
+| **Website Quick Ref** | 250 lines, navigation & user flows | Navigation, engagement, mobile behavior |
+
 ### Reference Guides (Production-Grounded)
+
+**Comprehensive guides with real examples and patterns — for deep design work**
 
 | Guide | Coverage | Best For |
 |-------|----------|----------|
@@ -45,6 +68,7 @@ This skill provides deep, production-grounded guides for every major surface of 
 |----------|-------|----------|
 | **Quick Reference** | 487 | Checklist, endpoint templates, error examples |
 | **API PRD Template** | 350+ | 14-section comprehensive PRD structure |
+| **Newsletter Pack** | 6,500+ | Diaspora-focused email templates (4 templates) |
 
 ---
 
@@ -158,6 +182,45 @@ This skill provides deep, production-grounded guides for every major surface of 
 
 ---
 
+### 5. **Newsletters** (Email Engagement)
+
+**Coverage**: 4 production-ready templates for diaspora-focused emails: weekly digest, breaking news, events & culture, community spotlight
+
+**Key Files**:
+- `templates/newsletter/README.md` (navigation & strategy)
+- `templates/newsletter/weekly-roundup.md` (1,465 words)
+- `templates/newsletter/breaking-news-alert.md` (300-400 words)
+- `templates/newsletter/events-culture-digest.md` (2,500+ words)
+- `templates/newsletter/community-spotlight.md` (1,800+ words)
+
+**Templates Covered**:
+- **Weekly Roundup**: Digest-style (stories + culture + events), Sunday mornings, 5-7 min read
+- **Breaking News Alert**: Real-time urgent notifications (hurricanes, political events, emergencies), 2-3 min read
+- **Events & Culture Digest**: Festival celebrations + diaspora gatherings, bi-weekly, 8-10 min read
+- **Community Spotlight**: Diaspora changemakers + grassroots initiatives, bi-weekly, 6-8 min read
+
+**Use When**:
+- Engaging diaspora audiences via email
+- Planning newsletter strategy
+- Needing templates for cultural/community engagement
+- Building engagement across time zones (USA, Canada, UK, Caribbean)
+
+**Design Patterns**:
+- Warm, personal tone (like talking to family)
+- Diaspora-aware content (always include home connection)
+- Timezone support (multiple event times listed)
+- Subscription tier personalization (free, premium, family)
+- Actionable CTAs (3-5 per issue, focused)
+- Mobile-first responsive design
+- Clear unsubscribe & preference management
+
+**Personalization Options**:
+- Geographic segments (USA, Canada, UK, Caribbean)
+- Subscription tiers (free, premium, family)
+- Topic preferences (news, culture, events, community)
+
+---
+
 ## Domain Context
 
 All guides are grounded in real GrenadianBuzz architecture:
@@ -225,21 +288,33 @@ All guides are grounded in real GrenadianBuzz architecture:
 ```
 skills/portable/grenadianbuzz/
 ├── SKILL.md                              # Main skill entry point
-├── INDEX.md                              # This file
+├── INDEX.md                              # This file — start here
 │
-├── reference/
+├── quick-ref/                            # ⭐ One-page quick references (NEW)
+│   ├── CLI-QUICK-REFERENCE.md            # 150 lines: 40+ common commands cheat sheet
+│   ├── DASHBOARD-QUICK-REFERENCE.md      # 200 lines: All sections & common tasks
+│   └── WEBSITE-QUICK-REFERENCE.md        # 250 lines: Navigation, flows, features
+│
+├── reference/                            # Deep reference guides
 │   ├── grenadianbuzz-api-patterns.md     # 823 lines: API versioning, responses, real examples
 │   ├── grenadianbuzz-cli-guide.md        # 700+ lines: 70+ commands, workflows, scripts
 │   ├── grenadianbuzz-dashboard-guide.md  # 900+ lines: Content, moderation, analytics dashboards
 │   ├── grenadianbuzz-website-guide.md    # 1000+ lines: Pages, SEO, responsive design, engagement
 │   └── grenadianbuzz-domain-checklist.md # 150+ lines: Validation rules, patterns, safety
 │
-└── templates/
+└── templates/                            # Reusable templates
     ├── quick-reference.md                # 487 lines: Fast checklist and endpoint templates
-    └── api-prd-template.md               # 350+ lines: 14-section PRD structure
+    ├── api-prd-template.md               # 350+ lines: 14-section PRD structure
+    │
+    └── newsletter/                       # 📧 Newsletter template pack (NEW)
+        ├── README.md                     # Navigation & content strategy
+        ├── weekly-roundup.md             # 1,465 words: Digest-style weekly newsletter
+        ├── breaking-news-alert.md        # 300-400 words: Real-time urgent alerts
+        ├── events-culture-digest.md      # 2,500+ words: Festival & cultural celebrations
+        └── community-spotlight.md        # 1,800+ words: Diaspora changemakers & initiatives
 ```
 
-**Total**: ~5,400 lines of production-grounded guides across all surfaces
+**Total**: ~12,400+ lines of production-grounded guides, quick references, and newsletter templates across all surfaces
 
 ---
 
@@ -331,23 +406,29 @@ A: Mostly. API, CLI, and website patterns are broadly applicable. Dashboard guid
 
 ## Summary
 
-This expanded GrenadianBuzz skill now covers **all major surfaces** with production-grounded, practical guides:
+This expanded GrenadianBuzz skill now covers **all major surfaces** with:
+- ✅ **Quick references** (1-page cheat sheets for CLI, Dashboard, Website)
+- ✅ **Deep reference guides** (production-grounded, 4,500+ lines)
+- ✅ **Reusable templates** (PRD, quick-ref checklist, newsletter pack)
+- ✅ **Domain checklist** (design validation)
+- ✅ **Newsletter template pack** — NEW! (4 templates for diaspora engagement)
 
-| Surface | Lines | Status |
-|---------|-------|--------|
-| API | 823 | ✅ Comprehensive |
-| CLI | 700+ | ✅ Comprehensive |
-| Dashboard | 900+ | ✅ Comprehensive |
-| Website | 1000+ | ✅ Comprehensive |
-| Domain | 150+ | ✅ Validation rules |
-| Templates | 840+ | ✅ Reusable |
-| **TOTAL** | **~5,400** | **Complete** |
+| Surface | Quick Ref | Deep Guide | Templates | Status |
+|---------|-----------|-----------|---|--------|
+| CLI | ✅ | 700+ lines | — | Complete |
+| Dashboard | ✅ | 900+ lines | — | Complete |
+| Website | ✅ | 1000+ lines | — | Complete |
+| API | — | 823 lines | API PRD | Complete |
+| Domain | — | 150+ lines | — | Validation rules |
+| Newsletter | — | — | 6,500+ words (4 templates) | ✨ NEW |
+| **TOTAL** | **600 lines** | **5,300 lines** | **7,500+ words** | **Complete** |
 
 All guides maintain:
-- ✅ Portability (templates work for other projects)
+- ✅ Portability (templates & patterns work for other projects and diaspora communities)
 - ✅ Safety (no secrets or internal details)
 - ✅ Consistency (shared patterns, cross-references)
 - ✅ Practicality (real examples, workflows)
+- ✅ Scannability (quick refs + deep dives available)
 
 ---
 

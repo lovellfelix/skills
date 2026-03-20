@@ -238,6 +238,12 @@ Output:
 - Compliance: unsubscribe tracking, consent verification
 ```
 
+## Personal Machine Activation
+
+- This is a personal-machine-only skill and stays disabled unless explicitly allowlisted.
+- Add `grenadianbuzz` to `~/.config/opencode/personal-machine-skills.txt` (one skill name per line).
+- Re-run your runtime link sync after updating the allowlist.
+
 ## Troubleshooting
 
 **"I'm designing a feature but need to span API + Android + CLI"**
