@@ -330,52 +330,6 @@
           }
         }
       },
-      "description": "Compatibility shim for the legacy GrenadianBuzz API skill. Canonical package is grenadianbuzz.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/grenadianbuzz-api/",
-      "name": "grenadianbuzz-api",
-      "personal_machine_only": true,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "api",
-        "openapi",
-        "prd",
-        "product",
-        "grenadianbuzz",
-        "compatibility",
-        "deprecated"
-      ],
-      "version": "0.1.1"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
       "description": "Unified product and engineering skill for GrenadianBuzz across all surfaces (API, Android app, CLI, website, dashboard, CDN).",
       "entrypoint": "SKILL.md",
       "location": "portable/grenadianbuzz/",
