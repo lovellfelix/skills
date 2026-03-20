@@ -6,6 +6,25 @@ This skill provides deep, production-grounded guides for every major surface of 
 
 ---
 
+## Table of Contents
+
+- [Quick Navigation](#quick-navigation) — Task-based jumplinks
+- [Complete Guide Map](#complete-guide-map) — All guides with coverage summary
+- [Surface Overview](#surface-overview) — Deep dive by platform (API, CLI, Dashboard, Website, Newsletters)
+  - [API (REST Backend)](#1-api-rest-backend)
+  - [CLI (Command-Line Tools)](#2-cli-command-line-tools)
+  - [Dashboard (Admin/Creator Tools)](#3-dashboard-admincreator-tools)
+  - [Website (Public Facing)](#4-website-public-facing)
+  - [Newsletters (Email Engagement)](#5-newsletters-email-engagement)
+- [Domain Context](#domain-context) — Audience, content model, engagement, moderation, auth
+- [How to Use These Guides](#how-to-use-these-guides) — For design review, feature building, standards
+- [File Structure](#file-structure) — Directory tree and content counts
+- [Key Patterns Across All Surfaces](#key-patterns-across-all-surfaces) — Auth, errors, pagination, real-time, moderation
+- [Validation Checklist](#validation-checklist) — Quick verification steps
+- [Common Questions](#common-questions) — FAQ
+
+---
+
 ## Quick Navigation
 
 ### Start Here Based on Your Task
@@ -184,10 +203,11 @@ This skill provides deep, production-grounded guides for every major surface of 
 
 ### 5. **Newsletters** (Email Engagement)
 
-**Coverage**: 4 production-ready templates for diaspora-focused emails: weekly digest, breaking news, events & culture, community spotlight
+**Coverage**: 4 production-ready templates + subject line & CTA snippets for diaspora-focused emails: weekly digest, breaking news, events & culture, community spotlight
 
 **Key Files**:
 - `templates/newsletter/README.md` (navigation & strategy)
+- `templates/newsletter/SNIPPETS.md` (subject lines & CTA variants by type) ⭐ NEW
 - `templates/newsletter/weekly-roundup.md` (1,465 words)
 - `templates/newsletter/breaking-news-alert.md` (300-400 words)
 - `templates/newsletter/events-culture-digest.md` (2,500+ words)
@@ -306,15 +326,16 @@ skills/portable/grenadianbuzz/
     ├── quick-reference.md                # 487 lines: Fast checklist and endpoint templates
     ├── api-prd-template.md               # 350+ lines: 14-section PRD structure
     │
-    └── newsletter/                       # 📧 Newsletter template pack (NEW)
+    └── newsletter/                       # 📧 Newsletter template pack
         ├── README.md                     # Navigation & content strategy
+        ├── SNIPPETS.md                   # ⭐ Subject lines & CTA variants by type (NEW)
         ├── weekly-roundup.md             # 1,465 words: Digest-style weekly newsletter
         ├── breaking-news-alert.md        # 300-400 words: Real-time urgent alerts
         ├── events-culture-digest.md      # 2,500+ words: Festival & cultural celebrations
         └── community-spotlight.md        # 1,800+ words: Diaspora changemakers & initiatives
 ```
 
-**Total**: ~12,400+ lines of production-grounded guides, quick references, and newsletter templates across all surfaces
+**Total**: ~13,000+ lines of production-grounded guides, quick references, templates, and newsletter snippets across all surfaces
 
 ---
 
