@@ -26,3 +26,75 @@ This directory is the canonical home for skills-first guidance in this repositor
 - Prefer creating new skills under `portable/`.
 - Keep `SKILL.md` concise and practical.
 - Keep runtime-specific behavior out of portable skill cores.
+
+## Validation & Scaffolding
+
+### Validate Skills
+
+Check all skills in `skills/` for required files, metadata completeness, and JSON validity:
+
+```bash
+./scripts/validate-skills.sh
+```
+
+### Regenerate Skills Index
+
+`skills/INDEX.md` is generated from `skills/**/manifest.json` and `SKILL.md` frontmatter:
+
+```bash
+python3 ./scripts/generate-skills-index.py
+```
+
+CI runs this generator and fails if `skills/INDEX.md` is out of date.
+
+Validates:
+- `SKILL.md` frontmatter (name, description, version, portable flag, tags)
+- `manifest.json` structure and adapter definitions
+- Directory naming conventions
+- Cross-references between files
+
+### Create a New Skill
+
+**Portable skill** (works across runtimes):
+
+```bash
+./scripts/new-skill.sh my-skill-name
+```
+
+**Runtime-specific skill** (OpenCode, Claude, Cursor, etc.):
+
+```bash
+./scripts/new-skill.sh my-skill-name --runtime opencode
+```
+
+Both generate scaffolding with:
+- `SKILL.md` template with YAML frontmatter
+- `manifest.json` with adapter mappings
+- `examples/` and `reference/` directories (optional)
+
+## Runtime Materialization
+
+Canonical source remains in this repo:
+
+- `skills/portable/` for portable skills
+- `skills/runtime-specific/<runtime>/` for runtime overlays
+
+Runtime-facing paths can be generated as symlinks using:
+
+```bash
+./hacks/sync-skill-runtime-links.sh
+```
+
+By default it syncs links for OpenCode, Claude, and Cursor (when detected):
+
+- OpenCode: `~/.config/opencode/skills/portable` and `~/.config/opencode/skills/runtime`
+- Claude: `~/.claude/skills/portable`
+- Cursor: `~/.cursor/skills/portable`
+
+Target a runtime explicitly:
+
+```bash
+./hacks/sync-skill-runtime-links.sh --runtime opencode
+./hacks/sync-skill-runtime-links.sh --runtime claude
+./hacks/sync-skill-runtime-links.sh --runtime cursor
+```

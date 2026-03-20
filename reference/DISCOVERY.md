@@ -188,7 +188,42 @@ Keep "Use when" and anti-patterns explicit in SKILL.md.
 - Should have `portable: false` in frontmatter
 - Organized by runtime subdirectory
 
-## Quality Checks
+## Scaffolding & Validation
+
+### Generate New Skill Scaffold
+
+Use the scaffolding script to create a new skill with correct structure and templates:
+
+```bash
+./scripts/new-skill.sh my-skill-name
+```
+
+Creates a portable skill under `skills/portable/my-skill-name/` with:
+- `SKILL.md` template
+- `manifest.json` with adapter stubs
+- Optional directories (`examples/`, `reference/`)
+
+For runtime-specific skills:
+
+```bash
+./scripts/new-skill.sh my-skill-name --runtime opencode
+```
+
+### Validate Skill Metadata
+
+Run validation to check all skills for completeness and correctness:
+
+```bash
+./scripts/validate-skills.sh
+```
+
+Checks:
+- Frontmatter completeness (name, description, version, portable, tags)
+- Directory naming conventions
+- `manifest.json` JSON validity
+- Metadata field consistency
+
+### Quality Checks
 
 Before committing a new skill:
 
@@ -199,6 +234,7 @@ Before committing a new skill:
 - [ ] "Use when" has 2+ concrete trigger examples
 - [ ] Directory structure follows convention
 - [ ] No hardcoded file paths (use relative or placeholder)
+- [ ] Validation passes: `./scripts/validate-skills.sh`
 
 ## Integration with Agent System
 
