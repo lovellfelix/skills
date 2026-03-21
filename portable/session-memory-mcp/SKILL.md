@@ -43,6 +43,9 @@ Durable memory convention for this skill:
 - Durable project state belongs in `~/.agents/memory/projects/<project>/`.
 - Durable transfer packets belong in `~/.agents/memory/handoffs/YYYY/MM/`.
 - Promoted exports belong in `~/.agents/memory/promoted/`.
+- Durable identity/preferences belong in `~/.agents/memory/profile/`.
+- Durable local-only people memory belongs in `~/.agents/memory/people/{profiles,notes,links}/`.
+- `people/links/` stores local graph-oriented references to session-memory entities (meetings, projects, tasks, events).
 
 ## Core patterns
 
@@ -67,7 +70,9 @@ Prefer small records with predictable keys:
 
 - `context_key`: stable lookup key (`task:auth-refactor`, `handoff:2026-03-20`).
 - Use project-scoped keys when possible (`project:dotfiles:current`, `project:dotfiles:decision:path-layout`).
+- Use durable people keys for first-class person context (`people:profile:<slug>`, `people:notes:<slug>`, `people:links:<slug>`).
 - `context_type`: category (`workflow`, `decision`, `blocker`, `convention`, `handoff`).
+- Add explicit person context types where needed (`people_profile`, `people_note_bundle`, `people_link_bundle`).
 - `context_value`: concise, actionable text.
 - `metadata`: optional JSON-like fields (owner, due date, links, confidence).
 

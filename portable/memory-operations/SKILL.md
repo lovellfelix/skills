@@ -30,15 +30,19 @@ Use this meta-skill to run a safe, repeatable memory workflow: collect high-sign
 
 1. Capture or refresh key session memory records using `session-memory-mcp` patterns.
 2. Promote selected session context into durable files under `~/.agents/memory/promoted/`.
-3. Update project-scoped state under `~/.agents/memory/projects/<project>/`.
-4. Build a concise handoff packet under `~/.agents/memory/handoffs/YYYY/MM/` using `handoff-resume` structure.
-5. Store a final `handoff:*` context record that points to promoted artifacts.
+3. Keep durable identity/preferences in `~/.agents/memory/profile/` and local-only people context in `~/.agents/memory/people/`.
+4. Update project-scoped state under `~/.agents/memory/projects/<project>/`.
+5. Build a concise handoff packet under `~/.agents/memory/handoffs/YYYY/MM/` using `handoff-resume` structure.
+6. Store a final `handoff:*` context record that points to promoted artifacts.
 
 Canonical path conventions:
 
 - Durable project memory: `~/.agents/memory/projects/<project>/`
 - Durable handoff packets: `~/.agents/memory/handoffs/YYYY/MM/`
 - Promoted exports: `~/.agents/memory/promoted/`
+- Durable profile memory: `~/.agents/memory/profile/`
+- Durable people memory: `~/.agents/memory/people/{profiles,notes,links}/`
+- `people/links/` is for local graph-oriented references to session-memory entities (meetings, projects, tasks, events)
 - Working cache only: `CLAUDE.md` (do not treat as durable source of truth)
 
 ## Durable promotion helper
@@ -63,6 +67,11 @@ Project and handoff helpers:
 ```bash
 ./hacks/init-memory-project.sh --project <project-slug>
 ./hacks/new-memory-handoff.sh --project <project-slug> --topic <topic>
+./hacks/generate-memory-handoff-summary.sh --project <project-slug> --session-id <session-id> --summary "<short summary>"
+./hacks/sync-memory-markdown-mcp.sh export --scope all
+./hacks/sync-memory-markdown-mcp.sh import --scope all --overwrite
+./hacks/manage-people-memory.sh delete --person <person-slug> --kind links
+./hacks/manage-people-memory.sh redact --person <person-slug> --kind all --field "<text>"
 ```
 
 ## Safety rules
@@ -71,4 +80,5 @@ Project and handoff helpers:
 - Only create missing files/directories inside canonical memory paths.
 - Keep promoted artifacts append-only by timestamped filenames.
 - Keep handoffs append-only by timestamped filenames.
+- Treat `people/` memory as local-only durable storage; do not commit or share it.
 - Review promoted content before sharing outside the machine.

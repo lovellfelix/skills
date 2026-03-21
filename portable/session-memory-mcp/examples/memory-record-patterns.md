@@ -47,3 +47,33 @@ These examples show high-signal records that remain useful across sessions.
   }
 }
 ```
+
+## People profile record
+
+```json
+{
+  "context_key": "people:profile:alex-jordan",
+  "context_type": "people_profile",
+  "context_value": "Preferred communication is concise async updates with action items. Works in platform team and owns staging secrets approvals.",
+  "metadata": {
+    "source": "~/.agents/memory/people/profiles/alex-jordan.md",
+    "sensitivity": "low",
+    "consent": "work-context-only"
+  }
+}
+```
+
+## People links record
+
+```json
+{
+  "context_key": "people:links:alex-jordan",
+  "context_type": "people_link_bundle",
+  "context_value": "- meeting:weekly-platform-sync (session-memory key: event:2026-03-20:weekly-platform-sync)\n- task:staging-secrets-approval (session-memory key: task:platform:staging-secrets)",
+  "metadata": {
+    "source": "~/.agents/memory/people/links/alex-jordan.md",
+    "link_targets": ["event", "task", "project"],
+    "local_only": true
+  }
+}
+```
