@@ -1,0 +1,66 @@
+---
+name: context-optimization
+description: "Minimize token usage and keep context focused"
+version: 0.1.0
+portable: false
+tags: [performance, optimization, context, tokens, efficiency]
+applies_to: [all]
+---
+
+# Context Optimization
+
+## Rules
+
+1. Search before reading.
+2. Read only the smallest useful window.
+3. Load skills only when they materially help.
+4. Cache small reusable findings.
+5. Discard noisy tool output after completion.
+
+## Recommended Flow
+
+```javascript
+glob("**/*.{ts,py,md}")
+grep("class UserService")
+read("src/user-service.ts", { offset: 42, limit: 40 })
+```
+
+## Read Strategy
+
+- Files under ~100 lines: reading the whole file is usually fine.
+- Files 100-500 lines: use judgment.
+- Files over ~500 lines: locate the section first, then read a window.
+- Prefer several small targeted reads over one full-file read.
+
+## MCP Caching
+
+```javascript
+session-memory_learn_project_convention({
+  project_id: "dotfiles",
+  language: "shell",
+  convention_type: "style",
+  convention_key: "function_naming",
+  convention_value: "snake_case"
+})
+
+session-memory_store_session_context({
+  session_id: "personal-assistant",
+  context_key: "explored:auth-flow",
+  context_value: JSON.stringify({ entry: "src/auth/index.ts:15" })
+})
+```
+
+## Shell Guidance
+
+- Prefer dedicated tools over shell for file discovery and file reading.
+- If shell is necessary, keep output narrow and machine-friendly.
+- Avoid `find`, `cat`, and broad `ls` for routine exploration.
+
+## Reporting
+
+- Return only the outcome, touched paths, and validation status.
+- Do not paste long code blocks unless the user asked.
+
+## Goal
+
+Keep free-agent tasks comfortably under 10k tokens whenever possible.
