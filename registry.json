@@ -160,6 +160,51 @@
           }
         }
       },
+      "description": "Build beautiful, modern Android UI with Material Design 3 and Jetpack Compose while avoiding generic boilerplate.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/compose-material3/",
+      "name": "compose-material3",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "android",
+        "kotlin",
+        "compose",
+        "material3",
+        "ui",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Comprehensive code quality audit covering architecture, patterns, and security vulnerabilities.",
       "entrypoint": "SKILL.md",
       "location": "portable/deep-audit/",

@@ -13,6 +13,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **ask** | `portable/ask/` | Quick Q&A workflow with source-priority search and concise, cited answers. |
 | **code-review** | `portable/code-review/` | Performs comprehensive code review with security scanning and language auto-detection. |
 | **communication-style** | `portable/communication-style/` | Rewrite communication for clarity, tone, and audience across Slack, email, docs, and more. |
+| **compose-material3** | `portable/compose-material3/` | Build beautiful, modern Android UI with Material Design 3 and Jetpack Compose while avoiding generic boilerplate. |
 | **deep-audit** | `portable/deep-audit/` | Comprehensive code quality audit covering architecture, patterns, and security vulnerabilities. |
 | **documentation** | `portable/documentation/` | Generate and update documentation with language-aware formatting and conventions. |
 | **dotfiles-optimization** | `portable/dotfiles-optimization/` | Use when improving shell configs, dotfiles layout, or local automation with safe, validated changes. |
