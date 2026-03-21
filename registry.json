@@ -511,6 +511,51 @@
           }
         }
       },
+      "description": "Coordinate session-memory capture, durable promotion, and handoff-ready resume workflows.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/memory-operations/",
+      "name": "memory-operations",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "memory",
+        "mcp",
+        "handoff",
+        "resume",
+        "durability",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards.",
       "entrypoint": "SKILL.md",
       "location": "portable/python-code-style/",
