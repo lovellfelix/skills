@@ -72,6 +72,49 @@
           }
         }
       },
+      "description": "Performs comprehensive code review with security scanning and language auto-detection.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/code-review/",
+      "name": "code-review",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "review",
+        "quality",
+        "security",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Rewrite communication for clarity, tone, and audience across Slack, email, docs, and more.",
       "entrypoint": "SKILL.md",
       "location": "portable/communication-style/",
@@ -86,6 +129,49 @@
         "tone",
         "style",
         "docs"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Comprehensive code quality audit covering architecture, patterns, and security vulnerabilities.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/deep-audit/",
+      "name": "deep-audit",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "audit",
+        "architecture",
+        "quality",
+        "portable"
       ],
       "version": "0.1.0"
     },
@@ -512,6 +598,53 @@
           }
         }
       },
+      "description": "Location search and geocoding with a no-API-key default flow, including ZIP/postal-code based nearby lookup.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/location-search/",
+      "name": "location-search",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "maps",
+        "geocode",
+        "location",
+        "search",
+        "routing",
+        "navigation",
+        "places",
+        "portable"
+      ],
+      "version": "0.2.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).",
       "entrypoint": "SKILL.md",
       "location": "portable/mcp-builder/",
@@ -785,6 +918,49 @@
         "proposal",
         "architecture",
         "technical-decision"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Security vulnerability scanning, secret detection, and secure coding recommendations.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/security-audit/",
+      "name": "security-audit",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "security",
+        "audit",
+        "vulnerabilities",
+        "portable"
       ],
       "version": "0.1.0"
     },

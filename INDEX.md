@@ -11,7 +11,9 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | Name | Location | Purpose |
 |------|----------|---------|
 | **ask** | `portable/ask/` | Quick Q&A workflow with source-priority search and concise, cited answers. |
+| **code-review** | `portable/code-review/` | Performs comprehensive code review with security scanning and language auto-detection. |
 | **communication-style** | `portable/communication-style/` | Rewrite communication for clarity, tone, and audience across Slack, email, docs, and more. |
+| **deep-audit** | `portable/deep-audit/` | Comprehensive code quality audit covering architecture, patterns, and security vulnerabilities. |
 | **documentation** | `portable/documentation/` | Generate and update documentation with language-aware formatting and conventions. |
 | **email-best-practices** | `portable/email-best-practices/` | Use when building email features, emails going to spam, high bounce rates, setting up SPF/DKIM/DMARC authentication, implementing email capture, ensuring compliance (CAN-SPAM, GDPR, CASL), handling webhooks, retry logic, or deciding transactional vs marketing. |
 | **example-skill** | `portable/example-skill/` | Portable starter skill package for defining concise, tool-agnostic workflows. |
@@ -21,6 +23,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **handoff-resume** | `portable/handoff-resume/` | Resume interrupted work and produce clean handoffs with clear blockers and next steps. |
 | **incident-review** | `portable/incident-review/` | Incident review and postmortem analysis with timeline, impact, root cause, and follow-ups. |
 | **java-to-kotlin-migration** | `portable/java-to-kotlin-migration/` | Idiomatic, safe Android Java-to-Kotlin migration playbook |
+| **location-search** | `portable/location-search/` | Location search and geocoding with a no-API-key default flow, including ZIP/postal-code based nearby lookup. |
 | **mcp-builder** | `portable/mcp-builder/` | Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK). |
 | **memory-operations** | `portable/memory-operations/` | Coordinate session-memory capture, durable promotion, and handoff-ready resume workflows. |
 | **python-code-style** | `portable/python-code-style/` | Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards. |
@@ -28,6 +31,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **release-notes** | `portable/release-notes/` | Draft and refine changelog and release notes from commits, PRs, and changes. |
 | **release-skills** | `portable/release-skills/` | Universal release workflow. Auto-detects version files and changelogs. Supports Node.js, Python, Rust, Claude Plugin, and generic projects. Use when user says "release", "发布", "new version", "bump version", "push", "推送". |
 | **rfc** | `portable/rfc/` | Draft and refine technical RFCs and design proposals. |
+| **security-audit** | `portable/security-audit/` | Security vulnerability scanning, secret detection, and secure coding recommendations. |
 | **session-memory-mcp** | `portable/session-memory-mcp/` | Practical patterns for storing, retrieving, and maintaining high-signal session memory via MCP. |
 | **shadcn-ui** | `portable/shadcn-ui/` | Complete shadcn/ui component library guide including installation, configuration, and implementation of accessible React components. Use when setting up shadcn/ui, installing components, building forms with React Hook Form and Zod, customizing themes with Tailwind CSS, or implementing UI patterns like buttons, dialogs, dropdowns, tables, and complex form layouts. |
 | **testing** | `portable/testing/` | Universal testing with framework auto-detection for Python, JS, TS, Go, and Kotlin. |
