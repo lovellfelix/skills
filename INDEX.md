@@ -60,6 +60,7 @@ Skills with runtime-specific adapters or overlays.
 | **morning** | `runtime-specific/opencode/morning/` | Morning briefing — calendar, reminders, weather, GitHub issues, priorities. Use when the user says "morning", "briefing", "start my day", or asks what's on today. |
 | **obsidian-work-notes** | `runtime-specific/opencode/obsidian-work-notes/` | Official Obsidian CLI-first workflow for work notes, with local wrapper fallback for custom search, writes, and graph operations |
 | **personal-planning** | `runtime-specific/opencode/personal-planning/` | Use when planning trips, family outings, personal events, or life milestones with concrete actions and contingencies. |
+| **phased-rollout** | `runtime-specific/opencode/phased-rollout/` | Execute phased deployments across environments with monitoring windows and rollback capability. |
 | **pre-validation** | `runtime-specific/opencode/pre-validation/` | Parallel validation during implementation to catch errors before testing phase. |
 | **standup** | `runtime-specific/opencode/standup/` | Generate standup update from git activity, session memory, GitHub, and tasks. Use when the user says "standup", "daily update", or asks for a summary of recent work. |
 | **task-execution** | `runtime-specific/opencode/task-execution/` | Executes planned development tasks with parallel batching and real-time dashboard updates. |

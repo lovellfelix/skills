@@ -1313,6 +1313,38 @@
           }
         }
       },
+      "description": "Execute phased deployments across environments with monitoring windows and rollback capability.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/phased-rollout/",
+      "name": "phased-rollout",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "deployment",
+        "rollout",
+        "release",
+        "operations",
+        "opencode",
+        "work"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": true
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Store, query, and sync Swagger/OpenAPI specs in SQLite for cross-project API reference.",
       "entrypoint": "SKILL.md",
       "location": "runtime-specific/opencode/api-docs/",
