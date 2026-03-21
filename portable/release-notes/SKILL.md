@@ -151,6 +151,54 @@ Output: Marketing-friendly announcement for blog/email
 * **Provide examples**: Show how to use new features or migrate old code
 * **Link dependencies**: Reference security CVEs, GitHub issues
 
+## Practical Examples
+
+### From Commits to Release Notes
+You have 24 commits since v1.5.0:
+```
+Input: git log v1.5.0..HEAD --oneline
+Output: Grouped features, fixes, breaking changes with user language
+```
+
+### Migration Guide for Breaking Change
+You're removing an API endpoint in v2.0:
+```
+Input: Old endpoint /api/users/export, new endpoint /api/batch/export
+Output: Step-by-step migration example, deprecation timeline, side-by-side code
+```
+
+### Security Release Urgency
+You patched CVE-2024-1234 affecting auth:
+```
+Input: CVE details, affected versions, patch version, workaround if delayed
+Output: Release notes emphasizing urgency, clear upgrade path
+```
+
+### Feature Announcement for Marketing
+You built a new dashboard that saves users 5 hours/week:
+```
+Input: Feature details, time savings, use cases
+Output: Benefit-first announcement ready for blog post or email
+```
+
+## Troubleshooting
+
+**"My commits are a mess; I can't write good release notes"**
+Look at PRs instead of commits. PR titles are usually more coherent.
+If still messy, ask yourself: "What did the user experience change?" Not every commit merits mention.
+
+**"Breaking change—how do I not panic users?"**
+Lead with the benefit or necessity. Provide migration path upfront.
+Example: "We upgraded auth to OpenID for better security. See migration guide → for 15-minute update."
+
+**"How much detail do release notes need?"**
+Write two versions: one for users (what changed, why, impact), one for devs (technical details, config changes).
+Let users link to the technical version if they need it.
+
+**"Should I mention every bug fix?"**
+No. List the important ones. Cosmetic or internal fixes go in CHANGELOG only.
+Test your rule: would this fix matter to a paying customer?
+
 ## Common Sections
 
 * **New Features**: Ordered by user impact

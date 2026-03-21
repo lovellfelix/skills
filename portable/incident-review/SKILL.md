@@ -125,6 +125,54 @@ Output: Complete postmortem document with action items
 * Review previous incident reports to identify patterns
 * Use postmortems as learning, not compliance exercises
 
+## Practical Examples
+
+### Quick Timeline Recovery
+You have chat transcripts and three log files from a database outage:
+```
+Input: "We got paged at 2:15pm, started looking at logs, 
+noticed connection errors at 2:17pm, restarted service at 2:35pm"
+Output: Structured timeline with key decision points and response metrics
+```
+
+### Impact for Stakeholders
+Your incident affected payment processing for 90 minutes:
+```
+Input: Number of transactions blocked, revenue impact estimate, 
+affected customer count, SLA breach details
+Output: Executive summary with business metrics and customer comms
+```
+
+### Root Cause Deep Dive
+You suspect connection pool exhaustion but want the full chain:
+```
+Input: System behavior, metrics showing connection count over time,
+config changes from the week before
+Output: Multi-layer root cause with contributing factors and prevention steps
+```
+
+### Postmortem Follow-up Tracking
+You held the meeting; now you need to actionize findings:
+```
+Input: Timeline, root cause, and lessons from team discussion
+Output: Numbered action items with owners, priority, and deadline
+```
+
+## Troubleshooting
+
+**"I have too many events—where do I start?"**
+Focus on decisions that changed the incident trajectory: page alert, mitigation attempt, recovery. Less important: every log line or Slack message.
+
+**"Root cause keeps changing as I dig deeper"**
+That's normal. Use the why-why framework: keep asking "why" until you reach a systemic issue, not just the technical trigger. Record contributing factors separately.
+
+**"Teams aren't actually doing the follow-ups"**
+Assign owners explicitly, link to the postmortem, set deadlines. Review quarterly to spot recurring issues. Make follow-ups part of sprint planning, not a to-do list.
+
+**"This feels blame-y; my team is defensive"**
+Remove names. Focus on "the request burst" not "John's code". Emphasize "we were missing monitoring" not "we didn't check".
+Frame as team learning: "What can we improve together?"
+
 ## Common Sections in Output
 
 * **Incident Summary**: One-paragraph overview

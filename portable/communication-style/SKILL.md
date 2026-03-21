@@ -167,6 +167,64 @@ Output: Polished announcement emphasizing user benefits
 * **Provide context**: Don't assume everyone knows the background
 * **Test readability**: Read aloud, or check Flesch Reading Ease score
 
+## Practical Examples
+
+### Debug a Confusing Slack Message
+Your message is getting replies asking for clarification:
+```
+Input: "yo can anyone help w/ the thingy that's not working"
+Output: "Can someone help debug why the authentication service 
+         keeps timing out on password reset?"
+```
+
+### Rewrite Incident Update for Three Audiences
+Same incident, three versions:
+```
+Input: Database replication lag caused 15-minute delay in reports
+Customers: "Reports are running 15 minutes slower. We're investigating 
+           and will update you in 30 minutes."
+Technical: "Replication lag between primary/replica exceeds 5 min. 
+           Temporarily increasing query timeout and monitoring catchup."
+Executives: "Operational issue resolved in 20 minutes. No revenue impact. 
+            Improving monitoring."
+```
+
+### Simplify Dense API Documentation
+Your endpoint doc has 5 nested parameter descriptions:
+```
+Input: Parameter names like "offset_timestamp_unix_ms_utc", 
+       "include_deleted_soft_entries"
+Output: Clear names, one-line summaries, usage example, common mistakes
+```
+
+### Craft Bad-News Email
+You need to tell a client their request is delayed:
+```
+Input: "request is deprioritized"
+Output: "We're focusing on critical fixes first. 
+         Your request is scheduled for March 15. 
+         Contact us if that timing doesn't work."
+```
+
+## Troubleshooting
+
+**"I rewrote it shorter, but it lost important detail"**
+Add a layered structure: headline, summary (1 paragraph), details (for those
+who need them). Let people drill down instead of front-loading everything.
+
+**"My tone sounds corporate/sterile; I wanted friendly"**
+Use contractions, shorter sentences, and specific examples. 
+Replace "assistance" with "help". Imagine explaining to a colleague over coffee.
+
+**"Different audiences have conflicting needs"**
+Use a brief executive summary at the top, detailed explanation below.
+Or send two versions. The key is making it easy for each reader to find their info.
+
+**"I sound too casual now; how do I know the right tone?"**
+Look at existing communication from your team/company. Match that baseline.
+When uncertain, slightly formal beats too casual in writing (easier to relax tone
+in follow-ups if needed).
+
 ## Tone Spectrum
 
 ```

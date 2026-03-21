@@ -168,6 +168,58 @@ Output: Phased rollout plan with rollback strategy
 * **Quantify when possible**: Performance numbers, scale limits
 * **Link to context**: Reference issues, past RFCs, related work
 
+## Practical Examples
+
+### Async Task Processing Design
+You're moving from synchronous to queue-based job processing:
+```
+Input: Current 30-second timeout limit, peak load hitting it, 
+       need for retries and monitoring
+Output: RFC with queue design, failure modes, rollout plan, 
+        success metrics (e.g., "support 10x load")
+```
+
+### Database Schema Migration
+You need to denormalize a frequently-joined table:
+```
+Input: Current schema, query patterns, performance bottleneck evidence
+Output: RFC with migration strategy, rollback plan, zero-downtime approach
+```
+
+### API Rate Limiting Policy
+You're adding per-customer rate limits:
+```
+Input: Abuse patterns, tier definitions, fairness goals
+Output: RFC with tier matrix, request-quota algorithm, grace periods
+```
+
+### Deprecation Timeline for Legacy Feature
+You want to sunset an old auth method:
+```
+Input: Current usage metrics, migration effort for customers, timeline constraints
+Output: RFC with announcement, deprecation schedule, migration tooling plan
+```
+
+## Troubleshooting
+
+**"My RFC feels incomplete; I don't know all the answers"**
+That's fine. Use "Open Questions" section explicitly. List what you don't know,
+what needs prototyping, and what you'll decide during implementation.
+Mark those as "Resolved during Phase 2" or similar.
+
+**"How much detail is too much?"**
+If implementation decisions belong in code, not RFC. RFC covers "what and why",
+not "every function signature". Aim for 2-3 pages; anything longer should link
+to detailed design docs.
+
+**"No one's reading my RFCs"**
+Make the summary compelling (2-3 sentences). Add a visual diagram if possible.
+Share in team meeting; don't just post. Highlight decisions that affect others.
+
+**"We skipped RFC and now regret the design"**
+Totally recoverable. Write a retrospective RFC explaining what you learned.
+Use it to refine the approach for v2. Make it a learning exercise, not blame.
+
 ## Common Sections
 
 * **Summary**: Elevator pitch
