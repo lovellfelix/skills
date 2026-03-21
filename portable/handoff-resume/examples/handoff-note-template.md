@@ -30,4 +30,9 @@ Validation:
 
 Resume command:
 - make test-resume
+
+Durable memory references:
+- Project state: ~/.agents/memory/projects/dotfiles/current.md
+- Handoff file: ~/.agents/memory/handoffs/2026/03/20260320164500-dotfiles-memory-wave.md
+- Promoted snapshot: ~/.agents/memory/promoted/20260320164000-opencode-2026-03-20.md
 ```

@@ -34,6 +34,13 @@ Use this meta-skill to run a safe, repeatable memory workflow: collect high-sign
 4. Build a concise handoff packet under `~/.agents/memory/handoffs/YYYY/MM/` using `handoff-resume` structure.
 5. Store a final `handoff:*` context record that points to promoted artifacts.
 
+Canonical path conventions:
+
+- Durable project memory: `~/.agents/memory/projects/<project>/`
+- Durable handoff packets: `~/.agents/memory/handoffs/YYYY/MM/`
+- Promoted exports: `~/.agents/memory/promoted/`
+- Working cache only: `CLAUDE.md` (do not treat as durable source of truth)
+
 ## Durable promotion helper
 
 Use the helper script from this repo:
@@ -48,6 +55,8 @@ Optional flags:
 - `--db <path>` to target a specific session-memory database.
 - `--agents-home <path>` to test outside `~/.agents`.
 - `--dry-run` to preview filesystem actions.
+
+After promoting, update project + handoff durable files so MCP records and filesystem artifacts stay aligned.
 
 Project and handoff helpers:
 

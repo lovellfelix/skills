@@ -37,6 +37,13 @@ Use session-memory MCP as a durable context layer so sessions can resume quickly
 4. Sync todos and task status as work progresses.
 5. Periodically prune stale/noisy records.
 
+Durable memory convention for this skill:
+
+- Session DB is the working layer (`~/.agents/memory/session.db`).
+- Durable project state belongs in `~/.agents/memory/projects/<project>/`.
+- Durable transfer packets belong in `~/.agents/memory/handoffs/YYYY/MM/`.
+- Promoted exports belong in `~/.agents/memory/promoted/`.
+
 ## Core patterns
 
 ### 1) Store-or-skip filter
@@ -59,6 +66,7 @@ Skip storing when it is:
 Prefer small records with predictable keys:
 
 - `context_key`: stable lookup key (`task:auth-refactor`, `handoff:2026-03-20`).
+- Use project-scoped keys when possible (`project:dotfiles:current`, `project:dotfiles:decision:path-layout`).
 - `context_type`: category (`workflow`, `decision`, `blocker`, `convention`, `handoff`).
 - `context_value`: concise, actionable text.
 - `metadata`: optional JSON-like fields (owner, due date, links, confidence).
@@ -99,7 +107,8 @@ During execution:
 
 At handoff:
 
-- Write one summary record that references key context keys.
+- Write one summary record that references key context keys plus durable file paths.
+- Ensure `projects/<project>/current.md` and the new `handoffs/YYYY/MM/...md` packet stay aligned.
 
 ### 6) Noise control
 
@@ -118,6 +127,7 @@ Use a two-layer approach:
 For handoffs between agents:
 
 - Store a `handoff:*` record with blockers, next steps, and validation status.
+- Include metadata pointing to durable files under `projects/` and `handoffs/`.
 - Pair with `handoff-resume` to produce restart-ready summaries.
 
 ## Runtime notes (optional)

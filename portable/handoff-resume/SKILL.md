@@ -39,14 +39,22 @@ Resume work quickly from prior session state, then leave behind a crisp handoff 
 
 ## Core patterns
 
+Durable memory convention for this skill:
+
+- Project state lives at `~/.agents/memory/projects/<project>/`.
+- Session handoff packets live at `~/.agents/memory/handoffs/YYYY/MM/`.
+- Keep handoff files append-only; write a new packet for each pause.
+
 ### 1) Resume snapshot (read path)
 
 Create a compact resume snapshot in this order:
 
 1. Current in-progress tasks and recently completed tasks.
 2. Most recent session notes or memory records.
-3. Latest repo activity (branch, commits, diffs, open PR context).
-4. Open dependencies and unresolved blockers.
+3. Durable project state from `projects/<project>/current.md` and `projects/<project>/decisions.md`.
+4. Latest handoff packet from `handoffs/YYYY/MM/` for this project/topic.
+5. Latest repo activity (branch, commits, diffs, open PR context).
+6. Open dependencies and unresolved blockers.
 
 Output structure:
 
@@ -75,6 +83,7 @@ When pausing or transferring work, leave a handoff packet with:
 - Known blockers and who can unblock.
 - Exact next command or first action for restart.
 - Validation status (what ran, what did not run).
+- Durable references to `projects/<project>/` and `promoted/<timestamp>-<session>.{json,md}` if used.
 
 Keep it scannable and executable in under 60 seconds.
 
@@ -106,6 +115,11 @@ Validation:
 
 Resume command:
 - <first command to run next session>
+
+Durable memory references:
+- Project state: ~/.agents/memory/projects/<project>/current.md
+- Handoff file: ~/.agents/memory/handoffs/YYYY/MM/<timestamp>-<project>-<topic>.md
+- Promoted snapshot: ~/.agents/memory/promoted/<timestamp>-<session>.md
 ```
 
 ## Quality bar

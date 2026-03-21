@@ -6,6 +6,8 @@ Use this matrix to keep memory high-signal.
 |---|---|---|
 | Final technical decision | Yes | Affects future implementation choices |
 | Active blocker with owner | Yes | Enables accurate resume and escalation |
+| Durable project state snapshot | Yes (`projects/<project>/current.md`) | Keeps latest status outside session DB |
+| Handoff transfer packet | Yes (`handoffs/YYYY/MM/...md`) | Gives restart-ready packet for next session |
 | Next-step checklist | Yes | Reduces restart friction |
 | Full raw terminal output | No | Usually noisy and hard to retrieve |
 | Duplicate status updates | No | Adds clutter without new signal |
