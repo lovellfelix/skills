@@ -15,6 +15,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **communication-style** | `portable/communication-style/` | Rewrite communication for clarity, tone, and audience across Slack, email, docs, and more. |
 | **deep-audit** | `portable/deep-audit/` | Comprehensive code quality audit covering architecture, patterns, and security vulnerabilities. |
 | **documentation** | `portable/documentation/` | Generate and update documentation with language-aware formatting and conventions. |
+| **dotfiles-optimization** | `portable/dotfiles-optimization/` | Use when improving shell configs, dotfiles layout, or local automation with safe, validated changes. |
 | **email-best-practices** | `portable/email-best-practices/` | Use when building email features, emails going to spam, high bounce rates, setting up SPF/DKIM/DMARC authentication, implementing email capture, ensuring compliance (CAN-SPAM, GDPR, CASL), handling webhooks, retry logic, or deciding transactional vs marketing. |
 | **example-skill** | `portable/example-skill/` | Portable starter skill package for defining concise, tool-agnostic workflows. |
 | **find-skills** | `portable/find-skills/` | Helps users discover and install agent skills when they ask questions like "how do I do X", "find a skill for X", "is there a skill that can...", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill. |
@@ -27,6 +28,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **mcp-builder** | `portable/mcp-builder/` | Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK). |
 | **memory-operations** | `portable/memory-operations/` | Coordinate session-memory capture, durable promotion, and handoff-ready resume workflows. |
 | **python-code-style** | `portable/python-code-style/` | Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards. |
+| **python-quality-checklist** | `portable/python-quality-checklist/` | Use when implementing or reviewing Python code to enforce minimum quality gates before completion. |
 | **refactoring** | `portable/refactoring/` | Simplify and refine code for clarity, consistency, and maintainability while preserving functionality. Use when code needs cleanup, after features are implemented, or during review. |
 | **release-notes** | `portable/release-notes/` | Draft and refine changelog and release notes from commits, PRs, and changes. |
 | **release-skills** | `portable/release-skills/` | Universal release workflow. Auto-detects version files and changelogs. Supports Node.js, Python, Rust, Claude Plugin, and generic projects. Use when user says "release", "发布", "new version", "bump version", "push", "推送". |
@@ -45,12 +47,23 @@ Skills with runtime-specific adapters or overlays.
 
 | Name | Location | Purpose |
 |------|----------|---------|
+| **actionable-planning** | `runtime-specific/opencode/actionable-planning/` | Create CLEAR actionable plans using LinkedIn's best planning practices |
+| **api-docs** | `runtime-specific/opencode/api-docs/` | Store, query, and sync Swagger/OpenAPI specs in SQLite for cross-project API reference. |
 | **ask** | `runtime-specific/opencode/ask/` | OpenCode ask overlay - search work notes first, then session memory, codebase, and web. |
+| **context-optimization** | `runtime-specific/opencode/context-optimization/` | Minimize token usage and keep context focused |
+| **dependency-resolution** | `runtime-specific/opencode/dependency-resolution/` | Analyze task dependencies and optimize execution order for maximum parallelization. |
+| **git-workflow** | `runtime-specific/opencode/git-workflow/` | Git automation, worktrees, hooks, and advanced workflow patterns |
 | **graph** | `runtime-specific/opencode/graph/` | Work item graph - track issues, PRs, JIRA tickets and their relationships across sessions. Use when the user says "graph", "track this", "what was I working on", or asks about work item status. |
 | **graph-tracker** | `runtime-specific/opencode/graph-tracker/` | Persistent graph of nodes and relationships — engineering (GitHub issues, PRs, Jira) AND personal (family, reminders, events, notes). Enables work continuity, standup dashboards, personal knowledge graphs, and cross-session resumption. |
+| **knowledge-graph** | `runtime-specific/opencode/knowledge-graph/` | Build and maintain a lightweight knowledge graph in the work knowledgebase. |
 | **morning** | `runtime-specific/opencode/morning/` | Morning briefing — calendar, reminders, weather, GitHub issues, priorities. Use when the user says "morning", "briefing", "start my day", or asks what's on today. |
 | **obsidian-work-notes** | `runtime-specific/opencode/obsidian-work-notes/` | Official Obsidian CLI-first workflow for work notes, with local wrapper fallback for custom search, writes, and graph operations |
+| **personal-planning** | `runtime-specific/opencode/personal-planning/` | Use when planning trips, family outings, personal events, or life milestones with concrete actions and contingencies. |
+| **pre-validation** | `runtime-specific/opencode/pre-validation/` | Parallel validation during implementation to catch errors before testing phase. |
 | **standup** | `runtime-specific/opencode/standup/` | Generate standup update from git activity, session memory, GitHub, and tasks. Use when the user says "standup", "daily update", or asks for a summary of recent work. |
+| **task-execution** | `runtime-specific/opencode/task-execution/` | Executes planned development tasks with parallel batching and real-time dashboard updates. |
+| **task-planning** | `runtime-specific/opencode/task-planning/` | Breaks down complex features into small, verifiable subtasks with dependency resolution. |
+| **workflow-routing** | `runtime-specific/opencode/workflow-routing/` | Intelligent task routing with technology detection and agent delegation. |
 
 ## Archive
 

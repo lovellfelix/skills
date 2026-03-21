@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "name": "personal-planning",
+  "version": "0.1.0",
+  "portable": false,
+  "runtime": "opencode",
+  "entrypoint": "SKILL.md",
+  "tags": [
+    "planning",
+    "personal",
+    "travel",
+    "events",
+    "opencode"
+  ],
+  "adapters": {
+    "opencode": {
+      "path": "SKILL.md",
+      "mode": "native"
+    }
+  },
+  "compatibility": {
+    "runtimes": {
+      "opencode": {
+        "min_version": "*"
+      }
+    }
+  }
+}

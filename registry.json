@@ -245,6 +245,51 @@
           }
         }
       },
+      "description": "Use when improving shell configs, dotfiles layout, or local automation with safe, validated changes.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/dotfiles-optimization/",
+      "name": "dotfiles-optimization",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "dotfiles",
+        "shell",
+        "zsh",
+        "nvim",
+        "stow",
+        "automation"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Use when building email features, emails going to spam, high bounce rates, setting up SPF/DKIM/DMARC authentication, implementing email capture, ensuring compliance (CAN-SPAM, GDPR, CASL), handling webhooks, retry logic, or deciding transactional vs marketing.",
       "entrypoint": "SKILL.md",
       "location": "portable/email-best-practices/",
@@ -776,6 +821,50 @@
           }
         }
       },
+      "description": "Use when implementing or reviewing Python code to enforce minimum quality gates before completion.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/python-quality-checklist/",
+      "name": "python-quality-checklist",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "python",
+        "quality",
+        "typing",
+        "docstrings",
+        "validation"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Simplify and refine code for clarity, consistency, and maintainability while preserving functionality. Use when code needs cleanup, after features are implemented, or during review.",
       "entrypoint": "SKILL.md",
       "location": "portable/refactoring/",
@@ -1149,6 +1238,66 @@
           }
         }
       },
+      "description": "Create CLEAR actionable plans using LinkedIn's best planning practices",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/actionable-planning/",
+      "name": "actionable-planning",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "planning",
+        "execution",
+        "productivity",
+        "workflow",
+        "opencode"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Store, query, and sync Swagger/OpenAPI specs in SQLite for cross-project API reference.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/api-docs/",
+      "name": "api-docs",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "api",
+        "openapi",
+        "swagger",
+        "docs",
+        "opencode"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "OpenCode ask overlay - search work notes first, then session memory, codebase, and web.",
       "entrypoint": "SKILL.md",
       "location": "runtime-specific/opencode/ask/",
@@ -1161,6 +1310,96 @@
         "knowledge-search",
         "opencode",
         "obsidian"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Minimize token usage and keep context focused",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/context-optimization/",
+      "name": "context-optimization",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "performance",
+        "optimization",
+        "context",
+        "tokens",
+        "efficiency"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Analyze task dependencies and optimize execution order for maximum parallelization.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/dependency-resolution/",
+      "name": "dependency-resolution",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "dependencies",
+        "planning",
+        "parallelization",
+        "opencode"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Git automation, worktrees, hooks, and advanced workflow patterns",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/git-workflow/",
+      "name": "git-workflow",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "git",
+        "automation",
+        "worktrees",
+        "hooks",
+        "workflow",
+        "version-control"
       ],
       "version": "0.1.0"
     },
@@ -1220,6 +1459,35 @@
         "tracking",
         "github",
         "jira",
+        "opencode"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Build and maintain a lightweight knowledge graph in the work knowledgebase.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/knowledge-graph/",
+      "name": "knowledge-graph",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "knowledge-graph",
+        "notes",
+        "memory",
         "opencode"
       ],
       "version": "0.1.0"
@@ -1298,6 +1566,65 @@
           }
         }
       },
+      "description": "Use when planning trips, family outings, personal events, or life milestones with concrete actions and contingencies.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/personal-planning/",
+      "name": "personal-planning",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "planning",
+        "personal",
+        "travel",
+        "events",
+        "opencode"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Parallel validation during implementation to catch errors before testing phase.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/pre-validation/",
+      "name": "pre-validation",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "validation",
+        "linting",
+        "type-checking",
+        "opencode"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Generate standup update from git activity, session memory, GitHub, and tasks. Use when the user says \"standup\", \"daily update\", or asks for a summary of recent work.",
       "entrypoint": "SKILL.md",
       "location": "runtime-specific/opencode/standup/",
@@ -1310,6 +1637,93 @@
         "daily-update",
         "github",
         "tasks",
+        "opencode"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Executes planned development tasks with parallel batching and real-time dashboard updates.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/task-execution/",
+      "name": "task-execution",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "execution",
+        "validation",
+        "automation",
+        "opencode"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Breaks down complex features into small, verifiable subtasks with dependency resolution.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/task-planning/",
+      "name": "task-planning",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "planning",
+        "decomposition",
+        "dependencies",
+        "opencode"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Intelligent task routing with technology detection and agent delegation.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/workflow-routing/",
+      "name": "workflow-routing",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "routing",
+        "orchestration",
+        "delegation",
         "opencode"
       ],
       "version": "0.1.0"

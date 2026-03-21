@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "name": "python-quality-checklist",
+  "version": "0.1.0",
+  "portable": true,
+  "entrypoint": "SKILL.md",
+  "tags": [
+    "python",
+    "quality",
+    "typing",
+    "docstrings",
+    "validation"
+  ],
+  "adapters": {
+    "opencode": {
+      "path": "SKILL.md",
+      "mode": "native"
+    },
+    "cursor": {
+      "path": "SKILL.md",
+      "mode": "import"
+    },
+    "claude": {
+      "path": "SKILL.md",
+      "mode": "include"
+    }
+  },
+  "compatibility": {
+    "runtimes": {
+      "opencode": {
+        "min_version": "*"
+      },
+      "cursor": {
+        "min_version": "*"
+      },
+      "claude": {
+        "min_version": "*"
+      }
+    }
+  }
+}
