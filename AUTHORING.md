@@ -81,6 +81,11 @@ Optional activation metadata:
 - When `true`, runtime link sync only enables the skill when the local allowlist includes the skill name.
 - Local allowlist path: `~/.config/opencode/personal-machine-skills.txt` (one skill name per line)
 - Validation requirement: when `personal_machine_only` is `true`, `SKILL.md` must include a `## Personal Machine Activation` section that explains allowlist setup and references `~/.config/opencode/personal-machine-skills.txt`.
+- `work_machine_only`: boolean (manifest-only, default `false`)
+- When `true`, runtime link sync only enables the skill when the local work-machine flag file exists.
+- Default flag path: `~/.work-env-skills`
+- Override flag path: `SKILL_WORK_MACHINE_FLAG_FILE=/path/to/flag`
+- Validation requirement: when `work_machine_only` is `true`, `SKILL.md` must include a `## Work Machine Activation` section that references `~/.work-env-skills`.
 
 ## Versioning
 

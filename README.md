@@ -106,6 +106,12 @@ grenadianbuzz-api
 
 - Override allowlist path with `SKILL_PERSONAL_ALLOWLIST_FILE=/path/to/file`.
 
+Work-machine-only opt-in:
+
+- Skills with `"work_machine_only": true` in `manifest.json` are skipped unless a local work-machine flag exists.
+- Default flag path: `~/.work-env-skills`
+- Override flag path with `SKILL_WORK_MACHINE_FLAG_FILE=/path/to/flag`.
+
 Target a runtime explicitly:
 
 ```bash
