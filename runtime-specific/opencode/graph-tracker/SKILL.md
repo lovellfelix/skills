@@ -52,7 +52,7 @@ Automatically engage this skill when:
 
 ### Storage
 
-All data lives in the shared session-memory SQLite database (`~/.opencode/sessions/session.db`):
+All data lives in the shared session-memory SQLite database (`~/.agents/memory/session.db`, with legacy fallback to `~/.opencode/sessions/session.db`):
 
 ```
 graph_nodes   - Nodes of any type (engineering, personal, etc.)

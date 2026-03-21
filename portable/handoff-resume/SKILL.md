@@ -43,6 +43,7 @@ Durable memory convention for this skill:
 
 - Project state lives at `~/.agents/memory/projects/<project>/`.
 - Session handoff packets live at `~/.agents/memory/handoffs/YYYY/MM/`.
+- Profile + people durable context live at `~/.agents/memory/{profile,people}/`.
 - Keep handoff files append-only; write a new packet for each pause.
 
 ### 1) Resume snapshot (read path)
@@ -86,6 +87,12 @@ When pausing or transferring work, leave a handoff packet with:
 - Durable references to `projects/<project>/` and `promoted/<timestamp>-<session>.{json,md}` if used.
 
 Keep it scannable and executable in under 60 seconds.
+
+Helper script:
+
+```bash
+./hacks/generate-memory-handoff-summary.sh --project <project-slug> --session-id <session-id> --summary-file <handoff.md>
+```
 
 ## Handoff template
 
