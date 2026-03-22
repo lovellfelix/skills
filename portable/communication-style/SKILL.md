@@ -1,6 +1,6 @@
 ---
 name: communication-style
-description: Rewrite communication for clarity, tone, and audience across Slack, email, docs, and more.
+description: Use when rewriting Slack messages, drafting emails, improving tone, simplifying docs, or adapting communication for a specific audience. Also use when the user says 'make this clearer', 'improve the tone', 'write a Slack message', or 'draft an email'.
 version: 0.1.0
 portable: true
 tags: [communication, writing, clarity, tone, style, docs]

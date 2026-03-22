@@ -216,3 +216,8 @@ Test your rule: would this fix matter to a paying customer?
 * **Technical (GitHub)**: Precise, technical detail
 * **CHANGELOG.md**: Consistent format, all changes
 * **Migration Guide**: Step-by-step upgrade instructions
+
+## See Also
+
+- **Full release workflow** (versioning + tagging + pushing): use the `release-skills` skill.
+  `release-notes` focuses on drafting changelog content; `release-skills` orchestrates the complete release process including that step.

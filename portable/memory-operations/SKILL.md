@@ -2,11 +2,16 @@
 name: memory-operations
 description: Coordinate session-memory capture, durable promotion, and handoff-ready resume workflows.
 version: 0.1.0
-portable: true
-tags: [memory, mcp, handoff, resume, durability, portable]
+portable: false
+tags: [memory, mcp, handoff, resume, durability]
 ---
 
 # Memory Operations
+
+> **Prerequisites (runtime-specific):** This skill requires the `~/.agents/memory/` directory
+> structure and the `session-memory` MCP configured in OpenCode. It will not work portably
+> on machines without this setup. See `session-memory-mcp` skill for the portable patterns.
+
 
 Use this meta-skill to run a safe, repeatable memory workflow: collect high-signal session memory, promote durable artifacts, and leave a restart-ready handoff.
 

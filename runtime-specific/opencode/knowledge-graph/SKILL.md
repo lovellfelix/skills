@@ -1,16 +1,16 @@
 ---
 name: knowledge-graph
 description: Build and maintain a lightweight knowledge graph in the work knowledgebase.
-version: 0.1.0
+version: 0.1.1
 portable: false
 tags: [knowledge-graph, notes, memory, opencode]
 ---
 
 What I do
 
-* Link work notes into a navigable graph using `add_relation`
-* Add structured learnings as `add_observation` entries
-* Use `build_context` and `get_backlinks` to traverse and validate the graph
+* Link work notes into a navigable graph using `session-memory_link_nodes`
+* Add structured learnings as node observations via `session-memory_upsert_node`
+* Use `session-memory_query_nodes` to traverse and surface related context
 * Keep the graph sparse and high-signal (avoid link spam)
 
 When to use me
@@ -21,8 +21,12 @@ When to use me
 
 Rules
 
-* Work only: store graph links in the knowledgebase (not Apple Notes)
+* Work only: store graph links in session-memory (not Apple Notes)
 * Prefer canonical relation types used consistently:
   - `related_to`, `depends_on`, `implements`, `runbook_for`, `explains`, `decision_for`, `risk_for`, `example_of`
 * Add 1-3 relations and 1-3 observations per session maximum
-* Use idempotency keys for write tools when available to avoid duplicates
+* Use `external_id` as the node identifier field (not `item_id`)
+
+> **Note:** The knowledgebase MCP was removed in March 2026. All graph operations
+> now go through the `session-memory` MCP. For full graph tracking workflows, see
+> the `graph-tracker` skill.

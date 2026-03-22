@@ -19,7 +19,7 @@ applies_to: [all]
 
 ## Recommended Flow
 
-```javascript
+```text
 glob("**/*.{ts,py,md}")
 grep("class UserService")
 read("src/user-service.ts", { offset: 42, limit: 40 })
@@ -34,7 +34,7 @@ read("src/user-service.ts", { offset: 42, limit: 40 })
 
 ## MCP Caching
 
-```javascript
+```text
 session-memory_learn_project_convention({
   project_id: "dotfiles",
   language: "shell",

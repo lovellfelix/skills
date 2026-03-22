@@ -1,12 +1,18 @@
 ---
 name: graph
 description: Work item graph - track issues, PRs, JIRA tickets and their relationships across sessions. Use when the user says "graph", "track this", "what was I working on", or asks about work item status.
-version: 0.1.0
+version: 0.1.1
 portable: false
 tags: [graph, tracking, github, jira, opencode]
 ---
 
 # Work Item Graph
+
+> **Deprecated:** This skill is superseded by `graph-tracker`, which covers the
+> same engineering use-cases plus personal domains (people, reminders, events)
+> and has more complete workflow guidance. Load `graph-tracker` instead.
+>
+> This file is kept for reference only and will be removed in a future cleanup.
 
 Track and query engineering work items (GitHub issues, PRs, JIRA tickets) and their relationships using session-memory graph tools.
 
@@ -26,10 +32,10 @@ Do you want to:
 
 Use session-memory MCP:
 ```
-upsert_node({
+session-memory_upsert_node({
   domain: "engineering",
   item_type: "github_issue" | "github_pr" | "jira_ticket",
-  item_id: "<repo#number>" | "<PROJ-123>",
+  external_id: "<repo#number>" | "<PROJ-123>",
   title: "<title>",
   status: "open" | "in_progress" | "in_review" | "merged" | "closed",
   metadata: { "url": "...", "repo": "..." }
@@ -39,7 +45,7 @@ upsert_node({
 ### View dashboard
 
 ```
-work_status_dashboard({})
+session-memory_work_status_dashboard({})
 ```
 
 Present results as:
@@ -51,13 +57,13 @@ Present results as:
 ### Link items
 
 ```
-link_nodes({
+session-memory_link_nodes({
   from_domain: "engineering",
   from_item_type: "github_issue",
-  from_item_id: "<repo#123>",
+  from_external_id: "<repo#123>",
   to_domain: "engineering",
   to_item_type: "github_pr",
-  to_item_id: "<repo#456>",
+  to_external_id: "<repo#456>",
   relationship: "has_pr"
 })
 ```
@@ -66,17 +72,17 @@ Relationship types: `has_pr`, `implements`, `blocks`, `related_to`, `parent_of`
 
 ### Resume context ("what was I working on")
 
-1. `work_status_dashboard({})` - get all tracked items
-2. `retrieve_session_context({ session_id: "<git-basename>", limit: 10 })` - recent session state
+1. `session-memory_work_status_dashboard({})` - get all tracked items
+2. `session-memory_retrieve_session_context({ session_id: "<git-basename>", limit: 10 })` - recent session state
 3. Present a prioritized list of active items with their current status
 
 ### Update status
 
 ```
-update_node_status({
+session-memory_update_node_status({
   domain: "engineering",
   item_type: "github_pr",
-  item_id: "<repo#456>",
+  external_id: "<repo#456>",
   status: "merged"
 })
 ```
@@ -86,3 +92,4 @@ update_node_status({
 - Silently upsert items discovered during other workflows (morning briefing, standup).
 - Use `domain: "engineering"` for all work items.
 - Item IDs follow format: `repo#number` for GitHub, `PROJ-123` for JIRA.
+- Use `external_id` (not `item_id`) as the node identifier field.

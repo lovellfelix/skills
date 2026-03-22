@@ -145,6 +145,13 @@ Runtime tool names vary, but the pattern is consistent:
 
 Adapt names to your MCP runtime while preserving this structure.
 
+**In OpenCode**, all tools are prefixed with `session-memory_`:
+- `session-memory_store_session_context`
+- `session-memory_retrieve_session_context`
+- `session-memory_learn_project_convention`
+- `session-memory_sync_todos_to_tasks`
+- `session-memory_query_memory`
+
 ## Examples and reference
 
 - `examples/memory-record-patterns.md`

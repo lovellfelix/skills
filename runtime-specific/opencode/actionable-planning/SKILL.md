@@ -1,6 +1,6 @@
 ---
 name: actionable-planning
-description: "Create CLEAR actionable plans using LinkedIn's best planning practices"
+description: Create actionable plans using the CLEAR framework (Concrete, Linked, Estimated, Assigned, Resulted). Use when planning features, projects, or multi-step tasks requiring clear ownership and success criteria.
 version: 0.1.0
 portable: false
 tags: [planning, execution, productivity, workflow, opencode]

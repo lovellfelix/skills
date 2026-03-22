@@ -473,3 +473,8 @@ Trigger this skill when user requests:
 - "push to remote" (with uncommitted changes)
 
 **Important**: If user says "just push" or "直接 push" with uncommitted changes, STILL follow all steps above first.
+
+## See Also
+
+- **Just the changelog?** Use the `release-notes` skill to draft or refine changelog entries
+  without running the full release workflow.

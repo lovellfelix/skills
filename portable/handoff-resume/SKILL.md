@@ -2,11 +2,16 @@
 name: handoff-resume
 description: Resume interrupted work and produce clean handoffs with clear blockers and next steps.
 version: 0.1.0
-portable: true
-tags: [workflow, continuity, handoff, resume, portable]
+portable: false
+tags: [workflow, continuity, handoff, resume]
 ---
 
 # Handoff Resume
+
+> **Prerequisites (runtime-specific):** This skill requires the `~/.agents/memory/` directory
+> structure and the `session-memory` MCP configured in OpenCode. It will not work portably
+> on machines without this setup. See `session-memory-mcp` skill for the portable patterns.
+
 
 Resume work quickly from prior session state, then leave behind a crisp handoff for the next session or teammate.
 
