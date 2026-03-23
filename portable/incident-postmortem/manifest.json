@@ -1,13 +1,15 @@
 {
   "schema_version": "1.0",
-  "name": "documentation",
-  "version": "0.1.0",
+  "name": "incident-postmortem",
+  "version": "0.3.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
-    "documentation",
-    "writing",
-    "portable"
+    "incident",
+    "postmortem",
+    "reliability",
+    "root-cause-analysis",
+    "operations"
   ],
   "adapters": {
     "opencode": {

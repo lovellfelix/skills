@@ -1,16 +1,15 @@
 {
   "schema_version": "1.0",
   "name": "communication-style",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
     "communication",
-    "writing",
-    "clarity",
-    "tone",
-    "style",
-    "docs"
+    "engineering-writing",
+    "pr-review",
+    "slack",
+    "clarity"
   ],
   "adapters": {
     "opencode": {

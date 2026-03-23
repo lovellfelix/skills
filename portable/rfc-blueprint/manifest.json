@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "name": "incident-review",
-  "version": "0.1.0",
+  "name": "rfc-blueprint",
+  "version": "0.3.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
-    "incident",
-    "postmortem",
-    "root-cause-analysis",
-    "follow-up",
-    "retrospective"
+    "rfc",
+    "architecture",
+    "design",
+    "tradeoffs",
+    "rollout"
   ],
   "adapters": {
     "opencode": {
