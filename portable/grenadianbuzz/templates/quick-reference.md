@@ -8,7 +8,7 @@ When designing a new API for GrenadianBuzz, use this checklist to ensure complet
 
 ### Core Endpoint
 
-- [ ] **GET** - Retrieve (with filters, pagination via cursor)
+- [ ] **GET** - Retrieve (with filters, pagination via $skip/$limit)
 - [ ] **POST** - Create (with validation, return 201 + resource)
 - [ ] **PATCH** - Update partial (not PUT)
 - [ ] **DELETE** - Remove (return 204 No Content)
@@ -18,14 +18,14 @@ When designing a new API for GrenadianBuzz, use this checklist to ensure complet
 - [ ] Category filter (`?category=news`)
 - [ ] Date range (`?from=2026-01-01&to=2026-02-28`)
 - [ ] Status filter (`?status=published`)
-- [ ] Cursor pagination (`?cursor=...&limit=20`)
-- [ ] Sort options (`?sort=published_at|trending|top_users`)
+- [ ] Offset pagination (`?$skip=0&$limit=50`)
+- [ ] Sort options (`?$sort[published_at]=-1`)
 
 ### Engagement (if applicable)
 
-- [ ] Reactions endpoint (`POST /interactions`, emoji)
-- [ ] Reaction counts endpoint (`GET /interactions/counts/:id`)
-- [ ] Comments endpoint (`POST /comments`, GET `/comments?parent_id=...`)
+- [ ] Reactions endpoint (`POST /v1/interactions`, types: flower, candle, heart, prayer, rose)
+- [ ] Get interactions (`GET /v1/interactions?contentId=...&contentType=article`)
+- [ ] Comments endpoint (`POST /v1/comments`, GET `/v1/comments?parent_id=...`)
 
 ### Moderation
 
@@ -86,21 +86,18 @@ Response (200):
 ### List Endpoint (GET with Pagination)
 
 ```
-GET /v2/<resource>?category=...&status=...&limit=20&cursor=...&sort=...
+GET /v2/<resource>?category=...&status=...&$limit=50&$skip=0&$sort[published_at]=-1
 Authorization: <if required>
 
 Response (200):
 {
+  "total": 1250,
+  "limit": 50,
+  "skip": 0,
   "data": [
     { "id": "...", "title": "...", ... },
     ...
-  ],
-  "metadata": {
-    "limit": 20,
-    "total": 1250,
-    "has_more": true,
-    "next_cursor": "eyJ..."
-  }
+  ]
 }
 ```
 
@@ -170,46 +167,57 @@ Response (204): No Content
 
 For articles, events, or posts supporting reactions:
 
-### Add Reaction (Idempotent)
+### Add Reaction (Like or Reaction Type)
 
 ```
 POST /v1/interactions
 Authorization: Bearer <token>
 
 {
-  "content_id": "<uuid>",
-  "content_type": "article|event|obituary",
-  "reaction": "👍|❤️|🕯️|💖|🌹|🙏"
+  "contentId": "<uuid>",
+  "contentType": "article|event|obituary|comment",
+  "interactionType": "like|reaction",
+  "reactionType": "flower|candle|heart|prayer|rose"  // Only if interactionType=reaction
 }
 
-Response (200 or 201):
+Response (201):
 {
-  "data": {
-    "id": "<interaction-id>",
-    "reaction": "👍",
-    "created_at": "..."
-  }
+  "_id": "<interaction-id>",
+  "contentId": "<uuid>",
+  "contentType": "article",
+  "interactionType": "reaction",
+  "reactionType": "heart",
+  "userId": "<user-id>",
+  "userName": "diaspora_user",
+  "userAvatar": "...",
+  "createdAt": "2026-02-07T10:00:00Z"
 }
 ```
 
-### Get Counts (Lightweight Read)
+### Get Interactions List
 
 ```
-GET /v1/interactions/counts/<content-id>
+GET /v1/interactions?contentId=<id>&contentType=article&limit=50
 
-Response:
+Response (200):
 {
-  "data": {
-    "content_id": "<id>",
-    "reaction_counts": {
-      "👍": 45,
-      "❤️": 12,
-      "🕯️": 8,
-      ...
+  "total": 71,
+  "limit": 50,
+  "skip": 0,
+  "data": [
+    {
+      "_id": "<interaction-id>",
+      "contentId": "<id>",
+      "contentType": "article",
+      "interactionType": "reaction",
+      "reactionType": "heart",
+      "userId": "<user-id>",
+      "userName": "diaspora_user",
+      "userAvatar": "...",
+      "createdAt": "2026-02-07T10:00:00Z"
     },
-    "total_interactions": 71,
-    "user_reaction": "👍" (if authenticated)
-  }
+    ...
+  ]
 }
 ```
 
@@ -406,7 +414,7 @@ Before deploying a new endpoint:
 
 ```javascript
 // Get articles with filter
-const articles = await fetch('/v2/articles?category=news&limit=20')
+const articles = await fetch('/v2/articles?category=news&$limit=50')
   .then(r => r.json())
   .then(res => res.data);
 
@@ -418,14 +426,15 @@ await fetch('/v1/interactions', {
     'Authorization': `Bearer ${token}`
   },
   body: JSON.stringify({
-    content_id: articleId,
-    content_type: 'article',
-    reaction: '👍'
+    contentId: articleId,
+    contentType: 'article',
+    interactionType: 'reaction',
+    reactionType: 'heart'
   })
 });
 
-// Get reaction counts
-const counts = await fetch(`/v1/interactions/counts/${articleId}`)
+// Get interactions list
+const interactions = await fetch(`/v1/interactions?contentId=${articleId}&contentType=article`)
   .then(r => r.json())
   .then(res => res.data);
 ```
@@ -436,42 +445,44 @@ const counts = await fetch(`/v1/interactions/counts/${articleId}`)
 import requests
 
 # Get articles
-resp = requests.get('/v2/articles', params={'category': 'news', 'limit': 20})
+resp = requests.get('/v2/articles', params={'category': 'news', '$limit': 50})
 articles = resp.json()['data']
 
 # Post reaction
 resp = requests.post('/v1/interactions',
   headers={'Authorization': f'Bearer {token}'},
   json={
-    'content_id': article_id,
-    'content_type': 'article',
-    'reaction': '👍'
+    'contentId': article_id,
+    'contentType': 'article',
+    'interactionType': 'reaction',
+    'reactionType': 'heart'
   }
 )
 
-# Get reaction counts
-resp = requests.get(f'/v1/interactions/counts/{article_id}')
-counts = resp.json()['data']['reaction_counts']
+# Get interactions list
+resp = requests.get(f'/v1/interactions?contentId={article_id}&contentType=article')
+interactions = resp.json()['data']
 ```
 
 ### cURL
 
 ```bash
 # Get articles
-curl 'https://api.grenadianbuzz.com/v2/articles?category=news&limit=20'
+curl 'https://api.grenadianbuzz.com/v2/articles?category=news&$limit=50'
 
 # Post reaction (requires auth)
 curl -X POST 'https://api.grenadianbuzz.com/v1/interactions' \
   -H 'Authorization: Bearer <token>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "content_id": "<article-id>",
-    "content_type": "article",
-    "reaction": "👍"
+    "contentId": "<article-id>",
+    "contentType": "article",
+    "interactionType": "reaction",
+    "reactionType": "heart"
   }'
 
-# Get reaction counts
-curl 'https://api.grenadianbuzz.com/v1/interactions/counts/<article-id>'
+# Get interactions list
+curl 'https://api.grenadianbuzz.com/v1/interactions?contentId=<article-id>&contentType=article'
 ```
 
 ---

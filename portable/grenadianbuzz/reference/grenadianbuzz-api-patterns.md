@@ -154,59 +154,75 @@ X-RateLimit-Reset: 1707304800
 
 ---
 
-## Pagination & Cursors
+## Pagination & Offset/Limit
 
-### Cursor Strategy
+### FeathersJS Pagination Strategy
 
-GrenadianBuzz uses **opaque cursor pagination** for feed stability (not offset/limit):
+GrenadianBuzz uses **offset-based pagination** via FeathersJS `$skip` and `$limit` query parameters:
 
 ```
 Request:
-GET /v2/articles?limit=20&cursor=eyJwb3NpdGlvbiI6IDEwMDB9
+GET /v3/articles?$limit=25&$skip=50&$sort[published_at]=-1
 
 Response:
 {
-  "data": [...],
-  "metadata": {
-    "limit": 20,
-    "has_more": true,
-    "next_cursor": "eyJwb3NpdGlvbiI6IDEwMjB9"
-  }
+  "total": 1250,
+  "limit": 25,
+  "skip": 50,
+  "data": [...]
 }
 ```
 
-### Why Cursors?
+### Query Parameters
 
-| Approach | Pros | Cons | GrenadianBuzz Use |
-|----------|------|------|-------------------|
-| **Offset/Limit** | Simple to implement | Unstable with new inserts (duplicate/skip items) | Legacy only |
-| **Cursor** | Stable ordering, handles mutations | Clients can't jump to page 5 | Feed APIs (v2/v3 articles) |
-| **Keyset Pagination** | Scalable, efficient | Complex implementation | Future optimization |
+| Parameter | Type | Default | Max | Description |
+|-----------|------|---------|-----|-------------|
+| `$limit` | integer | 50 | 100 | Maximum records to return |
+| `$skip` | integer | 0 | - | Records to skip (offset) |
+| `$sort` | object | - | - | Sort order: `{field: 1}` (asc) or `-1` (desc) |
 
-### Implementation Detail
+### Alternative: Page-Based Syntax
 
-Cursor encodes `{ published_at, id }` pair:
+GrenadianBuzz also supports page-based pagination, which converts to `$skip`/`$limit`:
 
-```javascript
-// Encoding
-const cursor = Buffer.from(JSON.stringify({
-  published_at: "2026-02-07T10:00:00Z",
-  id: "550e8400-..."
-})).toString('base64');
-
-// Decoding
-const decoded = JSON.parse(Buffer.from(cursor, 'base64').toString());
 ```
+GET /v3/articles?page=3&limit=25
+# Converts to: $skip=50&$limit=25
+```
+
+### Sorting
+
+Multiple sort options available:
+
+```
+GET /v3/articles?sort=-published_at,title
+```
+
+**Sort Format:**
+- `field` — Ascending order
+- `-field` — Descending order  
+- `field1,-field2` — Multiple fields (comma-separated)
 
 ---
 
 ## Engagement Endpoints
 
-### Reaction System
+### Interaction System
 
-Emoji reactions available: 👍 ❤️ 🕯️ 💖 🌹 🙏
+GrenadianBuzz supports two interaction types:
+- **Likes**: Simple positive interactions (interactionType: "like")
+- **Reactions**: Expressive interactions with specific types (interactionType: "reaction" + reactionType)
 
-#### Add Reaction (Idempotent Toggle)
+#### Supported Reaction Types
+
+String-based reaction types (not emoji in the API):
+- `flower` — Flower reaction
+- `candle` — Candle/remembrance reaction
+- `heart` — Heart/love reaction
+- `prayer` — Prayer/respect reaction
+- `rose` — Rose tribute
+
+#### Create Interaction (Like or Reaction)
 
 ```
 POST /v1/interactions
@@ -214,63 +230,76 @@ Content-Type: application/json
 Authorization: Bearer <jwt>
 
 {
-  "content_id": "550e8400-e29b-41d4-a716-446655440000",
-  "content_type": "article",
-  "reaction": "👍"
+  "contentId": "550e8400-e29b-41d4-a716-446655440000",
+  "contentType": "article",
+  "interactionType": "reaction",
+  "reactionType": "heart"
 }
 
-Response (201 Created or 200 OK if toggling):
+Response (201 Created):
 {
-  "id": "interaction-123",
-  "user_id": "user-456",
-  "reaction": "👍",
-  "created_at": "2026-02-07T10:00:00Z"
+  "_id": "interaction-123",
+  "contentId": "550e8400-e29b-41d4-a716-446655440000",
+  "contentType": "article",
+  "interactionType": "reaction",
+  "reactionType": "heart",
+  "userId": "user-456",
+  "userName": "diaspora_user",
+  "userAvatar": "https://...",
+  "createdAt": "2026-02-07T10:00:00Z"
 }
 ```
 
-#### Get Reaction Counts (Lightweight)
+**Request Fields:**
+- `contentId` (required): ID of content being interacted with
+- `contentType` (required): Type of content ("article", "obituary", "comment")
+- `interactionType` (required): "like" or "reaction"
+- `reactionType` (optional): Required if interactionType is "reaction"
+
+#### Get Interaction List
 
 ```
-GET /v1/interactions/counts/550e8400-e29b-41d4-a716-446655440000
+GET /v1/interactions?contentId=...&contentType=article&limit=50
 
 Response (200):
 {
-  "content_id": "550e8400-e29b-41d4-a716-446655440000",
-  "reaction_counts": {
-    "👍": 45,
-    "❤️": 12,
-    "🕯️": 8,
-    "💖": 3,
-    "🌹": 1,
-    "🙏": 2
-  },
-  "total_interactions": 71,
-  "user_reaction": "👍"  // If authenticated
+  "total": 71,
+  "limit": 50,
+  "skip": 0,
+  "data": [
+    {
+      "_id": "interaction-123",
+      "contentId": "...",
+      "contentType": "article",
+      "interactionType": "reaction",
+      "reactionType": "heart",
+      "userId": "user-456",
+      "userName": "diaspora_user",
+      "userAvatar": "...",
+      "createdAt": "2026-02-07T10:00:00Z"
+    },
+    ...
+  ]
 }
 ```
 
-#### List All Reactions on Content
+**Query Parameters:**
+- `contentId`: Filter by specific content
+- `contentType`: Filter by content type (article, obituary, comment)
+- `interactionType`: Filter by interaction type (like, reaction)
+- `userId`: Filter by user
+- `$limit`, `$skip`, `$sort`: Standard pagination
+
+#### Delete Interaction
 
 ```
-GET /v1/interactions?content_id=...&content_type=article&limit=50
+DELETE /v1/interactions/interaction-123
+Authorization: Bearer <jwt>
 
-Response:
+Response (200):
 {
-  "data": [
-    {
-      "id": "...",
-      "user_id": "...",
-      "user": {
-        "id": "...",
-        "username": "diaspora_user",
-        "avatar_url": "..."
-      },
-      "reaction": "👍",
-      "created_at": "2026-02-07T10:00:00Z"
-    },
-    ...
-  ],
-  "metadata": { "has_more": true, "next_cursor": "..." }
+  "_id": "interaction-123",
+  "deleted": true
 }
 ```
 
@@ -695,14 +724,15 @@ curl -X POST https://api.grenadianbuzz.com/v2/articles \
 curl https://api.grenadianbuzz.com/v2/articles/article-550e8400 \
   -H "Authorization: Bearer user-token"
 
-# 2. User reacts with ❤️ (like)
+# 2. User reacts with heart (compassion)
 curl -X POST https://api.grenadianbuzz.com/v1/interactions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer user-token" \
   -d '{
-    "content_id": "article-550e8400",
-    "content_type": "article",
-    "reaction": "❤️"
+    "contentId": "article-550e8400",
+    "contentType": "article",
+    "interactionType": "reaction",
+    "reactionType": "heart"
   }'
 
 # 3. User leaves comment
@@ -715,8 +745,8 @@ curl -X POST https://api.grenadianbuzz.com/v1/comments \
     "text": "Wonderful coverage of our independence! Thank you for keeping us connected."
   }'
 
-# 4. Get comment thread with counts
-curl "https://api.grenadianbuzz.com/v1/comments?parent_id=article-550e8400&limit=10" \
+# 4. Get comment thread
+curl "https://api.grenadianbuzz.com/v1/comments?parent_id=article-550e8400&$limit=10" \
   -H "Authorization: Bearer user-token"
 ```
 

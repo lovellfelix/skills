@@ -1,7 +1,7 @@
 ---
 name: grenadianbuzz
 description: Unified product and engineering skill for GrenadianBuzz across all surfaces (API, Android app, CLI, website, dashboard, CDN).
-version: 0.2.0
+version: 0.3.0
 portable: true
 tags: [grenadianbuzz, product, mobile, api, backend, frontend, architecture]
 ---
@@ -58,7 +58,7 @@ tags: [grenadianbuzz, product, mobile, api, backend, frontend, architecture]
 ### API-First Design
 - REST contracts first, implementation details second.
 - Mobile clients drive payload shapes (minimize network traffic).
-- Cursor-based pagination for feed stability (not offset/limit).
+- Offset-based pagination via `$skip` and `$limit` parameters (not cursor-based).
 - Versioning: /v1, /v2, /v3 with 90+ day deprecation windows.
 
 ### Mobile-Aware Payloads
@@ -97,7 +97,7 @@ tags: [grenadianbuzz, product, mobile, api, backend, frontend, architecture]
 - User-generated content: comments, reactions, saved items, subscriptions
 
 ### Engagement & Analytics
-- Interaction types: likes (👍), love (❤️), seasonal reactions (🕯️ 💖 🌹 🙏)
+- Interaction types: likes ("like" type) and reactions ("reaction" type with: flower, candle, heart, prayer, rose)
 - Comment threads on articles, obituaries, and events
 - Engagement metrics: view counts, comment counts, shares
 - Near-real-time trending and top-users aggregation

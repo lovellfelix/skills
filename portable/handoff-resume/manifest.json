@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "name": "handoff-resume",
   "version": "0.1.0",
-  "portable": true,
+  "portable": false,
   "entrypoint": "SKILL.md",
   "tags": [
     "workflow",

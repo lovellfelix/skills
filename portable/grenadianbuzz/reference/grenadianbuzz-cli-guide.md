@@ -1,762 +1,739 @@
 # GrenadianBuzz CLI Reference Guide
 
-**Deep reference for command-line interface design and workflows for GrenadianBuzz tools**
+**Production-grounded reference for the GBuzz CLI**
 
-Based on actual CLI surface: `~/projects/grenadianbuzz/cli`
+Based on source code: `/Users/lovellfelix/projects/grenadianbuzz/cli`
 
 ---
 
 ## Table of Contents
 
-1. [Architecture Overview](#architecture-overview)
-2. [Command Structure](#command-structure)
-3. [Common Patterns](#common-patterns)
-4. [Content Management Commands](#content-management-commands)
-5. [User & Moderation Commands](#user--moderation-commands)
-6. [Analytics & Reporting](#analytics--reporting)
-7. [Configuration & Authentication](#configuration--authentication)
-8. [Error Handling & Debugging](#error-handling--debugging)
-9. [Examples & Workflows](#examples--workflows)
+1. [Overview](#overview)
+2. [Global Architecture](#global-architecture)
+3. [Global Options](#global-options)
+4. [Configuration](#configuration)
+5. [Core Commands](#core-commands)
+   - [crawl](#crawl)
+   - [notify](#notify)
+   - [archive](#archive)
+   - [discover](#discover)
+   - [fix-streams](#fix-streams)
+   - [task-runner](#task-runner)
+6. [Common Workflows](#common-workflows)
+7. [Logging & Debugging](#logging--debugging)
+8. [Error Handling](#error-handling)
 
 ---
 
-## Architecture Overview
+## Overview
 
-The GrenadianBuzz CLI is built for:
-- **Admin operations**: Bulk content review, moderation, user management
-- **Editorial workflows**: Publishing, scheduling, content curation
-- **Data operations**: Analytics export, content sync, backup/restore
-- **Troubleshooting**: Log inspection, health checks, debugging
+The GBuzz CLI is a production tool for:
+- **Content crawling**: RSS feeds, WordPress sites, HTML obituary sources, radio stations
+- **Notifications**: Newsletters, feedback requests, seasonal greetings
+- **Station management**: Discovery, validation, and automatic stream repair
+- **Data archiving**: Expired analytics retention and cleanup
+- **Task scheduling**: Continuous or one-time task execution with monitoring
 
-### Design Principles
+**Binary name**: `gbuzz` (not `gb`)
 
-1. **Composable**: Small commands that chain together
-2. **Scriptable**: JSON output, exit codes, idempotent operations
-3. **Safe by default**: Destructive ops require explicit confirmation
-4. **Documented inline**: `--help`, examples, exit codes
-5. **Audit-aware**: All operations logged with timestamp, user, changes
+**Entry point**: `/Users/lovellfelix/projects/grenadianbuzz/cli/gbuzz/cli.py`
 
 ---
 
-## Command Structure
-
-### Naming Convention
+## Global Architecture
 
 ```
-gb <resource> <action> [options]
+┌─────────────────────────────────────────────────────────────┐
+│                      gbuzz CLI                              │
+│  (Global options: --log-level, -v, --timestamp, --config)  │
+└─────────────────────────────────────────────────────────────┘
+           │
+           ├─── crawl
+           │    ├─ rss
+           │    ├─ wordpress
+           │    ├─ station
+           │    ├─ station-discover
+           │    └─ obituary-html
+           │
+           ├─── notify
+           │    ├─ newsletter
+           │    ├─ feedback
+           │    ├─ newyear
+           │    └─ christmas
+           │
+           ├─── archive
+           │    └─ run
+           │
+           ├─── discover
+           │    ├─ feeds
+           │    └─ stations
+           │
+           ├─── fix-streams
+           │
+           └─── task-runner
+```
+
+---
+
+## Global Options
+
+Applied to all commands:
+
+```bash
+--log-level LEVEL              # Logging level: DEBUG, INFO, WARNING, ERROR
+                               # (overrides -v flags)
+
+-v, -vv, -vvv                  # Verbose mode:
+                               # -v = INFO (general info)
+                               # -vv = VERBOSE (detailed operations, level 15)
+                               # -vvv = DEBUG (full debugging)
+
+--timestamp / --no-timestamp   # Enable/disable timestamp in logs
+                               # (default: enabled)
+
+--json-format                  # Output logs in JSON format
+                               # Ideal for Kubernetes/container environments
+                               # Includes pod/namespace metadata auto-detection
+
+--config PATH                  # Path to YAML config file
+                               # (default: ~/.config/gbuzz/config.yaml)
+```
+
+### Option Precedence
+
+`--log-level` > `-v/-vv/-vvv` flags
+
+```bash
+# --log-level takes precedence
+gbuzz --log-level DEBUG -v crawl rss  # Uses DEBUG, not INFO
+```
+
+---
+
+## Configuration
+
+### Environment Variables (Recommended)
+
+```bash
+export API_URL="https://api.example.com"
+export API_CLIENT_KEY="your-secret-key"
+```
+
+### Configuration File: ~/.config/gbuzz/config.yaml
+
+```yaml
+# Required
+API_URL: "https://api.example.com"
+API_CLIENT_KEY: "your-secret-key"
+
+# Optional HTTP configuration
+HTTP_TIMEOUT: 30              # Read timeout in seconds
+CONNECT_TIMEOUT: 10           # Connection timeout in seconds
+HTTP_POOL_CONNECTIONS: 10     # Number of connection pools
+HTTP_POOL_MAXSIZE: 20         # Max connections per pool
+HTTP_KEEP_ALIVE: true         # Enable keep-alive on session
+
+# Optional: Station discovery and fixing
+STATION_DISCOVERY_ENABLED: true
+STATION_DISCOVERY_COUNTRIES: "Grenada,Jamaica,Trinidad"
+STATION_DISCOVERY_GENRES: "news,calypso,reggae"
+STATION_DISCOVERY_LIMIT: 100
+STATION_DISCOVERY_AUTO_VALIDATE: true
+STATION_AUTO_FIX_ENABLED: true
+STATION_AUTO_FIX_LIMIT: 50
+STATION_AUTO_FIX_VERIFY: true
+```
+
+### Config Precedence
+
+Environment variables > config file
+
+If both are set, environment variables override the config file.
+
+---
+
+## Core Commands
+
+### crawl
+
+Crawl content from various sources with TTL (time-to-live) management.
+
+**Purpose**: Periodically fetch fresh content; skip runs if TTL hasn't expired (unless `--now`)
+
+**Generic crawlers** (registered from task registry):
+- `rss` - RSS feed sources
+- `wordpress` - WordPress REST API sources
+- `station` - Validate existing radio stations
+- `station-discover` - Discover new radio stations
+- `obituary-html` - HTML obituary listings
+
+**Usage**:
+```bash
+gbuzz crawl <crawler-name> [OPTIONS]
+```
+
+**Options**:
+```
+--ttl SECONDS              # Time-to-live between crawls (default: 21600 = 6 hours)
+--now                      # Force crawl and skip TTL/hash checks
 ```
 
 **Examples**:
 ```bash
-gb articles publish --title "..." --schedule-at "2026-03-21T10:00:00Z"
-gb moderation queue --status=flagged --limit=20
-gb users create --email "..." --role=admin
-gb analytics export --start-date=2026-01-01 --format=json
+# Crawl RSS feeds (use cache if TTL not expired)
+gbuzz crawl rss
+
+# Force crawl RSS regardless of TTL
+gbuzz crawl rss --now
+
+# Crawl with custom TTL (1 hour)
+gbuzz crawl wordpress --ttl 3600
+
+# Verbose crawling
+gbuzz -vv crawl station --now
+
+# JSON-format logs for containers
+gbuzz --json-format crawl rss --now
 ```
 
-### Option Patterns
+### notify
 
-| Pattern | Purpose | Example |
-|---------|---------|---------|
-| `--flag` | Boolean toggle | `--dry-run`, `--force` |
-| `--key=value` | Single value | `--limit=10`, `--format=json` |
-| `--key value` | Alternative syntax | `--filter-by flagged` |
-| `-f, --file` | Short + long form | `-f article.json` or `--file article.json` |
-| `--key="value with spaces"` | Quoted values | `--title="Top 10 Carnival Moments"` |
+Send notifications to users based on schedules.
 
-### Exit Codes
+**Purpose**: Email notifications (newsletters, feedback requests, seasonal greetings)
 
-```
-0 - Success
-1 - Generic error
-2 - Usage/validation error
-3 - Authentication required
-4 - Permission denied
-5 - Resource not found
-10 - Dry-run: would fail
-```
+**Available notifications**:
 
-### Standard Options (All Commands)
-
+#### newsletter
+Send newsletters to inactive users
 ```bash
---format=json|table|csv|yaml    # Output format (default: table)
---output=file.json              # Write to file instead of stdout
---verbose                        # Show API calls, headers, timings
---dry-run                        # Preview changes without applying
---config=/path/to/config.json   # Use alternate config
+gbuzz notify newsletter [OPTIONS]
+
+# Default schedule: Saturdays 9-11 AM (user's local timezone)
 ```
+
+#### feedback
+Request user feedback
+```bash
+gbuzz notify feedback [OPTIONS]
+
+# Default schedule: Multiple times daily (user's local timezone)
+```
+
+#### newyear
+New Year's greeting
+```bash
+gbuzz notify newyear [OPTIONS]
+
+# Default schedule: New Year's Day 9 AM (user's local timezone)
+```
+
+#### christmas
+Christmas greeting
+```bash
+gbuzz notify christmas [OPTIONS]
+
+# Default schedule: Christmas Day 9 AM (user's local timezone)
+```
+
+**Options** (all notify commands):
+```
+--cron SCHEDULE            # Cron expression (e.g., "0 9 * * 1" = Monday 9 AM)
+                           # Interpreted in user's local timezone
+--grace-minutes MINS       # Grace period in minutes (default: varies by command)
+--force                    # Force delivery, bypassing normal checks
+--users-limit N            # Limit number of users to notify
+```
+
+**Examples**:
+```bash
+# Send newsletter now (bypassing normal conditions)
+gbuzz notify newsletter --force
+
+# Send feedback request with custom schedule (daily at 8 AM)
+gbuzz notify feedback --cron "0 8 * * *"
+
+# Limit to 100 users
+gbuzz notify newsletter --users-limit 100 --force
+
+# Christmas greeting (dry-run first to verify)
+gbuzz -v notify christmas --force
+
+# New Year with custom grace period
+gbuzz notify newyear --force --grace-minutes 120
+```
+
+**Timezone Behavior**:
+- Cron expressions are evaluated in each user's local timezone
+- Grace period allows staggering notifications across time zones
+- Use `--grace-minutes` to spread delivery over a range
+
+### archive
+
+Archive expired analytics data with retention policies.
+
+**Purpose**: Clean up old analytics, maintain data retention compliance
+
+**Usage**:
+```bash
+gbuzz archive run [OPTIONS]
+```
+
+**Options**:
+```
+--mode MODE                # latest (default) or all
+                           # latest = archive latest batch only
+                           # all = archive all expired entries
+--retention MONTHS         # Retention period in months (default: 23)
+--dry-run                  # Simulate without modifying
+--force                    # Force archiving even if conditions not met
+```
+
+**Examples**:
+```bash
+# Preview archiving (dry-run)
+gbuzz archive run --dry-run
+
+# Archive latest batch only (default)
+gbuzz archive run
+
+# Archive all expired data with 18-month retention
+gbuzz archive run --mode all --retention 18
+
+# Verify then archive (dry-run first)
+gbuzz archive run --dry-run --mode all
+gbuzz archive run --mode all  # Run if dry-run looks good
+
+# Production: archive with force flag
+gbuzz archive run --mode all --force
+```
+
+### discover
+
+Discover feeds and radio stations from various sources.
+
+**Usage**:
+```bash
+gbuzz discover <subcommand> [OPTIONS]
+```
+
+#### discover feeds
+Discover feed endpoints (RSS, Atom, JSON, WordPress) from a website
+
+**Usage**:
+```bash
+gbuzz discover feeds <URL> [OPTIONS]
+```
+
+**Options**:
+```
+--min-confidence VALUE     # Minimum confidence to include (0.0-1.0)
+--format FORMAT            # json (default) or table
+```
+
+**Examples**:
+```bash
+# Discover feeds from a news site
+gbuzz discover feeds https://example.com --min-confidence 0.7
+
+# All feeds (low confidence threshold)
+gbuzz discover feeds https://example.com --min-confidence 0.0
+```
+
+#### discover stations
+Discover radio stations from Radio Browser API
+
+**Usage**:
+```bash
+gbuzz discover stations [OPTIONS]
+```
+
+**Options**:
+```
+--country COUNTRY          # Filter by country name (e.g., "Grenada", "Jamaica")
+--search NAME              # Search by station name
+--tag TAG                  # Search by tag/genre (e.g., "calypso", "reggae")
+--caribbean                # Get all Caribbean stations
+--limit N                  # Max results (default: 50)
+--validate                 # Validate stream URLs after discovery
+--format FORMAT            # json (default) or table
+```
+
+**Examples**:
+```bash
+# Find Grenada stations
+gbuzz discover stations --country Grenada
+
+# Search by name
+gbuzz discover stations --search "Nation"
+
+# All Caribbean stations
+gbuzz discover stations --caribbean
+
+# Validate and show as table
+gbuzz discover stations --caribbean --validate --format table
+
+# Search by tag with limit
+gbuzz discover stations --tag calypso --limit 20
+
+# Verbose discovery with validation
+gbuzz -v discover stations --country Jamaica --validate
+```
+
+### fix-streams
+
+Validate and repair station stream URLs using fallback methods.
+
+**Purpose**: Detect broken streams and repair using fallback strategies:
+1. Check station homepage for stream links
+2. Search Radio Browser API
+3. Scrape TuneIn for replacement URL
+
+**Usage**:
+```bash
+gbuzz fix-streams [OPTIONS]
+```
+
+**Options**:
+```
+--validate-only            # Only validate; don't fix
+--dry-run                  # Show what would be fixed without applying
+--limit N                  # Max stations to process (default: 100)
+--format FORMAT            # json (default) or table
+```
+
+**Examples**:
+```bash
+# Check stream health (validation only)
+gbuzz fix-streams --validate-only
+
+# Preview repairs without applying
+gbuzz fix-streams --dry-run
+
+# Fix broken streams
+gbuzz fix-streams
+
+# Process only 10 stations
+gbuzz fix-streams --limit 10
+
+# Verbose output with table format
+gbuzz -vv fix-streams --format table
+
+# Dry-run first, then apply
+gbuzz fix-streams --dry-run
+gbuzz fix-streams  # After reviewing output
+```
+
+**Output Format** (JSON):
+```json
+[
+  {
+    "station_id": "uuid",
+    "station_name": "Station Name",
+    "old_url": "https://old-stream.url",
+    "new_url": "https://new-stream.url",
+    "fixed": true,
+    "method": "radio_browser",  // or "homepage", "tunein", "already_valid"
+    "error": null
+  }
+]
+```
+
+### task-runner
+
+Run multiple tasks in continuous or one-time mode.
+
+**Purpose**: Automate repeating work (crawling, notifications, archiving) at scale
+
+**Usage**:
+```bash
+gbuzz task-runner [OPTIONS]
+```
+
+**Options**:
+```
+--tasks NAMES              # Comma-separated task names (e.g., "rss,wordpress,station")
+--all                      # Run all available tasks
+--once                     # Run once and exit (no loop)
+--interval SECS            # Seconds between iterations (default: 300 = 5 min)
+--force                    # Force execution (bypass TTL checks)
+--ttl SECS                 # Task freshness TTL in seconds (default: 10800 = 3 hours)
+--metrics-port PORT        # Prometheus metrics server port
+```
+
+**Examples**:
+```bash
+# Run all tasks continuously (every 5 minutes)
+gbuzz task-runner --all
+
+# Run specific tasks once
+gbuzz task-runner --tasks rss,wordpress --once
+
+# Run all tasks every 10 minutes
+gbuzz task-runner --all --interval 600
+
+# Production: with metrics and JSON logging
+gbuzz --json-format task-runner --all --interval 300 --metrics-port 8080
+
+# Force execution (skip TTL checks) for specific tasks
+gbuzz task-runner --tasks rss,station --once --force
+
+# Verbose execution
+gbuzz -vv task-runner --tasks rss,wordpress --once
+```
+
+**Available tasks** (dynamically registered):
+- All `crawl` commands: `rss`, `wordpress`, `station`, `station-discover`, `obituary-html`
+- All `notify` commands: `newsletter`, `feedback`, `newyear`, `christmas`
+- `archive_task` - Archive analytics
+
+**Metrics** (when `--metrics-port` is set):
+Prometheus metrics available at `http://localhost:<port>/metrics`
+- Task execution duration
+- Task throughput
+- Error counts
 
 ---
 
-## Common Patterns
-
-### Authentication
-
-```bash
-# Login (stores token in ~/.gb/config.json)
-gb auth login --email=admin@grenadianbuzz.com --password=...
-
-# Use API key instead
-gb auth login --api-key=<uuid>
-
-# Check current session
-gb auth whoami
-gb auth token-info
-
-# Logout
-gb auth logout
-```
-
-**Token storage** (encrypted):
-- Location: `~/.gb/config.json`
-- Expiry: 24 hours (auto-refreshes with valid refresh token)
-- Scope: Inherited from server; admin token = all operations
-
-### Filtering & Pagination
-
-```bash
-# Pagination (cursor-based, stable across updates)
-gb articles list --limit=20 --cursor="eyJwb3NpdGlvbiI6IDIwfQ=="
-
-# Filtering (same as API)
-gb articles list --status=published --category=obituaries --date-from=2026-01-01
-
-# Sorting (field:direction)
-gb articles list --sort=published_at:desc,like_count:desc
-
-# Combining filters
-gb articles list --status=published --author-id=<uuid> --limit=50 --format=json
-```
-
-### Bulk Operations
-
-```bash
-# Bulk update from file
-gb articles bulk-update << EOF
-{
-  "updates": [
-    { "id": "<uuid1>", "status": "archived" },
-    { "id": "<uuid2>", "status": "archived" }
-  ]
-}
-EOF
-
-# Bulk export to file
-gb articles export --format=json > articles_backup_2026-03.json
-
-# Bulk import from file
-gb articles import articles_backup_2026-03.json --dry-run
-gb articles import articles_backup_2026-03.json --confirm
-```
-
-### Conditional Operations
-
-```bash
-# Only run if condition is true
-gb articles publish --id=<uuid> --if-status=draft --force
-
-# Retry with exponential backoff (automatic for transient errors)
-gb moderation process-queue --retry-attempts=5 --retry-delay=2
-
-# Timeout override
-gb sync articles --timeout=30s
-
-# Skip errors and continue
-gb articles bulk-update updates.json --skip-errors --continue-on-failure
-```
-
----
-
-## Content Management Commands
-
-### Articles
-
-```bash
-# List articles
-gb articles list --status=draft --limit=20 --format=json
-
-# Get single article
-gb articles get <article-id> --include=comments,reactions
-
-# Create new article
-gb articles create \
-  --title="New Story" \
-  --content="..." \
-  --category=news \
-  --source-id=<uuid> \
-  --status=draft
-
-# Update article
-gb articles update <article-id> \
-  --title="Updated Title" \
-  --content="..." \
-  --status=published
-
-# Publish with scheduling
-gb articles publish <article-id> \
-  --schedule-at="2026-03-21T10:00:00Z" \
-  --notify-users=true
-
-# Archive old articles (dry-run first)
-gb articles archive --published-before=2025-01-01 --dry-run
-gb articles archive --published-before=2025-01-01 --confirm
-
-# Bulk delete
-gb articles delete <id1>,<id2>,<id3> --force
-```
-
-### Obituaries
-
-```bash
-# List with search
-gb obituaries list --search="name of deceased" --limit=10
-
-# Create obituary
-gb obituaries create \
-  --name="John Doe" \
-  --date-of-death="2026-03-15" \
-  --biography="..." \
-  --photo-url="..."
-
-# Update obituary
-gb obituaries update <obituary-id> --bio-update "Additional details..."
-
-# Flag for review (manual curation)
-gb obituaries flag <obituary-id> --reason="Needs verification"
-
-# Approve flagged obituary
-gb obituaries approve <obituary-id>
-
-# List flagged
-gb obituaries list --status=flagged --limit=20
-```
-
-### Events
-
-```bash
-# List upcoming events
-gb events list --after-date=2026-03-20 --category=carnival,religious --sort=start_date:asc
-
-# Create event
-gb events create \
-  --title="Grenada Independence Day" \
-  --start-date="2026-02-07T09:00:00Z" \
-  --end-date="2026-02-07T18:00:00Z" \
-  --location="St. George's" \
-  --category=national_holiday \
-  --description="..."
-
-# Update event
-gb events update <event-id> --location="Updated venue"
-
-# Mark event as featured
-gb events feature <event-id> --until="2026-03-31T23:59:59Z"
-
-# Duplicate event (for recurring events)
-gb events duplicate <event-id> --repeat=weekly --until="2026-06-01"
-```
-
-### Radio Stations
-
-```bash
-# List stations
-gb radio list --country=grenada --language=english
-
-# Add station
-gb radio add \
-  --name="Station Name" \
-  --stream-url="https://..." \
-  --genre=news \
-  --language=english
-
-# Update station metadata
-gb radio update <station-id> --timezone="America/Grenada"
-
-# Check stream health
-gb radio health-check <station-id> --verbose
-
-# List all unhealthy streams
-gb radio health-check --all --report=failing
-```
-
----
-
-## User & Moderation Commands
-
-### User Management
-
-```bash
-# List users
-gb users list --role=admin --active=true --limit=50
-
-# Create user
-gb users create \
-  --email="user@example.com" \
-  --role=subscriber \
-  --subscription-tier=free
-
-# Update user
-gb users update <user-id> \
-  --role=moderator \
-  --subscription-tier=premium
-
-# Promote to admin
-gb users promote <user-id> --to=admin
-
-# Demote from admin
-gb users demote <user-id> --from=admin --to=moderator
-
-# Reset password
-gb users reset-password <user-id>
-
-# List suspended users
-gb users list --status=suspended --limit=20
-
-# Suspend user (revoke API access, hide content)
-gb users suspend <user-id> --reason="Spam behavior"
-
-# Reactivate user
-gb users reactivate <user-id>
-
-# Delete user (irreversible; archive instead for audit)
-gb users delete <user-id> --reason="GDPR deletion request" --confirm
-```
-
-### Moderation Queue
-
-```bash
-# View moderation queue (flagged content)
-gb moderation queue \
-  --status=pending \
-  --sort=created_at:asc \
-  --limit=20 \
-  --format=table
-
-# Get specific flagged item
-gb moderation get <flagged-id> --include=flags,actions
-
-# Flag content for review
-gb moderation flag <article-id> \
-  --reason="Spam" \
-  --priority=high \
-  --assigned-to=<moderator-uuid>
-
-# Mark for further review
-gb moderation escalate <flagged-id> --reason="Needs legal review"
-
-# Approve flagged content
-gb moderation approve <flagged-id> --notes="No policy violation"
-
-# Remove flagged content
-gb moderation remove <flagged-id> \
-  --reason="Violates community standards" \
-  --notify-author=true
-
-# Bulk moderation action
-gb moderation bulk-action << EOF
-{
-  "action": "approve",
-  "flagged_ids": ["<uuid1>", "<uuid2>", "<uuid3>"],
-  "notes": "Reviewed and cleared"
-}
-EOF
-
-# Moderation report
-gb moderation report --date-from=2026-01-01 --date-to=2026-03-20 --format=csv > mod_report.csv
-```
-
-### Comments
-
-```bash
-# List comments on article
-gb comments list --article-id=<uuid> --status=approved --sort=created_at:desc
-
-# Get comment thread
-gb comments get <comment-id> --include=replies
-
-# Hide comment (soft delete)
-gb comments hide <comment-id> --reason="Spam"
-
-# Restore hidden comment
-gb comments restore <comment-id>
-
-# Bulk hide comments by user
-gb comments bulk-hide --author-id=<user-uuid> --reason="User suspended"
-```
-
----
-
-## Analytics & Reporting
-
-### Dashboard Analytics
-
-```bash
-# Real-time stats
-gb analytics dashboard \
-  --metric=articles_published,total_views,top_users \
-  --period=today \
-  --format=json
-
-# Engagement summary
-gb analytics engagement \
-  --start-date=2026-01-01 \
-  --end-date=2026-03-20 \
-  --granularity=daily \
-  --format=csv > engagement.csv
-
-# Top creators
-gb analytics top-creators \
-  --limit=10 \
-  --period=this-month \
-  --metric=follower_growth,engagement_rate
-
-# Trending articles
-gb analytics trending \
-  --category=news,obituaries \
-  --time-window=7d \
-  --limit=20 \
-  --format=json
-```
-
-### Content Reports
-
-```bash
-# Content by category
-gb analytics content-breakdown \
-  --start-date=2026-01-01 \
-  --by=category \
-  --format=table
-
-# Author performance
-gb analytics author-performance \
-  --author-id=<uuid> \
-  --metrics=articles_published,total_views,avg_engagement \
-  --period=this-month
-
-# Moderation stats
-gb analytics moderation-stats \
-  --start-date=2026-01-01 \
-  --by=reason,reviewer \
-  --format=json > mod_stats.json
-```
-
-### Export & Reporting
-
-```bash
-# Export articles for external analysis
-gb export articles \
-  --start-date=2026-01-01 \
-  --end-date=2026-03-20 \
-  --status=published \
-  --include-comments=true \
-  --format=json > articles_export.json
-
-# Export user data (GDPR/privacy export)
-gb export user-data <user-id> --format=json > user_data_<user-id>.json
-
-# Schedule recurring report
-gb reports schedule \
-  --name="Weekly Engagement" \
-  --type=engagement \
-  --frequency=weekly \
-  --send-to=admin@grenadianbuzz.com \
-  --format=csv
-
-# Generate ad-hoc report
-gb reports generate \
-  --type=content-performance \
-  --start-date=2026-01-01 \
-  --end-date=2026-03-20 \
-  --output=report_2026_q1.pdf
-```
-
----
-
-## Configuration & Authentication
-
-### Config Management
-
-```bash
-# Initialize config (first-time setup)
-gb config init
-# Prompts for: email, API key/password, default format, editor
-
-# Show current config
-gb config show
-
-# Update config value
-gb config set default-format=json
-gb config set editor=vim
-gb config set timeout=30s
-
-# Show all saved profiles
-gb config profiles
-
-# Switch profile
-gb config use-profile=production
-
-# Create new profile
-gb config profile-add staging \
-  --api-url=https://staging-api.grenadianbuzz.com \
-  --api-key=<key>
-
-# Delete profile
-gb config profile-delete staging --confirm
-```
-
-### Secrets & API Keys
-
-```bash
-# List API keys
-gb auth api-keys list
-
-# Create API key (with expiry)
-gb auth api-keys create \
-  --name="CI/CD Pipeline" \
-  --expires-in=90d \
-  --scopes=articles:read,moderation:write
-
-# Revoke API key
-gb auth api-keys revoke <key-id>
-
-# Store/retrieve secrets from config
-gb secrets set SLACK_WEBHOOK https://hooks.slack.com/...
-gb secrets get SLACK_WEBHOOK
-
-# Test stored credential
-gb secrets test-connection <profile-name>
-```
-
----
-
-## Error Handling & Debugging
-
-### Verbose Output & Logging
-
-```bash
-# Verbose mode (shows HTTP requests, responses, timing)
-gb articles list --verbose --limit=5
-
-# Debug mode (includes full stack traces)
-gb articles list --debug
-
-# Log to file
-gb articles list --log-file=/tmp/gb-debug.log
-
-# Check logs
-gb logs tail --lines=50
-gb logs search "error" --since=1h
-```
-
-### Troubleshooting
-
-```bash
-# Health check (API connectivity, auth status)
-gb health-check
-
-# Verify auth token
-gb auth verify
-
-# Check rate limiting
-gb rate-limit status
-
-# Test API with simple ping
-gb ping
-
-# Diagnose connectivity
-gb diagnose --verbose > diagnostic_report.txt
-```
-
-### Common Issues
-
-**Rate Limited**:
-```bash
-gb articles list --rate-limit-delay=2s --retry-attempts=5
-```
-
-**Timeout on Large Requests**:
-```bash
-gb export articles --timeout=60s --batch-size=100
-```
-
-**Authentication Failed**:
-```bash
-gb auth logout
-gb auth login --email=admin@grenadianbuzz.com
-```
-
-**Malformed JSON in File**:
-```bash
-gb articles import articles.json --validate-only
-# Fix errors, then retry
-gb articles import articles.json --confirm
-```
-
----
-
-## Examples & Workflows
+## Common Workflows
 
 ### Daily Editorial Workflow
 
 ```bash
 #!/bin/bash
-set -euo pipefail
 
-# Check login
-gb auth verify
+# 1. Fetch fresh content (all sources)
+gbuzz task-runner --tasks rss,wordpress,station --once --force
 
-# Review overnight moderation queue
-gb moderation queue --status=pending --limit=20
+# 2. Check station health
+gbuzz fix-streams --dry-run
 
-# Bulk approve routine moderation flags
-gb moderation bulk-action << 'EOF'
+# 3. Review logs
+# (logs already in stdout from above commands)
+```
+
+### Continuous Background Operation (Production)
+
+```bash
+# Run all tasks every 5 minutes with Prometheus metrics
+gbuzz --json-format task-runner --all --interval 300 --metrics-port 8080 &
+
+# Monitor metrics
+curl http://localhost:8080/metrics | grep gbuzz
+```
+
+### Kubernetes Deployment
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gbuzz-tasks
+spec:
+  containers:
+  - name: gbuzz
+    image: gbuzz:latest
+    command: ["gbuzz", "--json-format", "task-runner", "--all", "--metrics-port", "8080"]
+    env:
+    - name: API_URL
+      value: "https://api.example.com"
+    - name: API_CLIENT_KEY
+      valueFrom:
+        secretKeyRef:
+          name: gbuzz-secrets
+          key: api-key
+    ports:
+    - containerPort: 8080
+```
+
+### Monthly Data Cleanup
+
+```bash
+# 1. Preview what would be archived
+gbuzz archive run --dry-run --mode all
+
+# 2. If satisfied, run archiving
+gbuzz archive run --mode all --retention 23
+
+# 3. Verify completion
+gbuzz -v archive run --force
+```
+
+### Discover and Fix Radio Stations
+
+```bash
+# 1. Discover new Caribbean stations
+gbuzz discover stations --caribbean --validate --limit 20
+
+# 2. Fix broken streams in existing database
+gbuzz fix-streams --dry-run
+
+# 3. Apply repairs
+gbuzz fix-streams
+```
+
+### Scheduled Notifications (Cron)
+
+```cron
+# Daily newsletter at 9 AM
+0 9 * * * gbuzz notify newsletter --force
+
+# Weekly feedback request (Monday 10 AM)
+0 10 * * 1 gbuzz notify feedback --force
+
+# Holiday greetings (via task-runner)
+0 9 25 12 * gbuzz notify christmas --force
+0 9 1 1 * gbuzz notify newyear --force
+```
+
+---
+
+## Logging & Debugging
+
+### Log Levels
+
+```bash
+# Default: WARNING level (only errors and warnings)
+gbuzz crawl rss
+
+# Info level (general status messages)
+gbuzz -v crawl rss
+# Same as:
+gbuzz --log-level INFO crawl rss
+
+# Verbose level (detailed operation logs)
+gbuzz -vv crawl rss
+
+# Debug level (full debugging information)
+gbuzz -vvv crawl rss
+# Same as:
+gbuzz --log-level DEBUG crawl rss
+```
+
+### Log Format
+
+**Standard output**:
+```
+2026-03-23 10:15:30 [INFO] [gbuzz] Starting RSS crawl
+2026-03-23 10:15:31 [INFO] [gbuzz] Fetched 12 articles from source 'National News'
+```
+
+**JSON format** (with `--json-format`):
+```json
 {
-  "action": "approve",
-  "flagged_ids": ["uuid1", "uuid2", "uuid3"],
-  "notes": "Reviewed, no violations"
+  "timestamp": "2026-03-23T10:15:30Z",
+  "level": "INFO",
+  "logger": "gbuzz.crawl.rss",
+  "message": "Fetched 12 articles",
+  "pod": "gbuzz-tasks-abc123",
+  "namespace": "production"
 }
-EOF
-
-# Publish scheduled articles
-gb articles list --status=scheduled --schedule-ready=true --dry-run
-gb articles list --status=scheduled --schedule-ready=true | \
-  jq '.data[].id' | \
-  xargs -I {} gb articles publish {}
-
-# Generate daily engagement report
-gb analytics engagement --period=today --format=csv > report_$(date +%Y-%m-%d).csv
-
-echo "Editorial workflow complete."
 ```
 
-### Bulk Content Migration
+### Debugging Specific Commands
 
 ```bash
-#!/bin/bash
+# Verbose RSS crawl
+gbuzz -vv crawl rss --now
 
-# Export articles from old system
-gb export articles --status=published --format=json > backup_articles.json
+# Debug station discovery
+gbuzz -vvv discover stations --country Grenada
 
-# Validate export
-gb articles import backup_articles.json --validate-only
+# Full debug of task-runner
+gbuzz -vvv task-runner --tasks rss --once
 
-# Dry-run import (see what would change)
-gb articles import backup_articles.json --dry-run
-
-# Actual import with confirmation
-gb articles import backup_articles.json --confirm --verbose
-
-# Verify counts match
-EXPORTED=$(jq '.data | length' backup_articles.json)
-IMPORTED=$(gb articles list --format=json | jq '.total')
-[ "$EXPORTED" -eq "$IMPORTED" ] && echo "Migration successful" || echo "Mismatch!"
-```
-
-### Automated Cleanup
-
-```bash
-#!/bin/bash
-
-# Archive articles older than 1 year (with safety)
-gb articles archive --published-before=2025-03-20 --dry-run
-
-# After review:
-gb articles archive --published-before=2025-03-20 --confirm
-
-# Clean up suspended users' content
-gb comments bulk-hide --author-id=<suspended-user-uuid> --dry-run
-gb comments bulk-hide --author-id=<suspended-user-uuid> --confirm
-
-# Generate cleanup report
-gb analytics moderation-stats --start-date=2026-03-01 --format=json > cleanup_stats.json
-```
-
-### Moderation Workflow with Escalation
-
-```bash
-#!/bin/bash
-
-# Check queue
-PENDING=$(gb moderation queue --status=pending --format=json | jq '.total')
-echo "Pending moderation items: $PENDING"
-
-# Process flagged items
-gb moderation queue --status=pending --sort=created_at:asc | while read -r ITEM; do
-  ID=$(echo "$ITEM" | jq -r '.id')
-  REASON=$(echo "$ITEM" | jq -r '.reason')
-  
-  case "$REASON" in
-    "spam")
-      gb moderation remove "$ID" --reason="Spam" --notify-author=true
-      ;;
-    "offensive")
-      gb moderation escalate "$ID" --reason="Needs legal review"
-      ;;
-    *)
-      gb moderation approve "$ID" --notes="No violation found"
-      ;;
-  esac
-done
-
-# Report escalated items
-gb moderation queue --status=escalated --format=csv > escalated_items.csv
+# Timestamp-free logs (for CI/CD)
+gbuzz --no-timestamp crawl rss
 ```
 
 ---
 
-## Integration Examples
+## Error Handling
 
-### Slack Notifications
+### Exit Codes
 
-```bash
-#!/bin/bash
-
-WEBHOOK_URL=$(gb secrets get SLACK_WEBHOOK)
-
-# Alert on moderation backlog
-PENDING=$(gb moderation queue --status=pending --format=json | jq '.total')
-if [ "$PENDING" -gt 50 ]; then
-  curl -X POST "$WEBHOOK_URL" \
-    -H 'Content-Type: application/json' \
-    -d "{\"text\": \"Moderation backlog high: $PENDING items\"}"
-fi
+```
+0       Success
+1       Generic error (API, network, file system)
+2       Usage/validation error (bad arguments)
 ```
 
-### Health Monitoring
+### Common Errors
 
+**Error**: `API_URL not configured`
 ```bash
-#!/bin/bash
+# Solution: Set environment variable or config file
+export API_URL="https://api.example.com"
+# OR create ~/.config/gbuzz/config.yaml
+```
 
-# Check API health every 5 minutes
-while true; do
-  if ! gb health-check --quiet; then
-    echo "API down at $(date)" >> /var/log/gb-health.log
-    # Trigger alert
-    gb secrets get ALERT_WEBHOOK | xargs -I {} curl -X POST {} -d "API down"
-  fi
-  sleep 300
-done
+**Error**: `Connection timeout`
+```bash
+# Solution: Increase timeout in config
+# ~/.config/gbuzz/config.yaml
+HTTP_TIMEOUT: 60        # Increase from default 30s
+CONNECT_TIMEOUT: 20     # Increase from default 10s
+```
+
+**Error**: `TTL not expired` (when running crawlers)
+```bash
+# Solution: Use --now to force crawl
+gbuzz crawl rss --now
+
+# Or use task-runner --force
+gbuzz task-runner --tasks rss --once --force
+```
+
+**Error**: `Failed to validate station stream`
+```bash
+# Check specific stream manually
+gbuzz -vv fix-streams --limit 1
+
+# View fallback strategy in debug logs
+gbuzz -vvv fix-streams --dry-run
 ```
 
 ---
 
-## Design Considerations for CLI Extensions
+## Design Patterns
 
-When adding new CLI commands:
+### Idempotent Operations
 
-1. **Consistency**: Follow `gb <resource> <action>` pattern
-2. **Safety**: Destructive ops require `--confirm` or `--force`
-3. **Scriptability**: JSON output, no interactive prompts by default
-4. **Discoverability**: Built-in help, examples, man pages
-5. **Audit**: All changes logged with user, timestamp, changes
-6. **Idempotency**: Running same command twice should be safe
-7. **Composability**: Commands should chain with pipes and redirects
+All crawlers are idempotent: running twice with same TTL produces same results
+- Duplicate detection via content hash
+- No side effects (read-only or safe writes)
+
+### Graceful Degradation
+
+If a source fails:
+- Other sources continue
+- Partial results returned
+- Error logged but doesn't halt task-runner
+
+### Dry-Run First Pattern
+
+```bash
+# Always dry-run mutating operations first
+gbuzz archive run --dry-run
+# Review output...
+gbuzz archive run  # Only after verification
+```
+
+### Timeout Safety
+
+All network operations have timeouts (default 30s read, 10s connect)
+- Configurable via config file
+- Override with `--config` flag
 
 ---
 
-## See Also
+## Production Checklist
 
-- **API Reference**: `grenadianbuzz-api-patterns.md` (REST endpoints, versioning)
-- **Domain Checklist**: `grenadianbuzz-domain-checklist.md` (validation patterns)
-- **Dashboard Guide**: `grenadianbuzz-dashboard-guide.md` (web UI patterns)
-- **Website Guide**: `grenadianbuzz-website-guide.md` (public site patterns)
+- [ ] Config file created with valid API credentials
+- [ ] API_URL and API_CLIENT_KEY verified working
+- [ ] First crawl tested with `--now` flag
+- [ ] Archive dry-run verified before production archive
+- [ ] Task-runner tested with `--once` before continuous operation
+- [ ] Metrics port configured and accessible (if using Prometheus)
+- [ ] Log rotation configured (for timestamp-enabled logs)
+- [ ] Error alerting set up (parse logs or monitor metrics)

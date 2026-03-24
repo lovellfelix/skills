@@ -118,27 +118,43 @@ This skill provides deep, production-grounded guides for every major surface of 
 
 ### 2. **CLI** (Command-Line Tools)
 
-**Coverage**: 70+ commands, command patterns, safe operations, bulk actions, analytics export, configuration management, scripting
+**Coverage**: Content crawling, notifications, station discovery/repair, analytics archiving, task scheduling, production monitoring
 
-**Key File**:
-- `reference/grenadianbuzz-cli-guide.md` (700+ lines)
+**Key Files**:
+- `reference/grenadianbuzz-cli-guide.md` (620+ lines) — Complete command reference
+- `quick-ref/CLI-QUICK-REFERENCE.md` (180 lines) — 1-page cheat sheet
+
+**Top-Level Commands**:
+- `crawl` — Multi-source content crawling (RSS, WordPress, stations, obituaries)
+- `notify` — User notifications (newsletters, feedback, seasonal greetings)
+- `archive` — Analytics retention and cleanup
+- `discover` — Feed and station discovery
+- `fix-streams` — Station stream validation and repair
+- `task-runner` — Continuous or scheduled task execution
 
 **Use When**:
-- Building admin scripts
-- Automating content workflows
-- Setting up bulk operations
-- Designing monitoring tools
+- Automating daily content ingestion
+- Running continuous background tasks in production
+- Discovering new radio stations
+- Repairing broken station streams
+- Archiving old analytics data
+- Sending scheduled notifications
 
-**Command Categories**:
-- Content management (articles, obituaries, events, radio)
-- User & moderation (flags, approvals, escalations)
-- Analytics & reporting (exports, metrics, trends)
-- Configuration (auth, profiles, secrets)
+**Global Options**:
+- `--log-level`, `-v/-vv/-vvv` — Logging control
+- `--json-format` — Kubernetes-friendly structured logs
+- `--timestamp/--no-timestamp` — Log formatting
+- `--config` — YAML configuration path
+
+**Config**:
+- YAML-based: `~/.config/gbuzz/config.yaml`
+- Environment variables: `API_URL`, `API_CLIENT_KEY`
 
 **Example Workflows**:
-- Daily editorial workflow (check queue, approve, publish, report)
-- Bulk content migration (export, validate, import)
-- Moderation escalation with decision logic
+- Daily editorial: `gbuzz task-runner --tasks rss,wordpress,station --once`
+- Validate streams: `gbuzz fix-streams --dry-run`
+- Archive monthly: `gbuzz archive run --mode all --retention 23`
+- Discover Caribbean stations: `gbuzz discover stations --caribbean --validate`
 
 ---
 
@@ -253,7 +269,7 @@ All guides are grounded in real GrenadianBuzz architecture:
 - User-generated content (comments, reactions, subscriptions)
 
 **Engagement Types**:
-- Reactions: 👍 like, ❤️ love, 🕯️ remember, 💖 compassion, 🌹 tribute, 🙏 respect
+- Reactions: like (simple positive), and reaction types (flower, candle, heart, prayer, rose)
 - Comments with nested replies
 - Saves/bookmarks
 - Shares
@@ -355,10 +371,10 @@ skills/portable/grenadianbuzz/
 **Dashboard**: Toast notifications, inline error messages, retry options
 **Website**: User-friendly messages, graceful degradation
 
-### Pagination & Cursors
+### Pagination & Offset/Limit
 
-**API**: Cursor-based for stability across updates
-**CLI**: Limit/cursor options, bulk operations
+**API**: Offset-based via `$skip` and `$limit` parameters (not cursor-based)
+**CLI**: Limit/skip options, bulk operations
 **Dashboard**: Pagination for tables, infinite scroll for queues
 **Website**: Pagination or infinite scroll based on use case
 

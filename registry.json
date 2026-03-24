@@ -29,49 +29,6 @@
           }
         }
       },
-      "description": "Quick Q&A workflow with source-priority search and concise, cited answers.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/ask/",
-      "name": "ask",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "qa",
-        "knowledge-search",
-        "troubleshooting",
-        "portable"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
       "description": "Performs comprehensive code review with security scanning and language auto-detection.",
       "entrypoint": "SKILL.md",
       "location": "portable/code-review/",
@@ -85,7 +42,8 @@
         "security",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -115,7 +73,7 @@
           }
         }
       },
-      "description": "Rewrite communication for clarity, tone, and audience across Slack, email, docs, and more.",
+      "description": "Refine technical communication for clarity, brevity, and review usefulness.",
       "entrypoint": "SKILL.md",
       "location": "portable/communication-style/",
       "name": "communication-style",
@@ -124,13 +82,13 @@
       "runtime": null,
       "tags": [
         "communication",
-        "writing",
-        "clarity",
-        "tone",
-        "style",
-        "docs"
+        "engineering-writing",
+        "pr-review",
+        "slack",
+        "clarity"
       ],
-      "version": "0.1.0"
+      "version": "0.3.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -175,7 +133,8 @@
         "ui",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -218,7 +177,8 @@
         "quality",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -248,7 +208,7 @@
           }
         }
       },
-      "description": "Generate and update documentation with language-aware formatting and conventions.",
+      "description": "Write and update concise engineering documentation grounded in runtime behavior and operations.",
       "entrypoint": "SKILL.md",
       "location": "portable/documentation/",
       "name": "documentation",
@@ -257,10 +217,13 @@
       "runtime": null,
       "tags": [
         "documentation",
-        "writing",
-        "portable"
+        "engineering",
+        "runbook",
+        "operations",
+        "architecture"
       ],
-      "version": "0.1.0"
+      "version": "0.3.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -305,7 +268,8 @@
         "stow",
         "automation"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -348,7 +312,8 @@
         "compliance",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -390,50 +355,8 @@
         "template",
         "portable"
       ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/find-skills/",
-      "name": "find-skills",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "skills",
-        "discovery",
-        "tooling",
-        "portable"
-      ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -476,7 +399,8 @@
         "design",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -526,7 +450,8 @@
         "prd",
         "newsletter"
       ],
-      "version": "0.2.0"
+      "version": "0.3.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -570,7 +495,8 @@
         "resume",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -600,21 +526,67 @@
           }
         }
       },
-      "description": "Incident review and postmortem analysis with timeline, impact, root cause, and follow-ups.",
+      "description": "Write concise, operationally useful postmortems focused on decisions, causes, and concrete follow-ups.",
       "entrypoint": "SKILL.md",
-      "location": "portable/incident-review/",
-      "name": "incident-review",
+      "location": "portable/incident-postmortem/",
+      "name": "incident-postmortem",
       "personal_machine_only": false,
       "portable": true,
       "runtime": null,
       "tags": [
         "incident",
         "postmortem",
+        "reliability",
         "root-cause-analysis",
-        "follow-up",
-        "retrospective"
+        "operations"
       ],
-      "version": "0.1.0"
+      "version": "0.3.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Build, deploy, and manage infrastructure with containers, Kubernetes, and IaC.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/infrastructure-automation/",
+      "name": "infrastructure-automation",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "infrastructure",
+        "devops",
+        "containers",
+        "kubernetes",
+        "portable"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -658,7 +630,8 @@
         "migration",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -705,7 +678,8 @@
         "places",
         "portable"
       ],
-      "version": "0.2.0"
+      "version": "0.2.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -748,7 +722,8 @@
         "server",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -793,7 +768,52 @@
         "durability",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Profile applications and generate optimization recommendations with measurable impact.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/performance-profiling/",
+      "name": "performance-profiling",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "performance",
+        "profiling",
+        "optimization",
+        "portable"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -836,7 +856,8 @@
         "documentation",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -880,49 +901,8 @@
         "docstrings",
         "validation"
       ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Simplify and refine code for clarity, consistency, and maintainability while preserving functionality. Use when code needs cleanup, after features are implemented, or during review.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/refactoring/",
-      "name": "refactoring",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "refactoring",
-        "maintainability",
-        "portable"
-      ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -966,7 +946,8 @@
         "notes",
         "documentation"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -996,50 +977,7 @@
           }
         }
       },
-      "description": "Universal release workflow. Auto-detects version files and changelogs. Supports Node.js, Python, Rust, Claude Plugin, and generic projects. Use when user says \"release\", \"\u53d1\u5e03\", \"new version\", \"bump version\", \"push\", \"\u63a8\u9001\".",
-      "entrypoint": "SKILL.md",
-      "location": "portable/release-skills/",
-      "name": "release-skills",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "release",
-        "versioning",
-        "changelog",
-        "portable"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Draft and refine technical RFCs and design proposals.",
+      "description": "Draft tight, reviewable engineering RFCs focused on constraints, decisions, and rollout safety.",
       "entrypoint": "SKILL.md",
       "location": "portable/rfc/",
       "name": "rfc",
@@ -1048,12 +986,13 @@
       "runtime": null,
       "tags": [
         "rfc",
-        "design",
-        "proposal",
         "architecture",
-        "technical-decision"
+        "design",
+        "tradeoffs",
+        "rollout"
       ],
-      "version": "0.1.0"
+      "version": "0.3.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -1096,7 +1035,8 @@
         "vulnerabilities",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -1140,7 +1080,8 @@
         "continuity",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -1183,7 +1124,145 @@
         "ui",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Write production-grade shell scripts with error handling, testing, and cross-platform support.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/shell-automation/",
+      "name": "shell-automation",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "shell",
+        "automation",
+        "bash",
+        "scripts",
+        "portable"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Use when authoring or maintaining portable skills and custom commands to ensure correctness, discoverability, and long-term maintainability across tools and machines.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/skills-and-commands-checklist/",
+      "name": "skills-and-commands-checklist",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "authoring",
+        "skills",
+        "commands",
+        "quality",
+        "portability",
+        "validation",
+        "maintenance"
+      ],
+      "version": "1.0.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Debug Linux servers, Puppet, Kubernetes, RPM, systemd, and infrastructure issues with systematic troubleshooting.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/sre-debugging/",
+      "name": "sre-debugging",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "sre",
+        "debugging",
+        "linux",
+        "infrastructure",
+        "portable"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -1225,7 +1304,8 @@
         "quality",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -1267,7 +1347,8 @@
         "workflow",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -1283,7 +1364,7 @@
           }
         }
       },
-      "description": "Create CLEAR actionable plans using LinkedIn's best planning practices",
+      "description": "Create actionable plans using the CLEAR framework (Concrete, Linked, Estimated, Assigned, Resulted). Use when planning features, projects, or multi-step tasks requiring clear ownership and success criteria.",
       "entrypoint": "SKILL.md",
       "location": "runtime-specific/opencode/actionable-planning/",
       "name": "actionable-planning",
@@ -1297,7 +1378,286 @@
         "workflow",
         "opencode"
       ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Store, query, and sync Swagger/OpenAPI specs in SQLite for cross-project API reference.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/api-docs/",
+      "name": "api-docs",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "api",
+        "openapi",
+        "swagger",
+        "docs",
+        "opencode"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "OpenCode ask overlay - search work notes first, then session memory, codebase, and web.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/ask/",
+      "name": "ask",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "qa",
+        "knowledge-search",
+        "opencode",
+        "obsidian"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Minimize token usage and keep context focused",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/context-optimization/",
+      "name": "context-optimization",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "performance",
+        "optimization",
+        "context",
+        "tokens",
+        "efficiency"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Git automation, worktrees, hooks, and advanced workflow patterns",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/git-workflow/",
+      "name": "git-workflow",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "git",
+        "automation",
+        "worktrees",
+        "hooks",
+        "workflow",
+        "version-control"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Persistent graph of nodes and relationships \u2014 engineering (GitHub issues, PRs, Jira) AND personal (family, reminders, events, notes). Enables work continuity, standup dashboards, personal knowledge graphs, and cross-session resumption.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/graph-tracker/",
+      "name": "graph-tracker",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "graph",
+        "tracking",
+        "github",
+        "jira",
+        "opencode"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Build and maintain a lightweight knowledge graph in the work knowledgebase.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/knowledge-graph/",
+      "name": "knowledge-graph",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "knowledge-graph",
+        "notes",
+        "memory",
+        "opencode"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Morning briefing \u2014 calendar, reminders, weather, GitHub issues, priorities. Use when the user says \"morning\", \"briefing\", \"start my day\", or asks what's on today.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/morning/",
+      "name": "morning",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "morning",
+        "briefing",
+        "calendar",
+        "reminders",
+        "opencode"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Official Obsidian CLI-first workflow for work notes, with local wrapper fallback for custom search, writes, and graph operations",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/obsidian-work-notes/",
+      "name": "obsidian-work-notes",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "obsidian",
+        "notes",
+        "knowledgebase",
+        "graph",
+        "opencode"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Use when planning trips, family outings, personal events, or life milestones with concrete actions and contingencies.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/personal-planning/",
+      "name": "personal-planning",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "planning",
+        "personal",
+        "travel",
+        "events",
+        "opencode"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -1345,363 +1705,6 @@
           }
         }
       },
-      "description": "Store, query, and sync Swagger/OpenAPI specs in SQLite for cross-project API reference.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/api-docs/",
-      "name": "api-docs",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "api",
-        "openapi",
-        "swagger",
-        "docs",
-        "opencode"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "OpenCode ask overlay - search work notes first, then session memory, codebase, and web.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/ask/",
-      "name": "ask",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "qa",
-        "knowledge-search",
-        "opencode",
-        "obsidian"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Minimize token usage and keep context focused",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/context-optimization/",
-      "name": "context-optimization",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "performance",
-        "optimization",
-        "context",
-        "tokens",
-        "efficiency"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Analyze task dependencies and optimize execution order for maximum parallelization.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/dependency-resolution/",
-      "name": "dependency-resolution",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "dependencies",
-        "planning",
-        "parallelization",
-        "opencode"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Git automation, worktrees, hooks, and advanced workflow patterns",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/git-workflow/",
-      "name": "git-workflow",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "git",
-        "automation",
-        "worktrees",
-        "hooks",
-        "workflow",
-        "version-control"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Persistent graph of nodes and relationships \u2014 engineering (GitHub issues, PRs, Jira) AND personal (family, reminders, events, notes). Enables work continuity, standup dashboards, personal knowledge graphs, and cross-session resumption.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/graph-tracker/",
-      "name": "graph-tracker",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "graph",
-        "tracking",
-        "github",
-        "jira",
-        "opencode"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Work item graph - track issues, PRs, JIRA tickets and their relationships across sessions. Use when the user says \"graph\", \"track this\", \"what was I working on\", or asks about work item status.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/graph/",
-      "name": "graph",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "graph",
-        "tracking",
-        "github",
-        "jira",
-        "opencode"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Build and maintain a lightweight knowledge graph in the work knowledgebase.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/knowledge-graph/",
-      "name": "knowledge-graph",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "knowledge-graph",
-        "notes",
-        "memory",
-        "opencode"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Morning briefing \u2014 calendar, reminders, weather, GitHub issues, priorities. Use when the user says \"morning\", \"briefing\", \"start my day\", or asks what's on today.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/morning/",
-      "name": "morning",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "morning",
-        "briefing",
-        "calendar",
-        "reminders",
-        "opencode"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Official Obsidian CLI-first workflow for work notes, with local wrapper fallback for custom search, writes, and graph operations",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/obsidian-work-notes/",
-      "name": "obsidian-work-notes",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "obsidian",
-        "notes",
-        "knowledgebase",
-        "graph",
-        "opencode"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Use when planning trips, family outings, personal events, or life milestones with concrete actions and contingencies.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/personal-planning/",
-      "name": "personal-planning",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "planning",
-        "personal",
-        "travel",
-        "events",
-        "opencode"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Parallel validation during implementation to catch errors before testing phase.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/pre-validation/",
-      "name": "pre-validation",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "validation",
-        "linting",
-        "type-checking",
-        "opencode"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
       "description": "Generate standup update from git activity, session memory, GitHub, and tasks. Use when the user says \"standup\", \"daily update\", or asks for a summary of recent work.",
       "entrypoint": "SKILL.md",
       "location": "runtime-specific/opencode/standup/",
@@ -1716,94 +1719,8 @@
         "tasks",
         "opencode"
       ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Executes planned development tasks with parallel batching and real-time dashboard updates.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/task-execution/",
-      "name": "task-execution",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "execution",
-        "validation",
-        "automation",
-        "opencode"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Breaks down complex features into small, verifiable subtasks with dependency resolution.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/task-planning/",
-      "name": "task-planning",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "planning",
-        "decomposition",
-        "dependencies",
-        "opencode"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Intelligent task routing with technology detection and agent delegation.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/workflow-routing/",
-      "name": "workflow-routing",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "routing",
-        "orchestration",
-        "delegation",
-        "opencode"
-      ],
-      "version": "0.1.0"
+      "version": "0.1.0",
+      "work_machine_only": false
     }
   ]
 }

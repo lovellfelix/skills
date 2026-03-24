@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "name": "knowledge-graph",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "portable": false,
   "runtime": "opencode",
   "entrypoint": "SKILL.md",
