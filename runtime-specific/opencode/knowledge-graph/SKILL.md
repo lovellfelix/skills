@@ -1,6 +1,6 @@
 ---
 name: knowledge-graph
-description: Build and maintain a lightweight knowledge graph in the work knowledgebase.
+description: Build and maintain a lightweight knowledge graph in the work knowledgebase. Use when connecting related work notes, capturing design decisions, or surfacing complex relationships across projects.
 version: 0.1.1
 portable: false
 tags: [knowledge-graph, notes, memory, opencode]

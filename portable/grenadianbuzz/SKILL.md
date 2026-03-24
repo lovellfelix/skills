@@ -1,6 +1,6 @@
 ---
 name: grenadianbuzz
-description: Unified product and engineering skill for GrenadianBuzz across all surfaces (API, Android app, CLI, website, dashboard, CDN).
+description: Unified product and engineering skill for GrenadianBuzz across all surfaces (API, Android app, CLI, website, dashboard, CDN). Use when working on GrenadianBuzz features, architecture, or operational tasks.
 version: 0.3.0
 portable: true
 tags: [grenadianbuzz, product, mobile, api, backend, frontend, architecture]

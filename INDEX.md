@@ -11,7 +11,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | Name | Location | Purpose |
 |------|----------|---------|
 | **code-review** | `portable/code-review/` | Performs comprehensive code review with security scanning and language auto-detection. |
-| **communication-style** | `portable/communication-style/` | Refine technical communication for clarity, brevity, and review usefulness. |
+| **communication-style** | `portable/communication-style/` | Refine technical communication for clarity, brevity, and review usefulness. Use when writing PRs, documentation, RFCs, or Slack messages to improve clarity and reduce review friction. |
 | **compose-material3** | `portable/compose-material3/` | Build beautiful, modern Android UI with Material Design 3 and Jetpack Compose while avoiding generic boilerplate. |
 | **deep-audit** | `portable/deep-audit/` | Comprehensive code quality audit covering architecture, patterns, and security vulnerabilities. |
 | **documentation** | `portable/documentation/` | Write and update concise engineering documentation grounded in runtime behavior and operations. |
@@ -19,21 +19,21 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **email-best-practices** | `portable/email-best-practices/` | Use when building email features, emails going to spam, high bounce rates, setting up SPF/DKIM/DMARC authentication, implementing email capture, ensuring compliance (CAN-SPAM, GDPR, CASL), handling webhooks, retry logic, or deciding transactional vs marketing. |
 | **example-skill** | `portable/example-skill/` | Portable starter skill package for defining concise, tool-agnostic workflows. |
 | **frontend-design** | `portable/frontend-design/` | Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics. |
-| **grenadianbuzz** | `portable/grenadianbuzz/` | Unified product and engineering skill for GrenadianBuzz across all surfaces (API, Android app, CLI, website, dashboard, CDN). |
+| **grenadianbuzz** | `portable/grenadianbuzz/` | Unified product and engineering skill for GrenadianBuzz across all surfaces (API, Android app, CLI, website, dashboard, CDN). Use when working on GrenadianBuzz features, architecture, or operational tasks. |
 | **handoff-resume** | `portable/handoff-resume/` | Resume interrupted work and produce clean handoffs with clear blockers and next steps. |
-| **incident-postmortem** | `portable/incident-postmortem/` | Write concise, operationally useful postmortems focused on decisions, causes, and concrete follow-ups. |
+| **incident-postmortem** | `portable/incident-postmortem/` | Write concise, operationally useful postmortems focused on decisions, causes, and concrete follow-ups. Use after production incidents or operational failures to extract learning and drive improvements. |
 | **infrastructure-automation** | `portable/infrastructure-automation/` | Build, deploy, and manage infrastructure with containers, Kubernetes, and IaC. |
-| **java-to-kotlin-migration** | `portable/java-to-kotlin-migration/` | Idiomatic, safe Android Java-to-Kotlin migration playbook |
-| **location-search** | `portable/location-search/` | Location search and geocoding with a no-API-key default flow, including ZIP/postal-code based nearby lookup. |
+| **java-to-kotlin-migration** | `portable/java-to-kotlin-migration/` | Idiomatic, safe Android Java-to-Kotlin migration playbook. Use when migrating Android projects from Java to Kotlin while maintaining behavior and test coverage. |
+| **location-search** | `portable/location-search/` | Location search and geocoding with a no-API-key default flow, including ZIP/postal-code based nearby lookup. Use when planning trips, finding nearby places, or integrating location features without API setup. |
 | **mcp-builder** | `portable/mcp-builder/` | Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK). |
 | **memory-operations** | `portable/memory-operations/` | Coordinate session-memory capture, durable promotion, and handoff-ready resume workflows. |
-| **performance-profiling** | `portable/performance-profiling/` | Profile applications and generate optimization recommendations with measurable impact. |
+| **performance-profiling** | `portable/performance-profiling/` | Profile applications and generate optimization recommendations with measurable impact. Use when identifying bottlenecks, optimizing slow operations, or validating performance improvements. |
 | **python-code-style** | `portable/python-code-style/` | Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards. |
 | **python-quality-checklist** | `portable/python-quality-checklist/` | Use when implementing or reviewing Python code to enforce minimum quality gates before completion. |
 | **release-notes** | `portable/release-notes/` | Draft and refine changelog and release notes from commits, PRs, and changes. |
 | **rfc** | `portable/rfc/` | Draft tight, reviewable engineering RFCs focused on constraints, decisions, and rollout safety. |
-| **security-audit** | `portable/security-audit/` | Security vulnerability scanning, secret detection, and secure coding recommendations. |
-| **session-memory-mcp** | `portable/session-memory-mcp/` | Practical patterns for storing, retrieving, and maintaining high-signal session memory via MCP. |
+| **security-audit** | `portable/security-audit/` | Security vulnerability scanning, secret detection, and secure coding recommendations. Use before merging changes, during code review, or when assessing codebase security posture. |
+| **session-memory-mcp** | `portable/session-memory-mcp/` | Practical patterns for storing, retrieving, and maintaining high-signal session memory via MCP. Use when building MCP-integrated workflows, caching session state, or establishing durable patterns across sessions. |
 | **shadcn-ui** | `portable/shadcn-ui/` | Complete shadcn/ui component library guide including installation, configuration, and implementation of accessible React components. Use when setting up shadcn/ui, installing components, building forms with React Hook Form and Zod, customizing themes with Tailwind CSS, or implementing UI patterns like buttons, dialogs, dropdowns, tables, and complex form layouts. |
 | **shell-automation** | `portable/shell-automation/` | Write production-grade shell scripts with error handling, testing, and cross-platform support. |
 | **skills-and-commands-checklist** | `portable/skills-and-commands-checklist/` | Use when authoring or maintaining portable skills and custom commands to ensure correctness, discoverability, and long-term maintainability across tools and machines. |
@@ -50,16 +50,19 @@ Skills with runtime-specific adapters or overlays.
 | Name | Location | Purpose |
 |------|----------|---------|
 | **actionable-planning** | `runtime-specific/opencode/actionable-planning/` | Create actionable plans using the CLEAR framework (Concrete, Linked, Estimated, Assigned, Resulted). Use when planning features, projects, or multi-step tasks requiring clear ownership and success criteria. |
-| **api-docs** | `runtime-specific/opencode/api-docs/` | Store, query, and sync Swagger/OpenAPI specs in SQLite for cross-project API reference. |
+| **api-docs** | `runtime-specific/opencode/api-docs/` | Store, query, and sync Swagger/OpenAPI specs in SQLite for cross-project API reference. Use when building API clients, keeping API contracts in sync across projects, or querying endpoint details. |
 | **ask** | `runtime-specific/opencode/ask/` | OpenCode ask overlay - search work notes first, then session memory, codebase, and web. |
-| **context-optimization** | `runtime-specific/opencode/context-optimization/` | Minimize token usage and keep context focused |
-| **git-workflow** | `runtime-specific/opencode/git-workflow/` | Git automation, worktrees, hooks, and advanced workflow patterns |
+| **context-optimization** | `runtime-specific/opencode/context-optimization/` | Reduce token usage and context bloat by using targeted reads, caching, and discarding noisy tool output. Use when exploring large codebases, summarizing lengthy outputs, or optimizing for cost. |
+| **git-workflow** | `runtime-specific/opencode/git-workflow/` | Automate git workflows with worktrees, hooks, and advanced patterns. Use when setting up multi-branch workflows, automating commits, managing hooks, or handling complex merge/rebase scenarios. |
+| **google-docs** | `runtime-specific/opencode/google-docs/` | Use this skill when reading, writing, or searching Google Docs, Sheets, and Drive files from OpenCode. |
 | **graph-tracker** | `runtime-specific/opencode/graph-tracker/` | Persistent graph of nodes and relationships — engineering (GitHub issues, PRs, Jira) AND personal (family, reminders, events, notes). Enables work continuity, standup dashboards, personal knowledge graphs, and cross-session resumption. |
-| **knowledge-graph** | `runtime-specific/opencode/knowledge-graph/` | Build and maintain a lightweight knowledge graph in the work knowledgebase. |
+| **jarvis-search** | `runtime-specific/opencode/jarvis-search/` | Use this skill to search LinkedIn codebases with Jarvis from OpenCode. |
+| **jira-workflow** | `runtime-specific/opencode/jira-workflow/` | Use this skill when reading, creating, searching, and updating JIRA issues from OpenCode. |
+| **knowledge-graph** | `runtime-specific/opencode/knowledge-graph/` | Build and maintain a lightweight knowledge graph in the work knowledgebase. Use when connecting related work notes, capturing design decisions, or surfacing complex relationships across projects. |
 | **morning** | `runtime-specific/opencode/morning/` | Morning briefing — calendar, reminders, weather, GitHub issues, priorities. Use when the user says "morning", "briefing", "start my day", or asks what's on today. |
 | **obsidian-work-notes** | `runtime-specific/opencode/obsidian-work-notes/` | Official Obsidian CLI-first workflow for work notes, with local wrapper fallback for custom search, writes, and graph operations |
 | **personal-planning** | `runtime-specific/opencode/personal-planning/` | Use when planning trips, family outings, personal events, or life milestones with concrete actions and contingencies. |
-| **phased-rollout** | `runtime-specific/opencode/phased-rollout/` | Execute phased deployments across environments with monitoring windows and rollback capability. |
+| **phased-rollout** | `runtime-specific/opencode/phased-rollout/` | Execute phased deployments across environments with monitoring windows and rollback capability. Use when coordinating multi-environment releases, canary deployments, or high-risk launches requiring explicit safety gates. |
 | **standup** | `runtime-specific/opencode/standup/` | Generate standup update from git activity, session memory, GitHub, and tasks. Use when the user says "standup", "daily update", or asks for a summary of recent work. |
 
 ## Archive

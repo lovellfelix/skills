@@ -1,6 +1,6 @@
 ---
 name: communication-style
-description: Refine technical communication for clarity, brevity, and review usefulness.
+description: Refine technical communication for clarity, brevity, and review usefulness. Use when writing PRs, documentation, RFCs, or Slack messages to improve clarity and reduce review friction.
 version: 0.3.0
 portable: true
 tags: [communication, engineering-writing, pr-review, slack, clarity]

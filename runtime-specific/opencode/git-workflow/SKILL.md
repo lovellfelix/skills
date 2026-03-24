@@ -1,6 +1,6 @@
 ---
 name: git-workflow
-description: "Git automation, worktrees, hooks, and advanced workflow patterns"
+description: Automate git workflows with worktrees, hooks, and advanced patterns. Use when setting up multi-branch workflows, automating commits, managing hooks, or handling complex merge/rebase scenarios.
 version: 0.1.0
 portable: false
 tags: [git, automation, worktrees, hooks, workflow, version-control]

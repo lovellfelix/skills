@@ -1,6 +1,6 @@
 ---
 name: performance-profiling
-description: Profile applications and generate optimization recommendations with measurable impact.
+description: Profile applications and generate optimization recommendations with measurable impact. Use when identifying bottlenecks, optimizing slow operations, or validating performance improvements.
 version: 0.1.0
 portable: true
 tags: [performance, profiling, optimization, portable]

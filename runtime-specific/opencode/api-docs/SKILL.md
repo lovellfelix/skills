@@ -1,6 +1,6 @@
 ---
 name: api-docs
-description: Store, query, and sync Swagger/OpenAPI specs in SQLite for cross-project API reference.
+description: Store, query, and sync Swagger/OpenAPI specs in SQLite for cross-project API reference. Use when building API clients, keeping API contracts in sync across projects, or querying endpoint details.
 version: 0.1.1
 portable: false
 tags: [api, openapi, swagger, docs, opencode]

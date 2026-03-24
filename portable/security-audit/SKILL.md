@@ -1,6 +1,6 @@
 ---
 name: security-audit
-description: Security vulnerability scanning, secret detection, and secure coding recommendations.
+description: Security vulnerability scanning, secret detection, and secure coding recommendations. Use before merging changes, during code review, or when assessing codebase security posture.
 version: 0.1.0
 portable: true
 tags: [security, audit, vulnerabilities, portable]

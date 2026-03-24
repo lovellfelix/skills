@@ -73,7 +73,7 @@
           }
         }
       },
-      "description": "Refine technical communication for clarity, brevity, and review usefulness.",
+      "description": "Refine technical communication for clarity, brevity, and review usefulness. Use when writing PRs, documentation, RFCs, or Slack messages to improve clarity and reduce review friction.",
       "entrypoint": "SKILL.md",
       "location": "portable/communication-style/",
       "name": "communication-style",
@@ -430,7 +430,7 @@
           }
         }
       },
-      "description": "Unified product and engineering skill for GrenadianBuzz across all surfaces (API, Android app, CLI, website, dashboard, CDN).",
+      "description": "Unified product and engineering skill for GrenadianBuzz across all surfaces (API, Android app, CLI, website, dashboard, CDN). Use when working on GrenadianBuzz features, architecture, or operational tasks.",
       "entrypoint": "SKILL.md",
       "location": "portable/grenadianbuzz/",
       "name": "grenadianbuzz",
@@ -486,7 +486,7 @@
       "location": "portable/handoff-resume/",
       "name": "handoff-resume",
       "personal_machine_only": false,
-      "portable": true,
+      "portable": false,
       "runtime": null,
       "tags": [
         "workflow",
@@ -526,7 +526,7 @@
           }
         }
       },
-      "description": "Write concise, operationally useful postmortems focused on decisions, causes, and concrete follow-ups.",
+      "description": "Write concise, operationally useful postmortems focused on decisions, causes, and concrete follow-ups. Use after production incidents or operational failures to extract learning and drive improvements.",
       "entrypoint": "SKILL.md",
       "location": "portable/incident-postmortem/",
       "name": "incident-postmortem",
@@ -616,7 +616,7 @@
           }
         }
       },
-      "description": "Idiomatic, safe Android Java-to-Kotlin migration playbook",
+      "description": "Idiomatic, safe Android Java-to-Kotlin migration playbook. Use when migrating Android projects from Java to Kotlin while maintaining behavior and test coverage.",
       "entrypoint": "SKILL.md",
       "location": "portable/java-to-kotlin-migration/",
       "name": "java-to-kotlin-migration",
@@ -661,7 +661,7 @@
           }
         }
       },
-      "description": "Location search and geocoding with a no-API-key default flow, including ZIP/postal-code based nearby lookup.",
+      "description": "Location search and geocoding with a no-API-key default flow, including ZIP/postal-code based nearby lookup. Use when planning trips, finding nearby places, or integrating location features without API setup.",
       "entrypoint": "SKILL.md",
       "location": "portable/location-search/",
       "name": "location-search",
@@ -758,7 +758,7 @@
       "location": "portable/memory-operations/",
       "name": "memory-operations",
       "personal_machine_only": false,
-      "portable": true,
+      "portable": false,
       "runtime": null,
       "tags": [
         "memory",
@@ -799,7 +799,7 @@
           }
         }
       },
-      "description": "Profile applications and generate optimization recommendations with measurable impact.",
+      "description": "Profile applications and generate optimization recommendations with measurable impact. Use when identifying bottlenecks, optimizing slow operations, or validating performance improvements.",
       "entrypoint": "SKILL.md",
       "location": "portable/performance-profiling/",
       "name": "performance-profiling",
@@ -1022,7 +1022,7 @@
           }
         }
       },
-      "description": "Security vulnerability scanning, secret detection, and secure coding recommendations.",
+      "description": "Security vulnerability scanning, secret detection, and secure coding recommendations. Use before merging changes, during code review, or when assessing codebase security posture.",
       "entrypoint": "SKILL.md",
       "location": "portable/security-audit/",
       "name": "security-audit",
@@ -1066,7 +1066,7 @@
           }
         }
       },
-      "description": "Practical patterns for storing, retrieving, and maintaining high-signal session memory via MCP.",
+      "description": "Practical patterns for storing, retrieving, and maintaining high-signal session memory via MCP. Use when building MCP-integrated workflows, caching session state, or establishing durable patterns across sessions.",
       "entrypoint": "SKILL.md",
       "location": "portable/session-memory-mcp/",
       "name": "session-memory-mcp",
@@ -1395,7 +1395,7 @@
           }
         }
       },
-      "description": "Store, query, and sync Swagger/OpenAPI specs in SQLite for cross-project API reference.",
+      "description": "Store, query, and sync Swagger/OpenAPI specs in SQLite for cross-project API reference. Use when building API clients, keeping API contracts in sync across projects, or querying endpoint details.",
       "entrypoint": "SKILL.md",
       "location": "runtime-specific/opencode/api-docs/",
       "name": "api-docs",
@@ -1409,7 +1409,7 @@
         "docs",
         "opencode"
       ],
-      "version": "0.1.0",
+      "version": "0.1.1",
       "work_machine_only": false
     },
     {
@@ -1456,7 +1456,7 @@
           }
         }
       },
-      "description": "Minimize token usage and keep context focused",
+      "description": "Reduce token usage and context bloat by using targeted reads, caching, and discarding noisy tool output. Use when exploring large codebases, summarizing lengthy outputs, or optimizing for cost.",
       "entrypoint": "SKILL.md",
       "location": "runtime-specific/opencode/context-optimization/",
       "name": "context-optimization",
@@ -1487,7 +1487,7 @@
           }
         }
       },
-      "description": "Git automation, worktrees, hooks, and advanced workflow patterns",
+      "description": "Automate git workflows with worktrees, hooks, and advanced patterns. Use when setting up multi-branch workflows, automating commits, managing hooks, or handling complex merge/rebase scenarios.",
       "entrypoint": "SKILL.md",
       "location": "runtime-specific/opencode/git-workflow/",
       "name": "git-workflow",
@@ -1504,6 +1504,37 @@
       ],
       "version": "0.1.0",
       "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Use this skill when reading, writing, or searching Google Docs, Sheets, and Drive files from OpenCode.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/google-docs/",
+      "name": "google-docs",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "google-docs",
+        "google-sheets",
+        "google-drive",
+        "opencode",
+        "work"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": true
     },
     {
       "adapters": {
@@ -1550,7 +1581,69 @@
           }
         }
       },
-      "description": "Build and maintain a lightweight knowledge graph in the work knowledgebase.",
+      "description": "Use this skill to search LinkedIn codebases with Jarvis from OpenCode.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/jarvis-search/",
+      "name": "jarvis-search",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "jarvis",
+        "code-search",
+        "linkedin",
+        "opencode",
+        "work"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": true
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Use this skill when reading, creating, searching, and updating JIRA issues from OpenCode.",
+      "entrypoint": "SKILL.md",
+      "location": "runtime-specific/opencode/jira-workflow/",
+      "name": "jira-workflow",
+      "personal_machine_only": false,
+      "portable": false,
+      "runtime": "opencode",
+      "tags": [
+        "jira",
+        "atlassian",
+        "workflow",
+        "opencode",
+        "work"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": true
+    },
+    {
+      "adapters": {
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Build and maintain a lightweight knowledge graph in the work knowledgebase. Use when connecting related work notes, capturing design decisions, or surfacing complex relationships across projects.",
       "entrypoint": "SKILL.md",
       "location": "runtime-specific/opencode/knowledge-graph/",
       "name": "knowledge-graph",
@@ -1563,7 +1656,7 @@
         "memory",
         "opencode"
       ],
-      "version": "0.1.0",
+      "version": "0.1.1",
       "work_machine_only": false
     },
     {
@@ -1673,7 +1766,7 @@
           }
         }
       },
-      "description": "Execute phased deployments across environments with monitoring windows and rollback capability.",
+      "description": "Execute phased deployments across environments with monitoring windows and rollback capability. Use when coordinating multi-environment releases, canary deployments, or high-risk launches requiring explicit safety gates.",
       "entrypoint": "SKILL.md",
       "location": "runtime-specific/opencode/phased-rollout/",
       "name": "phased-rollout",

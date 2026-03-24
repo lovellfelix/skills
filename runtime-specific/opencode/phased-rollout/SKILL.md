@@ -1,6 +1,6 @@
 ---
 name: phased-rollout
-description: Execute phased deployments across environments with monitoring windows and rollback capability.
+description: Execute phased deployments across environments with monitoring windows and rollback capability. Use when coordinating multi-environment releases, canary deployments, or high-risk launches requiring explicit safety gates.
 version: 0.1.0
 portable: false
 tags: [deployment, rollout, release, operations, opencode, work]
