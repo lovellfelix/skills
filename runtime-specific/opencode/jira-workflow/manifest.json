@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "name": "jira-workflow",
+  "version": "0.1.0",
+  "portable": false,
+  "runtime": "opencode",
+  "work_machine_only": true,
+  "entrypoint": "SKILL.md",
+  "tags": [
+    "jira",
+    "atlassian",
+    "workflow",
+    "opencode",
+    "work"
+  ],
+  "adapters": {
+    "opencode": {
+      "path": "SKILL.md",
+      "mode": "native"
+    }
+  },
+  "compatibility": {
+    "runtimes": {
+      "opencode": {
+        "min_version": "*"
+      }
+    }
+  }
+}
