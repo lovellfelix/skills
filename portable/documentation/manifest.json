@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "name": "rfc-blueprint",
+  "name": "documentation",
   "version": "0.3.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
-    "rfc",
-    "architecture",
-    "design",
-    "tradeoffs",
-    "rollout"
+    "documentation",
+    "engineering",
+    "runbook",
+    "operations",
+    "architecture"
   ],
   "adapters": {
     "opencode": {

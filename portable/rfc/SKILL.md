@@ -1,12 +1,12 @@
 ---
-name: rfc-blueprint
+name: rfc
 description: Draft tight, reviewable engineering RFCs focused on constraints, decisions, and rollout safety.
 version: 0.3.0
 portable: true
 tags: [rfc, architecture, design, tradeoffs, rollout]
 ---
 
-# RFC Blueprint
+# RFC
 
 ## Style Defaults
 

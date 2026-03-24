@@ -1,12 +1,12 @@
 ---
-name: engineering-doc
+name: documentation
 description: Write and update concise engineering documentation grounded in runtime behavior and operations.
 version: 0.3.0
 portable: true
 tags: [documentation, engineering, runbook, operations, architecture]
 ---
 
-# Engineering Doc
+# Documentation
 
 ## Style Defaults
 
