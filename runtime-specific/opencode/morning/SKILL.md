@@ -19,13 +19,13 @@ Run all of these in parallel:
 **Always:**
 - `date +%u` and `date +%H` (determine weekday/weekend and time of day)
 - Load preferences via session-memory MCP: `get_user_preferences({ user_id: "default" })` — look for `planning:work_context` and `identity:zip_code`
-- `bash ~/.config/opencode/scripts/apple-calendar.sh today --json`
-- `bash ~/.config/opencode/scripts/apple-reminders.sh overdue --json`
-- `bash ~/.config/opencode/scripts/apple-reminders.sh today --json`
-- `bash ~/.config/opencode/scripts/apple-notes-safe.sh read-context`
+- `bash ~/.dotfiles/hacks/macos-automation/apple-calendar.sh today --json`
+- `bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh overdue --json`
+- `bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh today --json`
+- `bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh read-context`
 
 **If after 16:00:**
-- `bash ~/.config/opencode/scripts/apple-calendar.sh tomorrow --json`
+- `bash ~/.dotfiles/hacks/macos-automation/apple-calendar.sh tomorrow --json`
 
 **If ZIP code found in preferences:**
 - `bash ~/.config/opencode/scripts/weather.sh today --zip "$ZIP" --json`
@@ -80,7 +80,7 @@ One suggestion
 ### 5. STORE (silent)
 
 - Store today's plan in session-memory: `store_session_context({ session_id: "<git-basename>", context_type: "workflow", key: "daily-plan-YYYY-MM-DD", value: "..." })`
-- Sync to Apple Notes: `bash ~/.config/opencode/scripts/apple-notes-safe.sh sync-context '<json>'`
+- Sync to Apple Notes: `bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh sync-context '<json>'`
 
 ### 6. LEARN (silent)
 

@@ -26,7 +26,7 @@ Run all in parallel:
 - `gh search issues --author=@me --updated=">$(date -v-1d +%Y-%m-%d)" --json number,title,state,repository`
 
 **Calendar:**
-- `bash ~/.config/opencode/scripts/apple-calendar.sh today --json`
+- `bash ~/.dotfiles/hacks/macos-automation/apple-calendar.sh today --json`
 
 **Graceful degradation:** If `gh` is unavailable or rate-limited, use session memory only. If Apple scripts fail, skip calendar context.
 
