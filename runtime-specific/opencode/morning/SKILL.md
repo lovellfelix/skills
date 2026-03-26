@@ -18,7 +18,10 @@ Run all of these in parallel:
 
 **Always:**
 - `date +%u` and `date +%H` (determine weekday/weekend and time of day)
-- Load preferences via session-memory MCP: `get_user_preferences({ user_id: "default" })` — look for `planning:work_context` and `identity:zip_code`
+- Load preferences via session-memory MCP: `session-memory_get_user_preferences({ user_id: "default" })` without key filters.
+  - Explicitly scan returned preference rows for ZIP keys in this order: `location.zip`, `identity:zip_code`, `zip_code`.
+  - Normalize ZIP by trimming whitespace and accepting only `12345` or `12345-6789`.
+  - If none found/valid, set ZIP empty and continue with: `Weather unavailable - no saved ZIP/location`.
 - `bash ~/.dotfiles/hacks/macos-automation/apple-calendar.sh today --json`
 - `bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh overdue --json`
 - `bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh today --json`
@@ -29,6 +32,10 @@ Run all of these in parallel:
 
 **If ZIP code found in preferences:**
 - `bash ~/.config/opencode/scripts/weather.sh today --zip "$ZIP" --json`
+
+**If ZIP code not found in preferences:**
+- Continue the briefing without weather.
+- Report: `Weather unavailable - no saved ZIP/location`.
 
 **If work mode** (user explicitly asks OR `planning:work_context` is `"true"`):
 - `gh search issues --assignee @me --state open --sort updated --order desc --limit 50 --json number,title,url,repository,labels,updatedAt,createdAt,commentsCount`

@@ -43,6 +43,7 @@ Durable memory convention for this skill:
 - Durable project state belongs in `~/.agents/memory/projects/<project>/`.
 - Durable transfer packets belong in `~/.agents/memory/handoffs/YYYY/MM/`.
 - Promoted exports belong in `~/.agents/memory/promoted/`.
+- Prefer compacted promoted summaries first (`~/.agents/memory/promoted/*-compact.{md,json}`) before opening raw promoted exports.
 - Durable identity/preferences belong in `~/.agents/memory/profile/`.
 - Durable local-only people memory belongs in `~/.agents/memory/people/{profiles,notes,links}/`.
 - `people/links/` stores local graph-oriented references to session-memory entities (meetings, projects, tasks, events).
@@ -104,6 +105,7 @@ At session start:
 1. Retrieve recent workflow contexts.
 2. Retrieve open blockers and in-progress todos.
 3. Retrieve project conventions relevant to current task.
+4. Read durable disk artifacts in this order when available: `projects/<project>/artifacts/autodream-*.md`, then `promoted/*-compact.md`, then `handoffs/YYYY/MM/*.md`.
 
 During execution:
 
