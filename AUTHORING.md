@@ -103,7 +103,7 @@ Optional activation metadata:
 Regenerate generated artifacts after skill edits:
 
 ```bash
-python3 ./scripts/generate-skills-index.py
+python3 ./hacks/generate-skills-index.py
 ```
 
 This updates:
@@ -116,7 +116,7 @@ This updates:
 Run validation before commit:
 
 ```bash
-./scripts/validate-skills.sh
+./hacks/validate-skills.sh
 ```
 
 Checks include metadata completeness, shared-field consistency, adapter link health, compatibility coverage, and personal-machine activation guidance for personal-only skills.
@@ -126,11 +126,11 @@ Checks include metadata completeness, shared-field consistency, adapter link hea
 Portable:
 
 ```bash
-./scripts/new-skill.sh my-skill-name
+./hacks/new-skill.sh my-skill-name
 ```
 
 Runtime-specific:
 
 ```bash
-./scripts/new-skill.sh my-skill-name --runtime opencode
+./hacks/new-skill.sh my-skill-name --runtime opencode
 ```

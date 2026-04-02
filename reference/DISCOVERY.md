@@ -214,7 +214,7 @@ Keep "Use when" and anti-patterns explicit in SKILL.md.
 Use the scaffolding script to create a new skill with correct structure and templates:
 
 ```bash
-./scripts/new-skill.sh my-skill-name
+./hacks/new-skill.sh my-skill-name
 ```
 
 Creates a portable skill under `skills/portable/my-skill-name/` with:
@@ -225,7 +225,7 @@ Creates a portable skill under `skills/portable/my-skill-name/` with:
 For runtime-specific skills:
 
 ```bash
-./scripts/new-skill.sh my-skill-name --runtime opencode
+./hacks/new-skill.sh my-skill-name --runtime opencode
 ```
 
 ### Validate Skill Metadata
@@ -233,7 +233,7 @@ For runtime-specific skills:
 Run validation to check all skills for completeness and correctness:
 
 ```bash
-./scripts/validate-skills.sh
+./hacks/validate-skills.sh
 ```
 
 Checks:
@@ -255,7 +255,7 @@ Before committing a new skill:
 - [ ] "Use when" has 2+ concrete trigger examples
 - [ ] Directory structure follows convention
 - [ ] No hardcoded file paths (use relative or placeholder)
-- [ ] Validation passes: `./scripts/validate-skills.sh`
+- [ ] Validation passes: `./hacks/validate-skills.sh`
 
 ## Integration with Agent System
 

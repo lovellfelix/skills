@@ -35,7 +35,7 @@ This directory is the canonical home for skills-first guidance in this repositor
 Check all skills in `skills/` for required files, metadata completeness, and JSON validity:
 
 ```bash
-./scripts/validate-skills.sh
+./hacks/validate-skills.sh
 ```
 
 ### Regenerate Skills Index
@@ -43,7 +43,7 @@ Check all skills in `skills/` for required files, metadata completeness, and JSO
 `skills/INDEX.md` and `skills/registry.json` are generated from `skills/**/manifest.json` and `SKILL.md` frontmatter:
 
 ```bash
-python3 ./scripts/generate-skills-index.py
+python3 ./hacks/generate-skills-index.py
 ```
 
 CI runs this generator and fails if generated artifacts are out of date.
@@ -60,13 +60,13 @@ Validates:
 **Portable skill** (works across runtimes):
 
 ```bash
-./scripts/new-skill.sh my-skill-name
+./hacks/new-skill.sh my-skill-name
 ```
 
 **Runtime-specific skill** (OpenCode, Claude, Cursor, etc.):
 
 ```bash
-./scripts/new-skill.sh my-skill-name --runtime opencode
+./hacks/new-skill.sh my-skill-name --runtime opencode
 ```
 
 Both generate scaffolding with:

@@ -140,7 +140,7 @@ This checklist covers both **portable skills** (SKILL.md + manifest.json) and **
 **Run before commit:**
 
 ```bash
-./scripts/validate-skills.sh
+./hacks/validate-skills.sh
 ```
 
 Checks include:
@@ -206,7 +206,7 @@ Checks include:
 **After adding or updating a skill:**
 
 ```bash
-python3 ./scripts/generate-skills-index.py
+python3 ./hacks/generate-skills-index.py
 ```
 
 This updates:
@@ -284,8 +284,8 @@ This updates:
 **Run quarterly:**
 
 ```bash
-./scripts/validate-skills.sh          # Metadata + adapter health
-./scripts/generate-skills-index.py    # Rebuild registry (check for orphans)
+./hacks/validate-skills.sh            # Metadata + adapter health
+./hacks/generate-skills-index.py      # Rebuild registry (check for orphans)
 git ls-files -d                       # List deleted tracked files
 git symbolic-ref --list               # Check symlink targets
 ```
@@ -346,8 +346,8 @@ git symbolic-ref --list               # Check symlink targets
 - [ ] Markdown format (no proprietary syntax)
 
 **Validation:**
-- [ ] `./scripts/validate-skills.sh` passes (metadata consistency)
-- [ ] `./scripts/generate-skills-index.py` updates registry without errors
+- [ ] `./hacks/validate-skills.sh` passes (metadata consistency)
+- [ ] `./hacks/generate-skills-index.py` updates registry without errors
 - [ ] Skill appears in updated `skills/INDEX.md`
 - [ ] Manual spot-check: Can you find the skill via search/tags?
 
@@ -363,13 +363,13 @@ git symbolic-ref --list               # Check symlink targets
 
 ### Creating a New Portable Skill
 
-1. Run scaffold: `./scripts/new-skill.sh my-skill-name`
+1. Run scaffold: `./hacks/new-skill.sh my-skill-name`
 2. Edit `SKILL.md` frontmatter and content
 3. Create `manifest.json` matching frontmatter exactly
 4. Add examples or reference files to supporting directories if needed
 5. Test examples; verify all links
-6. Run validation: `./scripts/validate-skills.sh`
-7. Run generation: `python3 ./scripts/generate-skills-index.py`
+6. Run validation: `./hacks/validate-skills.sh`
+7. Run generation: `python3 ./hacks/generate-skills-index.py`
 8. Verify skill in `skills/INDEX.md` and `skills/registry.json`
 9. Commit with message: `feat(skills): add my-skill-name`
 
@@ -399,7 +399,7 @@ git symbolic-ref --list               # Check symlink targets
 
 1. **Deprecation (v2.0.0):** Add "## Deprecated" banner at top of SKILL.md with migration path
 2. **Removal:** Delete skill directory, remove from registry manually or via script
-3. Run `./scripts/validate-skills.sh` to confirm registry consistency
+3. Run `./hacks/validate-skills.sh` to confirm registry consistency
 4. Commit with message: `deprecate(skill-name): reason` or `remove(skill-name): EOL`
 
 ---
@@ -532,5 +532,5 @@ main "$@"
 - **skills/INDEX.md** — Catalog of all portable skills
 - **skills/registry.json** — Machine-readable skill manifest
 - **SKILL-SPEC.md** — Technical specification for skill format
-- **scripts/validate-skills.sh** — Automated metadata validation
-- **scripts/generate-skills-index.py** — Registry regeneration tool
+- **hacks/validate-skills.sh** — Automated metadata validation
+- **hacks/generate-skills-index.py** — Registry regeneration tool
