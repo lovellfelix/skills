@@ -531,6 +531,6 @@ main "$@"
 - **AUTHORING.md** — Detailed setup and scaffolding instructions
 - **skills/INDEX.md** — Catalog of all portable skills
 - **skills/registry.json** — Machine-readable skill manifest
-- **SKILL-SPEC.md** — Technical specification for skill format
+- **docs/skill-spec/SKILL-SPEC.md** — Technical specification for skill format
 - **hacks/validate-skills.sh** — Automated metadata validation
 - **hacks/generate-skills-index.py** — Registry regeneration tool
