@@ -9,7 +9,7 @@ applies_to: [planner, task-manager, orchestrator, personal-assistant]
 
 # Actionable Planning Skill
 
-Transform vague goals into **concrete, executable plans** using the CLEAR framework inspired by LinkedIn's best planning practices.
+Transform vague goals into **concrete, executable plans** using the CLEAR framework.
 
 ## The CLEAR Framework
 
@@ -23,7 +23,7 @@ Every action item must be:
 | **A** | **Assigned** - Clear ownership | "Someone should..." | "Owner: @john" |
 | **R** | **Resulted** - Success criteria defined | "When it's done" | "Done when: Tests pass, PR merged" |
 
-## LinkedIn Best Practices for Project Planning
+## Planning Best Practices
 
 ### 1. Start with the End in Mind
 - Define success criteria FIRST
