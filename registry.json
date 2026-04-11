@@ -661,6 +661,51 @@
           }
         }
       },
+      "description": "Use this skill when organizing, searching, or updating the personal knowledgebase.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/knowledgebase-workflow/",
+      "name": "knowledgebase-workflow",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "knowledgebase",
+        "workflow",
+        "documentation",
+        "notes",
+        "reference"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Location search and geocoding with a no-API-key default flow, including ZIP/postal-code based nearby lookup. Use when planning trips, finding nearby places, or integrating location features without API setup.",
       "entrypoint": "SKILL.md",
       "location": "portable/location-search/",
