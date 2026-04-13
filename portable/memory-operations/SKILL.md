@@ -2,7 +2,7 @@
 name: memory-operations
 description: Coordinate session-memory capture, durable promotion, and handoff-ready resume workflows.
 version: 0.1.0
-portable: false
+portable: true
 tags: [memory, mcp, handoff, resume, durability]
 ---
 

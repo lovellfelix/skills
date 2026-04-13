@@ -2,7 +2,7 @@
 name: handoff-resume
 description: Resume interrupted work and produce clean handoffs with clear blockers and next steps.
 version: 0.1.0
-portable: false
+portable: true
 tags: [workflow, continuity, handoff, resume]
 ---
 
