@@ -96,8 +96,8 @@ By default it syncs links for OpenCode, Claude, and Cursor (when detected):
 Personal-machine-only opt-in:
 
 - Skills with `"personal_machine_only": true` in `manifest.json` are skipped by default.
-- To enable locally, add the skill name to `~/.config/opencode/personal-machine-skills.txt`.
-- Personal-only skills must document activation in `SKILL.md` under a `## Personal Machine Activation` section, including allowlist setup and the `~/.config/opencode/personal-machine-skills.txt` path.
+- To enable locally, add the skill name to `~/.personal-machine-skills.txt`.
+- Personal-only skills must document activation in `SKILL.md` under a `## Personal Machine Activation` section, including allowlist setup and the `~/.personal-machine-skills.txt` path.
 - Example:
 
 ```txt

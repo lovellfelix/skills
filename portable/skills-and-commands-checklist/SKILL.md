@@ -119,7 +119,7 @@ This checklist covers both **portable skills** (SKILL.md + manifest.json) and **
 - [ ] **In manifest.json:** Add `"personal_machine_only": true`.
 - [ ] **In SKILL.md:** Include a `## Personal Machine Activation` section explaining:
   - Why it's personal-only (e.g., contains private integrations, personal workflows, or irrelevant for shared machines)
-  - How to enable locally: Add skill name to `~/.config/opencode/personal-machine-skills.txt` (one per line)
+  - How to enable locally: Add skill name to `~/.personal-machine-skills.txt` (one per line)
   - Reference the allowlist file explicitly
   
 - [ ] **Alternative: Work-machine-only skills:**

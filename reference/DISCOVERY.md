@@ -130,7 +130,7 @@ Maps skill to runtime adapters and versioning.
 - `compatibility.runtimes` must exist in `manifest.json`
 - Runtime keys should match `adapters` keys
 - `min_version` can be `*` (no minimum) or a runtime version constraint string
-- Optional `personal_machine_only: true` keeps a skill disabled unless enabled via local allowlist (`~/.config/opencode/personal-machine-skills.txt`)
+- Optional `personal_machine_only: true` keeps a skill disabled unless enabled via local allowlist (`~/.personal-machine-skills.txt`)
 
 **Adapter modes:**
 - `native`: Runtime loads and executes directly

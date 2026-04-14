@@ -241,7 +241,7 @@ Output:
 ## Personal Machine Activation
 
 - This is a personal-machine-only skill and stays disabled unless explicitly allowlisted.
-- Add `grenadianbuzz` to `~/.config/opencode/personal-machine-skills.txt` (one skill name per line).
+- Add `grenadianbuzz` to `~/.personal-machine-skills.txt` (one skill name per line).
 - Re-run your runtime link sync after updating the allowlist.
 
 ## Troubleshooting
