@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "name": "homelab-gitops-flux-operations",
+  "version": "0.1.0",
+  "portable": true,
+  "personal_machine_only": true,
+  "entrypoint": "SKILL.md",
+  "tags": [
+    "homelab",
+    "flux",
+    "gitops",
+    "kubernetes",
+    "helmrelease",
+    "home-assistant",
+    "sops",
+    "portable"
+  ],
+  "adapters": {
+    "opencode": {
+      "path": "SKILL.md",
+      "mode": "native"
+    },
+    "cursor": {
+      "path": "SKILL.md",
+      "mode": "import"
+    },
+    "claude": {
+      "path": "SKILL.md",
+      "mode": "include"
+    },
+    "copilot": {
+      "path": "SKILL.md",
+      "mode": "include"
+    },
+    "forge": {
+      "path": "SKILL.md",
+      "mode": "include"
+    }
+  },
+  "compatibility": {
+    "runtimes": {
+      "opencode": {
+        "min_version": "*"
+      },
+      "cursor": {
+        "min_version": "*"
+      },
+      "claude": {
+        "min_version": "*"
+      },
+      "copilot": {
+        "min_version": "*"
+      },
+      "forge": {
+        "min_version": "*"
+      }
+    }
+  }
+}
