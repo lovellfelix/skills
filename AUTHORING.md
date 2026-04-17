@@ -55,10 +55,6 @@ tags: [workflow, example]
     "copilot": {
       "path": "SKILL.md",
       "mode": "include"
-    },
-    "forge": {
-      "path": "SKILL.md",
-      "mode": "include"
     }
   },
   "compatibility": {
@@ -74,9 +70,6 @@ tags: [workflow, example]
       },
       "copilot": {
         "min_version": "*"
-      },
-      "forge": {
-        "min_version": "*"
       }
     }
   }
@@ -87,7 +80,7 @@ Compatibility rules:
 
 - `compatibility.runtimes` is required.
 - Runtime keys must match `adapters` keys.
-- All five runtimes (`opencode`, `cursor`, `claude`, `copilot`, `forge`) should be declared for portable skills.
+- All supported runtimes (`opencode`, `cursor`, `claude`, `copilot`) should be declared for portable skills.
 - `min_version` can be `*` or a runtime-version constraint string.
 
 Optional activation metadata:

@@ -28,10 +28,6 @@
     "copilot": {
       "path": "SKILL.md",
       "mode": "include"
-    },
-    "forge": {
-      "path": "SKILL.md",
-      "mode": "include"
     }
   },
   "compatibility": {
@@ -46,9 +42,6 @@
         "min_version": "*"
       },
       "copilot": {
-        "min_version": "*"
-      },
-      "forge": {
         "min_version": "*"
       }
     }
