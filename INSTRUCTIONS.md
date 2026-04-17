@@ -52,6 +52,7 @@ This user works across multiple coding harnesses: Claude Code, OpenCode, Pi, Cop
 - **Shared state**: Session-memory MCP is shared across harnesses. Preferences and conventions are available everywhere.
 - **Portable skills**: Skills in `~/.dotfiles/skills/portable/` work across all harnesses.
 - **Session ID convention**: Use git repository basename as session/project ID.
+- **Conflict priority**: When shared skill guidance or agent overlays disagree between Pi and OpenCode, preserve Pi-safe behavior first and adapt OpenCode-specific examples second.
 - When making changes to agent configs or skills, consider impact on all harnesses.
 
 ## Ignore Directories

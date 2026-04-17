@@ -8,6 +8,7 @@ Guidelines for naming, structuring, and discovering skill packages across runtim
 - **Core files**: `SKILL.md`, `manifest.json`
 - **Triggers**: Document in SKILL.md frontmatter + "Use when" section
 - **Metadata**: YAML frontmatter in `SKILL.md`
+- **Pi support**: Pi currently discovers portable skills from the shared `~/.agents/skills/` directory; no dedicated `pi` adapter key is required today
 
 ## Naming
 
@@ -63,7 +64,7 @@ Brief explanation.
 
 ## Use when
 - Bullet list of trigger scenarios
-- Should match typical OpenCode/IDE workflow prompts
+- Should match typical Pi/OpenCode/IDE workflow prompts
 - Include both positive cases and anti-patterns
 
 ## Do not use when
@@ -198,6 +199,7 @@ Keep "Use when" and anti-patterns explicit in SKILL.md.
 - Core logic in `SKILL.md`; adapters in `manifest.json`
 - Example: reference docs, code style guides, workflows
 - Should have `portable: true` in frontmatter
+- Prefer Pi-safe, tool-agnostic wording first; push OpenCode-only tool syntax into runtime-specific overlays when needed
 
 ### Runtime-Specific (`skills/runtime-specific/<runtime>/`)
 

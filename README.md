@@ -26,6 +26,7 @@ This directory is the canonical home for skills-first guidance in this repositor
 - Prefer creating new skills under `portable/`.
 - Keep `SKILL.md` concise and practical.
 - Keep runtime-specific behavior out of portable skill cores.
+- Optimize portable skills for Pi first, then OpenCode; if behavior differs, preserve Pi-safe guidance and move extra OpenCode-specific behavior into adapters or runtime-specific overlays.
 - Follow `AUTHORING.md` for metadata and compatibility conventions.
 
 ## Validation & Scaffolding
@@ -92,6 +93,9 @@ By default it syncs links for OpenCode, Claude, and Cursor (when detected):
 - OpenCode: `~/.config/opencode/skills/portable` and `~/.config/opencode/skills/runtime`
 - Claude: `~/.claude/skills/portable`
 - Cursor: `~/.cursor/skills/portable`
+- Pi: usually consumes shared portable skills from `~/.agents/skills/` without requiring a dedicated manifest adapter key; `~/.pi/agent/skills/` remains available for Pi-local overlays
+
+The sync script focuses on runtimes that need explicit materialized links. Pi normally reads the shared skill directory directly.
 
 Personal-machine-only opt-in:
 
