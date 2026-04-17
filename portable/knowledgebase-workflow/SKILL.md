@@ -91,9 +91,9 @@ type: reference|note|dashboard|project
 ---
 ```
 
-## MCP Guidance
+## Metadata and runtime guidance
 
-This knowledgebase includes a local MCP helper in `.mcp/`.
+This knowledgebase includes local `.mcp/` metadata and helper scripts.
 
 - `.mcp/server.js` runs the KB MCP server.
 - `.mcp/manifest.json` defines search categories and taxonomy.
@@ -103,6 +103,7 @@ This knowledgebase includes a local MCP helper in `.mcp/`.
 Rules:
 
 - Treat `.mcp/manifest.json` as search metadata, not the source of truth for content placement.
+- In Pi, prefer harness-native tools when available instead of assuming a directly exposed knowledgebase MCP server.
 - If folder structure changes materially, update `.mcp/manifest.json`.
 - After large doc reorganizations, run `node .mcp/generate-index.js`.
 - After broad frontmatter cleanup, run `node .mcp/validate-metadata.js`.

@@ -100,4 +100,4 @@ Track any observed patterns (meeting-heavy days, focus patterns) via `track_user
 - Gather data in the main agent, not subagents (scripts need local access).
 - If any source fails (MCP server unreachable, script error, gh not authenticated), skip that section silently — don't fail the whole briefing.
 - If session-memory MCP is unavailable, skip preference loading and plan storage. Use known defaults from auto-memory instead.
-- If knowledgebase MCP is unavailable, skip KB lookups entirely.
+- If the work knowledgebase tool/wrapper is unavailable, skip KB lookups entirely.

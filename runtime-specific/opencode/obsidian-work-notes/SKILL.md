@@ -119,6 +119,14 @@ bash ~/.config/opencode/scripts/obsidian-notes.sh graph "Rollout Plan" --depth 2
 - `language-coder`: load this skill only when checking work-note patterns or runbooks.
 - `jr-orchestrator`: do not deep-load this skill unless routing depends on work-note lookup.
 
+## Pi Mapping
+
+In Pi work sessions:
+
+- use `work_knowledgebase` for `search`, `read`, `recent`, `backlinks`, and `graph`
+- treat it as a Pi tool wrapper around `obsidian-notes.sh`, not as a separate knowledgebase MCP server
+- use `session_memory` / `durable_memory` only for memory workflows, not note retrieval
+
 ## Short Rule
 
 If the task is "use work notes", load `obsidian-work-notes`, use `obsidian-notes.sh` for automation, and opt into official `obsidian` only when app-native behavior is specifically useful.

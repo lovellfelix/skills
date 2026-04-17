@@ -154,6 +154,16 @@ Adapt names to your MCP runtime while preserving this structure.
 - `session-memory_sync_todos_to_tasks`
 - `session-memory_query_memory`
 
+**In Pi**, the equivalent surfaces are split by memory role:
+- `session_memory` for live MCP-backed session context
+- `workflow_tasks` for task-state continuity backed by session-memory MCP
+- `durable_memory` for on-disk promoted summaries, handoffs, and autodream workflows
+
+Rule of thumb in Pi:
+- use `session_memory` for active working context
+- use `durable_memory` for durable artifacts on disk
+- use `work_knowledgebase` for work notes/runbooks in `~/knowledgebase`
+
 ## Examples and reference
 
 - `examples/memory-record-patterns.md`
