@@ -10,6 +10,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 
 | Name | Location | Purpose |
 |------|----------|---------|
+| **captain-work-search** | `portable/captain-work-search/` | Use Captain for work-domain search across JIRA, Confluence, Google surfaces, and Jarvis code search after checking local repo and work notes first. Best for Pi-safe guidance on when and how to use Captain as a fallback. |
 | **code-review** | `portable/code-review/` | Performs comprehensive code review with security scanning and language auto-detection. |
 | **communication-style** | `portable/communication-style/` | Refine technical communication for clarity, brevity, and review usefulness. Use when writing PRs, documentation, RFCs, or Slack messages to improve clarity and reduce review friction. |
 | **compose-material3** | `portable/compose-material3/` | Build beautiful, modern Android UI with Material Design 3 and Jetpack Compose while avoiding generic boilerplate. |
@@ -42,6 +43,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **skills-and-commands-checklist** | `portable/skills-and-commands-checklist/` | Use when authoring or maintaining portable skills and custom commands to ensure correctness, discoverability, and long-term maintainability across tools and machines. |
 | **sre-debugging** | `portable/sre-debugging/` | Debug Linux servers, Puppet, Kubernetes, RPM, systemd, and infrastructure issues with systematic troubleshooting. |
 | **testing** | `portable/testing/` | Universal testing with framework auto-detection for Python, JS, TS, Go, and Kotlin. |
+| **work-search** | `portable/work-search/` | Search internal work systems (JIRA, Confluence, code, Slack, wiki, Google Docs) using Captain via Pi-safe tools such as work_context_search and env_mcp. Use when the user asks about internal docs, tickets, code in other repos, team wikis, Slack discussions, or any LinkedIn internal knowledge. |
 | **writing-plans** | `portable/writing-plans/` | Use when you have a spec or requirements for a multi-step task, before touching code |
 
 ## Runtime-Specific Skills

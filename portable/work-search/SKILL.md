@@ -1,6 +1,9 @@
 ---
 name: work-search
-description: Search internal work systems (JIRA, Confluence, code, Slack, wiki, Google Docs) using captain's unified_context_search and domain-specific tools via the env_mcp tool. Use when the user asks about internal docs, tickets, code in other repos, team wikis, Slack discussions, or any LinkedIn internal knowledge.
+description: Search internal work systems (JIRA, Confluence, code, Slack, wiki, Google Docs) using Captain via Pi-safe tools such as work_context_search and env_mcp. Use when the user asks about internal docs, tickets, code in other repos, team wikis, Slack discussions, or any LinkedIn internal knowledge.
+version: 0.1.0
+portable: true
+tags: [captain, jarvis, jira, confluence, google, slack, work, portable]
 ---
 
 # Work Search — Internal Knowledge via Captain
@@ -15,14 +18,30 @@ Search across LinkedIn internal systems using captain MCP server tools through t
 - Finding Slack discussions or internal documentation
 - Any query about LinkedIn engineering tools, processes, or best practices
 
+## Work Machine Activation
+
+- This is a work-machine-only skill.
+- It is linked only when the local work-machine flag file exists: `~/.work-env-skills`.
+- The runtime linker can use a custom flag path via `SKILL_WORK_MACHINE_FLAG_FILE=/path/to/flag`.
+
 ## Prerequisites
 
 - Captain MCP server must be enabled: check with `/mcp`
 - Auth must be current: check with `/mcp auth`, fix with `/mcp setup`
+- Prefer repo-local search and `work_knowledgebase` before Captain
+- When adapting LinkedIn Claude plugin workflows into Pi/shared skills, inspect local plugin docs first with `work_skill_reference`
 
 ## How to Search
 
 ### 1. Unified Context Search (best for general questions)
+
+Prefer the Pi wrapper first:
+
+```
+work_context_search query="<natural language question>"
+```
+
+Raw Captain path when you need exact MCP arguments:
 
 ```
 env_mcp action=call server=captain toolName=unified_context_search argumentsJson={"query": "<natural language question>"}
@@ -69,3 +88,20 @@ If unsure which tool to use:
 ```
 env_mcp action=list_tools server=captain
 ```
+
+## Pi preference order
+
+1. Search the current repository
+2. Use `work_knowledgebase` for notes, runbooks, and prior work context
+3. Use `work_skill_reference` when the task is about LinkedIn Claude plugins, work skills, or adapting existing internal workflows
+4. Use `work_context_search` for common Captain-backed work lookup
+5. Fall back to raw `env_mcp` calls when you need exact Captain tools or arguments
+
+## Work skill adaptation flow
+
+When the user asks how an internal workflow already works in Claude or LinkedIn plugins:
+
+1. `work_skill_reference action=list_skills plugin="<plugin-name>"`
+2. `work_skill_reference action=search query="<topic>" plugin="<plugin-name>"`
+3. `work_skill_reference action=read identifier="<result path>"`
+4. Adapt the workflow into Pi-safe tools such as `work_knowledgebase`, `work_context_search`, and `env_mcp`
