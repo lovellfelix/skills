@@ -29,6 +29,10 @@
     "copilot": {
       "path": "SKILL.md",
       "mode": "include"
+    },
+    "pi": {
+      "path": "SKILL.md",
+      "mode": "include"
     }
   },
   "compatibility": {
@@ -43,6 +47,9 @@
         "min_version": "*"
       },
       "copilot": {
+        "min_version": "*"
+      },
+      "pi": {
         "min_version": "*"
       }
     }
