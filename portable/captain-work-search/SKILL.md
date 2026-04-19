@@ -8,6 +8,8 @@ tags: [captain, jarvis, jira, confluence, google, work, portable]
 
 # Captain Work Search
 
+One-line summary: Compatibility alias for work-search that preserves the same local-first, Captain-fallback policy for internal work lookup.
+
 Use Captain for work-domain search only after checking the local repository, repo-native tools, and work notes first.
 
 ## Canonical vs overlap

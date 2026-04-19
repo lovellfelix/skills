@@ -8,6 +8,8 @@ tags: [captain, jarvis, jira, confluence, google, slack, work, portable]
 
 # Work Search — Internal Knowledge via Captain
 
+One-line summary: Canonical skill for local-first, Captain-second internal work discovery across JIRA, Confluence, Slack, Google Docs, and cross-repo code.
+
 Search across LinkedIn internal systems using captain MCP server tools through the `env_mcp` Pi tool.
 
 ## Canonical vs overlap
