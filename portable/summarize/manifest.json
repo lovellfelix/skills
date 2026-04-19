@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.0",
+  "name": "summarize",
+  "version": "0.1.0",
+  "portable": true,
+  "entrypoint": "SKILL.md",
+  "tags": ["summarize", "markdown", "url", "pdf", "documents", "portable"],
+  "adapters": {
+    "opencode": { "path": "SKILL.md", "mode": "native" },
+    "claude": { "path": "SKILL.md", "mode": "include" },
+    "copilot": { "path": "SKILL.md", "mode": "include" },
+    "pi": { "path": "SKILL.md", "mode": "include" }
+  },
+  "compatibility": {
+    "runtimes": {
+      "opencode": { "min_version": "*" },
+      "claude": { "min_version": "*" },
+      "copilot": { "min_version": "*" },
+      "pi": { "min_version": "*" }
+    }
+  }
+}
