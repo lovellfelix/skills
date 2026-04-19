@@ -10,6 +10,11 @@ tags: [captain, jarvis, jira, confluence, google, work, portable]
 
 Use Captain for work-domain search only after checking the local repository, repo-native tools, and work notes first.
 
+## Canonical vs overlap
+
+- This skill is a **compatibility alias** for users/prompts that mention "captain-work-search" explicitly.
+- Prefer `work-search` as the canonical discovery target for new routing and documentation.
+
 ## Work Machine Activation
 
 - This is a work-machine-only skill.

@@ -10,6 +10,11 @@ tags: [captain, jarvis, jira, confluence, google, slack, work, portable]
 
 Search across LinkedIn internal systems using captain MCP server tools through the `env_mcp` Pi tool.
 
+## Canonical vs overlap
+
+- Use this skill as the **canonical** entry for Captain-backed work discovery.
+- `captain-work-search` is kept as a compatibility alias for existing prompts; both should route to the same local-first, Captain-second policy.
+
 ## When to Use
 
 - Questions about internal systems, services, or architecture

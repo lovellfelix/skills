@@ -148,6 +148,26 @@ When fields appear in both `manifest.json` and `SKILL.md` frontmatter, follow th
 
 This split ensures runtimes can load skills reliably while discovery tools surface current, accurate metadata.
 
+## Pi Discovery (shared-first, overlay-second)
+
+Pi skill discovery should be treated as:
+
+1. **Shared portable skills first**: `~/.agents/skills/`
+2. **Pi-local overlays second**: `~/.pi/agent/skills/` (for Pi-only behavior or local experiments)
+
+Notes:
+
+- For portable skills, prefer shared discovery from `~/.agents/skills/`.
+- `~/.pi/agent/skills/portable` is optional and should not be treated as required for normal Pi usage.
+- A `pi` adapter key in `manifest.json` is optional metadata today; Pi does not require it for shared portable-skill discovery.
+
+Quick triage when Pi cannot find a skill:
+
+1. Confirm `~/.agents/skills/<skill>/SKILL.md` exists.
+2. Confirm skill metadata passes `./hacks/validate-skills.sh`.
+3. If the skill is work-gated, confirm `~/.work-env-skills` exists (or override flag path).
+4. Re-run sync only when you explicitly want Pi-local overlays: `./hacks/sync-skill-runtime-links.sh --runtime pi`.
+
 ## Trigger Documentation
 
 Triggers describe when and how a skill is invoked.

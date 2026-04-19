@@ -97,6 +97,23 @@ By default it syncs links for OpenCode, Claude, and Cursor (when detected):
 
 The sync script focuses on runtimes that need explicit materialized links. Pi normally reads the shared skill directory directly.
 
+### Pi discovery order (important)
+
+For Pi, prefer this model:
+
+1. Shared portable skills from `~/.agents/skills/`
+2. Pi-local overlays from `~/.pi/agent/skills/` only when needed
+
+Treat `~/.pi/agent/skills/portable` as optional compatibility materialization, not a required baseline.
+
+### Overlap policy for skills
+
+When two skills overlap heavily:
+
+- Keep one canonical skill as the primary target for discovery.
+- Keep the other only if it serves as a compatibility alias for existing prompts.
+- Add a short cross-reference in both skills so routing is deterministic.
+
 Personal-machine-only opt-in:
 
 - Skills with `"personal_machine_only": true` in `manifest.json` are skipped by default.
