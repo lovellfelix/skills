@@ -1,170 +1,143 @@
 ---
 name: session-memory-mcp
 description: Practical patterns for storing, retrieving, and maintaining high-signal session memory via MCP. Use when building MCP-integrated workflows, caching session state, or establishing durable patterns across sessions.
-version: 0.1.0
+version: 0.2.0
 portable: true
 tags: [mcp, memory, workflow, continuity, portable]
 ---
 
 # Session Memory MCP
 
-Use session-memory MCP as a durable context layer so sessions can resume quickly without drowning in noise.
+Use session-memory as a durable context layer so sessions resume quickly without noise or re-discovery.
 
 ## Use when
 
-- You need cross-session continuity for active engineering work.
-- You want to persist decisions, blockers, and next actions.
-- A workflow has many steps and context can drift over time.
-- You are coordinating multiple agents or handoffs.
+- Cross-session continuity matters for active engineering work.
+- You need to persist decisions, blockers, or next actions.
+- A workflow has many steps and context can drift.
+- Coordinating multiple agents or handoffs.
 
 ## Do not use when
 
-- Data is transient and has no value after the current response.
-- Information is sensitive and should not be stored in memory.
-- You are about to store duplicated low-signal logs or raw command spam.
+- Data is transient with no value past the current response.
+- Information is sensitive and must not be stored.
+- You would store duplicated low-signal output (raw logs, command spam).
 
-## Inputs expected
+## Store-or-skip filter
 
-- Session identifier and project identifier (if available).
-- Current task state and meaningful decision points.
-- Minimal metadata needed for retrieval (topic, phase, status).
+Store only when at least one is true:
+- Changes future decisions.
+- Captures a blocker, assumption, or dependency.
+- Records a non-obvious project convention.
+- Enables restart without repeating discovery.
 
-## Workflow
-
-1. Decide if information is worth storing.
-2. Store concise, structured memory records.
-3. Retrieve targeted context at session start and before major actions.
-4. Sync todos and task status as work progresses.
-5. Periodically prune stale/noisy records.
-
-Durable memory convention for this skill:
-
-- Session DB is the working layer (`~/.agents/memory/session.db`).
-- Durable project state belongs in `~/.agents/memory/projects/<project>/`.
-- Durable transfer packets belong in `~/.agents/memory/handoffs/YYYY/MM/`.
-- Promoted exports belong in `~/.agents/memory/promoted/`.
-- Prefer compacted promoted summaries first (`~/.agents/memory/promoted/*-compact.{md,json}`) before opening raw promoted exports.
-- Durable identity/preferences belong in `~/.agents/memory/profile/`.
-- Durable local-only people memory belongs in `~/.agents/memory/people/{profiles,notes,links}/`.
-- `people/links/` stores local graph-oriented references to session-memory entities (meetings, projects, tasks, events).
+Skip if it is pure command output, redundant status, or temporary reasoning.
 
 ## Core patterns
 
-### 1) Store-or-skip filter
-
-Store context only when at least one is true:
-
-- It changes future decisions.
-- It captures a blocker, assumption, or dependency.
-- It records non-obvious project conventions.
-- It enables restart without repeating discovery.
-
-Skip storing when it is:
-
-- Pure command output with no interpretation.
-- Redundant status messages.
-- Temporary thought process with no lasting value.
-
-### 2) Context record structure
+### Session context records
 
 Prefer small records with predictable keys:
+- `context_key`: stable lookup key (`task:auth-refactor`, `decision:path-layout`).
+- `context_type`: `workflow` · `decision` · `blocker` · `convention` · `handoff` · `interaction`.
+- `context_value`: Situation + Decision + Next (3-line structure).
+- `metadata`: optional JSON (owner, due date, links, confidence).
 
-- `context_key`: stable lookup key (`task:auth-refactor`, `handoff:2026-03-20`).
-- Use project-scoped keys when possible (`project:dotfiles:current`, `project:dotfiles:decision:path-layout`).
-- Use durable people keys for first-class person context (`people:profile:<slug>`, `people:notes:<slug>`, `people:links:<slug>`).
-- `context_type`: category (`workflow`, `decision`, `blocker`, `convention`, `handoff`).
-- Add explicit person context types where needed (`people_profile`, `people_note_bundle`, `people_link_bundle`).
-- `context_value`: concise, actionable text.
-- `metadata`: optional JSON-like fields (owner, due date, links, confidence).
+### Project conventions
 
-Good `context_value` pattern:
+Store separately from per-session updates:
+- Stable patterns (naming, commit style, test commands) → convention records.
+- Current execution state → session context records.
 
-- Situation: what changed.
-- Decision: chosen path and why.
-- Next: immediate action.
+### Retrieval strategy
 
-### 3) Project convention storage
-
-Store conventions separately from per-session updates.
-
-- Use convention records for stable patterns (naming, commit style, test commands).
-- Keep session context focused on current execution state.
-- Link recurring patterns to project-level convention keys.
-
-### 4) Todo sync and task hygiene
-
-- Sync todos when task state changes, not every message.
-- Keep todo items atomic and execution-oriented.
-- Mark complete promptly to avoid stale boards.
-- If a task is blocked, store blocker plus owner and unblock criteria.
-
-### 5) Retrieval strategy
-
-At session start:
-
-1. Retrieve recent workflow contexts.
-2. Retrieve open blockers and in-progress todos.
-3. Retrieve project conventions relevant to current task.
-4. Read durable disk artifacts in this order when available: `projects/<project>/artifacts/autodream-*.md`, then `promoted/*-compact.md`, then `handoffs/YYYY/MM/*.md`.
+At session start (first turn):
+1. Durable context is auto-injected from `durable_memory` — read and apply it.
+2. Retrieve open blockers and in-progress tasks via `workflow_tasks`.
+3. Query session memory only if prior context has a specific lookup key.
 
 During execution:
-
-- Re-query memory only when context changed or uncertainty increased.
+- Re-query only when context changed or uncertainty increased.
 - Prefer narrow queries over broad dumps.
 
 At handoff:
+- Write one summary record pointing to key context keys and durable file paths.
+- Keep `projects/<project>/current.md` and the latest handoff packet aligned.
 
-- Write one summary record that references key context keys plus durable file paths.
-- Ensure `projects/<project>/current.md` and the new `handoffs/YYYY/MM/...md` packet stay aligned.
+## Pi tool mapping
 
-### 6) Noise control
+In Pi, session memory is split by role — use the right surface:
+
+| Need | Tool |
+|------|------|
+| Active working context (live session) | `session_memory` |
+| Task state and progress tracking | `workflow_tasks` |
+| On-disk promoted summaries, handoffs, autodream | `durable_memory` |
+| Work notes / runbooks in `~/knowledgebase` | `work_knowledgebase` |
+
+Key `session_memory` actions:
+- `store_context` — write a workflow/decision/blocker record.
+- `retrieve_context` — targeted read by key or type.
+- `track_user_preference` — persist a user style or workflow preference (silent).
+- `learn_project_convention` — record a stable project pattern.
+- `assemble_context` — pull active context for resume/continue signals.
+- `get_user_preferences` — read preferences before style decisions.
+
+## Path conventions
+
+```
+~/.agents/memory/session.db          # working layer (session_memory)
+~/.agents/memory/projects/<project>/ # project-scoped durable state
+~/.agents/memory/handoffs/YYYY/MM/   # handoff packets
+~/.agents/memory/promoted/           # promoted exports + compact summaries
+~/.agents/memory/profile/            # identity and preferences
+~/.agents/memory/people/             # local-only people context
+```
+
+When reading durable artifacts, prefer:
+1. `projects/<project>/artifacts/autodream-*-latest.md`
+2. `promoted/*-compact.md`
+3. `handoffs/YYYY/MM/*.md`
+
+## Autodream promotion
+
+Autodream runs automatically:
+- After each `agent_end` (throttled to 1h) and on `session_shutdown`.
+- Mode defaults to `apply` (writes to disk).
+- Trigger manually: `durable_memory` tool with `autodream_apply`.
+- Override: `PI_DURABLE_MEMORY_AUTO_MODE=report|apply|off`.
+
+## Fallback: MCP unavailable
+
+When the MCP server is unreachable (different harness, CLI context, or server not running), use the SQLite CLI fallback directly against `~/.agents/memory/session.db`:
+
+```bash
+# Portable CLI — no MCP required
+~/.dotfiles/hacks/smem.sh sessions                        # list known session IDs
+~/.dotfiles/hacks/smem.sh list [session_id]               # recent context records
+~/.dotfiles/hacks/smem.sh get <key> [session_id]          # read a value by key
+~/.dotfiles/hacks/smem.sh set <type> <key> <value> [sid]  # write / upsert a record
+~/.dotfiles/hacks/smem.sh tasks [workflow_id]             # workflow task state
+~/.dotfiles/hacks/smem.sh prefs                           # user preferences
+~/.dotfiles/hacks/smem.sh conventions [project_id]        # project conventions
+~/.dotfiles/hacks/smem.sh search <query> [session_id]     # full-text search
+~/.dotfiles/hacks/smem.sh dump [session_id]               # all records for session
+```
+
+Override DB path: `SESSION_DB=/path/to/session.db smem.sh list`
+
+Use `smem.sh` when:
+- Harness has no MCP tools configured (Cursor, Copilot, raw shell).
+- Debugging session memory content outside of an agent session.
+- Scripting batch reads or writes from shell automation.
 
 - Merge overlapping notes into one updated record.
-- Avoid repeated near-duplicate keys.
+- Avoid near-duplicate keys.
 - Archive or prune stale records that no longer inform decisions.
-- Keep records short enough to scan quickly.
+- Keep records short enough to scan in 5 seconds.
+## Noise control
 
-## Cross-session sharing pattern
-
-Use a two-layer approach:
-
-1. Session layer: execution timeline for current work.
-2. Project layer: stable conventions and reusable knowledge.
-
-For handoffs between agents:
-
-- Store a `handoff:*` record with blockers, next steps, and validation status.
-- Include metadata pointing to durable files under `projects/` and `handoffs/`.
-- Pair with `handoff-resume` to produce restart-ready summaries.
-
-## Runtime notes (optional)
-
-Runtime tool names vary, but the pattern is consistent:
-
-- `store_*` operations for writing contexts/conventions.
-- `retrieve_*` or `query_*` operations for targeted reads.
-- `sync_todos` operations for task state continuity.
-
-Adapt names to your MCP runtime while preserving this structure.
-
-**In OpenCode**, all tools are prefixed with `session-memory_`:
-- `session-memory_store_session_context`
-- `session-memory_retrieve_session_context`
-- `session-memory_learn_project_convention`
-- `session-memory_sync_todos_to_tasks`
-- `session-memory_query_memory`
-
-**In Pi**, the equivalent surfaces are split by memory role:
-- `session_memory` for live MCP-backed session context
-- `workflow_tasks` for task-state continuity backed by session-memory MCP
-- `durable_memory` for on-disk promoted summaries, handoffs, and autodream workflows
-
-Rule of thumb in Pi:
-- use `session_memory` for active working context
-- use `durable_memory` for durable artifacts on disk
-- use `work_knowledgebase` for work notes/runbooks in `~/knowledgebase`
-
-## Examples and reference
-
-- `examples/memory-record-patterns.md`
-- `reference/storage-decision-matrix.md`
+- Merge overlapping notes into one updated record.
+- Avoid near-duplicate keys.
+- Archive or prune stale records that no longer inform decisions.
+- Keep records short enough to scan in 5 seconds.
