@@ -12,6 +12,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 |------|----------|---------|
 | **captain-work-search** | `portable/captain-work-search/` | Use Captain for work-domain search across JIRA, Confluence, Google surfaces, and Jarvis code search after checking local repo and work notes first. Best for Pi-safe guidance on when and how to use Captain as a fallback. |
 | **code-review** | `portable/code-review/` | Performs comprehensive code review with security scanning and language auto-detection. |
+| **commit** | `portable/commit/` | Read this skill before making git commits |
 | **communication-style** | `portable/communication-style/` | Refine technical communication for clarity, brevity, and review usefulness. Use when writing PRs, documentation, RFCs, or Slack messages to improve clarity and reduce review friction. |
 | **compose-material3** | `portable/compose-material3/` | Build beautiful, modern Android UI with Material Design 3 and Jetpack Compose while avoiding generic boilerplate. |
 | **deep-audit** | `portable/deep-audit/` | Comprehensive code quality audit covering architecture, patterns, and security vulnerabilities. |
@@ -20,6 +21,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **email-best-practices** | `portable/email-best-practices/` | Use when building email features, emails going to spam, high bounce rates, setting up SPF/DKIM/DMARC authentication, implementing email capture, ensuring compliance (CAN-SPAM, GDPR, CASL), handling webhooks, retry logic, or deciding transactional vs marketing. |
 | **example-skill** | `portable/example-skill/` | Portable starter skill package for defining concise, tool-agnostic workflows. |
 | **frontend-design** | `portable/frontend-design/` | Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics. |
+| **github** | `portable/github/` | Interact with GitHub using the `gh` CLI. Use `gh issue`, `gh pr`, `gh run`, and `gh api` for issues, PRs, CI runs, and advanced queries. |
 | **grenadianbuzz** | `portable/grenadianbuzz/` | Unified product and engineering skill for GrenadianBuzz across all surfaces (API, Android app, CLI, website, dashboard, CDN). Use when working on GrenadianBuzz features, architecture, or operational tasks. |
 | **handoff-resume** | `portable/handoff-resume/` | Resume interrupted work and produce clean handoffs with clear blockers and next steps. |
 | **homelab-gitops-flux-operations** | `portable/homelab-gitops-flux-operations/` | Use when deploying, upgrading, reconciling, or debugging Flux-managed workloads on the personal homelab cluster, especially HelmRelease or Kustomization changes, Flux reconcile failures, app-template apps, CrashLoopBackOff or ImagePullBackOff pods, Home Assistant issues, kubectl exec troubleshooting, SOPS secret updates, or GitHub PR creation. |
@@ -28,13 +30,17 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **infrastructure-automation** | `portable/infrastructure-automation/` | Build, deploy, and manage infrastructure with containers, Kubernetes, and IaC. |
 | **java-to-kotlin-migration** | `portable/java-to-kotlin-migration/` | Idiomatic, safe Android Java-to-Kotlin migration playbook. Use when migrating Android projects from Java to Kotlin while maintaining behavior and test coverage. |
 | **knowledgebase-workflow** | `portable/knowledgebase-workflow/` | Use this skill when organizing, searching, or updating the personal knowledgebase. |
+| **life-organizer** | `portable/life-organizer/` | Use when the user asks to review personal reminders, calendar events, Apple Notes context, family plans, or general life-admin tasks on a macOS machine. |
 | **location-search** | `portable/location-search/` | Location search and geocoding with a no-API-key default flow, including ZIP/postal-code based nearby lookup. Use when planning trips, finding nearby places, or integrating location features without API setup. |
+| **marketing-psychology** | `portable/marketing-psychology/` | When the user wants to apply psychological principles, mental models, or behavioral science to marketing. Also use when the user mentions 'psychology,' 'mental models,' 'cognitive bias,' 'persuasion,' 'behavioral science,' 'why people buy,' 'decision-making,' or 'consumer behavior.' This skill provides 70+ mental models organized for marketing application. |
 | **mcp-builder** | `portable/mcp-builder/` | Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK). |
 | **memory-operations** | `portable/memory-operations/` | Coordinate session-memory capture, durable promotion, and handoff-ready resume workflows. |
+| **nuxt** | `portable/nuxt/` | Nuxt full-stack Vue framework with SSR, auto-imports, and file-based routing. Use when working with Nuxt apps, server routes, useFetch, middleware, or hybrid rendering. |
 | **performance-profiling** | `portable/performance-profiling/` | Profile applications and generate optimization recommendations with measurable impact. Use when identifying bottlenecks, optimizing slow operations, or validating performance improvements. |
 | **python-code-style** | `portable/python-code-style/` | Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards. |
 | **python-quality-checklist** | `portable/python-quality-checklist/` | Use when implementing or reviewing Python code to enforce minimum quality gates before completion. |
 | **release-notes** | `portable/release-notes/` | Draft and refine changelog and release notes from commits, PRs, and changes. |
+| **release-skills** | `portable/release-skills/` | Universal release workflow. Auto-detects version files and changelogs. Supports Node.js, Python, Rust, Claude Plugin, and generic projects. Use when user says "release", "发布", "new version", "bump version", "push", "推送". |
 | **rfc** | `portable/rfc/` | Draft tight, reviewable engineering RFCs focused on constraints, decisions, and rollout safety. |
 | **security-audit** | `portable/security-audit/` | Security vulnerability scanning, secret detection, and secure coding recommendations. Use before merging changes, during code review, or when assessing codebase security posture. |
 | **session-memory-mcp** | `portable/session-memory-mcp/` | Practical patterns for storing, retrieving, and maintaining high-signal session memory via MCP. Use when building MCP-integrated workflows, caching session state, or establishing durable patterns across sessions. |
@@ -42,9 +48,12 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **shell-automation** | `portable/shell-automation/` | Write production-grade shell scripts with error handling, testing, and cross-platform support. |
 | **skills-and-commands-checklist** | `portable/skills-and-commands-checklist/` | Use when authoring or maintaining portable skills and custom commands to ensure correctness, discoverability, and long-term maintainability across tools and machines. |
 | **sre-debugging** | `portable/sre-debugging/` | Debug Linux servers, Puppet, Kubernetes, RPM, systemd, and infrastructure issues with systematic troubleshooting. |
+| **summarize** | `portable/summarize/` | Fetch a URL or convert a local file (PDF/DOCX/HTML/etc.) into Markdown using `uvx markitdown`, optionally it can summarize |
 | **testing** | `portable/testing/` | Universal testing with framework auto-detection for Python, JS, TS, Go, and Kotlin. |
+| **weather-forecast** | `portable/weather-forecast/` | Use when the user asks for current weather, today's conditions, or a short forecast without relying on paid weather APIs. |
 | **work-search** | `portable/work-search/` | Search internal work systems (JIRA, Confluence, code, Slack, wiki, Google Docs) using Captain via Pi-safe tools such as work_context_search and env_mcp. Use when the user asks about internal docs, tickets, code in other repos, team wikis, Slack discussions, or any LinkedIn internal knowledge. |
 | **writing-plans** | `portable/writing-plans/` | Use when you have a spec or requirements for a multi-step task, before touching code |
+| **writing-skills** | `portable/writing-skills/` | Use when creating new skills, editing existing skills, or verifying skills work before deployment |
 
 ## Runtime-Specific Skills
 

@@ -18,6 +18,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -32,6 +36,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -72,6 +79,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -86,6 +97,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -116,12 +130,67 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Read this skill before making git commits",
+      "entrypoint": "SKILL.md",
+      "location": "portable/commit/",
+      "name": "commit",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "git",
+        "commit",
+        "conventional-commits",
+        "portable"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
         },
         "opencode": {
           "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
           "path": "SKILL.md"
         }
       },
@@ -137,6 +206,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -175,6 +247,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -189,6 +265,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -228,6 +307,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -242,6 +325,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -279,6 +365,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -293,6 +383,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -331,6 +424,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -345,6 +442,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -384,6 +484,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -398,6 +502,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -435,6 +542,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -449,6 +560,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -485,6 +599,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -499,6 +617,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -536,6 +657,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -550,6 +675,69 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Interact with GitHub using the `gh` CLI. Use `gh issue`, `gh pr`, `gh run`, and `gh api` for issues, PRs, CI runs, and advanced queries.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/github/",
+      "name": "github",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "github",
+        "gh",
+        "issues",
+        "pull-requests",
+        "ci",
+        "portable"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -594,6 +782,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -608,6 +800,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -646,6 +841,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -660,6 +859,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -701,6 +903,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -715,6 +921,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -756,6 +965,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -770,6 +983,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -808,6 +1024,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -822,6 +1042,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -860,6 +1083,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -874,6 +1101,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -912,6 +1142,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -926,6 +1160,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -964,6 +1201,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -978,6 +1219,70 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Use when the user asks to review personal reminders, calendar events, Apple Notes context, family plans, or general life-admin tasks on a macOS machine.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/life-organizer/",
+      "name": "life-organizer",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "personal",
+        "reminders",
+        "calendar",
+        "notes",
+        "family",
+        "planning",
+        "macos"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -999,7 +1304,7 @@
         "places",
         "portable"
       ],
-      "version": "0.2.0",
+      "version": "0.3.0",
       "work_machine_only": false
     },
     {
@@ -1019,6 +1324,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1033,6 +1342,64 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "When the user wants to apply psychological principles, mental models, or behavioral science to marketing. Also use when the user mentions 'psychology,' 'mental models,' 'cognitive bias,' 'persuasion,' 'behavioral science,' 'why people buy,' 'decision-making,' or 'consumer behavior.' This skill provides 70+ mental models organized for marketing application.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/marketing-psychology/",
+      "name": "marketing-psychology",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "portable"
+      ],
+      "version": "1.0.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1070,6 +1437,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1084,6 +1455,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1123,6 +1497,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1137,6 +1515,64 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Nuxt full-stack Vue framework with SSR, auto-imports, and file-based routing. Use when working with Nuxt apps, server routes, useFetch, middleware, or hybrid rendering.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/nuxt/",
+      "name": "nuxt",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "portable"
+      ],
+      "version": "1.0.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1174,6 +1610,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1188,6 +1628,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1225,6 +1668,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1239,6 +1686,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1277,6 +1727,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1291,6 +1745,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1329,6 +1786,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1343,6 +1804,64 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Universal release workflow. Auto-detects version files and changelogs. Supports Node.js, Python, Rust, Claude Plugin, and generic projects. Use when user says \"release\", \"\u53d1\u5e03\", \"new version\", \"bump version\", \"push\", \"\u63a8\u9001\".",
+      "entrypoint": "SKILL.md",
+      "location": "portable/release-skills/",
+      "name": "release-skills",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "portable"
+      ],
+      "version": "1.0.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1381,6 +1900,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1395,6 +1918,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1432,6 +1958,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1446,6 +1976,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1484,6 +2017,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1498,6 +2035,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1535,6 +2075,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1549,6 +2093,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1587,6 +2134,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1601,6 +2152,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1641,6 +2195,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1655,6 +2213,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1686,12 +2247,69 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Fetch a URL or convert a local file (PDF/DOCX/HTML/etc.) into Markdown using `uvx markitdown`, optionally it can summarize",
+      "entrypoint": "SKILL.md",
+      "location": "portable/summarize/",
+      "name": "summarize",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "summarize",
+        "markdown",
+        "url",
+        "pdf",
+        "documents",
+        "portable"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
         },
         "opencode": {
           "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
           "path": "SKILL.md"
         }
       },
@@ -1707,6 +2325,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1743,6 +2364,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1757,6 +2382,67 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Use when the user asks for current weather, today's conditions, or a short forecast without relying on paid weather APIs.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/weather-forecast/",
+      "name": "weather-forecast",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "weather",
+        "forecast",
+        "portable",
+        "personal-assistant"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1798,6 +2484,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1812,6 +2502,9 @@
             "min_version": "*"
           },
           "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
             "min_version": "*"
           }
         }
@@ -1829,6 +2522,61 @@
         "portable"
       ],
       "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Use when creating new skills, editing existing skills, or verifying skills work before deployment",
+      "entrypoint": "SKILL.md",
+      "location": "portable/writing-skills/",
+      "name": "writing-skills",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "portable"
+      ],
+      "version": "1.0.0",
       "work_machine_only": false
     },
     {
