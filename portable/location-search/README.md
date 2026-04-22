@@ -5,19 +5,21 @@ Portable skill for location search, geocoding, and nearby discovery with a no-AP
 ## Quick Start
 
 ```bash
-bash ~/.config/opencode/scripts/location-helper.sh help
-bash ~/.config/opencode/scripts/location-helper.sh location-from-zip 94102
-bash ~/.config/opencode/scripts/location-helper.sh find-nearby "coffee" 37.7749 -122.4194 2000
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh help
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh location-from-zip 94102
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh find-nearby "coffee" 37.7749 -122.4194 2000
 ```
 
 Default behavior uses free OpenStreetMap-based services and does not require API keys.
+
+If a runtime only allows OpenCode-managed paths, use `bash ~/.config/opencode/scripts/location-helper.sh ...` as a wrapper to the same shared helper.
 
 ## ZIP and Postal Code Usage
 
 ### US ZIP codes (no key)
 
 ```bash
-bash ~/.config/opencode/scripts/location-helper.sh location-from-zip 10001
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh location-from-zip 10001
 ```
 
 ### International postal codes (no key)
@@ -42,18 +44,18 @@ Use paid providers only when you need higher quotas or provider-specific feature
 
 ```bash
 # ZIP -> coordinates -> nearby search
-coords=$(bash ~/.config/opencode/scripts/location-helper.sh location-from-zip 94102)
+coords=$(bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh location-from-zip 94102)
 lat=${coords%%,*}
 lon=${coords##*,}
-bash ~/.config/opencode/scripts/location-helper.sh find-nearby "restaurant" "$lat" "$lon" 3000
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh find-nearby "restaurant" "$lat" "$lon" 3000
 ```
 
 ```bash
 # Current location -> nearby parks
-coords=$(bash ~/.config/opencode/scripts/location-helper.sh current-location)
+coords=$(bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh current-location)
 lat=${coords%%,*}
 lon=${coords##*,}
-bash ~/.config/opencode/scripts/location-helper.sh find-nearby "park" "$lat" "$lon" 3000
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh find-nearby "park" "$lat" "$lon" 3000
 ```
 
 ## Troubleshooting

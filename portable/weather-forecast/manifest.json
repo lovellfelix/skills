@@ -1,18 +1,14 @@
 {
   "schema_version": "1.0",
-  "name": "location-search",
-  "version": "0.3.0",
+  "name": "weather-forecast",
+  "version": "0.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
-    "maps",
-    "geocode",
-    "location",
-    "search",
-    "routing",
-    "navigation",
-    "places",
-    "portable"
+    "weather",
+    "forecast",
+    "portable",
+    "personal-assistant"
   ],
   "adapters": {
     "opencode": {

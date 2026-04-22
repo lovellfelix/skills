@@ -1,7 +1,7 @@
 ---
 name: location-search
 description: Location search and geocoding with a no-API-key default flow, including ZIP/postal-code based nearby lookup. Use when planning trips, finding nearby places, or integrating location features without API setup.
-version: 0.2.0
+version: 0.3.0
 portable: true
 tags: [maps, geocode, location, search, routing, navigation, places, portable]
 applies_to: [personal-assistant, workflow, automation]
@@ -11,59 +11,51 @@ applies_to: [personal-assistant, workflow, automation]
 
 ## What This Skill Covers
 
-- No-key location search using free OpenStreetMap services
+- No-key location search using OpenStreetMap services
 - ZIP/postal-code-first workflows for privacy-preserving "near me" requests
-- Nearby place lookup and basic distance calculations
-- Practical fallback handling for invalid inputs and API limits
+- Nearby place lookup, current location fallback, and distance checks
 
-## When to Use This Skill
+## Preferred Helper Paths
 
-Use this skill when the user asks for:
+Use the shared helper when possible:
 
-- "near me" discovery (coffee, parks, pharmacy, etc.)
-- address or ZIP/postal geocoding
-- quick distance checks between points
-- local suggestions without paid map providers
+```bash
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh
+```
 
-## Default No-Key Workflow
-
-Default behavior should not require any API key.
-
-1. Resolve a location anchor from one of: saved ZIP/postal code, explicit ZIP/postal input, or current location fallback.
-2. Convert anchor to coordinates.
-3. Run nearby search with Overpass (OpenStreetMap).
-4. Return concise, user-facing results with place name and address.
-
-Use this script entrypoint:
+If a runtime restricts execution to OpenCode-managed script paths, use the wrapper instead:
 
 ```bash
 bash ~/.config/opencode/scripts/location-helper.sh
 ```
 
+Do not call `location-search.sh`; the supported helper is `location-helper.sh`.
+
+## Default No-Key Workflow
+
+1. Resolve a location anchor from one of: saved ZIP/postal code, explicit ZIP/postal input, or current location fallback.
+2. Convert that anchor to coordinates.
+3. Run nearby search with Overpass (OpenStreetMap).
+4. Return concise results with place name and address.
+
 Supported commands:
 
 ```bash
-bash ~/.config/opencode/scripts/location-helper.sh current-location
-bash ~/.config/opencode/scripts/location-helper.sh location-from-zip 94102
-bash ~/.config/opencode/scripts/location-helper.sh find-nearby "coffee" 37.7749 -122.4194 2500
-bash ~/.config/opencode/scripts/location-helper.sh distance 37.7749 -122.4194 37.7849 -122.4094
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh current-location
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh location-from-zip 94102
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh find-nearby "coffee" 37.7749 -122.4194 2500
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh distance 37.7749 -122.4194 37.7849 -122.4094
 ```
-
-Do not call `location-search.sh`; this runtime supports `location-helper.sh`.
 
 ## ZIP and Postal Code Model
 
-### US ZIP codes (built-in shortcut)
+### US ZIP codes
 
 - Use `location-from-zip <zip>` for US ZIP and ZIP+4 input.
 - Examples: `94102`, `10001`, `60614-1234`.
 - Provider: `zippopotam.us` (free, no key).
 
-```bash
-bash ~/.config/opencode/scripts/location-helper.sh location-from-zip 94102
-```
-
-### International postal codes (no-key geocoding)
+### International postal codes
 
 - Use Nominatim queries with postal code plus country context.
 - Examples: `SW1A 1AA, UK`, `10115, DE`, `75008, FR`.
@@ -77,22 +69,15 @@ Guidance:
 
 - Always include country for ambiguous postal codes.
 - If the first lookup fails, retry with city + country context.
-- Store the user preference as postal text if the country is non-US.
+- Store non-US values as `postal_code` or country-qualified text.
 
-## MCP Preference Pattern
+## Session-Memory Pattern
 
-Store location preference in MCP memory and reuse it for future "near me" tasks.
+Reuse stored postal/ZIP preferences for future "near me" flows.
 
-```typescript
-session-memory_track_user_preference({
-  user_id: "default",
-  preference_key: "zip_code",
-  preference_value: "94102",
-  confidence: 1.0
-})
+```text
+session_memory action=track_user_preference category=workflow key=zip_code value=94102 confidence=1.0
 ```
-
-For non-US users, use `postal_code` or a country-qualified value (for example, `SW1A 1AA, UK`).
 
 ## Provider and API Key Rules
 
@@ -101,51 +86,47 @@ For non-US users, use `postal_code` or a country-qualified value (for example, `
 | ZIP to coordinates (US) | zippopotam.us | No |
 | Postal/address geocoding | OSM Nominatim | No |
 | Nearby place search | OSM Overpass | No |
-| High-volume commercial geocoding/routing | Google or Mapbox | Yes (optional path only) |
+| Higher-volume commercial geocoding/routing | Google or Mapbox | Yes |
 
-Key policy:
-
-- Default workflow: no API key required.
-- Optional provider upgrades: API keys are needed only when you explicitly choose Google/Mapbox for quota/features.
+Default workflow stays keyless unless the user explicitly wants a paid provider.
 
 ## Practical Workflows
 
-### "Find coffee near my ZIP"
+### Find coffee near a ZIP
 
 ```bash
-coords=$(bash ~/.config/opencode/scripts/location-helper.sh location-from-zip 94102)
+coords=$(bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh location-from-zip 94102)
 lat=${coords%%,*}
 lon=${coords##*,}
-bash ~/.config/opencode/scripts/location-helper.sh find-nearby "coffee" "$lat" "$lon" 2500
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh find-nearby "coffee" "$lat" "$lon" 2500
 ```
 
-### "Find parks near my current location"
+### Find parks near the current location
 
 ```bash
-coords=$(bash ~/.config/opencode/scripts/location-helper.sh current-location)
+coords=$(bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh current-location)
 lat=${coords%%,*}
 lon=${coords##*,}
-bash ~/.config/opencode/scripts/location-helper.sh find-nearby "park" "$lat" "$lon" 3000
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh find-nearby "park" "$lat" "$lon" 3000
 ```
 
-### "How far is point A from point B?"
+### Measure distance between two points
 
 ```bash
-bash ~/.config/opencode/scripts/location-helper.sh distance 37.7749 -122.4194 37.7849 -122.4094
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh distance 37.7749 -122.4194 37.7849 -122.4094
 ```
 
 ## Troubleshooting
 
-- `ZIP lookup failed`: check for US ZIP format; for non-US postal codes use Nominatim query flow.
-- `No nearby results`: increase radius (`2000` -> `5000`) or broaden query (`coffee` -> `cafe`).
-- `Rate limit response`: wait briefly and retry; keep OSM requests low-volume.
+- `ZIP lookup failed`: verify US ZIP format; for non-US postal codes use Nominatim with country context.
+- `No nearby results`: increase radius (`2000` → `5000`) or broaden the query (`coffee` → `cafe`).
 - `Current location unavailable`: install `corelocationcli` (`brew install corelocationcli`) or rely on IP fallback.
-- Script not found: use `bash ~/.config/opencode/scripts/location-helper.sh ...`.
+- If a runtime blocks the shared helper path, retry with the OpenCode wrapper path.
 
 ## Validation
 
 ```bash
-bash ~/.config/opencode/scripts/location-helper.sh help
-bash ~/.config/opencode/scripts/location-helper.sh location-from-zip 94102
-bash ~/.config/opencode/scripts/location-helper.sh find-nearby "coffee" 37.7749 -122.4194 2000
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh help
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh location-from-zip 94102
+bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh find-nearby "coffee" 37.7749 -122.4194 2000
 ```
