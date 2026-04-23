@@ -50,6 +50,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **sre-debugging** | `portable/sre-debugging/` | Debug Linux servers, Puppet, Kubernetes, RPM, systemd, and infrastructure issues with systematic troubleshooting. |
 | **summarize** | `portable/summarize/` | Fetch a URL or convert a local file (PDF/DOCX/HTML/etc.) into Markdown using `uvx markitdown`, optionally it can summarize |
 | **testing** | `portable/testing/` | Universal testing with framework auto-detection for Python, JS, TS, Go, and Kotlin. |
+| **ucm-test** | `portable/ucm-test/` | Test UCM module changes against remote hosts using the `ucm test` CLI (hiera, puppet, etc). Use when iterating on Puppet/Hiera data for UCM modules, testing package management changes (installs, removals, downgrades), or validating catalog convergence before merging. |
 | **weather-forecast** | `portable/weather-forecast/` | Use when the user asks for current weather, today's conditions, or a short forecast without relying on paid weather APIs. |
 | **work-search** | `portable/work-search/` | Search internal work systems (JIRA, Confluence, code, Slack, wiki, Google Docs) using Captain via Pi-safe tools such as work_context_search and env_mcp. Use when the user asks about internal docs, tickets, code in other repos, team wikis, Slack discussions, or any LinkedIn internal knowledge. |
 | **writing-plans** | `portable/writing-plans/` | Use when you have a spec or requirements for a multi-step task, before touching code |
