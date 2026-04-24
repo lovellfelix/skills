@@ -1142,6 +1142,58 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Structured workflow for knowledgebase health checks, inbox processing, oncall note management, metadata cleanup, and archive operations. Use when user asks to clean up KB, run a health check, process inbox, organize notes, or archive old content.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/kb-maintenance/",
+      "name": "kb-maintenance",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "knowledgebase",
+        "maintenance",
+        "workflow",
+        "documentation",
+        "notes"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
         },
         "pi": {
           "mode": "include",
