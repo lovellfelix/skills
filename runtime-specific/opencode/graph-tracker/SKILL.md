@@ -3,7 +3,21 @@ name: graph-tracker
 description: "Persistent graph of nodes and relationships — engineering (GitHub issues, PRs, Jira) AND personal (family, reminders, events, notes). Enables work continuity, standup dashboards, personal knowledge graphs, and cross-session resumption."
 version: 0.1.0
 portable: false
-tags: [github, jira, issues, prs, tracking, graph, continuity, standup, personal, family, notes, reminders]
+tags:
+  [
+    github,
+    jira,
+    issues,
+    prs,
+    tracking,
+    graph,
+    continuity,
+    standup,
+    personal,
+    family,
+    notes,
+    reminders,
+  ]
 applies_to: [workflow, engineering, personal-assistant, standup, personal]
 ---
 
@@ -14,18 +28,21 @@ applies_to: [workflow, engineering, personal-assistant, standup, personal]
 Persistent **graph-based tracking** of any entity and its relationships:
 
 ### Engineering Domain
+
 - **Track work items**: GitHub issues, PRs, Jira tickets, branches, commits
 - **Link relationships**: PR fixes issue, branch implements ticket, Jira linked to PR
 - **Dashboard views**: Open issues without PRs, active PRs, Jira status at a glance
 - **Graph traversal**: Follow any item to see its full context (issue -> branch -> PR -> Jira)
 
 ### Personal Domain
+
 - **Track people**: Family members, contacts, colleagues
 - **Track events**: Calendar events, appointments, reminders, deadlines
 - **Track notes**: Personal notes, observations, ideas linked to people or projects
 - **Track goals**: Health goals, financial targets, learning objectives
 
 ### Cross-Domain
+
 - **Cross-session continuity**: Resume work or personal context across sessions
 - **Unified graph**: Engineering and personal nodes can link to each other
 
@@ -34,6 +51,7 @@ Persistent **graph-based tracking** of any entity and its relationships:
 Automatically engage this skill when:
 
 ### Engineering Triggers
+
 - User creates or references a GitHub issue or PR
 - User mentions a Jira ticket (`PROJ-123`)
 - User asks "what am I working on?", "what's open?", "show my PRs"
@@ -42,6 +60,7 @@ Automatically engage this skill when:
 - User says "continue working on..." or "pick up where I left off"
 
 ### Personal Triggers
+
 - User mentions family members, children, spouse
 - User asks about reminders, upcoming events, or deadlines
 - User wants to track personal notes or observations about someone/something
@@ -66,63 +85,67 @@ This is **not** session-scoped — items persist across sessions for continuity.
 
 Every node has a `domain` field for namespace filtering:
 
-| Domain | Use Case |
-|--------|----------|
+| Domain        | Use Case                                            |
+| ------------- | --------------------------------------------------- |
 | `engineering` | GitHub issues, PRs, Jira tickets, branches, commits |
-| `personal` | Personal notes, goals, ideas |
-| `family` | Family members, family events, reminders |
-| `health` | Health goals, appointments, medications |
-| `finance` | Financial goals, budgets, transactions |
-| *(custom)* | Any string — the domain is free-text |
+| `personal`    | Personal notes, goals, ideas                        |
+| `family`      | Family members, family events, reminders            |
+| `health`      | Health goals, appointments, medications             |
+| `finance`     | Financial goals, budgets, transactions              |
+| _(custom)_    | Any string — the domain is free-text                |
 
 ### Node Types (Free-Text)
 
 No hardcoded enum — any string is valid. Common examples:
 
 #### Engineering
-| Type | External ID Format | Example |
-|------|-------------------|---------|
-| `github_issue` | `owner/repo#42` | `anomalyco/opencode#123` |
-| `github_pr` | `owner/repo#99` | `anomalyco/opencode#456` |
-| `jira_ticket` | `PROJ-123` | `MYPROJ-789` |
-| `branch` | `feature/xyz` | `fix/login-bug` |
-| `commit` | `abc1234` | Short SHA |
+
+| Type           | External ID Format | Example                  |
+| -------------- | ------------------ | ------------------------ |
+| `github_issue` | `owner/repo#42`    | `anomalyco/opencode#123` |
+| `github_pr`    | `owner/repo#99`    | `anomalyco/opencode#456` |
+| `jira_ticket`  | `PROJ-123`         | `MYPROJ-789`             |
+| `branch`       | `feature/xyz`      | `fix/login-bug`          |
+| `commit`       | `abc1234`          | Short SHA                |
 
 #### Personal
-| Type | External ID Format | Example |
-|------|-------------------|---------|
-| `person` | `child-a` | `child-a`, `spouse`, `mom` |
+
+| Type       | External ID Format         | Example                       |
+| ---------- | -------------------------- | ----------------------------- |
+| `person`   | `child-a`                  | `child-a`, `spouse`, `mom`    |
 | `reminder` | `reminder-YYYY-MM-DD-desc` | `reminder-2024-03-15-dentist` |
-| `event` | `event-YYYY-MM-DD-desc` | `event-2024-06-15-birthday` |
-| `note` | `note-desc` | `note-school-preferences` |
-| `goal` | `goal-desc` | `goal-reading-list-2024` |
+| `event`    | `event-YYYY-MM-DD-desc`    | `event-2024-06-15-birthday`   |
+| `note`     | `note-desc`                | `note-school-preferences`     |
+| `goal`     | `goal-desc`                | `goal-reading-list-2024`      |
 
 ### Relationship Types (Free-Text)
 
 No hardcoded enum — any string is valid. Common examples:
 
 #### Engineering
-| Relationship | Meaning | Example |
-|-------------|---------|---------|
-| `pr_for_issue` | PR addresses this issue | PR #99 -> Issue #42 |
-| `fixes` | Resolves the target | PR #99 fixes Issue #42 |
-| `implements` | Implements the target | Branch implements Jira ticket |
-| `branch_for_issue` | Branch created for issue | `fix/login` -> Issue #42 |
-| `linked_to` | General link | PROJ-123 linked_to #42 |
-| `blocks` | Blocks the target | Issue #10 blocks Issue #20 |
-| `relates_to` | Related items | Issue #10 relates_to #11 |
-| `parent_of` / `child_of` | Hierarchy | Epic parent_of Story |
+
+| Relationship             | Meaning                  | Example                       |
+| ------------------------ | ------------------------ | ----------------------------- |
+| `pr_for_issue`           | PR addresses this issue  | PR #99 -> Issue #42           |
+| `fixes`                  | Resolves the target      | PR #99 fixes Issue #42        |
+| `implements`             | Implements the target    | Branch implements Jira ticket |
+| `branch_for_issue`       | Branch created for issue | `fix/login` -> Issue #42      |
+| `linked_to`              | General link             | PROJ-123 linked_to #42        |
+| `blocks`                 | Blocks the target        | Issue #10 blocks Issue #20    |
+| `relates_to`             | Related items            | Issue #10 relates_to #11      |
+| `parent_of` / `child_of` | Hierarchy                | Epic parent_of Story          |
 
 #### Personal
-| Relationship | Meaning | Example |
-|-------------|---------|---------|
-| `parent_of` / `child_of` | Family hierarchy | user parent_of child-a |
-| `sibling_of` | Siblings | child-a sibling_of child-b |
-| `reminder_for` | Reminder about a person/thing | reminder reminder_for child-a |
-| `belongs_to` | Ownership/association | note belongs_to child-a |
-| `scheduled_for` | Event scheduling | event scheduled_for 2024-03-15 |
-| `resource_for` | Useful reference for a person/event/topic | school resource_for child-a |
-| `related_to` | General association | note related_to goal |
+
+| Relationship             | Meaning                                   | Example                        |
+| ------------------------ | ----------------------------------------- | ------------------------------ |
+| `parent_of` / `child_of` | Family hierarchy                          | user parent_of child-a         |
+| `sibling_of`             | Siblings                                  | child-a sibling_of child-b     |
+| `reminder_for`           | Reminder about a person/thing             | reminder reminder_for child-a  |
+| `belongs_to`             | Ownership/association                     | note belongs_to child-a        |
+| `scheduled_for`          | Event scheduling                          | event scheduled_for 2024-03-15 |
+| `resource_for`           | Useful reference for a person/event/topic | school resource_for child-a    |
+| `related_to`             | General association                       | note related_to goal           |
 
 ## Apple Notes Integration
 
@@ -313,15 +336,15 @@ remove_node({
 
 Agents should **silently** track items when they observe:
 
-| Trigger | Action |
-|---------|--------|
-| `gh issue create` output | `upsert_node(domain: engineering, type: github_issue)` |
-| `gh pr create` output | `upsert_node(domain: engineering, type: github_pr)` + link |
-| Branch checkout for issue | `upsert_node(domain: engineering, type: branch)` + link |
-| Jira ticket reference | `upsert_node(domain: engineering, type: jira_ticket)` |
-| PR merged notification | `update_node_status(merged)` |
-| User mentions family member | `upsert_node(domain: family, type: person)` |
-| User sets a reminder | `upsert_node(domain: family/personal, type: reminder)` + link |
+| Trigger                     | Action                                                        |
+| --------------------------- | ------------------------------------------------------------- |
+| `gh issue create` output    | `upsert_node(domain: engineering, type: github_issue)`        |
+| `gh pr create` output       | `upsert_node(domain: engineering, type: github_pr)` + link    |
+| Branch checkout for issue   | `upsert_node(domain: engineering, type: branch)` + link       |
+| Jira ticket reference       | `upsert_node(domain: engineering, type: jira_ticket)`         |
+| PR merged notification      | `update_node_status(merged)`                                  |
+| User mentions family member | `upsert_node(domain: family, type: person)`                   |
+| User sets a reminder        | `upsert_node(domain: family/personal, type: reminder)` + link |
 
 **Silent tracking**: Do not ask the user before tracking. Track items as a side-effect of normal operations. Only surface the graph when the user asks for it or during standup/dashboard views.
 
@@ -330,6 +353,7 @@ Agents should **silently** track items when they observe:
 When presenting the graph to the user, use ASCII art for clarity:
 
 ### Engineering
+
 ```
 PROJ-123 (Jira: In Progress)
   └─ linked_to → owner/repo#42 (Issue: open)
@@ -338,6 +362,7 @@ PROJ-123 (Jira: In Progress)
 ```
 
 ### Personal
+
 ```
 Alice (Person: active)
   ├─ reminder_for ← Dentist appointment (Reminder: pending)
@@ -356,7 +381,7 @@ Alice (Person: active)
 
 ## Security & Privacy
 
-- All data stored locally in `~/.opencode/sessions/session.db`
+- All data stored locally in `~/.agents/memory/session.db`
 - No external API calls from this skill — it only stores data
 - Personal data (family names, appointments) stays local
 - External lookups (GitHub, Jira) use existing tools (`gh` CLI, captain MCP)
