@@ -7,10 +7,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -27,9 +23,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -68,10 +61,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -88,9 +77,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -126,10 +112,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
@@ -142,9 +124,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "opencode": {
@@ -177,10 +156,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -197,9 +172,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -236,10 +208,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -256,9 +224,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -296,10 +261,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -316,9 +277,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -354,10 +312,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -374,9 +328,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -413,10 +364,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -433,9 +380,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -473,10 +417,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -493,9 +433,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -531,10 +468,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -551,9 +484,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -588,10 +518,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -608,9 +534,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -646,10 +569,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -666,9 +585,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -706,10 +622,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -726,9 +638,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -771,10 +680,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -791,9 +696,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -830,10 +732,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -850,9 +748,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -892,10 +787,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -912,9 +803,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -954,10 +842,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -974,9 +858,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1013,10 +894,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1033,9 +910,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1072,10 +946,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1092,9 +962,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1131,10 +998,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1147,9 +1010,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1183,10 +1043,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1203,9 +1059,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1242,10 +1095,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1262,9 +1111,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1303,10 +1149,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1323,9 +1165,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1365,10 +1204,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1385,9 +1220,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1420,10 +1252,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1440,9 +1268,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1478,10 +1303,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1498,9 +1319,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1538,10 +1356,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1558,9 +1372,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1593,10 +1404,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1613,9 +1420,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1651,10 +1455,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1671,9 +1471,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1709,10 +1506,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1729,9 +1522,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1768,10 +1558,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1788,9 +1574,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1827,10 +1610,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1847,9 +1626,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1882,10 +1658,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1902,9 +1674,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1941,10 +1710,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1961,9 +1726,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1999,10 +1761,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -2019,9 +1777,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -2058,10 +1813,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -2078,9 +1829,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -2116,10 +1864,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -2136,9 +1880,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -2175,10 +1916,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -2195,9 +1932,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -2236,10 +1970,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -2256,9 +1986,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -2295,10 +2022,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
@@ -2311,9 +2034,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "opencode": {
@@ -2348,10 +2068,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -2368,9 +2084,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -2405,10 +2118,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -2425,9 +2134,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -2465,10 +2171,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -2485,9 +2187,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -2523,10 +2222,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -2543,9 +2238,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -2585,10 +2277,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -2605,9 +2293,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -2642,10 +2327,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -2662,9 +2343,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
             "min_version": "*"
           },
           "cursor": {
