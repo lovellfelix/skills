@@ -2,7 +2,8 @@
 name: life-organizer
 description: Use when the user asks to review personal reminders, calendar events, Apple Notes context, family plans, or general life-admin tasks on a macOS machine.
 version: 0.1.0
-portable: true
+portable: false
+personal_machine_only: true
 tags: [personal, reminders, calendar, notes, family, planning, portable, macos]
 applies_to: [personal-assistant, life, planning, reminders]
 ---
@@ -145,3 +146,10 @@ bash ~/.dotfiles/hacks/macos-automation/apple-calendar.sh today --json
 bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh today --json
 bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh list-tags 10
 ```
+
+## Personal Machine Activation
+
+This skill is personal-machine-only and stays disabled unless explicitly allowlisted.
+
+- Add `life-organizer` to `~/.personal-machine-skills.txt` (one skill name per line).
+- Re-run your runtime link sync after updating the allowlist.

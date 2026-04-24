@@ -1,6 +1,6 @@
 ---
 name: compose-material3
-description: Build beautiful, modern Android UI with Material Design 3 and Jetpack Compose while avoiding generic boilerplate.
+description: Use when building Android UI components with Jetpack Compose and Material Design 3 to produce modern, distinctive interfaces that avoid generic boilerplate.
 version: 0.1.0
 portable: true
 tags: [android, kotlin, compose, material3, ui, portable]

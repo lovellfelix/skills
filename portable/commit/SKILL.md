@@ -1,6 +1,6 @@
 ---
 name: commit
-description: "Read this skill before making git commits"
+description: Use when making a git commit and need a correctly formatted Conventional Commits subject line.
 ---
 
 Create a git commit for the current changes using a concise Conventional Commits-style subject.

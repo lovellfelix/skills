@@ -1,6 +1,6 @@
 ---
 name: release-notes
-description: Draft and refine changelog and release notes from commits, PRs, and changes.
+description: Use when drafting or refining changelog entries and release notes from commits, PRs, or code changes.
 version: 0.1.0
 portable: true
 tags: [release, changelog, version, notes, documentation]

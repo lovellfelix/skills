@@ -1,6 +1,6 @@
 ---
 name: handoff-resume
-description: Resume interrupted work and produce clean handoffs with clear blockers and next steps.
+description: Use when resuming interrupted work across sessions, handing off to another agent or teammate, or creating a restart-ready status snapshot.
 version: 0.2.0
 portable: true
 tags: [workflow, continuity, handoff, resume]

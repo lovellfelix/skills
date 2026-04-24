@@ -1,6 +1,6 @@
 ---
 name: rfc
-description: Draft tight, reviewable engineering RFCs focused on constraints, decisions, and rollout safety.
+description: Use when proposing a significant engineering change and need a tight, reviewable RFC focused on constraints, decisions, and rollout safety.
 version: 0.3.0
 portable: true
 tags: [rfc, architecture, design, tradeoffs, rollout]

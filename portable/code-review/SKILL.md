@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Performs comprehensive code review with security scanning and language auto-detection.
+description: Use when reviewing code changes, a PR, or a commit and need structured, severity-graded findings covering correctness, security, reliability, and maintainability.
 version: 0.2.0
 portable: true
 tags: [review, quality, security, portable]

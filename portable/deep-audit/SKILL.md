@@ -1,6 +1,6 @@
 ---
 name: deep-audit
-description: Comprehensive code quality audit covering architecture, patterns, and security vulnerabilities.
+description: Use when performing a comprehensive codebase health assessment before major refactoring, migration, production readiness review, or ownership transfer.
 version: 0.2.0
 portable: true
 tags: [audit, architecture, quality, portable]

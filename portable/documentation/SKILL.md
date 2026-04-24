@@ -1,6 +1,6 @@
 ---
 name: documentation
-description: Write and update concise engineering documentation grounded in runtime behavior and operations.
+description: Use when writing or updating engineering documentation and want it grounded in runtime behavior rather than aspirational prose.
 version: 0.3.0
 portable: true
 tags: [documentation, engineering, runbook, operations, architecture]

@@ -2,7 +2,8 @@
 name: knowledgebase-workflow
 description: Use this skill when organizing, searching, or updating the personal knowledgebase.
 version: 0.1.0
-portable: true
+portable: false
+personal_machine_only: true
 tags: [knowledgebase, workflow, documentation, notes, reference]
 ---
 
@@ -141,3 +142,10 @@ When doing KB cleanup, inspect:
   - `~/knowledgebase/📝 Notes/README.md`
   - `~/knowledgebase/📚 Reference/README.md`
   - `~/knowledgebase/🚀 Projects/README.md`
+
+## Personal Machine Activation
+
+This skill is personal-machine-only and stays disabled unless explicitly allowlisted.
+
+- Add `knowledgebase-workflow` to `~/.personal-machine-skills.txt` (one skill name per line).
+- Re-run your runtime link sync after updating the allowlist.

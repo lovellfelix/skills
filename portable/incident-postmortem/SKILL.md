@@ -1,6 +1,6 @@
 ---
 name: incident-postmortem
-description: Write concise, operationally useful postmortems focused on decisions, causes, and concrete follow-ups. Use after production incidents or operational failures to extract learning and drive improvements.
+description: Use after a production incident or operational failure to write a concise, blameless postmortem focused on decisions, causes, and concrete follow-ups.
 version: 0.3.0
 portable: true
 tags: [incident, postmortem, reliability, root-cause-analysis, operations]

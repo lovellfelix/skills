@@ -1,6 +1,6 @@
 ---
 name: frontend-design
-description: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics.
+description: Use when building web components, pages, dashboards, or UI applications (websites, landing pages, React components, HTML/CSS) and need production-grade design that avoids generic AI-generated aesthetics.
 version: 0.1.0
 portable: true
 tags: [frontend, ui, design, portable]
