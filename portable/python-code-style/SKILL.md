@@ -1,7 +1,7 @@
 ---
 name: python-code-style
 description: Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards.
-version: 0.1.0
+version: 0.2.0
 portable: true
 tags: [python, style, documentation, portable]
 ---
@@ -361,3 +361,46 @@ pytest
 8. **Keep docs updated** - Treat documentation as code
 9. **Automate in CI** - Run linters on every commit
 10. **Target Python 3.10+** - For new projects, Python 3.12+ is recommended for modern language features
+
+## Pre-Submission Checklist
+
+Fix all failures before reporting task completion.
+
+### Types
+- Every function signature is typed.
+- Nullable values use explicit `T | None` (not `Optional[T]`).
+
+```python
+def process(data: dict[str, object], timeout: int = 30) -> str | None:
+    """Process input and return a token if successful."""
+    ...
+```
+
+### Docstrings
+- Public functions and classes include concise docstrings.
+- Include exceptions callers should expect.
+
+### Error Handling
+- Wrap risky external operations in specific `try/except` blocks.
+- Re-raise with context using `raise ... from e`.
+
+```python
+try:
+    payload = json.loads(raw)
+except json.JSONDecodeError as e:
+    raise ValueError("Invalid JSON payload") from e
+```
+
+### Input Validation
+- Validate user-provided values early; fail fast with actionable messages.
+
+```python
+if not email or "@" not in email:
+    raise ValueError(f"Invalid email: {email}")
+```
+
+### Pythonic Patterns
+- Prefer comprehensions over `map`/`filter` chains.
+- Use context managers for files/resources.
+- Prefer `pathlib.Path` for filesystem work.
+- Prefer f-strings for string formatting.
