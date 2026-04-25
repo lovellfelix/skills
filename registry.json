@@ -7,6 +7,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -23,6 +27,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -61,6 +68,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -79,6 +90,9 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "cursor": {
             "min_version": "*"
           },
@@ -90,7 +104,7 @@
           }
         }
       },
-      "description": "Performs comprehensive code review with security scanning and language auto-detection.",
+      "description": "Use when reviewing code changes, a PR, or a commit and need structured, severity-graded findings covering correctness, security, reliability, and maintainability.",
       "entrypoint": "SKILL.md",
       "location": "portable/code-review/",
       "name": "code-review",
@@ -112,6 +126,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
@@ -126,6 +144,9 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "opencode": {
             "min_version": "*"
           },
@@ -134,7 +155,7 @@
           }
         }
       },
-      "description": "Read this skill before making git commits",
+      "description": "Use when making a git commit and need a correctly formatted Conventional Commits subject line.",
       "entrypoint": "SKILL.md",
       "location": "portable/commit/",
       "name": "commit",
@@ -156,6 +177,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -174,6 +199,9 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "cursor": {
             "min_version": "*"
           },
@@ -185,7 +213,7 @@
           }
         }
       },
-      "description": "Refine technical communication for clarity, brevity, and review usefulness. Use when writing PRs, documentation, RFCs, or Slack messages to improve clarity and reduce review friction.",
+      "description": "Use when writing PRs, documentation, RFCs, or Slack messages to improve clarity, brevity, and reduce review friction.",
       "entrypoint": "SKILL.md",
       "location": "portable/communication-style/",
       "name": "communication-style",
@@ -208,6 +236,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -226,6 +258,9 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "cursor": {
             "min_version": "*"
           },
@@ -237,7 +272,7 @@
           }
         }
       },
-      "description": "Build beautiful, modern Android UI with Material Design 3 and Jetpack Compose while avoiding generic boilerplate.",
+      "description": "Use when building Android UI components with Jetpack Compose and Material Design 3 to produce modern, distinctive interfaces that avoid generic boilerplate.",
       "entrypoint": "SKILL.md",
       "location": "portable/compose-material3/",
       "name": "compose-material3",
@@ -261,6 +296,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -279,6 +318,9 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "cursor": {
             "min_version": "*"
           },
@@ -290,7 +332,7 @@
           }
         }
       },
-      "description": "Comprehensive code quality audit covering architecture, patterns, and security vulnerabilities.",
+      "description": "Use when performing a comprehensive codebase health assessment before major refactoring, migration, production readiness review, or ownership transfer.",
       "entrypoint": "SKILL.md",
       "location": "portable/deep-audit/",
       "name": "deep-audit",
@@ -319,6 +361,54 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Review a technical design document or RFC as a senior/staff engineer before sharing. Invoke after drafting to catch structural, clarity, and completeness issues.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/design-doc-review/",
+      "name": "design-doc-review",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "review",
+        "design",
+        "rfc",
+        "portable"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
         },
         "pi": {
           "mode": "include",
@@ -328,6 +418,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -341,7 +434,7 @@
           }
         }
       },
-      "description": "Write and update concise engineering documentation grounded in runtime behavior and operations.",
+      "description": "Use when writing or updating engineering documentation and want it grounded in runtime behavior rather than aspirational prose.",
       "entrypoint": "SKILL.md",
       "location": "portable/documentation/",
       "name": "documentation",
@@ -364,6 +457,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -380,6 +477,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -417,6 +517,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -433,6 +537,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -468,53 +575,7 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Portable starter skill package for defining concise, tool-agnostic workflows.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/example-skill/",
-      "name": "example-skill",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "starter",
-        "template",
-        "portable"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": false
-    },
-    {
-      "adapters": {
-        "claude": {
+        "copilot": {
           "mode": "include",
           "path": "SKILL.md"
         },
@@ -536,6 +597,9 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "cursor": {
             "min_version": "*"
           },
@@ -547,7 +611,7 @@
           }
         }
       },
-      "description": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics.",
+      "description": "Use when building web components, pages, dashboards, or UI applications (websites, landing pages, React components, HTML/CSS) and need production-grade design that avoids generic AI-generated aesthetics.",
       "entrypoint": "SKILL.md",
       "location": "portable/frontend-design/",
       "name": "frontend-design",
@@ -569,6 +633,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -587,6 +655,9 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "cursor": {
             "min_version": "*"
           },
@@ -598,7 +669,7 @@
           }
         }
       },
-      "description": "Interact with GitHub using the `gh` CLI. Use `gh issue`, `gh pr`, `gh run`, and `gh api` for issues, PRs, CI runs, and advanced queries.",
+      "description": "Use when interacting with GitHub issues, PRs, CI runs, or repository data via the gh CLI.",
       "entrypoint": "SKILL.md",
       "location": "portable/github/",
       "name": "github",
@@ -629,10 +700,6 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -645,38 +712,31 @@
           },
           "opencode": {
             "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
           }
         }
       },
-      "description": "Unified product and engineering skill for GrenadianBuzz across all surfaces (API, Android app, CLI, website, dashboard, CDN). Use when working on GrenadianBuzz features, architecture, or operational tasks.",
+      "description": "Apply Go idioms and engineering standards when writing, reviewing, or refactoring Go code. Triggers on .go files, go.mod references, or Go-related tasks.",
       "entrypoint": "SKILL.md",
-      "location": "portable/grenadianbuzz/",
-      "name": "grenadianbuzz",
-      "personal_machine_only": true,
+      "location": "portable/go-standards/",
+      "name": "go-standards",
+      "personal_machine_only": false,
       "portable": true,
       "runtime": null,
       "tags": [
-        "grenadianbuzz",
-        "product",
-        "mobile",
-        "android",
-        "api",
-        "backend",
-        "frontend",
-        "architecture",
-        "openapi",
-        "prd",
-        "newsletter"
+        "go",
+        "standards",
+        "portable"
       ],
-      "version": "0.3.0",
+      "version": "0.1.0",
       "work_machine_only": false
     },
     {
       "adapters": {
         "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
           "mode": "include",
           "path": "SKILL.md"
         },
@@ -698,6 +758,9 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "cursor": {
             "min_version": "*"
           },
@@ -709,7 +772,72 @@
           }
         }
       },
-      "description": "Resume interrupted work and produce clean handoffs with clear blockers and next steps.",
+      "description": "Use when working on GrenadianBuzz features, architecture, or operational tasks across any surface (API, Android app, CLI, website, dashboard, CDN, newsletter).",
+      "entrypoint": "SKILL.md",
+      "location": "portable/grenadianbuzz/",
+      "name": "grenadianbuzz",
+      "personal_machine_only": true,
+      "portable": false,
+      "runtime": null,
+      "tags": [
+        "grenadianbuzz",
+        "product",
+        "mobile",
+        "android",
+        "api",
+        "backend",
+        "frontend",
+        "architecture",
+        "openapi",
+        "prd",
+        "newsletter"
+      ],
+      "version": "0.4.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Use when resuming interrupted work across sessions, handing off to another agent or teammate, or creating a restart-ready status snapshot.",
       "entrypoint": "SKILL.md",
       "location": "portable/handoff-resume/",
       "name": "handoff-resume",
@@ -732,6 +860,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -748,6 +880,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -787,6 +922,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -803,6 +942,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -842,6 +984,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -860,6 +1006,9 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "cursor": {
             "min_version": "*"
           },
@@ -871,7 +1020,7 @@
           }
         }
       },
-      "description": "Write concise, operationally useful postmortems focused on decisions, causes, and concrete follow-ups. Use after production incidents or operational failures to extract learning and drive improvements.",
+      "description": "Use after a production incident or operational failure to write a concise, blameless postmortem focused on decisions, causes, and concrete follow-ups.",
       "entrypoint": "SKILL.md",
       "location": "portable/incident-postmortem/",
       "name": "incident-postmortem",
@@ -894,55 +1043,7 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Build, deploy, and manage infrastructure with containers, Kubernetes, and IaC.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/infrastructure-automation/",
-      "name": "infrastructure-automation",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "infrastructure",
-        "devops",
-        "containers",
-        "kubernetes",
-        "portable"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": false
-    },
-    {
-      "adapters": {
-        "claude": {
+        "copilot": {
           "mode": "include",
           "path": "SKILL.md"
         },
@@ -962,6 +1063,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -998,6 +1102,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1010,6 +1118,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1043,6 +1154,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1059,6 +1174,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1076,8 +1194,8 @@
       "entrypoint": "SKILL.md",
       "location": "portable/knowledgebase-workflow/",
       "name": "knowledgebase-workflow",
-      "personal_machine_only": false,
-      "portable": true,
+      "personal_machine_only": true,
+      "portable": false,
       "runtime": null,
       "tags": [
         "knowledgebase",
@@ -1092,6 +1210,10 @@
     {
       "adapters": {
         "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
           "mode": "include",
           "path": "SKILL.md"
         },
@@ -1113,6 +1235,9 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "cursor": {
             "min_version": "*"
           },
@@ -1128,8 +1253,8 @@
       "entrypoint": "SKILL.md",
       "location": "portable/life-organizer/",
       "name": "life-organizer",
-      "personal_machine_only": false,
-      "portable": true,
+      "personal_machine_only": true,
+      "portable": false,
       "runtime": null,
       "tags": [
         "personal",
@@ -1149,6 +1274,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1165,6 +1294,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1204,6 +1336,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1220,6 +1356,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1233,7 +1372,7 @@
           }
         }
       },
-      "description": "When the user wants to apply psychological principles, mental models, or behavioral science to marketing. Also use when the user mentions 'psychology,' 'mental models,' 'cognitive bias,' 'persuasion,' 'behavioral science,' 'why people buy,' 'decision-making,' or 'consumer behavior.' This skill provides 70+ mental models organized for marketing application.",
+      "description": "Use when applying psychological principles, mental models, or behavioral science to marketing decisions, messaging, or conversion strategy. Also triggers on 'cognitive bias,' 'persuasion,' 'why people buy,' or 'consumer behavior.'",
       "entrypoint": "SKILL.md",
       "location": "portable/marketing-psychology/",
       "name": "marketing-psychology",
@@ -1243,12 +1382,16 @@
       "tags": [
         "portable"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "work_machine_only": false
     },
     {
       "adapters": {
         "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
           "mode": "include",
           "path": "SKILL.md"
         },
@@ -1268,6 +1411,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1303,56 +1449,7 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Coordinate session-memory capture, durable promotion, and handoff-ready resume workflows.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/memory-operations/",
-      "name": "memory-operations",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "memory",
-        "mcp",
-        "handoff",
-        "resume",
-        "durability",
-        "portable"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": false
-    },
-    {
-      "adapters": {
-        "claude": {
+        "copilot": {
           "mode": "include",
           "path": "SKILL.md"
         },
@@ -1372,6 +1469,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1404,54 +1504,7 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Profile applications and generate optimization recommendations with measurable impact. Use when identifying bottlenecks, optimizing slow operations, or validating performance improvements.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/performance-profiling/",
-      "name": "performance-profiling",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "performance",
-        "profiling",
-        "optimization",
-        "portable"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": false
-    },
-    {
-      "adapters": {
-        "claude": {
+        "copilot": {
           "mode": "include",
           "path": "SKILL.md"
         },
@@ -1471,6 +1524,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1513,10 +1569,6 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1529,25 +1581,20 @@
           },
           "opencode": {
             "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
           }
         }
       },
-      "description": "Use when implementing or reviewing Python code to enforce minimum quality gates before completion.",
+      "description": "Apply Python engineering standards (type safety, error handling, structure, observability) when writing, reviewing, or refactoring Python code. Triggers on .py files or Python-related tasks.",
       "entrypoint": "SKILL.md",
-      "location": "portable/python-quality-checklist/",
-      "name": "python-quality-checklist",
+      "location": "portable/python-standards/",
+      "name": "python-standards",
       "personal_machine_only": false,
       "portable": true,
       "runtime": null,
       "tags": [
         "python",
-        "quality",
-        "typing",
-        "docstrings",
-        "validation"
+        "standards",
+        "portable"
       ],
       "version": "0.1.0",
       "work_machine_only": false
@@ -1555,6 +1602,10 @@
     {
       "adapters": {
         "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
           "mode": "include",
           "path": "SKILL.md"
         },
@@ -1576,6 +1627,9 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "cursor": {
             "min_version": "*"
           },
@@ -1587,7 +1641,7 @@
           }
         }
       },
-      "description": "Draft and refine changelog and release notes from commits, PRs, and changes.",
+      "description": "Use when drafting or refining changelog entries and release notes from commits, PRs, or code changes.",
       "entrypoint": "SKILL.md",
       "location": "portable/release-notes/",
       "name": "release-notes",
@@ -1610,6 +1664,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1626,6 +1684,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1665,6 +1726,54 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Write RFC and technical design documents using a strict blueprint format. Use for RFC, design doc, technical proposal, or architecture document requests. More opinionated than the rfc skill.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/rfc-blueprint/",
+      "name": "rfc-blueprint",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "rfc",
+        "architecture",
+        "design",
+        "portable"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
         },
         "pi": {
           "mode": "include",
@@ -1674,6 +1783,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1687,7 +1799,7 @@
           }
         }
       },
-      "description": "Draft tight, reviewable engineering RFCs focused on constraints, decisions, and rollout safety.",
+      "description": "Use when proposing a significant engineering change and need a tight, reviewable RFC focused on constraints, decisions, and rollout safety.",
       "entrypoint": "SKILL.md",
       "location": "portable/rfc/",
       "name": "rfc",
@@ -1710,54 +1822,7 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Security vulnerability scanning, secret detection, and secure coding recommendations. Use before merging changes, during code review, or when assessing codebase security posture.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/security-audit/",
-      "name": "security-audit",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "security",
-        "audit",
-        "vulnerabilities",
-        "portable"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": false
-    },
-    {
-      "adapters": {
-        "claude": {
+        "copilot": {
           "mode": "include",
           "path": "SKILL.md"
         },
@@ -1777,6 +1842,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1813,6 +1881,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -1831,6 +1903,9 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "cursor": {
             "min_version": "*"
           },
@@ -1842,7 +1917,7 @@
           }
         }
       },
-      "description": "Complete shadcn/ui component library guide including installation, configuration, and implementation of accessible React components. Use when setting up shadcn/ui, installing components, building forms with React Hook Form and Zod, customizing themes with Tailwind CSS, or implementing UI patterns like buttons, dialogs, dropdowns, tables, and complex form layouts.",
+      "description": "Use when setting up shadcn/ui, installing components, building forms with React Hook Form and Zod, customizing themes with Tailwind CSS, or implementing accessible UI patterns (buttons, dialogs, dropdowns, tables, complex layouts).",
       "entrypoint": "SKILL.md",
       "location": "portable/shadcn-ui/",
       "name": "shadcn-ui",
@@ -1864,55 +1939,7 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Write production-grade shell scripts with error handling, testing, and cross-platform support.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/shell-automation/",
-      "name": "shell-automation",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "shell",
-        "automation",
-        "bash",
-        "scripts",
-        "portable"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": false
-    },
-    {
-      "adapters": {
-        "claude": {
+        "copilot": {
           "mode": "include",
           "path": "SKILL.md"
         },
@@ -1932,6 +1959,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -1970,55 +2000,7 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Debug Linux servers, Puppet, Kubernetes, RPM, systemd, and infrastructure issues with systematic troubleshooting.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/sre-debugging/",
-      "name": "sre-debugging",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "sre",
-        "debugging",
-        "linux",
-        "infrastructure",
-        "portable"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": false
-    },
-    {
-      "adapters": {
-        "claude": {
+        "copilot": {
           "mode": "include",
           "path": "SKILL.md"
         },
@@ -2036,6 +2018,9 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "opencode": {
             "min_version": "*"
           },
@@ -2044,7 +2029,7 @@
           }
         }
       },
-      "description": "Fetch a URL or convert a local file (PDF/DOCX/HTML/etc.) into Markdown using `uvx markitdown`, optionally it can summarize",
+      "description": "Use when fetching a URL or converting a local file (PDF, DOCX, HTML, etc.) to Markdown for reading or summarization via uvx markitdown.",
       "entrypoint": "SKILL.md",
       "location": "portable/summarize/",
       "name": "summarize",
@@ -2068,53 +2053,7 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Universal testing with framework auto-detection for Python, JS, TS, Go, and Kotlin.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/testing/",
-      "name": "testing",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "testing",
-        "quality",
-        "portable"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": false
-    },
-    {
-      "adapters": {
-        "claude": {
+        "copilot": {
           "mode": "include",
           "path": "SKILL.md"
         },
@@ -2134,6 +2073,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -2171,6 +2113,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -2187,6 +2133,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -2222,6 +2171,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -2238,6 +2191,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -2277,6 +2233,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -2293,6 +2253,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
@@ -2327,6 +2290,10 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -2343,6 +2310,9 @@
       "compatibility": {
         "runtimes": {
           "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
             "min_version": "*"
           },
           "cursor": {
