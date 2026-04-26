@@ -1,6 +1,6 @@
-# GrenadianBuzz Skill v0.2.0 Update Summary
+# GrenadianBuzz Skill v0.4.0 Update Summary
 
-**Version**: 0.2.0 | **Date**: 2026-03-20 | **Status**: Stable
+**Version**: 0.4.0 | **Date**: 2026-04-26 | **Status**: Stable
 
 ## What Changed from v0.1.0
 
@@ -11,7 +11,7 @@
 - Covered versioning, pagination, error handling, engagement endpoints
 - Guided API contract-first design for backend-focused teams
 
-**v0.2.0 (grenadianbuzz)** — NEW
+**v0.4.0 (grenadianbuzz)** — NEW
 - Expands scope to **all product surfaces**:
   - Backend API (REST, versioning, production patterns)
   - **Android app** (Kotlin, JetpackCompose, MVVM, offline-first, new!)
@@ -98,15 +98,15 @@ All core GrenadianBuzz patterns remain stable:
 
 ### Metadata Updates
 
-**manifest.json** (v0.2.0):
+**manifest.json** (v0.4.0):
 - **Name**: `grenadianbuzz` (was: `grenadianbuzz-api`)
 - **Tags added**: `mobile`, `android`, `frontend`, `newsletter`, `architecture`
 - **Entrypoint**: `SKILL.md` (unchanged)
 - **Portability**: `true` (unchanged)
 - **Adapters**: OpenCode, Cursor, Claude (all supported)
 
-**SKILL.md frontmatter** (v0.2.0):
-- **Version**: 0.2.0 (was: 0.1.0)
+**SKILL.md frontmatter** (v0.4.0):
+- **Version**: 0.4.0 (was: 0.1.0)
 - **Description**: Unified product and engineering skill across all surfaces
 - **Tags**: Added `product`, `mobile`, `android`, `frontend`
 

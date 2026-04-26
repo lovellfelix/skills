@@ -1,0 +1,55 @@
+name: Template Validation
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/**'
+      - 'migration/**'
+      - 'docs/**'
+      - 'SKILL.md'
+      - '.github/workflows/template-validate.yml'
+
+jobs:
+  validate-template:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python (for YAML checks)
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Make scripts executable
+        run: |
+          chmod +x scripts/*.sh || true
+      - name: Run template validation
+        env:
+          PVE_HOST: ${{ secrets.PVE_HOST || '' }}
+          PVE_USER: ${{ secrets.PVE_USER || 'root@pam' }}
+          TEMPLATE_ID: ${{ secrets.TEMPLATE_ID || '' }}
+          STORAGE: ${{ secrets.PVE_STORAGE || '' }}
+          # enable strict validation when live secrets are provided
+          LIVE_SECRETS: ${{ (secrets.PVE_HOST && secrets.TEMPLATE_ID && secrets.PVE_USER) && '1' || '' }}
+        run: |
+          # template-validate.sh is safe to run in limited mode: it exits 0 when no TEMPLATE_ID/CLOUD_INIT_FILE provided
+          if [ -n "$LIVE_SECRETS" ]; then
+            echo "LIVE_SECRETS set: running full validation"
+            ./scripts/template-validate.sh
+          else
+            echo "LIVE_SECRETS not set: running limited validation (errors treated as warnings)"
+            ./scripts/template-validate.sh || true
+          fi
+      - name: Cloud-init YAML lint (optional)
+        if: ${{ always() }}
+        run: |
+          # If a cloud-init sample exists, validate it
+          if [ -f .github/cloud-init-sample.yaml ]; then
+            python3 -c "import yaml,sys
+from pathlib import Path
+try:
+  yaml.safe_load(Path('.github/cloud-init-sample.yaml').read_text())
+  print('cloud-init sample YAML looks valid')
+except Exception as e:
+  print('cloud-init sample YAML parse failed:', e); sys.exit(1)"
+          else
+            echo 'No cloud-init sample provided; skipping.'
+          fi

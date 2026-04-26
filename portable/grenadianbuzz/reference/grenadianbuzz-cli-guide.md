@@ -116,15 +116,17 @@ gbuzz --log-level DEBUG -v crawl rss  # Uses DEBUG, not INFO
 
 ```bash
 export API_URL="https://api.example.com"
-export API_CLIENT_KEY="your-secret-key"
+# WARNING: replace with your real client key. Use environment variables or a secrets manager in CI. Do NOT commit secrets to git.
+export API_CLIENT_KEY="YOUR_API_CLIENT_KEY"
 ```
 
-### Configuration File: ~/.config/gbuzz/config.yaml
+### Configuration File: ~/.config/gbuzz/config.yaml (example path for local development — in CI prefer environment variables or a mounted secret)
 
 ```yaml
 # Required
 API_URL: "https://api.example.com"
-API_CLIENT_KEY: "your-secret-key"
+# WARNING: replace with your real client key. Use environment variables or a secrets manager in CI. Do NOT commit secrets to git.
+API_CLIENT_KEY: "YOUR_API_CLIENT_KEY"
 
 # Optional HTTP configuration
 HTTP_TIMEOUT: 30              # Read timeout in seconds

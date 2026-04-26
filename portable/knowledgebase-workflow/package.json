@@ -1,0 +1,20 @@
+{
+  "name": "knowledgebase-workflow",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Scripts and helpers for local knowledgebase validation and backlink generation",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "kb:check": "node scripts/find-duplicates.js",
+    "kb:backlinks": "node scripts/generate-backlinks.js",
+    "kb:all": "npm run kb:check && npm run kb:backlinks",
+    "kb:test": "node scripts/test-kb.js"
+  },
+
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "js-yaml": "^4.1.0"
+  }
+}

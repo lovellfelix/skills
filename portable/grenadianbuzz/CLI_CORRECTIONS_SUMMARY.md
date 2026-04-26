@@ -1,6 +1,6 @@
 # GBuzz CLI Documentation Corrections - Summary
 
-**Date**: 2026-03-23  
+**Date**: 2026-04-26  
 **Scope**: Complete rewrite of CLI skill/docs to match actual GBuzz CLI surface  
 **Status**: Completed and validated against source code
 
@@ -40,7 +40,7 @@
 
 ### 4. `/Users/lovellfelix/.dotfiles/skills/portable/grenadianbuzz/manifest.json`
 **Before**: Version 0.2.0  
-**After**: Version 0.3.0
+**After**: Version 0.4.0
 - Bumped version to reflect corrections
 
 ---

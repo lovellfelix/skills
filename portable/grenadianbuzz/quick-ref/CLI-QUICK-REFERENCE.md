@@ -6,6 +6,26 @@
 
 ## Command Structure
 
+# Top-level help (short)
+```
+Usage: gbuzz [global options] <command> [command options]
+
+Options:
+  --log-level LEVEL    Set logging level (DEBUG, INFO, WARNING, ERROR)
+  -v, -vv, -vvv        Verbosity (increase logging)
+  --json-format        Output logs in JSON format
+  --config PATH        Path to YAML config file (default: ~/.config/gbuzz/config.yaml) (example default path for local dev; in CI prefer env vars/secrets)
+  --help               Show this help message
+
+Commands:
+  crawl         Crawl content sources (rss, wordpress, station...)
+  notify        Send notifications (newsletter, feedback, seasonal)
+  archive       Archive expired analytics data
+  discover      Discover feeds and radio stations
+  fix-streams   Validate and repair station streams
+  task-runner   Run scheduled/continuous tasks
+```
+
 ```
 gbuzz [global options] <command> [command options]
 gbuzz crawl rss --now
@@ -35,13 +55,15 @@ gbuzz task-runner --tasks rss,wordpress --once
 ### Environment Variables (Recommended)
 ```bash
 export API_URL="https://your-api-endpoint.com"
-export API_CLIENT_KEY="your-api-key"
+# WARNING: replace with your real client key. Use environment variables or a secrets manager in CI. Do NOT commit secrets to git.
+export API_CLIENT_KEY="YOUR_API_CLIENT_KEY"
 ```
 
 ### Configuration File (~/.config/gbuzz/config.yaml)
 ```yaml
 API_URL: "https://your-api-endpoint.com"
-API_CLIENT_KEY: "your-api-key"
+# WARNING: replace with your real client key. Use environment variables or a secrets manager in CI. Do NOT commit secrets to git.
+API_CLIENT_KEY: "YOUR_API_CLIENT_KEY"
 # Optional HTTP configuration
 HTTP_TIMEOUT: 30
 CONNECT_TIMEOUT: 10

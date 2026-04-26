@@ -1,0 +1,32 @@
+{
+  "info": {
+    "name": "GrenadianBuzz - Example Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Starter Postman collection for GrenadianBuzz API - replace baseUrl and add auth"
+  },
+  "item": [
+    {
+      "name": "List Posts",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{api_token}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/posts",
+          "host": ["{{baseUrl}}"],
+          "path": ["posts"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {"key": "baseUrl", "value": "https://api.example.com/v1"},
+    {"key": "api_token", "value": ""}
+  ]
+}

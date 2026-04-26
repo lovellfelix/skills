@@ -1,0 +1,19 @@
+# Canonical tags and aliases for the knowledgebase
+# Use canonical names in frontmatter `tags:`. Aliases are accepted but should be migrated.
+
+canonical:
+  design:
+    aliases: [ux, ux-design, ui]
+    description: "Design-related guidance, patterns, and decisions"
+  ops:
+    aliases: [operations, oncall]
+    description: "Operational runbooks and oncall procedures"
+  reference:
+    aliases: [cheatsheet, cheat-sheet]
+    description: "Short reference guides and quick answers"
+  project:
+    aliases: [work, workspace]
+    description: "Project-specific documentation"
+  note:
+    aliases: [thoughts, journal]
+    description: "Personal or ephemeral notes"

@@ -1,0 +1,8 @@
+{
+  "name": "knowledgebase-kb-metadata",
+  "version": "0.1.0",
+  "description": "Small manifest used by local KB metadata tooling. This is vendored for durability and local automation.",
+  "categories": ["notes","reference","dashboard","project"],
+  "generated_by": "knowledgebase-workflow",
+  "schema_version": "1.0"
+}

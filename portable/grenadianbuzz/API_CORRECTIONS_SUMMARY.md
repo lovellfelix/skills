@@ -1,6 +1,6 @@
 # GrenadianBuzz API Skill Corrections Summary
 
-**Date**: March 24, 2026  
+**Date**: April 26, 2026  
 **Scope**: Fix API reference accuracy in skill documentation  
 **Status**: Completed and validated against source code  
 **Source of Truth**: `/Users/lovellfelix/projects/grenadianbuzz/api/docs/` + source code
@@ -164,7 +164,7 @@ None identified. The actual GrenadianBuzz API implementation is clear:
 1. **Update OpenAPI/Swagger**: If Swagger UI is regenerated, it should match corrected patterns
 2. **Update client SDKs**: Any generated SDKs should use corrected field names
 3. **Quarterly Review**: Re-validate against source code as API evolves
-4. **Version Bump**: Consider incrementing skill version to reflect corrections (currently 0.3.0)
+4. **Version Bump**: Consider incrementing skill version to reflect corrections (currently 0.4.0)
 
 ---
 

@@ -14,12 +14,33 @@ tags: [homelab, proxmox, cluster-api, capmox, kubernetes, kubeadm, ceph, infrast
 This skill is for cluster lifecycle work on the personal homelab Kubernetes platform running on Proxmox.
 
 Primary source of truth:
-- `/Users/lovellfelix/projects/gitops-homelab/infrastructure/cluster-api/`
+- ${GITOPS_DIR:-~/projects/gitops-homelab}/infrastructure/cluster-api/
 
 Reference-only legacy repo:
-- `/Users/lovellfelix/projects/proxmox/cluster-api/`
+- ${LEGACY_PROXMOX_DIR:-~/projects/proxmox/cluster-api/}
 
 Use the GitOps repo first. Only fall back to the older repo when the newer path is missing detail, especially for template-builder workflows.
+
+## Required env vars and onboarding snippets
+Export these in your shell or CI environment as appropriate. Defaults are shown in parentheses.
+
+- GITOPS_DIR (~/projects/gitops-homelab)
+- MGMT_KUBECONFIG (~/.kube/proxmox-capi/mgmt-cluster.kubeconfig)
+- WORKLOAD_KUBECONFIG (~/.kube/proxmox-homelab/workload.kubeconfig)
+- PVE_HOST (pve hostname/ip)
+- PVE_USER (root@pam)
+- PVE_PORT (8006)
+- LIVE_SECRETS (unset by default; set to 1/true when running with real Proxmox credentials to make remote validation fatal)
+
+Example local onboarding snippet (add to your shell profile or CI environment):
+
+export GITOPS_DIR=~/projects/gitops-homelab
+export MGMT_KUBECONFIG=~/.kube/proxmox-capi/mgmt-cluster.kubeconfig
+export WORKLOAD_KUBECONFIG=~/.kube/proxmox-homelab/workload.kubeconfig
+# when you want full remote validation with live Proxmox credentials
+# export LIVE_SECRETS=1
+
+See docs/preflight-checklist.md for the lightweight preflight steps and dependencies (python3+pyyaml or yq for YAML parsing).
 
 ## Use when
 
@@ -84,11 +105,11 @@ Use the GitOps repo first. Only fall back to the older repo when the newer path 
 ## Key Files
 
 - `reference/runbook.md`
-- `/Users/lovellfelix/projects/gitops-homelab/infrastructure/cluster-api/README.md`
-- `/Users/lovellfelix/projects/gitops-homelab/infrastructure/cluster-api/manifests/homelab-cluster.yaml`
-- `/Users/lovellfelix/projects/gitops-homelab/infrastructure/cluster-api/CONTROL_PLANE_LOCAL_ZFS_MIGRATION.md`
-- `/Users/lovellfelix/projects/gitops-homelab/infrastructure/cluster-api/FIRST_CONTROL_PLANE_REPLACEMENT_PVE22.md`
-- `/Users/lovellfelix/projects/proxmox/cluster-api/01-template-builder/QUICKSTART.md`
+- ${GITOPS_DIR:-~/projects/gitops-homelab}/infrastructure/cluster-api/README.md
+- ${GITOPS_DIR:-~/projects/gitops-homelab}/infrastructure/cluster-api/manifests/homelab-cluster.yaml
+- ${GITOPS_DIR:-~/projects/gitops-homelab}/infrastructure/cluster-api/CONTROL_PLANE_LOCAL_ZFS_MIGRATION.md
+- ${GITOPS_DIR:-~/projects/gitops-homelab}/infrastructure/cluster-api/FIRST_CONTROL_PLANE_REPLACEMENT_PVE22.md
+- ${LEGACY_PROXMOX_DIR:-~/projects/proxmox/cluster-api/}/01-template-builder/QUICKSTART.md
 
 ## Common Mistakes
 
@@ -103,3 +124,31 @@ Use the GitOps repo first. Only fall back to the older repo when the newer path 
 - This is a personal-machine-only skill and stays disabled unless explicitly allowlisted.
 - Add `homelab-proxmox-cluster-api` to `~/.personal-machine-skills.txt` (one skill name per line).
 - Re-run your runtime link sync after updating the allowlist.
+
+## Runbooks, Scripts, and CI
+
+This skill now includes lightweight scripts and runbooks to validate templates, capture etcd snapshots, run preflight checks, and document recovery/playbooks.
+
+Scripts (non-destructive, run locally):
+- scripts/preflight.sh        - basic preflight checks (management connectivity, required tools)
+- scripts/cluster-status.sh  - quick status summary for management and workload clusters
+- scripts/etcd-snapshot.sh   - capture etcd snapshot from workload control-plane (if accessible)
+- scripts/template-validate.sh - validate Proxmox template visibility and cloud-init YAML (safe to run in CI in limited mode)
+
+Docs and runbooks:
+- docs/preflight-checklist.md
+- docs/recovery/etcd-restore.md
+- docs/recovery/proxmox-template-rollback.md
+- migration/control-plane-local-zfs-playbook.md
+
+CI validation
+- A GitHub Actions workflow (.github/workflows/template-validate.yml) performs lightweight template validation on pull requests.
+- The workflow is intentionally non-invasive: it will run template-validate.sh in limited mode when no Proxmox secrets are provided and will only parse cloud-init YAML if present.
+- To enable full remote Proxmox validation in CI, add secrets: PVE_HOST, PVE_USER, TEMPLATE_ID, and PVE_STORAGE to the repository secrets. The workflow will pick these up and run the additional checks.
+
+Usage guidance
+- Always run scripts/preflight.sh locally before performing template or control-plane changes.
+- Capture an etcd snapshot and store it with the change ticket before making disruptive changes.
+- Validate cloud-init locally (scripts/template-validate.sh CLOUD_INIT_FILE=...) and prefer PR-based changes to manifests.
+
+See the individual docs in the docs/ and migration/ directories for detailed step-by-step guidance and recovery runbooks.

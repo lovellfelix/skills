@@ -1,0 +1,9 @@
+{
+  "note1.md": [
+    "note1.md",
+    "note2.md"
+  ],
+  "note2.md": [
+    "note1.md"
+  ]
+}

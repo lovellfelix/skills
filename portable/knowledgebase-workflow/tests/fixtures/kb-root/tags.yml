@@ -1,0 +1,10 @@
+canonical:
+  design:
+    aliases: [ux, ux-design, ui]
+    description: "Design-related guidance"
+  ops:
+    aliases: [operations, oncall]
+    description: "Operational runbooks"
+  reference:
+    aliases: [cheatsheet]
+    description: "Short reference guides"

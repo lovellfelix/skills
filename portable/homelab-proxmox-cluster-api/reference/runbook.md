@@ -2,8 +2,8 @@
 
 ## Repo Selection
 
-- Use first: `/Users/lovellfelix/projects/gitops-homelab/infrastructure/cluster-api/`
-- Use as reference only: `/Users/lovellfelix/projects/proxmox/cluster-api/`
+- Use first: ${GITOPS_DIR:-~/projects/gitops-homelab}/infrastructure/cluster-api/
+- Use as reference only: ${LEGACY_PROXMOX_DIR:-~/projects/proxmox/cluster-api/}
 
 The migration notes mark `gitops-homelab` as the operational source of truth and the older Proxmox repo as a legacy reference.
 
@@ -23,7 +23,7 @@ Full status script:
 ```bash
 MGMT_KUBECONFIG="$HOME/.kube/proxmox-capi/mgmt-cluster.kubeconfig" \
 WORKLOAD_KUBECONFIG="$HOME/.kubeconfig.homelab-cluster" \
-  /Users/lovellfelix/projects/gitops-homelab/infrastructure/cluster-api/scripts/cluster-status.sh
+  ${GITOPS_DIR:-~/projects/gitops-homelab}/infrastructure/cluster-api/scripts/cluster-status.sh
 ```
 
 ## Rebuild and Build
@@ -31,14 +31,14 @@ WORKLOAD_KUBECONFIG="$HOME/.kubeconfig.homelab-cluster" \
 Build only:
 
 ```bash
-/Users/lovellfelix/projects/gitops-homelab/infrastructure/cluster-api/scripts/20-build-homelab-ha.sh \
+${GITOPS_DIR:-~/projects/gitops-homelab}/infrastructure/cluster-api/scripts/20-build-homelab-ha.sh \
   --mgmt-kubeconfig "$HOME/.kube/proxmox-capi/mgmt-cluster.kubeconfig"
 ```
 
 Full rebuild:
 
 ```bash
-/Users/lovellfelix/projects/gitops-homelab/infrastructure/cluster-api/scripts/30-rebuild-homelab-ha.sh \
+${GITOPS_DIR:-~/projects/gitops-homelab}/infrastructure/cluster-api/scripts/30-rebuild-homelab-ha.sh \
   --mgmt-kubeconfig "$HOME/.kube/proxmox-capi/mgmt-cluster.kubeconfig" \
   --auto-fix-boot
 ```
@@ -46,7 +46,7 @@ Full rebuild:
 Teardown:
 
 ```bash
-/Users/lovellfelix/projects/gitops-homelab/infrastructure/cluster-api/scripts/21-teardown-homelab-ha.sh \
+${GITOPS_DIR:-~/projects/gitops-homelab}/infrastructure/cluster-api/scripts/21-teardown-homelab-ha.sh \
   --name homelab \
   --mgmt-kubeconfig "$HOME/.kube/proxmox-capi/mgmt-cluster.kubeconfig" \
   --force
@@ -57,7 +57,7 @@ Teardown:
 Validate the current template before using it:
 
 ```bash
-/Users/lovellfelix/projects/gitops-homelab/infrastructure/cluster-api/scripts/10-ensure-workload-template.sh 9002
+${GITOPS_DIR:-~/projects/gitops-homelab}/infrastructure/cluster-api/scripts/10-ensure-workload-template.sh 9002
 ```
 
 What it checks:
@@ -72,7 +72,7 @@ What it checks:
 
 Current detailed builder docs live in the legacy repo:
 
-- `/Users/lovellfelix/projects/proxmox/cluster-api/01-template-builder/QUICKSTART.md`
+- ${LEGACY_PROXMOX_DIR:-~/projects/proxmox/cluster-api/}/01-template-builder/QUICKSTART.md
 
 Practical flow:
 
@@ -124,7 +124,7 @@ Use the rolling replacement guidance in:
 
 When the user wants a PR:
 
-1. Work in `/Users/lovellfelix/projects/gitops-homelab`
+1. Work in ${GITOPS_DIR:-~/projects/gitops-homelab}
 2. Create a branch
 3. Make manifest or script changes
 4. Run targeted validation commands
