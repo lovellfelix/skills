@@ -1,59 +1,84 @@
 ---
 name: commit
-description: Use when making a git commit and need a correctly formatted Conventional Commits subject line.
+description: Use when making a git commit and need a correctly formatted subject line with optional Jira ticket and Co-Authored-By trailer.
 ---
 
-Create a git commit for the current changes using a concise Conventional Commits-style subject.
+Create a git commit for the current changes using a short, imperative subject line.
 
 ## Format
 
-`<type>(<scope>): <summary>`
+With Jira ticket: `<JIRA-TICKET>: <summary>`
+Without Jira ticket: `<summary>`
 
-- `type` REQUIRED. Use `feat` for new features, `fix` for bug fixes. Other common types: `docs`, `refactor`, `chore`, `test`, `perf`.
-- `scope` OPTIONAL. Short noun in parentheses for the affected area (e.g., `api`, `parser`, `ui`).
+- `JIRA-TICKET` OPTIONAL. Use when the ticket is known (e.g. `PROJ-123`). Omit if unknown — do not guess.
 - `summary` REQUIRED. Short, imperative, <= 72 chars, no trailing period.
 
 ## Notes
 
 - Body is OPTIONAL. If needed, add a blank line after the subject and write short paragraphs.
-- Do NOT include breaking-change markers or change-type footers.
+- **Always use a heredoc** for multi-line messages — never pass `\n` escape sequences in `-m` strings, they render as literal backslash-n.
+- A blank line is **required** between the body (or subject) and the `Co-Authored-By` trailer; without it git does not treat it as a trailer.
+- Do NOT include `BREAKING CHANGE`, `Change-Type`, or other change-type footers.
 - Do NOT add sign-offs (no `Signed-off-by`).
 - Only commit; do NOT push.
-- If it is unclear whether a file should be included, ask the user which files to commit.
-- Treat any caller-provided arguments as additional commit guidance. Common patterns:
-  - Freeform instructions should influence scope, summary, and body.
-  - File paths or globs should limit which files to commit. If files are specified, only stage/commit those unless the user explicitly asks otherwise.
-  - If arguments combine files and instructions, honor both.
+
+## Argument Parsing
+
+Treat caller-provided arguments as follows:
+- Strings containing `/`, `.`, or glob characters (`*`, `?`, `**`) → treat as file paths/globs to stage.
+- Short imperative phrases → treat as commit summary or body guidance.
+- Mixed input (e.g. "commit auth.py and fix token expiry") → split: file = `auth.py`, summary = "fix token expiry".
+- If ambiguous, ask one clarifying question before proceeding.
+
+## Validation (run before committing)
+
+- Subject must be <= 72 chars. If longer, truncate or ask the user to shorten.
+- Subject must not end with a period — strip trailing periods automatically.
+- Subject should be imperative voice (e.g. "add", "fix", "remove"). If not, reword before committing.
 
 ## Co-Authored-By Trailer
 
-Always append a `Co-Authored-By` git trailer identifying the AI model that authored the commit. Use a blank line to separate it from the body (or subject if no body).
+Always append a `Co-Authored-By` git trailer identifying the AI model that authored the commit.
 
-Format by provider:
+Canonical format — use your own model name:
 
-- Claude (Anthropic): `Co-Authored-By: Claude <noreply@anthropic.com>`
-- GPT / o-series (OpenAI): `Co-Authored-By: GPT-4.1 <noreply@openai.com>`
-- Gemini (Google): `Co-Authored-By: Gemini <noreply@google.com>`
-- Codex / GitHub Copilot: `Co-Authored-By: GitHub Copilot <noreply@github.com>`
+| Provider | Trailer |
+|----------|---------|
+| Claude (Anthropic) | `Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>` |
+| GPT / o-series (OpenAI) | `Co-Authored-By: GPT-4.1 <noreply@openai.com>` |
+| Gemini (Google) | `Co-Authored-By: Gemini <noreply@google.com>` |
+| GitHub Copilot | `Co-Authored-By: GitHub Copilot <noreply@github.com>` |
 
-Use your own model name in the trailer (e.g. `Claude Sonnet 4.6`, `GPT-4.1`, `o3`).
+Replace the model name with the exact version you are running (e.g. `Claude Sonnet 4.7`, `o3`).
 
 ## Steps
 
-1. Infer from the prompt if the user provided specific file paths/globs and/or additional instructions.
-2. Review `git status` and `git diff` to understand the current changes (limit to argument-specified files if provided).
-3. (Optional) Run `git log -n 50 --pretty=format:%s` to see commonly used scopes.
-4. If there are ambiguous extra files, ask the user for clarification before committing.
-5. Stage only the intended files (all changes if no files specified).
-6. Run `git commit` using a heredoc to preserve the trailer newline:
+1. Parse the caller's arguments: separate file paths/globs from commit guidance (see Argument Parsing above).
+2. Run `git status` and `git diff` to understand the current changes (limit to argument-specified files if provided).
+3. (Optional) Run `git log -n 20 --pretty=format:%s` to check commonly used subject patterns.
+4. If ambiguous extra files are staged or unstaged, ask the user which to include before proceeding.
+5. Validate the subject (length <= 72, no trailing period, imperative voice).
+6. Stage only the intended files (`git add <paths>` or `git add -A` if no files specified).
+7. Run `git commit` using a heredoc:
 
 ```bash
+# With Jira ticket:
 git commit -m "$(cat <<'EOF'
-<type>(<scope>): <summary>
+PROJ-123: <summary>
 
 [optional body]
 
-Co-Authored-By: <Model Name> <noreply@provider.com>
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+EOF
+)"
+
+# Without Jira ticket:
+git commit -m "$(cat <<'EOF'
+<summary>
+
+[optional body]
+
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 EOF
 )"
 ```
