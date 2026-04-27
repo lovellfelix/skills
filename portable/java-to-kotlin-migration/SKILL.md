@@ -1,9 +1,9 @@
 ---
 name: java-to-kotlin-migration
-description: Idiomatic, safe Android Java-to-Kotlin migration playbook. Use when migrating Android projects from Java to Kotlin while maintaining behavior and test coverage.
+description: Use when migrating Android projects from Java to Kotlin while maintaining behavior and test coverage.
 version: 0.1.0
-portable: true
-tags: [android, kotlin, java, migration, portable]
+portable: false
+tags: [android, kotlin, java, migration]
 ---
 
 # Java-to-Kotlin Migration Skill

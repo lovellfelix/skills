@@ -17,8 +17,8 @@ Generate a standup update by aggregating work activity from multiple sources.
 Run all in parallel:
 
 **Session Memory:**
-- `retrieve_session_context({ session_id: "<git-basename>", limit: 50 })` — recent work context
-- `task_board({ include_done: true })` — completed and in-progress tasks
+- `session-memory_retrieve_session_context({ session_id: "<git-basename>", limit: 50 })` — recent work context
+- `session-memory_task_board({ include_done: true })` — completed and in-progress tasks
 
 **GitHub (cross-repo):**
 - `gh search commits --author=@me --committer-date=">$(date -v-1d +%Y-%m-%d)" --json sha,commit,repository --limit 20`
@@ -65,11 +65,10 @@ Blockers:
 
 Store standup in session-memory:
 ```
-store_session_context({
+session-memory_store_session_context({
   session_id: "<git-basename>",
-  context_type: "workflow",
-  key: "standup-YYYY-MM-DD",
-  value: "<standup-content>"
+  context_key: "standup-YYYY-MM-DD",
+  context_value: "<standup-content>"
 })
 ```
 

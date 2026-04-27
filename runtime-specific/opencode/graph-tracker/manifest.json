@@ -1,16 +1,24 @@
 {
   "schema_version": "1.0",
   "name": "graph-tracker",
+  "description": "Persistent graph of nodes and relationships - engineering (GitHub issues, PRs, Jira) AND personal (family, reminders, events, notes). Enables work continuity, standup dashboards, personal knowledge graphs, and cross-session resumption.",
   "version": "0.1.0",
   "portable": false,
   "runtime": "opencode",
   "entrypoint": "SKILL.md",
   "tags": [
-    "graph",
-    "tracking",
     "github",
     "jira",
-    "opencode"
+    "issues",
+    "prs",
+    "tracking",
+    "graph",
+    "continuity",
+    "standup",
+    "personal",
+    "family",
+    "notes",
+    "reminders"
   ],
   "adapters": {
     "opencode": {

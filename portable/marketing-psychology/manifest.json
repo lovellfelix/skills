@@ -2,10 +2,14 @@
   "schema_version": "1.0",
   "name": "marketing-psychology",
   "version": "1.1.0",
-  "portable": true,
+  "description": "Use when applying psychological principles, mental models, or behavioral science to marketing decisions, messaging, or conversion strategy. Also triggers on 'cognitive bias,' 'persuasion,' 'why people buy,' or 'consumer behavior.'",
+  "portable": false,
   "entrypoint": "SKILL.md",
   "tags": [
-    "portable"
+    "marketing",
+    "psychology",
+    "persuasion",
+    "behavioral-science"
   ],
   "adapters": {
     "opencode": {

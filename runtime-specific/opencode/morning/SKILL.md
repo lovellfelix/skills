@@ -39,7 +39,7 @@ Run all of these in parallel:
 
 **If work mode** (user explicitly asks OR `planning:work_context` is `"true"`):
 - `gh search issues --assignee @me --state open --sort updated --order desc --limit 50 --json number,title,url,repository,labels,updatedAt,createdAt,commentsCount`
-- Session-memory: `task_board({ include_done: false })`
+- Session-memory: `session-memory_task_board({ include_done: false })`
 
 ### 2. DETERMINE MODE
 
@@ -86,12 +86,12 @@ One suggestion
 
 ### 5. STORE (silent)
 
-- Store today's plan in session-memory: `store_session_context({ session_id: "<git-basename>", context_type: "workflow", key: "daily-plan-YYYY-MM-DD", value: "..." })`
+- Store today's plan in session-memory: `session-memory_store_session_context({ session_id: "<git-basename>", context_key: "daily-plan-YYYY-MM-DD", context_value: "..." })`
 - Sync to Apple Notes: `bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh sync-context '<json>'`
 
 ### 6. LEARN (silent)
 
-Track any observed patterns (meeting-heavy days, focus patterns) via `track_user_preference`.
+Track any observed patterns (meeting-heavy days, focus patterns) via `session-memory_track_user_preference`.
 
 ## Rules
 

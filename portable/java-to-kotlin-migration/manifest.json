@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
   "name": "java-to-kotlin-migration",
+  "description": "Use when migrating Android projects from Java to Kotlin while maintaining behavior and test coverage.",
   "version": "0.1.0",
-  "portable": true,
+  "portable": false,
   "entrypoint": "SKILL.md",
   "tags": [
     "android",
     "kotlin",
     "java",
-    "migration",
-    "portable"
+    "migration"
   ],
   "adapters": {
     "opencode": {

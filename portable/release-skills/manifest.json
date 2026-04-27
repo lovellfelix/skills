@@ -1,6 +1,7 @@
 {
   "schema_version": "1.0",
   "name": "release-skills",
+  "description": "Use when releasing a new version, bumping semver, generating changelogs, or publishing to npm, PyPI, Cargo, or GitHub.",
   "version": "1.0.0",
   "portable": true,
   "entrypoint": "SKILL.md",

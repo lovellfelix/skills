@@ -23,8 +23,8 @@ If results are sufficient, answer from them and cite note titles naturally.
 
 ### 2. Fall back to session memory
 
-- `get_project_conventions({ project_id: "<git-basename>" })`
-- `retrieve_session_context({ session_id: "<git-basename>" })`
+- `session-memory_get_project_conventions({ project_id: "<git-basename>" })`
+- `session-memory_retrieve_session_context({ session_id: "<git-basename>" })`
 
 ### 3. Fall back to codebase
 

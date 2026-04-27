@@ -4,7 +4,7 @@ description: Use when the user asks to review personal reminders, calendar event
 version: 0.1.0
 portable: false
 personal_machine_only: true
-tags: [personal, reminders, calendar, notes, family, planning, portable, macos]
+tags: [personal, reminders, calendar, notes, family, planning, macos]
 applies_to: [personal-assistant, life, planning, reminders]
 ---
 

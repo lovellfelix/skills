@@ -143,140 +143,67 @@ No hardcoded enum — any string is valid. Common examples:
 
 ## MCP Tools Reference
 
-### `upsert_node` — Create or update a graph node
+The graph-specific node tools are not currently exposed in this OpenCode runtime. Use the general `session-memory_*` context tools to persist graph-shaped records until the dedicated graph API is available again.
+
+### `session-memory_store_session_context` — Store graph-shaped records
 
 ```typescript
-// Engineering example
-upsert_node({
-  domain: "engineering",
-  item_type: "github_issue",
-  external_id: "owner/repo#42",
-  title: "Fix login validation",
-  status: "open",
-  repo: "owner/repo",
-  url: "https://github.com/owner/repo/issues/42",
-  metadata_json: '{"labels":["bug","auth"],"assignee":"user"}',
-  tags: "bug,auth,login",
+// Engineering item keyed by external identifier
+session-memory_store_session_context({
+  session_id: "graph-tracker",
+  context_key: "graph:engineering:github_issue:owner/repo#42",
+  context_value: JSON.stringify({
+    title: "Fix login validation",
+    status: "open",
+    repo: "owner/repo",
+    url: "https://github.com/owner/repo/issues/42",
+    tags: ["bug", "auth", "login"],
+    links: [{ relationship: "linked_to", target: "graph:engineering:jira_ticket:PROJ-123" }]
+  })
 })
 
-// Personal example
-upsert_node({
-  domain: "family",
-  item_type: "person",
-  external_id: "child-a",
-  title: "Alice",
-  status: "active",
-  metadata_json: '{"birthday":"2018-05-20","school":"Springfield Elementary","grade":"1st"}',
-  tags: "family,child",
-})
-
-// Reminder example
-upsert_node({
-  domain: "family",
-  item_type: "reminder",
-  external_id: "reminder-2024-03-15-dentist",
-  title: "Alice dentist appointment",
-  status: "pending",
-  metadata_json: '{"date":"2024-03-15","time":"14:00","location":"Dr. Smith"}',
-  tags: "health,appointment",
+// Personal item keyed the same way
+session-memory_store_session_context({
+  session_id: "graph-tracker",
+  context_key: "graph:family:person:child-a",
+  context_value: JSON.stringify({
+    title: "Alice",
+    status: "active",
+    tags: ["family", "child"],
+    metadata: { birthday: "2018-05-20", school: "Springfield Elementary" }
+  })
 })
 ```
 
-### `link_nodes` — Create a relationship
+### `session-memory_retrieve_session_context` — Read graph records
 
 ```typescript
-// Engineering: PR fixes issue
-link_nodes({
-  source_type: "github_pr",
-  source_external_id: "owner/repo#99",
-  target_type: "github_issue",
-  target_external_id: "owner/repo#42",
-  relationship: "fixes",
-})
-
-// Personal: reminder for child
-link_nodes({
-  source_type: "reminder",
-  source_external_id: "reminder-2024-03-15-dentist",
-  target_type: "person",
-  target_external_id: "child-a",
-  relationship: "reminder_for",
+// Recent graph entries
+session-memory_retrieve_session_context({
+  session_id: "graph-tracker",
+  limit: 50,
 })
 ```
 
-### `query_nodes` — Search and filter
+### `session-memory_query_memory` — Search graph records
 
 ```typescript
-// All open PRs (engineering domain)
-query_nodes({ domain: "engineering", item_type: "github_pr", status: "open" })
-
-// All family members
-query_nodes({ domain: "family", item_type: "person" })
-
-// All pending reminders
-query_nodes({ item_type: "reminder", status: "pending" })
-
-// Search by title
-query_nodes({ search: "Alice" })
-
-// By tag
-query_nodes({ tag: "health" })
+// Search for a person, issue, or tag label in stored graph JSON
+session-memory_query_memory({ query: "graph child-a Alice health", limit: 10 })
 ```
 
-### `get_node_graph` — Traverse relationships
+### `session-memory_store_interaction` — Record relationship updates
 
 ```typescript
-// See everything connected to a person
-get_node_graph({
-  item_type: "person",
-  external_id: "child-a",
-  depth: 2,
-})
-// Returns: person node + reminders, events, notes linked to them
-
-// See everything connected to an issue
-get_node_graph({
-  item_type: "github_issue",
-  external_id: "owner/repo#42",
-  depth: 2,
-})
-// Returns: issue + branch + PR + Jira ticket
-```
-
-### `work_status_dashboard` — Engineering standup view
-
-```typescript
-// Full engineering dashboard (filters to domain='engineering')
-work_status_dashboard({})
-
-// Filtered by repo
-work_status_dashboard({ repo: "owner/repo" })
-```
-
-### `update_node_status` — Status change
-
-```typescript
-// Engineering
-update_node_status({
-  item_type: "github_pr",
-  external_id: "owner/repo#99",
-  status: "merged",
-})
-
-// Personal
-update_node_status({
-  item_type: "reminder",
-  external_id: "reminder-2024-03-15-dentist",
-  status: "completed",
-})
-```
-
-### `remove_node` — Delete node and edges
-
-```typescript
-remove_node({
-  item_type: "reminder",
-  external_id: "reminder-2024-03-15-dentist",
+session-memory_store_interaction({
+  session_id: "graph-tracker",
+  role: "system",
+  content: "Linked owner/repo#99 to owner/repo#42 with fixes relationship",
+  metadata: JSON.stringify({
+    source: "graph:engineering:github_pr:owner/repo#99",
+    target: "graph:engineering:github_issue:owner/repo#42",
+    relationship: "fixes"
+  })
 })
 ```
 
@@ -285,37 +212,39 @@ remove_node({
 ### Engineering: When creating a PR
 
 ```
-1. upsert_node  → domain: engineering, type: github_pr
-2. upsert_node  → domain: engineering, type: github_issue (if not tracked)
-3. link_nodes   → pr_for_issue or fixes relationship
-4. upsert_node  → domain: engineering, type: branch + branch_for_pr
+1. session-memory_store_session_context  → graph:engineering:github_pr:<repo#pr>
+2. session-memory_store_session_context  → graph:engineering:github_issue:<repo#issue> (if not tracked)
+3. session-memory_store_interaction      → relationship metadata such as fixes or pr_for_issue
+4. session-memory_store_session_context  → graph:engineering:branch:<branch-name>
 ```
 
 ### Engineering: During standup
 
 ```
-1. work_status_dashboard  → get engineering picture
-2. Present: issues needing PRs, PRs needing review, Jira status, with title and status for each item
-3. For any recommendation, include: why now, evidence/signals, and the immediate next step
-4. End with a single strongest recommendation using `Best first task`, `Why this first`, and `Do this now`
-5. If dashboard data lacks titles, status, owners, or next steps, mark the item as needing lookup instead of presenting it as a confident recommendation
+1. session-memory_retrieve_session_context  → recent graph-tracker entries
+2. session-memory_query_memory              → search for repo, issue, PR, or Jira identifiers when needed
+3. Present: issues needing PRs, PRs needing review, Jira status, with title and status for each item
+4. For any recommendation, include: why now, evidence/signals, and the immediate next step
+5. End with a single strongest recommendation using `Best first task`, `Why this first`, and `Do this now`
+6. If stored data lacks titles, status, owners, or next steps, mark the item as needing lookup instead of presenting it as a confident recommendation
 ```
 
 ### Personal: Family member tracking
 
 ```
-1. upsert_node  → domain: family, type: person, id: child-a
-2. upsert_node  → domain: family, type: reminder, id: reminder-dentist
-3. link_nodes   → reminder_for relationship
-4. upsert_node  → domain: family, type: note, id: note-school-preferences
-5. link_nodes   → belongs_to relationship (note → person)
+1. session-memory_store_session_context  → graph:family:person:child-a
+2. session-memory_store_session_context  → graph:family:reminder:reminder-dentist
+3. session-memory_store_interaction      → reminder_for relationship metadata
+4. session-memory_store_session_context  → graph:family:note:note-school-preferences
+5. session-memory_store_interaction      → belongs_to relationship metadata (note → person)
 ```
 
 ### Personal: "What do I need to remember about Alice?"
 
 ```
-1. get_node_graph → type: person, id: child-a, depth: 2
-2. Present: all reminders, events, notes linked to Alice
+1. session-memory_query_memory → search for graph child-a Alice and related reminder IDs
+2. session-memory_retrieve_session_context → inspect the stored records and relationship entries
+3. Present: all reminders, events, notes linked to Alice
 ```
 
 ## Auto-Tracking Triggers
@@ -324,13 +253,13 @@ Agents should **silently** track items when they observe:
 
 | Trigger                     | Action                                                        |
 | --------------------------- | ------------------------------------------------------------- |
-| `gh issue create` output    | `upsert_node(domain: engineering, type: github_issue)`        |
-| `gh pr create` output       | `upsert_node(domain: engineering, type: github_pr)` + link    |
-| Branch checkout for issue   | `upsert_node(domain: engineering, type: branch)` + link       |
-| Jira ticket reference       | `upsert_node(domain: engineering, type: jira_ticket)`         |
-| PR merged notification      | `update_node_status(merged)`                                  |
-| User mentions family member | `upsert_node(domain: family, type: person)`                   |
-| User sets a reminder        | `upsert_node(domain: family/personal, type: reminder)` + link |
+| `gh issue create` output    | `session-memory_store_session_context(graph:engineering:github_issue:...)`        |
+| `gh pr create` output       | `session-memory_store_session_context(graph:engineering:github_pr:...)` + relationship log |
+| Branch checkout for issue   | `session-memory_store_session_context(graph:engineering:branch:...)` + relationship log     |
+| Jira ticket reference       | `session-memory_store_session_context(graph:engineering:jira_ticket:...)`                |
+| PR merged notification      | Update stored graph record status via `session-memory_store_session_context(...)`         |
+| User mentions family member | `session-memory_store_session_context(graph:family:person:...)`                           |
+| User sets a reminder        | `session-memory_store_session_context(graph:family:reminder:...)` + relationship log      |
 
 **Silent tracking**: Do not ask the user before tracking. Track items as a side-effect of normal operations. Only surface the graph when the user asks for it or during standup/dashboard views.
 
@@ -359,11 +288,11 @@ Alice (Person: active)
 
 ## Data Hygiene
 
-- **Deduplication**: `upsert_node` uses `(item_type, external_id)` as unique key
-- **Cascade deletes**: Removing a node removes all its edges and tags
-- **Status sync**: Update status when you observe changes
-- **No auto-cleanup**: Items persist until explicitly removed
-- **Domain filtering**: Use `domain` to keep queries focused
+- **Deduplication**: use stable `graph:<domain>:<type>:<external-id>` keys so repeated writes replace the same tracked entity
+- **Relationship cleanup**: if an item is no longer relevant, remove or overwrite both the stored record and any related interaction entries manually
+- **Status sync**: rewrite the stored record when you observe changes
+- **No auto-cleanup**: records persist until explicitly replaced or pruned
+- **Domain filtering**: keep domain and type in the `context_key` so retrieval and search stay focused
 
 ## Security & Privacy
 

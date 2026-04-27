@@ -1,9 +1,9 @@
 ---
 name: nuxt
-description: Nuxt full-stack Vue framework with SSR, auto-imports, and file-based routing. Use when working with Nuxt apps, server routes, useFetch, middleware, or hybrid rendering.
+description: Use when working with Nuxt apps, server routes, useFetch, middleware, or hybrid rendering in a full-stack Vue application.
 version: 1.0.0
-portable: true
-tags: [nuxt, vue, nitro, ssr, routing, portable]
+portable: false
+tags: [nuxt, vue, nitro, ssr, routing]
 metadata:
   author: Anthony Fu
   version: "2026.1.28"

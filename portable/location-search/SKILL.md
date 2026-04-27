@@ -1,9 +1,9 @@
 ---
 name: location-search
-description: Location search and geocoding with a no-API-key default flow, including ZIP/postal-code based nearby lookup. Use when planning trips, finding nearby places, or integrating location features without API setup.
+description: Use when planning trips, finding nearby places, or integrating location features with a no-API-key default flow, including ZIP or postal-code lookup.
 version: 0.3.0
-portable: true
-tags: [maps, geocode, location, search, routing, navigation, places, portable]
+portable: false
+tags: [maps, geocode, location, search, routing, navigation, places]
 applies_to: [personal-assistant, workflow, automation]
 ---
 

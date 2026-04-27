@@ -2,7 +2,8 @@
   "schema_version": "1.0",
   "name": "location-search",
   "version": "0.3.0",
-  "portable": true,
+  "description": "Use when planning trips, finding nearby places, or integrating location features with a no-API-key default flow, including ZIP or postal-code lookup.",
+  "portable": false,
   "entrypoint": "SKILL.md",
   "tags": [
     "maps",
@@ -11,8 +12,7 @@
     "search",
     "routing",
     "navigation",
-    "places",
-    "portable"
+    "places"
   ],
   "adapters": {
     "opencode": {

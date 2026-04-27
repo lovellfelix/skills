@@ -61,7 +61,7 @@ Load this skill and describe your release goal (e.g., "release a patch", "bump m
 
 ### Step 3: Generate Changelog
 
-1. Run `git log <last-tag>..HEAD --format="%s" | grep -E "^[a-z]+(\(.+))?: " | sed "s/^/- /"` to produce CHANGELOG entries.
+1. Run `git log <last-tag>..HEAD --format="%s" | grep -E "^[a-z]+(\(.+\))?:" | sed "s/^/- /"` to produce CHANGELOG entries.
 2. For multi-language projects, open follow-up PRs for translations.
 3. Prepend new entries to each CHANGELOG file.
 

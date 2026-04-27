@@ -60,3 +60,5 @@ This will:
 1) convert to Markdown via `uvx --from 'markitdown[pdf]' markitdown`
 2) write the full Markdown to a temp `.md` file and print its path as a "Hint" line
 3) run `pi --model claude-haiku-4-5` (no-tools, no-session) to summarize using your extra prompt
+
+If `pi` is unavailable on the current machine, use the conversion step only or send the generated Markdown to another local model CLI.

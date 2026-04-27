@@ -2,7 +2,7 @@
 name: kb-maintenance
 description: "Structured workflow for knowledgebase health checks, inbox processing, oncall note management, metadata cleanup, and archive operations. Use when user asks to clean up KB, run a health check, process inbox, organize notes, or archive old content."
 version: 0.1.0
-portable: true
+portable: false
 tags: [knowledgebase, maintenance, workflow, documentation, notes]
 ---
 
@@ -75,6 +75,7 @@ Archive convention:
 - Duplicates for the same week: keep the canonical `Oncall Notes - Week Ending <Date> - X.md` form, archive the rest
 
 ```bash
+# Example - replace with the current quarter and month glob
 # Create archive dirs
 mkdir -p "📦 Archive/oncall/2026-Q1"
 # Move old notes

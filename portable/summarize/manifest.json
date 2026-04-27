@@ -1,12 +1,14 @@
 {
   "schema_version": "1.0",
   "name": "summarize",
+  "description": "Use when fetching a URL or converting a local file (PDF, DOCX, HTML, etc.) to Markdown for reading or summarization via uvx markitdown.",
   "version": "0.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",
-  "tags": ["summarize", "markdown", "url", "pdf", "documents", "portable"],
+  "tags": ["summarization", "markdown", "documents", "urls", "portable"],
   "adapters": {
     "opencode": { "path": "SKILL.md", "mode": "native" },
+    "cursor": { "path": "SKILL.md", "mode": "import" },
     "claude": { "path": "SKILL.md", "mode": "include" },
     "copilot": { "path": "SKILL.md", "mode": "include" },
     "pi": { "path": "SKILL.md", "mode": "include" }
@@ -14,6 +16,7 @@
   "compatibility": {
     "runtimes": {
       "opencode": { "min_version": "*" },
+      "cursor": { "min_version": "*" },
       "claude": { "min_version": "*" },
       "copilot": { "min_version": "*" },
       "pi": { "min_version": "*" }

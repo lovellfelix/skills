@@ -1,6 +1,7 @@
 {
   "schema_version": "1.0",
   "name": "release-notes",
+  "description": "Use when drafting or refining changelog entries and release notes from commits, PRs, or code changes.",
   "version": "0.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",
