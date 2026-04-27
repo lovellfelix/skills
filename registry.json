@@ -284,7 +284,7 @@
         "quality",
         "portable"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "work_machine_only": false
     },
     {
@@ -764,7 +764,7 @@
         "resume",
         "portable"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "work_machine_only": false
     },
     {
@@ -814,7 +814,7 @@
       "location": "portable/homelab-gitops-flux-operations/",
       "name": "homelab-gitops-flux-operations",
       "personal_machine_only": true,
-      "portable": true,
+      "portable": false,
       "runtime": null,
       "tags": [
         "homelab",
@@ -823,8 +823,7 @@
         "kubernetes",
         "helmrelease",
         "home-assistant",
-        "sops",
-        "portable"
+        "sops"
       ],
       "version": "0.1.0",
       "work_machine_only": false
@@ -876,7 +875,7 @@
       "location": "portable/homelab-proxmox-cluster-api/",
       "name": "homelab-proxmox-cluster-api",
       "personal_machine_only": true,
-      "portable": true,
+      "portable": false,
       "runtime": null,
       "tags": [
         "homelab",
@@ -885,8 +884,7 @@
         "capmox",
         "kubernetes",
         "kubeadm",
-        "infrastructure",
-        "portable"
+        "infrastructure"
       ],
       "version": "0.1.0",
       "work_machine_only": false
@@ -1885,7 +1883,7 @@
         "validation",
         "maintenance"
       ],
-      "version": "1.0.0",
+      "version": "1.1.0",
       "work_machine_only": false
     },
     {

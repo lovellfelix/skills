@@ -31,6 +31,13 @@ bash ~/.config/opencode/scripts/location-helper.sh
 
 Do not call `location-search.sh`; the supported helper is `location-helper.sh`.
 
+## Personal Machine Activation
+
+This skill is personal-machine only.
+
+- Add `location-search` to `~/.personal-machine-skills.txt`.
+- Bootstrap/runtime sync only exposes it when that allowlist includes the skill.
+
 ## Default No-Key Workflow
 
 1. Resolve a location anchor from one of: saved ZIP/postal code, explicit ZIP/postal input, or current location fallback.

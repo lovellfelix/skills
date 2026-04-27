@@ -30,6 +30,13 @@ If a runtime restricts execution to OpenCode-managed paths, use the wrapper inst
 bash ~/.config/opencode/scripts/weather.sh
 ```
 
+## Personal Machine Activation
+
+This skill is personal-machine only.
+
+- Add `weather-forecast` to `~/.personal-machine-skills.txt`.
+- Bootstrap/runtime sync only exposes it when that allowlist includes the skill.
+
 ## Default No-Key Workflow
 
 1. Prefer a stored ZIP/postal preference when available.

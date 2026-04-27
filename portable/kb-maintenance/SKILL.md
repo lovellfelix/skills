@@ -19,6 +19,13 @@ Use this skill when the user asks to:
 - Archive old oncall notes
 - Fix metadata or broken links
 
+## Work Machine Activation
+
+This skill is work-machine only.
+
+- Enable work context with the `~/.work-env-skills` flag.
+- Do not expect bootstrap/runtime sync to surface this skill on personal context without that flag.
+
 ## KB Location
 
 `~/knowledgebase` — emoji-based directory structure. See `AGENTS.md` for full layout.
