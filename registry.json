@@ -43,67 +43,6 @@
           }
         }
       },
-      "description": "Use Captain for work-domain search across JIRA, Confluence, Google surfaces, and Jarvis code search after checking local repo and work notes first. Best for Pi-safe guidance on when and how to use Captain as a fallback.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/captain-work-search/",
-      "name": "captain-work-search",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "captain",
-        "jarvis",
-        "jira",
-        "confluence",
-        "google",
-        "work",
-        "portable"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": true
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
       "description": "Use when reviewing code changes, a PR, or a commit and need structured, severity-graded findings covering correctness, security, reliability, and maintainability.",
       "entrypoint": "SKILL.md",
       "location": "portable/code-review/",
@@ -117,7 +56,7 @@
         "security",
         "portable"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "work_machine_only": false
     },
     {
@@ -155,7 +94,7 @@
           }
         }
       },
-      "description": "Use when making a git commit and need a correctly formatted Conventional Commits subject line.",
+      "description": "Use when making a git commit and need a correctly formatted subject line with optional Jira ticket and Co-Authored-By trailer.",
       "entrypoint": "SKILL.md",
       "location": "portable/commit/",
       "name": "commit",
@@ -227,7 +166,7 @@
         "slack",
         "clarity"
       ],
-      "version": "0.3.0",
+      "version": "0.5.0",
       "work_machine_only": false
     },
     {
@@ -276,7 +215,7 @@
       "entrypoint": "SKILL.md",
       "location": "portable/compose-material3/",
       "name": "compose-material3",
-      "personal_machine_only": false,
+      "personal_machine_only": true,
       "portable": true,
       "runtime": null,
       "tags": [
@@ -354,12 +293,20 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
         },
         "opencode": {
           "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
           "path": "SKILL.md"
         }
       },
@@ -368,15 +315,21 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "cursor": {
             "min_version": "*"
           },
           "opencode": {
             "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
           }
         }
       },
-      "description": "Review a technical design document or RFC as a senior/staff engineer before sharing. Invoke after drafting to catch structural, clarity, and completeness issues.",
+      "description": "Use when reviewing a technical design document or RFC as a senior/staff engineer before sharing. Invoke after drafting to catch structural, clarity, and completeness issues.",
       "entrypoint": "SKILL.md",
       "location": "portable/design-doc-review/",
       "name": "design-doc-review",
@@ -387,7 +340,8 @@
         "review",
         "design",
         "rfc",
-        "portable"
+        "quality",
+        "rubric"
       ],
       "version": "0.1.0",
       "work_machine_only": false
@@ -446,7 +400,8 @@
         "engineering",
         "runbook",
         "operations",
-        "architecture"
+        "architecture",
+        "writing"
       ],
       "version": "0.3.0",
       "work_machine_only": false
@@ -611,17 +566,19 @@
           }
         }
       },
-      "description": "Use when building web components, pages, dashboards, or UI applications (websites, landing pages, React components, HTML/CSS) and need production-grade design that avoids generic AI-generated aesthetics.",
+      "description": "Use when interacting with GitHub issues, PRs, CI runs, or repository data via the gh CLI.",
       "entrypoint": "SKILL.md",
-      "location": "portable/frontend-design/",
-      "name": "frontend-design",
+      "location": "portable/github/",
+      "name": "github",
       "personal_machine_only": false,
       "portable": true,
       "runtime": null,
       "tags": [
-        "frontend",
-        "ui",
-        "design",
+        "github",
+        "gh",
+        "issues",
+        "pull-requests",
+        "ci",
         "portable"
       ],
       "version": "0.1.0",
@@ -669,53 +626,7 @@
           }
         }
       },
-      "description": "Use when interacting with GitHub issues, PRs, CI runs, or repository data via the gh CLI.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/github/",
-      "name": "github",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "github",
-        "gh",
-        "issues",
-        "pull-requests",
-        "ci",
-        "portable"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": false
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Apply Go idioms and engineering standards when writing, reviewing, or refactoring Go code. Triggers on .go files, go.mod references, or Go-related tasks.",
+      "description": "Use when writing, reviewing, or refactoring Go code to apply idiomatic engineering standards. Triggers on .go files, go.mod references, or Go-related tasks.",
       "entrypoint": "SKILL.md",
       "location": "portable/go-standards/",
       "name": "go-standards",
@@ -725,7 +636,9 @@
       "tags": [
         "go",
         "standards",
-        "portable"
+        "idioms",
+        "error-handling",
+        "concurrency"
       ],
       "version": "0.1.0",
       "work_machine_only": false
@@ -1020,7 +933,7 @@
           }
         }
       },
-      "description": "Use after a production incident or operational failure to write a concise, blameless postmortem focused on decisions, causes, and concrete follow-ups.",
+      "description": "Use when writing a postmortem after a production incident or operational failure to produce a concise, blameless analysis focused on decisions, causes, and concrete follow-ups.",
       "entrypoint": "SKILL.md",
       "location": "portable/incident-postmortem/",
       "name": "incident-postmortem",
@@ -1083,7 +996,7 @@
       "entrypoint": "SKILL.md",
       "location": "portable/java-to-kotlin-migration/",
       "name": "java-to-kotlin-migration",
-      "personal_machine_only": false,
+      "personal_machine_only": true,
       "portable": true,
       "runtime": null,
       "tags": [
@@ -1146,7 +1059,7 @@
         "notes"
       ],
       "version": "0.1.0",
-      "work_machine_only": false
+      "work_machine_only": true
     },
     {
       "adapters": {
@@ -1194,7 +1107,7 @@
       "entrypoint": "SKILL.md",
       "location": "portable/knowledgebase-workflow/",
       "name": "knowledgebase-workflow",
-      "personal_machine_only": true,
+      "personal_machine_only": false,
       "portable": false,
       "runtime": null,
       "tags": [
@@ -1314,7 +1227,7 @@
       "entrypoint": "SKILL.md",
       "location": "portable/location-search/",
       "name": "location-search",
-      "personal_machine_only": false,
+      "personal_machine_only": true,
       "portable": true,
       "runtime": null,
       "tags": [
@@ -1376,7 +1289,7 @@
       "entrypoint": "SKILL.md",
       "location": "portable/marketing-psychology/",
       "name": "marketing-psychology",
-      "personal_machine_only": false,
+      "personal_machine_only": true,
       "portable": true,
       "runtime": null,
       "tags": [
@@ -1427,69 +1340,11 @@
           }
         }
       },
-      "description": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).",
-      "entrypoint": "SKILL.md",
-      "location": "portable/mcp-builder/",
-      "name": "mcp-builder",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "mcp",
-        "protocol",
-        "server",
-        "portable"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": false
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
       "description": "Nuxt full-stack Vue framework with SSR, auto-imports, and file-based routing. Use when working with Nuxt apps, server routes, useFetch, middleware, or hybrid rendering.",
       "entrypoint": "SKILL.md",
       "location": "portable/nuxt/",
       "name": "nuxt",
-      "personal_machine_only": false,
+      "personal_machine_only": true,
       "portable": true,
       "runtime": null,
       "tags": [
@@ -1540,7 +1395,7 @@
           }
         }
       },
-      "description": "Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards.",
+      "description": "Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards. Covers Python code style, linting, formatting, naming conventions, and documentation.",
       "entrypoint": "SKILL.md",
       "location": "portable/python-code-style/",
       "name": "python-code-style",
@@ -1551,14 +1406,19 @@
         "python",
         "style",
         "documentation",
-        "portable"
+        "linting",
+        "formatting"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "work_machine_only": false
     },
     {
       "adapters": {
         "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
           "mode": "include",
           "path": "SKILL.md"
         },
@@ -1569,6 +1429,10 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -1576,15 +1440,21 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "cursor": {
             "min_version": "*"
           },
           "opencode": {
             "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
           }
         }
       },
-      "description": "Apply Python engineering standards (type safety, error handling, structure, observability) when writing, reviewing, or refactoring Python code. Triggers on .py files or Python-related tasks.",
+      "description": "Use when writing, reviewing, or refactoring Python code to apply engineering standards for type safety, error handling, structure, and observability. Triggers on .py files or Python-related tasks.",
       "entrypoint": "SKILL.md",
       "location": "portable/python-standards/",
       "name": "python-standards",
@@ -1594,7 +1464,10 @@
       "tags": [
         "python",
         "standards",
-        "portable"
+        "type-safety",
+        "error-handling",
+        "structure",
+        "observability"
       ],
       "version": "0.1.0",
       "work_machine_only": false
@@ -1700,7 +1573,7 @@
           }
         }
       },
-      "description": "Universal release workflow. Auto-detects version files and changelogs. Supports Node.js, Python, Rust, Claude Plugin, and generic projects. Use when user says \"release\", \"\u53d1\u5e03\", \"new version\", \"bump version\", \"push\", \"\u63a8\u9001\".",
+      "description": "Use when releasing a new version, bumping semver, generating changelogs, or publishing to npm/PyPI/Cargo/GitHub. Supports Node.js, Python, Rust, Claude Plugin, and generic projects.",
       "entrypoint": "SKILL.md",
       "location": "portable/release-skills/",
       "name": "release-skills",
@@ -1708,6 +1581,12 @@
       "portable": true,
       "runtime": null,
       "tags": [
+        "release",
+        "versioning",
+        "changelog",
+        "semver",
+        "publishing",
+        "sbom",
         "portable"
       ],
       "version": "1.0.0",
@@ -1719,12 +1598,20 @@
           "mode": "include",
           "path": "SKILL.md"
         },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
         },
         "opencode": {
           "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
           "path": "SKILL.md"
         }
       },
@@ -1733,15 +1620,21 @@
           "claude": {
             "min_version": "*"
           },
+          "copilot": {
+            "min_version": "*"
+          },
           "cursor": {
             "min_version": "*"
           },
           "opencode": {
             "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
           }
         }
       },
-      "description": "Write RFC and technical design documents using a strict blueprint format. Use for RFC, design doc, technical proposal, or architecture document requests. More opinionated than the rfc skill.",
+      "description": "Use when writing an RFC, technical design doc, or architecture proposal and need a strict, opinionated blueprint format with Mermaid diagrams.",
       "entrypoint": "SKILL.md",
       "location": "portable/rfc-blueprint/",
       "name": "rfc-blueprint",
@@ -1752,7 +1645,8 @@
         "rfc",
         "architecture",
         "design",
-        "portable"
+        "blueprint",
+        "mermaid"
       ],
       "version": "0.1.0",
       "work_machine_only": false
@@ -1858,7 +1752,7 @@
           }
         }
       },
-      "description": "Practical patterns for storing, retrieving, and maintaining high-signal session memory via MCP. Use when building MCP-integrated workflows, caching session state, or establishing durable patterns across sessions.",
+      "description": "Use when building MCP-integrated workflows, caching session state, or establishing durable patterns across sessions. Practical patterns for storing, retrieving, and maintaining high-signal session memory via MCP.",
       "entrypoint": "SKILL.md",
       "location": "portable/session-memory-mcp/",
       "name": "session-memory-mcp",
@@ -1869,10 +1763,9 @@
         "mcp",
         "memory",
         "workflow",
-        "continuity",
-        "portable"
+        "continuity"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "work_machine_only": false
     },
     {
@@ -1928,9 +1821,10 @@
         "shadcn",
         "react",
         "ui",
-        "portable"
+        "forms",
+        "tailwind"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "work_machine_only": false
     },
     {
@@ -2153,7 +2047,7 @@
       "entrypoint": "SKILL.md",
       "location": "portable/weather-forecast/",
       "name": "weather-forecast",
-      "personal_machine_only": false,
+      "personal_machine_only": true,
       "portable": true,
       "runtime": null,
       "tags": [
@@ -2182,10 +2076,6 @@
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
         }
       },
       "compatibility": {
@@ -2201,31 +2091,25 @@
           },
           "opencode": {
             "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
           }
         }
       },
-      "description": "Search internal work systems (JIRA, Confluence, code, Slack, wiki, Google Docs) using Captain via Pi-safe tools such as work_context_search and env_mcp. Use when the user asks about internal docs, tickets, code in other repos, team wikis, Slack discussions, or any LinkedIn internal knowledge.",
+      "description": "Use when implementing or modifying Python code and pytest tests and need concise, typed, production-ready changes with modern syntax, walrus-operator patterns, fixtures, annotated mocks, @patch usage, and Ruff/pytest quality gates.",
       "entrypoint": "SKILL.md",
-      "location": "portable/work-search/",
-      "name": "work-search",
+      "location": "portable/writing-modern-python/",
+      "name": "writing-modern-python",
       "personal_machine_only": false,
       "portable": true,
       "runtime": null,
       "tags": [
-        "captain",
-        "jarvis",
-        "jira",
-        "confluence",
-        "google",
-        "slack",
-        "work",
+        "python",
+        "pytest",
+        "quality",
+        "testing",
         "portable"
       ],
       "version": "0.1.0",
-      "work_machine_only": true
+      "work_machine_only": false
     },
     {
       "adapters": {
@@ -2384,7 +2268,7 @@
           }
         }
       },
-      "description": "Store, query, and sync Swagger/OpenAPI specs in SQLite for cross-project API reference. Use when building API clients, keeping API contracts in sync across projects, or querying endpoint details.",
+      "description": "Use when building API clients, keeping API contracts in sync across projects, or querying endpoint details. Stores and queries Swagger/OpenAPI specs in SQLite for cross-project API reference.",
       "entrypoint": "SKILL.md",
       "location": "runtime-specific/opencode/api-docs/",
       "name": "api-docs",

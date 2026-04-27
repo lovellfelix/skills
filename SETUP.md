@@ -33,7 +33,7 @@ OpenCode scans these locations (default, no config needed):
 ```
 Step 8:  sync-skill-runtime-links.sh → links local skills → ~/.agents/skills/
 Step 8b: sync-command-runtime-links.sh → portable commands
-Step 8c: install_community_skills() → npx skills add from community-{env}.json
+Step 8c: install_community_skills() → npx skills add --yes --agent opencode from community-{env}.json
 ```
 
 Community skills install to `~/.agents/skills/` (primary) then symlink to `~/.claude/skills/` (Claude-specific).
