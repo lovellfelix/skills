@@ -80,3 +80,10 @@ Pattern: `Form` → `FormField` → `FormItem` → `FormLabel` + `FormControl` +
 | `ui-reference.md` | Extended component patterns and composition examples |
 | `official-ui-reference.md` | Full official component documentation |
 | `learn.md` | Learning path and deeper guides |
+
+## Constraints
+
+- Requires Tailwind CSS v3 (v4 support is experimental as of shadcn 0.9+).
+- Interactive components need `"use client"` — cannot be used in RSC directly.
+- No built-in i18n or RTL support.
+- Toast/Sonner requires root layout placement.

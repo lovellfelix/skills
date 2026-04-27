@@ -1,6 +1,9 @@
 ---
 name: commit
 description: Use when making a git commit and need a correctly formatted subject line with optional Jira ticket and Co-Authored-By trailer.
+version: 0.1.0
+portable: true
+tags: [git, commit, conventional-commits, portable]
 ---
 
 Create a git commit for the current changes using a short, imperative subject line.
@@ -68,7 +71,7 @@ PROJ-123: <summary>
 
 [optional body]
 
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+Co-Authored-By: <MODEL_NAME> <noreply@PROVIDER.com>
 EOF
 )"
 
@@ -78,7 +81,12 @@ git commit -m "$(cat <<'EOF'
 
 [optional body]
 
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+Co-Authored-By: <MODEL_NAME> <noreply@PROVIDER.com>
 EOF
 )"
+
+# Examples:
+# Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+# Co-Authored-By: GPT-4.1 <noreply@openai.com>
+# Co-Authored-By: Gemini 2.5 <noreply@google.com>
 ```

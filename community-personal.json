@@ -1,0 +1,22 @@
+[
+  {
+    "repo": "anthropics/claude-code",
+    "skill_name": "memory"
+  },
+  {
+    "repo": "anthropics/claude-code",
+    "skill_name": "prompt-generation"
+  },
+  {
+    "repo": "anthropics/claude-code",
+    "skill_name": "web-search"
+  },
+  {
+    "repo": "anthropics/claude-code",
+    "skill_name": "code-review"
+  },
+  {
+    "repo": "anthropics/claude-code",
+    "skill_name": "write"
+  }
+]

@@ -5,6 +5,12 @@
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
+    "release",
+    "versioning",
+    "changelog",
+    "semver",
+    "publishing",
+    "sbom",
     "portable"
   ],
   "adapters": {

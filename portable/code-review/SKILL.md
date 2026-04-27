@@ -36,7 +36,21 @@ Output sections:
 4. **Low / Nits** — optional; only if quick to fix.
 5. **What's good** — 1–3 things done well (omit if nothing stands out).
 
-## Checklist by category
+## Steps
+
+1. Identify the target (diff, PR, file, or directory to review).
+2. Auto-detect language from file extensions (.py, .js, .ts, .go, .kt, .sh).
+3. Apply the checklist by category in order: Correctness → Security → Reliability → Performance → Maintainability.
+4. Format each finding as `[SEVERITY] File:line — Observation`.
+5. Write output to `.opencode/reviews/REVIEW-{target}-{YYYYMMDD}.md`.
+6. End with completion markers.
+
+## Completion Markers
+
+Every review MUST end with:
+✓ REVIEW_COMPLETE: {target} ({file_count} files, {line_count} lines)
+✓ SECURITY: {High/Medium/Low/None}
+✓ QUALITY: {critical_count} critical, {improvements_count} improvements
 
 ### Correctness
 - Off-by-one errors, null/undefined dereferences, wrong operator precedence.
@@ -63,7 +77,7 @@ Output sections:
 - Unnecessary allocations inside tight loops.
 
 ### Maintainability
-- Functions >40 lines with multiple responsibilities.
+- Functions >50 lines with multiple responsibilities.
 - Magic numbers / strings without named constants.
 - Test coverage gaps for critical paths.
 - Misleading variable or function names.

@@ -1,9 +1,9 @@
 ---
 name: python-code-style
-description: Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards.
+description: "Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards. Covers Python code style, linting, formatting, naming conventions, and documentation."
 version: 0.2.0
 portable: true
-tags: [python, style, documentation, portable]
+tags: [python, style, documentation, linting, formatting]
 ---
 
 # Python Code Style & Documentation
@@ -42,11 +42,13 @@ Modern Python code should include type hints for all public APIs.
 ```bash
 # Install modern tooling
 pip install ruff mypy
+```
 
+```toml
 # Configure in pyproject.toml
 [tool.ruff]
 line-length = 120
-target-version = "py312"  # Adjust based on your project's minimum Python version
+target-version = "py312"
 
 [tool.mypy]
 strict = true

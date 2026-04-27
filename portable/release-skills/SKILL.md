@@ -1,6 +1,9 @@
 ---
 name: release-skills
-description: Universal release workflow. Auto-detects version files and changelogs. Supports Node.js, Python, Rust, Claude Plugin, and generic projects. Use when user says "release", "发布", "new version", "bump version", "push", "推送".
+description: "Use when releasing a new version, bumping semver, generating changelogs, or publishing to npm/PyPI/Cargo/GitHub. Supports Node.js, Python, Rust, Claude Plugin, and generic projects."
+version: 1.0.0
+portable: true
+tags: [release, versioning, changelog, semver, publishing, sbom, portable]
 ---
 
 # Release Skills
@@ -9,7 +12,7 @@ Universal release workflow supporting any project type with multi-language chang
 
 ## Quick Start
 
-Just run `/release-skills` - auto-detects your project configuration.
+Load this skill and describe your release goal (e.g., "release a patch", "bump minor version"). The skill auto-detects your project configuration and guides you through each step.
 
 ## Supported Projects
 
@@ -50,7 +53,24 @@ Just run `/release-skills` - auto-detects your project configuration.
 4. Identify language of each changelog by filename suffix
 5. Display detected configuration
 
-(omitted: language detection, analysis, generation steps — full details in docs/release-guidelines.md)
+### Step 2: Analyze Changes
+
+1. Run `git log <last-tag>..HEAD --oneline` to collect commits since last tag.
+2. Classify commits as feat/fix/chore/breaking per conventional commits.
+3. Determine version bump: breaking → major, feat → minor, fix → patch.
+
+### Step 3: Generate Changelog
+
+1. Run `git log <last-tag>..HEAD --format="%s" | grep -E "^[a-z]+(\(.+))?: " | sed "s/^/- /"` to produce CHANGELOG entries.
+2. For multi-language projects, open follow-up PRs for translations.
+3. Prepend new entries to each CHANGELOG file.
+
+### Step 4: Bump Version
+
+1. Read the current version from the detected version file.
+2. Apply the semver bump based on analysis in Step 2.
+3. Write the new version to the version file.
+4. Commit: `git commit -m "chore: release vX.Y.Z"`.
 
 ## Checklist (Critical Artifacts)
 
@@ -89,7 +109,7 @@ Before publishing, ensure the following artifacts exist and are up-to-date:
 
 - Store publish tokens in CI secrets (GitHub Actions Secrets or vault). Do NOT hardcode tokens in scripts.
 - NPM: NPM_TOKEN
-- PyPI: TWINE_USERNAME and TWINE_PASSWORD (or TWINE_PASSWORD as API token)
+- PyPI: TWINE_PASSWORD set to an API token (use `__token__` as username, or omit username entirely with modern twine)
 - Cargo: CARGO_REGISTRY_TOKEN
 - GitHub: GITHUB_TOKEN (for release creation and uploads)
 - GPG signing: prefer project-managed keys (.keys/) or org key manager. Consider sigstore/tuf/KMS for long-lived production use.
@@ -133,6 +153,3 @@ Before publishing, ensure the following artifacts exist and are up-to-date:
 ## Examples & Utilities
 
 Scripts are intentionally small and opinionated. They expect CI to inject credentials and run from repository root. Use `--dry-run` flags to validate behavior without side-effects.
-
-
-Status: success

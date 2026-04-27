@@ -1,6 +1,6 @@
 ---
 name: incident-postmortem
-description: Use after a production incident or operational failure to write a concise, blameless postmortem focused on decisions, causes, and concrete follow-ups.
+description: "Use when writing a postmortem after a production incident or operational failure to produce a concise, blameless analysis focused on decisions, causes, and concrete follow-ups."
 version: 0.3.0
 portable: true
 tags: [incident, postmortem, reliability, root-cause-analysis, operations]
@@ -37,18 +37,18 @@ tags: [incident, postmortem, reliability, root-cause-analysis, operations]
 
 Use this exact structure:
 
-1. Summary
-2. Impact
-3. Timeline
-4. Trigger
-5. Contributing Factors
-6. Root Cause
-7. Resolution
-8. What Worked
-9. What Didn't
-10. Follow-Ups
+1. Summary (mandatory)
+2. Impact (mandatory)
+3. Timeline (mandatory)
+4. Trigger (mandatory)
+5. Contributing Factors (mandatory)
+6. Root Cause (mandatory)
+7. Resolution (mandatory)
+8. What Worked (optional for minor incidents)
+9. What Didn't (optional for minor incidents)
+10. Follow-Ups (mandatory)
 
-## LinkedIn Output Format
+## Output Format
 
 - Keep the document readable in one pass.
 - Optimize for clarity, not narrative.
@@ -78,4 +78,12 @@ Each follow-up must include:
 - Action
 - Type (`prevent`, `detect`, `respond`)
 - Due date
-- Traceability
+- Traceability (link to incident ticket, alert, or log entry)
+
+## Steps
+
+1. Gather incident data (ask user for timeline, impact, resolution if not in context).
+2. Identify trigger, contributing factors, and root cause separately.
+3. Draft each section in order: Summary → Root Cause → Follow-Ups.
+4. Apply Follow-Up Rules to every follow-up item.
+5. Validate: no blame language, timeline fits one screen, all follow-ups owned.

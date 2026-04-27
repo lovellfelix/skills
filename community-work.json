@@ -1,0 +1,34 @@
+[
+  {
+    "repo": "anthropics/claude-code",
+    "skill_name": "frontend-design"
+  },
+  {
+    "repo": "anthropics/claude-code",
+    "skill_name": "mcp-builder"
+  },
+  {
+    "repo": "anthropics/claude-code",
+    "skill_name": "skill-creator"
+  },
+  {
+    "repo": "vercel-labs/agent-skills",
+    "skill_name": "web-design-guidelines"
+  },
+  {
+    "repo": "vercel-labs/agent-skills",
+    "skill_name": "react-best-practices"
+  },
+  {
+    "repo": "vercel-labs/agent-skills",
+    "skill_name": "composition-patterns"
+  },
+  {
+    "repo": "OthmanAdi/planning-with-files",
+    "skill_name": "planning-with-files"
+  },
+  {
+    "repo": "anthropics/claude-code",
+    "skill_name": "simplify"
+  }
+]

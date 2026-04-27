@@ -42,7 +42,19 @@ tags: [rfc, architecture, design, tradeoffs, rollout]
 6. Rollout / Validation
 7. Appendix (optional)
 
-## Output Format
+## Steps
+
+1. Confirm scope and constraints with user.
+2. Draft each section in order: Motivation → Non-Negotiables → Proposed Approach → Key Decisions → Risks → Rollout → Appendix.
+3. Apply Output Structure rules (each section scannable in <30s, bullets over paragraphs).
+4. Verify no filler language, no restating obvious context.
+5. Write output to `{filename}.md` or return inline.
+
+## Completion Markers
+
+Every RFC MUST end with:
+✓ RFC_COMPLETE: {title} ({section_count} sections)
+✓ DECISIONS: {decision_count} key decisions documented
 
 - Each section must be scannable in <30 seconds.
 - Prefer bullets over paragraphs.

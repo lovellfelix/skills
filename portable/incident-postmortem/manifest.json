@@ -4,52 +4,21 @@
   "version": "0.3.0",
   "portable": true,
   "entrypoint": "SKILL.md",
-  "tags": [
-    "incident",
-    "postmortem",
-    "reliability",
-    "root-cause-analysis",
-    "operations"
-  ],
+  "tags": ["incident", "postmortem", "reliability", "root-cause-analysis", "operations"],
   "adapters": {
-    "opencode": {
-      "path": "SKILL.md",
-      "mode": "native"
-    },
-    "cursor": {
-      "path": "SKILL.md",
-      "mode": "import"
-    },
-    "claude": {
-      "path": "SKILL.md",
-      "mode": "include"
-    },
-    "copilot": {
-      "path": "SKILL.md",
-      "mode": "include"
-    },
-    "pi": {
-      "path": "SKILL.md",
-      "mode": "include"
-    }
+    "opencode": { "path": "SKILL.md", "mode": "native" },
+    "cursor": { "path": "SKILL.md", "mode": "import" },
+    "claude": { "path": "SKILL.md", "mode": "include" },
+    "copilot": { "path": "SKILL.md", "mode": "include" },
+    "pi": { "path": "SKILL.md", "mode": "include" }
   },
   "compatibility": {
     "runtimes": {
-      "opencode": {
-        "min_version": "*"
-      },
-      "cursor": {
-        "min_version": "*"
-      },
-      "claude": {
-        "min_version": "*"
-      },
-      "copilot": {
-        "min_version": "*"
-      },
-      "pi": {
-        "min_version": "*"
-      }
+      "opencode": { "min_version": "*" },
+      "cursor": { "min_version": "*" },
+      "claude": { "min_version": "*" },
+      "copilot": { "min_version": "*" },
+      "pi": { "min_version": "*" }
     }
   }
 }

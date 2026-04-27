@@ -1,11 +1,20 @@
 ---
 name: github
-description: Use when interacting with GitHub issues, PRs, CI runs, or repository data via the gh CLI.
+description: "Use when interacting with GitHub issues, PRs, CI runs, or repository data via the gh CLI."
+version: 0.1.0
+portable: true
+tags: [github, gh, cli, pr, ci, issues]
 ---
 
 # GitHub Skill
 
 Use the `gh` CLI to interact with GitHub. Always specify `--repo owner/repo` when not in a git directory, or use URLs directly.
+
+## Rules
+
+- Authenticate first: `gh auth status` to check auth state.
+- Rate limits: Authenticated requests have higher limits. Use `gh api rate_limit` to check.
+- Fail gracefully: If `gh` isn't authenticated, prompt user to run `gh auth login`.
 
 ## Pull Requests
 

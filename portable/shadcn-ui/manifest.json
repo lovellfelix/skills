@@ -1,54 +1,25 @@
 {
   "schema_version": "1.0",
   "name": "shadcn-ui",
-  "version": "0.1.0",
+  "description": "Use when setting up shadcn/ui, installing components, building forms with React Hook Form and Zod, customizing themes with Tailwind CSS, or implementing accessible UI patterns.",
+  "version": "0.2.0",
   "portable": true,
   "entrypoint": "SKILL.md",
-  "tags": [
-    "shadcn",
-    "react",
-    "ui",
-    "portable"
-  ],
+  "tags": ["shadcn", "react", "ui", "forms", "tailwind"],
   "adapters": {
-    "opencode": {
-      "path": "SKILL.md",
-      "mode": "native"
-    },
-    "cursor": {
-      "path": "SKILL.md",
-      "mode": "import"
-    },
-    "claude": {
-      "path": "SKILL.md",
-      "mode": "include"
-    },
-    "copilot": {
-      "path": "SKILL.md",
-      "mode": "include"
-    },
-    "pi": {
-      "path": "SKILL.md",
-      "mode": "include"
-    }
+    "opencode": { "path": "SKILL.md", "mode": "native" },
+    "cursor": { "path": "SKILL.md", "mode": "import" },
+    "claude": { "path": "SKILL.md", "mode": "include" },
+    "copilot": { "path": "SKILL.md", "mode": "include" },
+    "pi": { "path": "SKILL.md", "mode": "include" }
   },
   "compatibility": {
     "runtimes": {
-      "opencode": {
-        "min_version": "*"
-      },
-      "cursor": {
-        "min_version": "*"
-      },
-      "claude": {
-        "min_version": "*"
-      },
-      "copilot": {
-        "min_version": "*"
-      },
-      "pi": {
-        "min_version": "*"
-      }
+      "opencode": { "min_version": "*" },
+      "cursor": { "min_version": "*" },
+      "claude": { "min_version": "*" },
+      "copilot": { "min_version": "*" },
+      "pi": { "min_version": "*" }
     }
   }
 }

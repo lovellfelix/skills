@@ -1,9 +1,9 @@
 ---
 name: design-doc-review
-description: Review a technical design document or RFC as a senior/staff engineer before sharing. Invoke after drafting to catch structural, clarity, and completeness issues.
+description: "Use when reviewing a technical design document or RFC as a senior/staff engineer before sharing. Invoke after drafting to catch structural, clarity, and completeness issues."
 version: 0.1.0
 portable: true
-tags: [review, design, rfc, portable]
+tags: [review, design, rfc, quality, rubric]
 ---
 
 # Design Doc Review
@@ -33,6 +33,25 @@ Review the design document or RFC in the current context. Evaluate against these
 - Mermaid diagram uses TD instead of LR
 
 ## Output format
+
+- One finding per line
+- Format: `[P0|P1|P2] <Section> — <finding> — <recommended fix>`
+- End with a one-sentence overall readiness assessment
+
+## Steps
+
+1. Locate the design document in context (ask user if not present).
+2. Evaluate P0 criteria first — if any fail, stop and report immediately.
+3. Evaluate P1 criteria.
+4. Evaluate P2 criteria.
+5. Output findings in [P0|P1|P2] format, one per line.
+6. End with overall readiness sentence.
+
+## Constraints
+
+- Do not rewrite the document; only report findings.
+- Do not invent issues not present in the document.
+- Use the rfc-blueprint structure as the reference for structural evaluation.
 
 - One finding per line
 - Format: `[P0|P1|P2] <Section> — <finding> — <recommended fix>`

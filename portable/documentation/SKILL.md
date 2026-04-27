@@ -66,7 +66,9 @@ Use this structure unless user asks otherwise:
 
 ## Output Mode Hints
 
-- Design / Architecture: emphasize decisions, tradeoffs, and invariants.
-- Implementation Doc: emphasize interfaces, dependencies, and behavior under load.
-- Runbook: emphasize detection, triage, mitigation, rollback, and verification.
-- Migration / Rollout: emphasize sequencing, safety checks, blast radius, and recovery.
+| Mode | Emphasize |
+|------|-----------|
+| Design / Architecture | Decisions, tradeoffs, invariants |
+| Implementation Doc | Interfaces, dependencies, behavior under load |
+| Runbook | Detection, triage, mitigation, rollback, verification |
+| Migration / Rollout | Sequencing, safety checks, blast radius, recovery |

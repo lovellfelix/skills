@@ -1,9 +1,9 @@
 ---
 name: go-standards
-description: Apply Go idioms and engineering standards when writing, reviewing, or refactoring Go code. Triggers on .go files, go.mod references, or Go-related tasks.
+description: "Use when writing, reviewing, or refactoring Go code to apply idiomatic engineering standards. Triggers on .go files, go.mod references, or Go-related tasks."
 version: 0.1.0
 portable: true
-tags: [go, standards, portable]
+tags: [go, standards, idioms, error-handling, concurrency]
 ---
 
 # Go Standards
@@ -40,6 +40,19 @@ tags: [go, standards, portable]
 - Emit structured logs using the project's established logger. Check existing usage before introducing a new one.
 - Instrument error paths — errors returned to callers should have corresponding log or metric emission at the boundary.
 - Prefer named return values in exported functions for documentation clarity, not for naked returns.
+
+## Testing
+
+- Table-driven tests using `t.Run` subtests.
+- Use `testify/assert` for assertions if the project uses it; otherwise stdlib `testing`.
+- Include benchmarks for hot paths.
+
+## Tooling
+
+- `gofmt` — run always before committing.
+- `go vet` — enables by default in Go 1.14+.
+- `golangci-lint` — comprehensive linter aggregation. Run in CI.
+- `staticcheck` — static analysis for bugs and performance.
 
 ## Anti-patterns
 

@@ -1,9 +1,9 @@
 ---
 name: python-standards
-description: Apply Python engineering standards (type safety, error handling, structure, observability) when writing, reviewing, or refactoring Python code. Triggers on .py files or Python-related tasks.
+description: "Use when writing, reviewing, or refactoring Python code to apply engineering standards for type safety, error handling, structure, and observability. Triggers on .py files or Python-related tasks."
 version: 0.1.0
 portable: true
-tags: [python, standards, portable]
+tags: [python, standards, type-safety, error-handling, structure, observability]
 ---
 
 # Python Standards

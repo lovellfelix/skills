@@ -1,14 +1,29 @@
 ---
 name: rfc-blueprint
-description: Write RFC and technical design documents using a strict blueprint format. Use for RFC, design doc, technical proposal, or architecture document requests. More opinionated than the rfc skill.
+description: "Use when writing an RFC, technical design doc, or architecture proposal and need a strict, opinionated blueprint format with Mermaid diagrams."
 version: 0.1.0
 portable: true
-tags: [rfc, architecture, design, portable]
+tags: [rfc, architecture, design, blueprint, mermaid]
 ---
 
 # RFC Blueprint Format
 
-## Document Structure (strict order)
+## Steps
+
+1. Confirm scope with user (or infer from context if document exists).
+2. Draft Header (Title, Author, Date, Status, Target Audience).
+3. Draft Motivation (max 3 sentences).
+4. Draft Non-Negotiables (hard constraints as bullets).
+5. Draft Architecture: first Mermaid flowchart, then prose.
+6. If material risks exist (likelihood × impact non-trivial), draft Risks table.
+7. Draft Appendix (alternatives, state model, algorithms, open questions).
+8. Verify: every section scannable in <30s, no filler.
+
+## Completion Markers
+
+Every blueprint MUST end with:
+✓ BLUEPRINT_COMPLETE: {title} ({section_count} sections)
+✓ DIAGRAM: {mermaid_diagram_count} diagram(s) included
 
 ### 1. Header
 
