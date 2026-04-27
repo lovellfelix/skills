@@ -45,3 +45,10 @@ Use this skill to design and implement polished Android interfaces with Jetpack 
 - Check TalkBack labels and focus order
 - Confirm contrast and readability in light and dark themes
 - Run project checks (`./gradlew test`, `./gradlew lint`, and a debug build)
+
+## Personal Machine Activation
+
+This skill is personal-machine only.
+
+- Add `compose-material3` to the allowlist in `~/.personal-machine-skills.txt`.
+- Bootstrap and runtime sync only expose it when that allowlist includes the skill.

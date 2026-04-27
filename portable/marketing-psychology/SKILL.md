@@ -2,6 +2,8 @@
 name: marketing-psychology
 version: 1.1.0
 description: Use when applying psychological principles, mental models, or behavioral science to marketing decisions, messaging, or conversion strategy. Also triggers on 'cognitive bias,' 'persuasion,' 'why people buy,' or 'consumer behavior.'
+portable: true
+tags: [marketing, psychology, persuasion, behavioral-science, portable]
 ---
 
 # Marketing Psychology & Mental Models
@@ -19,6 +21,13 @@ Expert application of psychological principles and mental models to marketing. H
 ## Do not use when
 
 - Task is purely technical implementation with no behavioral/messaging component.
+
+## Personal Machine Activation
+
+This skill is personal-machine only.
+
+- Add `marketing-psychology` to `~/.personal-machine-skills.txt`.
+- Keep it off shared/work machines unless you explicitly allowlist it.
 
 ## How to apply
 

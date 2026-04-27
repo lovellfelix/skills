@@ -1,6 +1,9 @@
 ---
 name: nuxt
 description: Nuxt full-stack Vue framework with SSR, auto-imports, and file-based routing. Use when working with Nuxt apps, server routes, useFetch, middleware, or hybrid rendering.
+version: 1.0.0
+portable: true
+tags: [nuxt, vue, nitro, ssr, routing, portable]
 metadata:
   author: Anthony Fu
   version: "2026.1.28"
@@ -10,6 +13,13 @@ metadata:
 Nuxt is a full-stack Vue framework that provides server-side rendering, file-based routing, auto-imports, and a powerful module system. It uses Nitro as its server engine for universal deployment across Node.js, serverless, and edge platforms.
 
 > The skill is based on Nuxt 3.x, generated at 2026-01-28.
+
+## Personal Machine Activation
+
+This skill is personal-machine only.
+
+- Add `nuxt` to `~/.personal-machine-skills.txt`.
+- Bootstrap/runtime sync only exposes it when that allowlist includes the skill.
 
 ## Core
 

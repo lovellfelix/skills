@@ -3,21 +3,7 @@ name: graph-tracker
 description: "Persistent graph of nodes and relationships — engineering (GitHub issues, PRs, Jira) AND personal (family, reminders, events, notes). Enables work continuity, standup dashboards, personal knowledge graphs, and cross-session resumption."
 version: 0.1.0
 portable: false
-tags:
-  [
-    github,
-    jira,
-    issues,
-    prs,
-    tracking,
-    graph,
-    continuity,
-    standup,
-    personal,
-    family,
-    notes,
-    reminders,
-  ]
+tags: [github, jira, issues, prs, tracking, graph, continuity, standup, personal, family, notes, reminders]
 applies_to: [workflow, engineering, personal-assistant, standup, personal]
 ---
 

@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "name": "homelab-proxmox-cluster-api",
   "version": "0.1.0",
-  "portable": true,
+  "portable": false,
   "entrypoint": "SKILL.md",
   "tags": [
     "homelab",
@@ -11,8 +11,7 @@
     "capmox",
     "kubernetes",
     "kubeadm",
-    "infrastructure",
-    "portable"
+    "infrastructure"
   ],
   "adapters": {
     "opencode": {
