@@ -58,5 +58,6 @@
       }
     }
   },
-  "work_machine_only": true
+  "work_machine_only": false,
+  "personal_machine_only": true
 }
