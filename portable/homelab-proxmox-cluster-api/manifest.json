@@ -3,7 +3,6 @@
   "name": "homelab-proxmox-cluster-api",
   "version": "0.1.0",
   "portable": true,
-  "personal_machine_only": true,
   "entrypoint": "SKILL.md",
   "tags": [
     "homelab",
@@ -55,5 +54,6 @@
         "min_version": "*"
       }
     }
-  }
+  },
+  "work_machine_only": true
 }

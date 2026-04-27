@@ -4,7 +4,13 @@
   "version": "0.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",
-  "tags": ["knowledgebase", "maintenance", "workflow", "documentation", "notes"],
+  "tags": [
+    "knowledgebase",
+    "maintenance",
+    "workflow",
+    "documentation",
+    "notes"
+  ],
   "adapters": {
     "opencode": {
       "path": "SKILL.md",
@@ -25,10 +31,19 @@
   },
   "compatibility": {
     "runtimes": {
-      "opencode": { "min_version": "*" },
-      "cursor": { "min_version": "*" },
-      "claude": { "min_version": "*" },
-      "copilot": { "min_version": "*" }
+      "opencode": {
+        "min_version": "*"
+      },
+      "cursor": {
+        "min_version": "*"
+      },
+      "claude": {
+        "min_version": "*"
+      },
+      "copilot": {
+        "min_version": "*"
+      }
     }
-  }
+  },
+  "work_machine_only": true
 }

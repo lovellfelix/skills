@@ -49,5 +49,6 @@
         "min_version": "*"
       }
     }
-  }
+  },
+  "personal_machine_only": true
 }

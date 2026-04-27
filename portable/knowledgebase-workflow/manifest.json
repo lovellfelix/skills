@@ -3,7 +3,6 @@
   "name": "knowledgebase-workflow",
   "version": "0.1.0",
   "portable": false,
-  "personal_machine_only": true,
   "entrypoint": "SKILL.md",
   "tags": [
     "knowledgebase",
