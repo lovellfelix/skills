@@ -23,6 +23,7 @@ Without Jira ticket: `<summary>`
 - A blank line is **required** between the body (or subject) and the `Co-Authored-By` trailer; without it git does not treat it as a trailer.
 - Do NOT include `BREAKING CHANGE`, `Change-Type`, or other change-type footers.
 - Do NOT add sign-offs (no `Signed-off-by`).
+- Do not use provider-only trailers like "Claude"; include the specific model name (e.g., Claude Sonnet 4.6).
 - Only commit; do NOT push.
 
 ## Argument Parsing
@@ -71,7 +72,7 @@ PROJ-123: <summary>
 
 [optional body]
 
-Co-Authored-By: <MODEL_NAME> <noreply@PROVIDER.com>
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 EOF
 )"
 
@@ -81,7 +82,7 @@ git commit -m "$(cat <<'EOF'
 
 [optional body]
 
-Co-Authored-By: <MODEL_NAME> <noreply@PROVIDER.com>
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 EOF
 )"
 
