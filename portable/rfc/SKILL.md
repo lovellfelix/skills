@@ -1,86 +1,52 @@
 ---
 name: rfc
-description: Use when proposing a significant engineering change and need a tight, reviewable RFC focused on constraints, decisions, and rollout safety.
-version: 0.3.0
+description: "Use when proposing a significant engineering change, writing a technical design doc, or architecture proposal and need a tight, reviewable RFC with optional Mermaid diagrams."
+version: 1.0.0
 portable: true
-tags: [rfc, architecture, design, tradeoffs, rollout]
+tags: [rfc, architecture, design, blueprint, mermaid]
 ---
 
 # RFC
 
-## Style Defaults
-
-- Tight core doc; optimize for review speed.
-- Lead with problem and constraints.
-- Focus on behavior, tradeoffs, and operational impact.
-- Keep language direct and implementation-relevant.
-- Push deep detail into appendix by default.
-- Each section answers a reviewer question.
-- Prefer describing failure behavior before happy path when risk is high.
-
-## What I Do
-
-- Build RFCs around decisions reviewers can validate quickly.
-- Keep scope focused and non-negotiables explicit.
-- Surface tradeoffs, risks, and failure implications early.
-- Align architecture with rollout, validation, and recovery plans.
-
-## When to Use Me
-
-- Proposing architecture or behavior changes with production impact.
-- Choosing between approaches with meaningful tradeoffs.
-- Needing reviewer alignment before implementation.
-- Replacing long drafts with tight, decision-oriented RFCs.
+Tight, decision-oriented RFCs optimized for review speed. Lead with problem and constraints, focus on behavior and tradeoffs, push deep detail into appendix.
 
 ## Output Structure
 
-1. Motivation
-2. Non-Negotiables / Constraints
-3. Proposed Approach
-4. Key Decisions / Tradeoffs
-5. Risks
-6. Rollout / Validation
-7. Appendix (optional)
+1. **Header** — Title, Author, Date, Status (Draft/In Review/Accepted/Superseded)
+2. **Motivation** — 2–4 sentences: problem, impact, why now. No padding.
+3. **Non-Negotiables** — Hard constraints as bullets (SLO, scale, latency, security, compatibility)
+4. **Architecture** — Lead with Mermaid `flowchart LR` diagram if >3 components. Follow with prose on data flow, responsibilities, boundaries.
+5. **Key Decisions / Tradeoffs** — Each decision with rationale and rejected alternatives
+6. **Risks** — Failure modes + mitigation + owner. Table format if >2 risks.
+7. **Rollout / Validation** — Steps, observability, blast radius, rollback procedure
+8. **Appendix** (optional) — Alternatives considered (≥2 with rejection rationale), state models, algorithms, open questions with owner and due date
 
-## Steps
+## Style Rules
 
-1. Confirm scope and constraints with user.
-2. Draft each section in order: Motivation → Non-Negotiables → Proposed Approach → Key Decisions → Risks → Rollout → Appendix.
-3. Apply Output Structure rules (each section scannable in <30s, bullets over paragraphs).
-4. Verify no filler language, no restating obvious context.
-5. Write output to `{filename}.md` or return inline.
+- Each section scannable in <30 seconds
+- Bullets over paragraphs. Active voice. Present tense.
+- Assume informed senior/staff engineer reviewers
+- No executive summary, abstract, or background that belongs in a wiki
+- No filler, hedge stacking, or restating obvious context
+- Include only details that affect decisions
+
+## Mermaid Diagrams
+
+- Use `flowchart LR` for architecture (never TD)
+- Minimal nodes — only components readers need to reason about
+- Label edges with data or signals crossing boundaries
+- Use `classDef` styling when >5 nodes
+
+```mermaid
+flowchart LR
+    A[Client] -->|HTTP| B[API Gateway]
+    B -->|gRPC| C[Service]
+    C -->|SQL| D[(Database)]
+```
 
 ## Completion Markers
 
-Every RFC MUST end with:
+```text
 ✓ RFC_COMPLETE: {title} ({section_count} sections)
 ✓ DECISIONS: {decision_count} key decisions documented
-
-- Each section must be scannable in <30 seconds.
-- Prefer bullets over paragraphs.
-- Avoid restating obvious context.
-- Assume informed reviewers.
-- No narrative or academic writing.
-
-Section expectations:
-
-- Motivation: 2–4 sentences (problem, impact, why now)
-- Constraints: explicit bullets (SLO, scale, latency, etc.)
-- Approach: runtime behavior and architecture
-- Risks: failure modes + recovery
-- Rollout: steps, observability, rollback
-
-## Guidelines / Constraints
-
-- Keep core RFC concise.
-- Include only details that affect decisions.
-- Highlight tradeoffs clearly.
-- Include operational implications.
-- Move deep technical detail to appendix.
-
-## Explicitly Avoid
-
-- Generic RFC templates
-- Overlong design sections
-- Ceremony-heavy structure
-- Filler language
+```

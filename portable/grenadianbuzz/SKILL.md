@@ -112,7 +112,7 @@ This skill is personal-machine-only and stays disabled unless explicitly allowli
 - Add `grenadianbuzz` to `~/.personal-machine-skills.txt` (one skill name per line).
 - Re-run your runtime link sync after updating the allowlist. Example command (placeholder — replace with your environment-specific command):
 
-```
+```bash
 # Example runtime sync commands; pick the one that matches your setup or replace with your environment's command
 pi runtime link sync
 # or

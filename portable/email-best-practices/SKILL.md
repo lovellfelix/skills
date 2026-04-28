@@ -12,7 +12,7 @@ Guidance for building deliverable, compliant, user-friendly emails.
 
 ## Architecture Overview
 
-```
+```text
 [User] → [Email Form] → [Validation] → [Double Opt-In]
                                               ↓
                                     [Consent Recorded]

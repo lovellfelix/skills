@@ -8,19 +8,9 @@ tags: [communication, engineering-writing, pr-review, slack, clarity]
 
 # Communication Style
 
-- Quick links
-  - [Audience & Intent](#audience--intent)
-  - [Tone Matrix](#tone-matrix)
-  - [Style Defaults & Constraints](#style-defaults--constraints)
-  - [Modes (Tighten / PR / Slack / RFC)](#modes)
-  - [PR Review — Templates & Checklist](#pr-review-templates-checklist)
-  - [Copy-paste Templates](#copy-paste-templates)
-  - [Friction-reduction Rules](#friction-reduction-rules)
-  - [Diplomatic Phrasing Cheatsheet](#diplomatic-phrasing-cheatsheet)
-  - [Decision Ownership Guidance](#decision-ownership-guidance)
-  - [Examples (PR / RFC / Slack)](#examples)
+Defaults: Be concise, direct, use active voice — name actor and action. Engineering-first: present behavior, risk, and next step; format for fast scanning (short lines, bullets).
 
-(Note: anchors follow GitHub-style slugification — lowercase; spaces → -; common punctuation mapped or removed. If your renderer uses different anchor rules, link to the exact header id.)
+Avoid marketing phrasing, hidden politeness, and vague hedging unless uncertainty is real. Output must be copy-paste ready.
 
 ## Audience & Intent
 
@@ -53,22 +43,9 @@ Primary:
 Secondary:
 - 1–3 lines: background, links, non-actionable context for other stakeholders
 
-Routing (bots / onboarding): include machine-friendly headers at the top when messages must be routed or consumed by automation. Prefer a single-line JSON value for X-Routing (recommended) — it's easy for machines to parse. Avoid semicolon-separated key=value pairs (e.g., bots=onboarding;channel=alerts); they are harder to parse reliably.
-
-X-Routing: {"bots":["onboarding"],"channel":"alerts"}
-X-Onboarding: true
-
-Machine-routing schema examples (one-line):
-```json
-{"bots":["onboarding"],"channel":"alerts"}
-```
-```yaml
-{bots: [onboarding], channel: alerts}
-```
-
 Copy-paste template:
 
-```
+```text
 Audience: Primary: @team-name  Secondary: @docs @product
 
 Primary:
@@ -85,41 +62,6 @@ Keep the Primary block <=2 sentences. Put long rationale or logs only in the Sec
 
 ## Tone Matrix
 
-Machine-readable (YAML)
-
-```yaml
-tones:
-  - tone: Direct
-    use-case: code/PRs
-    voice: active
-    length: "1-3 sentences + checklist/patch"
-    opening_template: "Fix crash in X by adding backoff."
-
-  - tone: Collaborative
-    use-case: reviews, cross-team asks
-    voice: active
-    length: "2-4 sentences + specific asks"
-    opening_template: "I'd like input on two options for X — pairing welcome."
-
-  - tone: Diplomatic
-    use-case: conflict, sensitive review
-    voice: passive-allowed
-    length: "2-5 sentences"
-    opening_template: "I noticed X and wanted to propose a small change to reduce risk."
-
-  - tone: Persuasive
-    use-case: roadmaps, exec asks
-    voice: active
-    length: "1-3 bullets + one-line ask"
-    opening_template: "Recommend we invest in Y; expected ROI: 3x in 12 months."
-
-  - tone: Informational
-    use-case: status updates
-    voice: active
-    length: "3-6 bullets"
-    opening_template: "Status: migration 75% done. Next: cutover on Tue. Owner: @bob."
-```
-
 Human-readable table
 
 | tone | use-case | active/passive | length | opening_template |
@@ -134,17 +76,6 @@ Tone examples (opening lines):
 - Direct: "Fix: NullPointer in UserService when email is missing — guard added."
 - Collaborative: "Question: should we centralize validation in the API or the client? I lean API for consistent errors."
 - Diplomatic: "Suggestion: consider adding a max retry to reduce downstream load (see rationale)."
-
-## Style Defaults & Constraints
-
-- Concise by default. Cut filler aggressively.
-- Direct and specific. Lead with the issue or ask.
-- Active voice. Name actor and action.
-- Engineering-first framing. Include behavior, risk, and next step.
-- Fast scanning. Short lines, clean bullets, minimal prose.
-- Tone: professional, slightly conversational. Never corporate.
-
-Constraints: avoid marketing phrasing, hidden politeness, and vague hedging unless uncertainty is real. Output must be copy-paste ready.
 
 ## Modes
 
@@ -168,15 +99,13 @@ See small-mode rules below for common contexts.
 - Pi Response Polish
   - Max 3–5 bullets for completion. No unnecessary preamble. If ambiguous, ask (use the Clarification pattern).
 
-<a id="pr-review-templates-checklist"></a>
-
 ## PR Review — Templates & Checklist
 
 Purpose: reduce back-and-forth and make reviews action-oriented.
 
 Comment template (copy-paste ready):
 
-```
+```text
 Observation: [what you see]
 Impact: [why it matters]
 Recommendation: [exact change, test, or link to code]
@@ -202,7 +131,7 @@ PR description template (use in every PR body):
 
 Note: Title MUST be a short outcome (use 6–10 words max; focus on the end result).
 
-```
+```text
 Title: <short outcome-focused title>
 
 Summary: 1–2 lines describing the change and user-visible effect.
@@ -248,29 +177,9 @@ Escalation signals (request owner/maintainer attention):
 
 Below are ready-to-send templates. Replace bracketed tokens.
 
-PR description
-
-Note: Title MUST be a short outcome (6–10 words max; state the result).
-
-```
-Title: [Short outcome-focused title]
-
-Summary: [1–2 lines: what changed and why]
-
-Why: [short rationale and tradeoffs]
-
-Testing: [how to validate, steps or tests]
-
-Rollout: [flag/percentage, migration steps, rollback]
-
-Impact: [perf, infra, data]
-
-Owners: @[author] reviewers: @[team]
-```
-
 RFC / Decision request (short)
 
-```
+```text
 Title: [Decision: short outcome]
 
 Context: [1–3 lines background]
@@ -286,7 +195,7 @@ Ask: [approve / review by date / feedback]
 
 Slack status / ask
 
-```
+```text
 Context: [1 line]
 
 Update: [1–2 bullets – current status]
@@ -298,7 +207,7 @@ Technical email (to infra/security/product)
 
 Include To / CC / Contact lines for clear escalation routing.
 
-```
+```text
 To: [team-or-personal-alias]
 CC: [additional-stakeholders]
 Contact: [primary contact name / @handle / email]
@@ -313,7 +222,7 @@ Action: [what you need from recipient; escalate to Contact if no reply in X hour
 
 Clarification question (to requestor)
 
-```
+```text
 Understanding: [one line summary of my current assumption]
 
 Ambiguity: [single-sentence specific uncertainty]
@@ -332,10 +241,6 @@ Small rules that reduce reviewer friction and save time.
 - Run tests locally and link the passing CI in the PR body.
 - Prefer suggested change blocks for nits over comments.
 - Add tests or a short manual validation recipe.
-- Mark WIP/Preview with a clear prefix and avoid requesting formal review.
-- If touch is broad (>10 files), include a short design note in the PR body.
-- Use feature flags for behavior changes when rollout/rollback matters.
-- Document and version migrations; include an idempotent migration plan.
 
 ## Diplomatic Phrasing Cheatsheet
 
@@ -344,47 +249,3 @@ Use these patterns when you need to be constructive.
 - Instead of "This is wrong", write "Suggestion: consider..." with rationale.
 - Instead of "You missed X", write "Observation: X is absent; recommendation...".
 - Replace blame with facts: "I see that X does Y under Z".
-- Offer pairing: "Happy to pair on this if helpful".
-- Close the loop: "If we choose to keep this, I'll follow up with...".
-
-## Decision Ownership Guidance
-
-Make decisions explicit and assign an owner.
-
-- Decision types: Operational (owner = team), Design (owner = author/architect), Exec (owner = PM/leader), Security (owner = SecOps).
-- For ambiguous ownership: default to the author for technical choices; default to PM for scope/priority.
-- When in doubt, tag the suggested owner in the PR and ask for a confirm or handoff.
-
-Phrases to assign ownership:
-- "Decision: enable X in prod — owner: @alice (please confirm by EOD)."
-- "If @alice doesn't respond, owner becomes @team-leads for approval." 
-
-## Examples
-
-Example PR body
-
-```
-Title: Fix crash when email is missing in UserService
-
-Summary: Adds null-check and unit tests to prevent NPE when email is missing from user profile.
-
-Why: Missing email caused crash in onboarding flow for ~0.5% of users.
-
-Testing: Unit tests added; manual repro steps included.
-
-Rollout: Deploy behind feature flag for 24h canary, then 100%.
-
-Impact: Low perf cost; no migration required.
-
-Owners: @author reviewers: @team
-```
-
-Example Slack update
-
-```
-Context: Migration of review-db to replica cluster
-
-Update: Migration 75% complete; remaining table copy scheduled at 03:00 UTC.
-
-Ask: Will cause 5–10m read-only window; @infra please confirm maintenance window.
-```

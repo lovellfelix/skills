@@ -1,6 +1,6 @@
 ---
 name: kb-maintenance
-description: "Structured workflow for knowledgebase health checks, inbox processing, oncall note management, metadata cleanup, and archive operations. Use when user asks to clean up KB, run a health check, process inbox, organize notes, or archive old content."
+description: "Use when performing knowledgebase health checks, inbox processing, oncall note management, metadata cleanup, or archive operations."
 version: 0.1.0
 portable: false
 tags: [knowledgebase, maintenance, workflow, documentation, notes]

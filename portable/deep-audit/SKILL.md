@@ -10,21 +10,6 @@ tags: [audit, architecture, quality, portable]
 
 Full codebase health assessment: architecture, technical debt, security posture, and maintainability.
 
-## Use when
-
-- Comprehensive codebase health check before major refactoring or migration.
-- Security compliance audit or pre-production review.
-- Onboarding to an unfamiliar codebase and need a quality baseline.
-- Evaluating long-term maintainability or ownership transfer.
-
-## What I do
-
-- Deep architectural review: coupling, cohesion, layer violations, dependency hygiene.
-- Identify anti-patterns and technical debt hotspots with estimated remediation cost.
-- Security posture assessment (OWASP Top 10, secrets, auth/authz gaps).
-- Evaluate test coverage quality (not just quantity).
-- Produce a prioritized findings report with blast radius estimates.
-
 ## Audit workflow
 
 1. **Scope** — identify surfaces: APIs, data layer, auth, config, dependencies.
@@ -46,7 +31,7 @@ Full codebase health assessment: architecture, technical debt, security posture,
 
 ### Security findings
 Use this format per issue:
-```
+```text
 [CRITICAL|HIGH|MEDIUM] Component — Vulnerability description
 Risk: specific attack vector or data exposure.
 Remediation: concrete fix with implementation note.

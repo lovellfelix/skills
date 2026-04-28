@@ -1,6 +1,6 @@
 ---
 name: ucm-test
-description: Test UCM module changes against remote hosts using the `ucm test` CLI (hiera, puppet, etc). Use when iterating on Puppet/Hiera data for UCM modules, testing package management changes (installs, removals, downgrades), or validating catalog convergence before merging.
+description: "Use when testing UCM module changes against remote hosts using the ucm test CLI for hiera, puppet, package management, or catalog convergence validation."
 version: 0.1.0
 portable: true
 tags: [ucm, puppet, hiera, linkedin, infrastructure, work]
@@ -15,14 +15,6 @@ One-line summary: Test and apply UCM Puppet/Hiera changes against a remote host 
 - This is a work-machine-only skill.
 - It is linked only when the local work-machine flag file exists: `~/.work-env-skills`.
 - Override the flag path with: `SKILL_WORK_MACHINE_FLAG_FILE=/path/to/flag`.
-
-## When to Use
-
-- Iterating on Puppet Hiera data for a UCM module (e.g. `coreucm`).
-- Validating package install, removal, or downgrade changes before merging.
-- Debugging first-run Puppet apply errors (DNF upgrade/downgrade race conditions).
-- Testing resource ordering via Puppet metaparameters (`before`, `require`) in Hiera.
-- Confirming idempotency — verifying a second puppet apply results in no changes.
 
 ## Command Syntax
 
@@ -144,7 +136,7 @@ Always define changes in **all relevant OS sections** to ensure consistent rollo
 
 ### `No packages marked for upgrade`
 
-```
+```text
 Error: Could not update: Execution of '/bin/dnf -e 1 -y upgrade LNKD-ucm-reportclient-1.0.216-1.cm2' returned 1
 No match for argument: LNKD-ucm-reportclient-1.0.216-1.cm2
 ```
@@ -155,7 +147,7 @@ No match for argument: LNKD-ucm-reportclient-1.0.216-1.cm2
 
 ### rsync error on install
 
-```
+```text
 rsync error: unexpected end of file
 Error: Failed to install remotely.
 ```
@@ -166,7 +158,7 @@ Error: Failed to install remotely.
 
 ### Warning: hiera path doesn't end in module name
 
-```
+```text
 Warning: Your supplied hiera path doesn't end in coreucm. This is possibly wrong.
 ```
 

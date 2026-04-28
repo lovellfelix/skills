@@ -1,263 +1,89 @@
 ---
 name: knowledgebase-workflow
-description: Use this skill when organizing, searching, or updating the personal knowledgebase.
-version: 0.1.0
+description: "Use when organizing, searching, or updating the personal knowledgebase via Obsidian vault or work notes."
+version: 1.0.0
 portable: false
 personal_machine_only: true
-tags: [knowledgebase, workflow, documentation, notes, reference]
+tags: [knowledgebase, workflow, documentation, notes]
 ---
 
 # Knowledgebase Workflow
 
-## What this skill does
+Operating guide for working in `~/knowledgebase`. Use for note placement, inbox processing, hub maintenance, and KB cleanup.
 
-Provides a practical operating guide for working in `~/knowledgebase`.
+## Repository Structure
 
-Use it to:
+| Path | Purpose |
+|------|--------|
+| `\U0001f4ca Dashboard/` | Top-level dashboards and navigation |
+| `\U0001f4da Reference/` | Cheatsheets and quick references |
+| `\U0001f4dd Notes/` | Operational notes, monitoring, AI, journal, inbox |
+| `\U0001f680 Projects/` | Project-specific working docs |
+| `\U0001f4e6 Archive/` | Archived or superseded content |
 
-- find the right place for new notes
-- process inbox material into durable docs
-- update hub pages without adding clutter
-- keep `.mcp` metadata aligned with the repository layout
-- prefer canonical docs over duplicative fragments
-
-## Use when
-
-- The user asks where a note should live in the knowledgebase.
-- The task involves processing `📝 Notes/Inbox/`.
-- The task involves cleaning up, reorganizing, or simplifying KB docs.
-- The task involves updating hub pages such as `README.md` files.
-- The task changes major KB structure and `.mcp/manifest.json` may need updates.
-- The user asks how to use, search, or maintain this knowledgebase.
-
-## Do not use when
-
-- The task is unrelated to `~/knowledgebase`.
-- The task is pure software implementation in another repository.
-- The task only needs a one-off file edit with no KB placement or structure question.
-
-## Inputs expected
-
-- The target note or notes to create, update, or process.
-- The current repository structure under `~/knowledgebase`.
-- Existing related documents, if the task may be duplicative.
-
-## Repository Rules
-
-- `📊 Dashboard/` is for top-level dashboards and navigation.
-- `📚 Reference/` is for cheatsheets and quick references.
-- `📝 Notes/` is for operational notes, monitoring, AI notes, journal, and inbox.
-- `🚀 Projects/` is for project-specific working docs and design material.
-- `📦 Archive/` is for archived or superseded content.
-
-Use the actual emoji-based paths in links and edits.
+Use actual emoji-based paths in links and edits.
 
 ## Placement Rules
 
-- Operations procedures -> `📝 Notes/⚙️ Operations/`
-- Monitoring guides -> `📝 Notes/📊 Monitoring/`
-- AI notes and agent material -> `📝 Notes/🤖 Artificial Intelligence/`
-- Quick references -> `📚 Reference/🔧 Cheatsheets/`
-- Project-specific material -> `🚀 Projects/[area]/`
-- Temporary intake -> `📝 Notes/Inbox/`
+- Operations procedures \u2192 `\U0001f4dd Notes/\u2699\ufe0f Operations/`
+- Monitoring guides \u2192 `\U0001f4dd Notes/\U0001f4ca Monitoring/`
+- AI notes \u2192 `\U0001f4dd Notes/\U0001f916 Artificial Intelligence/`
+- Quick references \u2192 `\U0001f4da Reference/\U0001f527 Cheatsheets/`
+- Project material \u2192 `\U0001f680 Projects/[area]/`
+- Temporary intake \u2192 `\U0001f4dd Notes/Inbox/`
 
-## Inbox Workflow
+## Inbox Processing
 
-When processing inbox notes:
-
-1. Read the note and identify whether it is operational, reference, project, or duplicate material.
-2. Merge into an existing canonical note when possible.
-3. If it should stand alone, rewrite it into a polished note with frontmatter and a clear title.
-4. Move or promote it into the correct destination.
-5. Remove the original inbox copy after promotion or merge.
+1. Read note; classify as operational, reference, project, or duplicate.
+2. Merge into existing canonical note when possible.
+3. If standalone, rewrite with frontmatter and clear title.
+4. Move to correct destination.
+5. Remove original inbox copy after promotion.
 
 ## Writing Defaults
 
-- Keep notes concise, practical, and scannable.
-- Start promoted notes with a short blockquote describing purpose.
-- Use explicit section headers.
-- Label fenced code blocks with a language.
-- Prefer `modified`, not `last_modified`.
+- Concise, practical, scannable. Label code blocks with a language.
+- Use `modified` (not `last_modified`).
 
-Minimum promoted frontmatter:
+Minimum frontmatter:
 
 ```yaml
 ---
 title: "Document Title"
-tags: [category, topic, type]
-aliases: ["Alt Name"]
+tags: [category, topic]
 created: YYYY-MM-DD
 modified: YYYY-MM-DD
 type: reference|note|dashboard|project
 ---
 ```
 
-## Metadata and runtime guidance
-
-This knowledgebase includes a small, vendored `.mcp/` toolset and in-repo scripts used for validation and index generation. The `.mcp/` artifacts are intentionally included in this repository so automation and local tooling remain durable and self-contained.
-
-- `.mcp/server.js` - a tiny read-only HTTP server that serves `.mcp/manifest.json` and `.mcp/index.json` for local automation.
-- `.mcp/manifest.json` - vendored search/taxonomy metadata used by local tools. Treat as metadata only, not the source of truth for content placement.
-- `.mcp/generate-index.js` - bootstraps `.mcp/index.json` by invoking the repository backlink generator.
-- `.mcp/validate-metadata.js` - wrapper that runs the repository validation scripts.
-
-Rules and bootstrapping:
-
-- The authoritative content lives in the repo (Markdown files). `.mcp/manifest.json` only helps tooling categorize content for search; update it when you change top-level categories or taxonomy.
-- To refresh indexes or validation, prefer the in-repo scripts (under `scripts/`) and the npm helper commands below. The `.mcp` entrypoints call those scripts so CI or automation can rely on a stable path (`.mcp/validate-metadata.js`, `.mcp/generate-index.js`).
-- After large doc reorganizations, run the backlink/index generator:
-  - npm install
-  - npm run kb:backlinks
-  - node .mcp/generate-index.js
-- To run validation checks locally (duplication/frontmatter coverage):
-  - npm install
-  - npm run kb:check
-  - node .mcp/validate-metadata.js
-- To serve the manifest/index locally for other local tools:
-  - node .mcp/server.js
-
-Do not hand-edit `.mcp/index.json`; it is generated by the above tooling.
-
 ## Hub Page Rules
 
 - Keep hub pages short and navigational.
-- Link to the most useful destinations, not every related file.
-- Remove stale summaries, dead references, and speculative structure.
+- Link to useful destinations, not every related file.
+- Remove stale summaries and dead references.
 - Use `README.md` only when a folder genuinely needs a hub.
 
-## Canonicalization Rules
+## Canonicalization
 
-- Prefer updating an existing canonical note over creating a near-duplicate.
-- If two notes overlap heavily, keep the better destination and merge useful content into it.
-- Archive or remove stale copies only after useful content has been preserved.
+- Update existing canonical notes over creating near-duplicates.
+- Merge overlapping notes; keep the better destination.
+- Archive stale copies only after preserving useful content.
 
 ## Maintenance Checks
 
-When doing KB cleanup, inspect:
+Inspect: inbox backlog, old oncall notes, broken hub links, malformed frontmatter, notes too long for quick reference.
 
-- inbox backlog in `📝 Notes/Inbox/`
-- old oncall notes in `📝 Notes/⚙️ Operations/oncall/`
-- broken or stale hub links
-- malformed or missing frontmatter
-- docs that are too long and should become quick references
+## Validation Commands
 
-## Examples and reference
+```bash
+npm run kb:check        # duplicate/frontmatter checks
+npm run kb:backlinks    # generate backlinks index
+npm run kb:all          # both in sequence
+```
 
-- Root KB guide: `~/knowledgebase/AGENTS.md`
+## Key Paths
+
+- KB root guide: `~/knowledgebase/AGENTS.md`
 - MCP metadata: `~/knowledgebase/.mcp/manifest.json`
-- Main hubs:
-  - `~/knowledgebase/📊 Dashboard/README.md`
-  - `~/knowledgebase/📝 Notes/README.md`
-  - `~/knowledgebase/📚 Reference/README.md`
-  - `~/knowledgebase/🚀 Projects/README.md`
-
-## Personal Machine Activation
-
-This skill is personal-machine-only and stays disabled unless explicitly allowlisted.
-
-- Add `knowledgebase-workflow` to `~/.personal-machine-skills.txt` (one skill name per line).
-- Re-run your runtime link sync after updating the allowlist.
-
-## Tools & automation (KB validation)
-
-This skill ships a small set of scripts, CI checks, and templates to keep the KB healthy. Files are discoverable under the repo root and this skill directory.
-
-Paths and quick usage
-
-- scripts/find-duplicates.js — find duplicate note titles/aliases and missing required frontmatter. Run:
-  - node scripts/find-duplicates.js
-- scripts/generate-backlinks.js — build a backlinks index in ./backlinks/ (index.json and BACKLINKS.md).
-  - node scripts/generate-backlinks.js
-- scripts/kb-change-summary.sh — convenience wrapper that runs the above two scripts and exits non-zero on failure.
-  - ./scripts/kb-change-summary.sh
-- .githooks/pre-commit — lightweight pre-commit hook that runs the KB checks. To enable locally:
-  - git config core.hooksPath .githooks
-  - chmod +x .githooks/pre-commit
-- .github/workflows/kb-validate.yml — GitHub Actions workflow that runs KB validation on PRs touching Markdown or scripts
-- tags.yml — canonical tag list and aliases. Update when you introduce new canonical tags.
-- .github/PULL_REQUEST_TEMPLATE.md — PR checklist for KB changes; include a local run of the KB checks in your PR description
-- examples/frontmatter-example.md — expanded frontmatter example (owner, reviewers, status, reviewed_date, source, summary)
-- KB_OWNERS.md — map of KB path patterns to owners (who to notify for changes)
-- docs/backlinks.md — guide on backlinks generation and usage
-
-Ignoring non-KB packaging and docs files
-
-The in-repo scripts skip a small set of known non-KB files and directories (packaging, examples, generated outputs) so they don't treat tooling files as KB content. By default the scripts ignore: `.git`, `node_modules`, `dist`, `build`, `.github`, `.mcp`, `backlinks`, `examples`, `docs`, `tests`, `.githooks`, `SKILL.md`, and `KB_OWNERS.md`.
-
-If you need to change this list for your repository, edit the IGNORE array near the top of `scripts/find-duplicates.js` and `scripts/generate-backlinks.js`.
-
-Specifying a KB root for team use
-
-For team workflows or when the KB root isn't the repository root, both scripts accept an optional --root PATH (or --root=PATH) argument to run against a different directory. Example:
-
-- node scripts/find-duplicates.js --root path/to/your-kb
-- node scripts/generate-backlinks.js --root path/to/your-kb
-
-When --root is provided, generated backlink output is written under the provided root's ./backlinks/ directory.
-
-Actionable validation rules (what the scripts check)
-
-- No duplicate `title` values (case-insensitive, normalized) across Markdown files
-- No duplicate `aliases` across files
-- Required frontmatter fields must be present: `title`, `created`, `modified`, `type`
-- Backlinks are generated into ./backlinks/ for use by dashboards or manual inspection
-
-CI / pre-commit behavior
-
-- The pre-commit hook runs `scripts/kb-change-summary.sh`. It aborts the commit when duplicates or missing frontmatter are detected.
-- The GitHub Actions workflow `.github/workflows/kb-validate.yml` runs the same checks on PRs touching Markdown or scripts and fails the check if any validation fails.
-
-How to adopt these checks locally
-
-1. Ensure Node.js 18+ is installed locally (the scripts rely on modern Node features).
-2. From the repository root, install local npm dependencies:
-   - npm install
-3. Enable the local hooks folder:
-   - git config core.hooksPath .githooks
-   - chmod +x .githooks/pre-commit
-4. Run the quick checks locally with the provided npm scripts:
-   - npm run kb:check        # runs duplicate/frontmatter checks
-   - npm run kb:backlinks    # generates ./backlinks/index.json and BACKLINKS.md
-   - npm run kb:all         # run both in sequence
-
-Notes for cross-platform and team onboarding
-
-- Node version: use Node.js 18+ (set via engines in package.json). Consider using nvm, fnm, or Volta for consistent versions across the team.
-- POSIX vs Windows: the scripts are plain Node.js and should work on Windows, macOS, and Linux. Shell helper scripts (`.mcp/*.sh`) expect a POSIX-compatible shell. On Windows, use WSL, Git Bash, or adapt the commands.
-- npm vs yarn/pnpm: the repository uses npm by default. If your team prefers yarn or pnpm, update developer docs and CI accordingly.
-
-Normalization rules and caveats
-
-The scripts normalize titles, aliases, and tags to a canonical matching form before comparisons. Current rules (implemented in `scripts/normalize.js`):
-
-- Trim surrounding whitespace, collapse runs of non-alphanumeric characters to a single space.
-- Convert to lower-case ASCII.
-- Characters outside a-z and 0-9 are treated as separators and removed during normalization.
-
-Caveats:
-
-- International characters are simplified by the current rule (non-ASCII characters are removed). If you rely on accented letters or non-Latin scripts, update the normalization logic.
-- Normalization affects duplicate detection, alias matching, and tag validation. Be conservative when changing it — small changes can cause many false positives/negatives.
-
-Make the normalization behavior configurable
-
-- The normalization logic is centralized in `scripts/normalize.js`. To change behavior for your KB, edit that file or replace it with a compatible module that exports a single function: (value) => normalizedString.
-
-- If you need per-repo customization, consider replacing `scripts/normalize.js` with a small shim that reads a JSON config file and applies rules accordingly.
-
-The `.mcp/` entrypoints are vendored for durability; CI can call `.mcp/validate-metadata.js` and `.mcp/generate-index.js` as stable automation entrypoints that wrap the in-repo scripts.
-
-Files added by this change
-
-- scripts/find-duplicates.js
-- scripts/generate-backlinks.js
-- scripts/kb-change-summary.sh
-- .githooks/pre-commit
-- .github/workflows/kb-validate.yml
-- tags.yml
-- .github/PULL_REQUEST_TEMPLATE.md
-- examples/frontmatter-example.md
-- KB_OWNERS.md
-- docs/backlinks.md
-
-Keep these files in sync when you change frontmatter rules or tag canonicalization.
+- Dashboards: `~/knowledgebase/\U0001f4ca Dashboard/README.md`

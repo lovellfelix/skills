@@ -47,7 +47,7 @@ At session end or before transfer:
 
 ## Status snapshot template
 
-```
+```text
 Objective: <one sentence>
 
 Last actions:

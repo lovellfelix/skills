@@ -92,7 +92,7 @@ Key `session_memory` actions:
 
 ## Path conventions
 
-```
+```text
 ~/.agents/memory/session.db          # working layer (session_memory)
 ~/.agents/memory/projects/<project>/ # project-scoped durable state
 ~/.agents/memory/handoffs/YYYY/MM/   # handoff packets

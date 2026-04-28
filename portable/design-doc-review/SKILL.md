@@ -52,7 +52,3 @@ Review the design document or RFC in the current context. Evaluate against these
 - Do not rewrite the document; only report findings.
 - Do not invent issues not present in the document.
 - Use the rfc-blueprint structure as the reference for structural evaluation.
-
-- One finding per line
-- Format: `[P0|P1|P2] <Section> — <finding> — <recommended fix>`
-- End with a one-sentence overall readiness assessment

@@ -11,13 +11,6 @@ Turn “things” (URLs, PDFs, Word docs, PowerPoints, HTML pages, text files, e
 `markitdown` can fetch URLs by itself; this skill mainly wraps it to make saving + summarizing convenient.
 For PDF inputs, use the `markitdown[pdf]` extra (or the wrapper below, which now does this automatically).
 
-## When to use
-
-Use this skill when you need to:
-- pull down a web page as a document-like Markdown representation
-- convert binary docs (PDF/DOCX/PPTX) into Markdown for analysis
-- quickly produce a short summary of a long document before deeper work
-
 ## Quick usage
 
 ### Convert a URL or file to Markdown

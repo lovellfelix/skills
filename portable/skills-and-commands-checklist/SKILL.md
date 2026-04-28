@@ -42,7 +42,7 @@ shellcheck hacks/my-command.sh
 ## Artifact structure
 
 **Portable skill:**
-```
+```text
 skills/portable/my-skill/
 ├── SKILL.md          # required; frontmatter: name, description, version, portable, tags
 ├── manifest.json     # required; must match SKILL.md frontmatter exactly

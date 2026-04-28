@@ -17,13 +17,6 @@ Use this skill to design and implement polished Android interfaces with Jetpack 
 - Improve component quality for default, pressed, focused, disabled, and loading states
 - Avoid generic patterns (flat structure, repetitive spacing, weak contrast, default-only styling)
 
-## When To Use
-
-- Building a new Compose screen or flow
-- Migrating XML views to Compose with modern Material 3 structure
-- Refreshing a UI that feels boilerplate or visually inconsistent
-- Creating a reusable design system layer in Compose
-
 ## Implementation Checklist
 
 1. Define semantic tokens (`colorScheme`, typography scale, shape scale, spacing constants).

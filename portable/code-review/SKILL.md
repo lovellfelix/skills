@@ -10,18 +10,11 @@ tags: [review, quality, security, portable]
 
 Structured review focused on bugs, risk, and actionable improvements — not style opinions.
 
-## What I do
-
-- Auto-detect language (Python, JS/TS, Go, Kotlin, Shell) and apply appropriate standards.
-- Surface bugs, security issues, and best-practice violations.
-- Identify OWASP Top 10 patterns relevant to the code.
-- Generate actionable comments with severity and fix recommendation.
-
 ## Review structure
 
 For each issue, use this format:
 
-```
+```text
 [SEVERITY] File:line — Observation
 Impact: why it matters.
 Fix: concrete change.
@@ -42,7 +35,7 @@ Output sections:
 2. Auto-detect language from file extensions (.py, .js, .ts, .go, .kt, .sh).
 3. Apply the checklist by category in order: Correctness → Security → Reliability → Performance → Maintainability.
 4. Format each finding as `[SEVERITY] File:line — Observation`.
-5. Write output to `.opencode/reviews/REVIEW-{target}-{YYYYMMDD}.md`.
+5. Present findings inline or write to a review file if requested.
 6. End with completion markers.
 
 ## Completion Markers

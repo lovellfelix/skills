@@ -16,23 +16,6 @@ tags: [incident, postmortem, reliability, root-cause-analysis, operations]
 - Emphasize operational learning: prevention, detection, response.
 - Keep it readable in one pass.
 
-## What I Do
-
-- Build postmortems that explain what happened and why.
-- Distill timeline to moments that changed incident trajectory.
-- Clarify causal layers:
-  - Trigger
-  - Contributing Factors
-  - Root Cause
-- Produce actionable, owned follow-ups tied to incident evidence.
-
-## When to Use Me
-
-- You need a postmortem after production degradation or outage.
-- Existing write-up is a log dump with weak analysis.
-- Follow-ups are vague or unowned.
-- Team needs clear operational learning without blame language.
-
 ## Output Structure
 
 Use this exact structure:
