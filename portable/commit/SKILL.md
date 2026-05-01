@@ -1,7 +1,7 @@
 ---
 name: commit
 description: Use when making a git commit and need a correctly formatted subject line with optional Jira ticket and Co-Authored-By trailer.
-version: 0.1.0
+version: 0.2.0
 portable: true
 tags: [git, commit, conventional-commits, portable]
 ---
@@ -23,7 +23,7 @@ Without Jira ticket: `<summary>`
 - A blank line is **required** between the body (or subject) and the `Co-Authored-By` trailer; without it git does not treat it as a trailer.
 - Do NOT include `BREAKING CHANGE`, `Change-Type`, or other change-type footers.
 - Do NOT add sign-offs (no `Signed-off-by`).
-- Do not use provider-only trailers like "Claude"; include the specific model name (e.g., Claude Sonnet 4.6).
+- Do not use provider-only trailers like "Claude"; include the specific model name (e.g., Claude Sonnet 4.5).
 - Only commit; do NOT push.
 
 ## Argument Parsing
@@ -46,30 +46,49 @@ Always append a `Co-Authored-By` git trailer identifying the AI model that autho
 
 ### How to determine your model name
 
-1. Check your **model identifier** from the runtime/session context (e.g. `claude-sonnet-4-20250514`, `gpt-4.1`, `gpt-5-mini`).
-2. Map the identifier to a human-readable name using the table below.
-3. If the identifier doesn't match any row, use the raw identifier as the model name.
+**Step 1 — Get the raw identifier.** Your model identifier is provided in your system prompt or session context. Use it exactly as given.
 
-**Do NOT guess or use a generic name like "Claude" — always include the specific version.**
+**Step 2 — Strip any provider prefix.** Remove everything up to and including the last `/` (e.g., `github-copilot/claude-sonnet-4.6` → `claude-sonnet-4.6`). Provider prefixes like `github-copilot/`, `anthropic/`, `openai/` are never part of the model name.
 
-| Model identifier pattern | Human-readable name | Email domain |
-|--------------------------|--------------------:|--------------|
-| `claude-sonnet-4-*` | Claude Sonnet 4 | anthropic.com |
-| `claude-sonnet-4.5-*` | Claude Sonnet 4.5 | anthropic.com |
+**Step 3 — Match against the table below (first match wins, top to bottom).** Patterns are applied to the normalized identifier from Step 2.
+
+> **Do NOT guess or use a generic name like "Claude" — always include the specific version from the table.**
+
+| Model identifier pattern (after prefix strip) | Human-readable name | Email domain |
+|------------------------------------------------|--------------------:|--------------|
+| `claude-sonnet-4-5*` | Claude Sonnet 4.5 | anthropic.com |
+| `claude-sonnet-4.5*` | Claude Sonnet 4.5 | anthropic.com |
+| `claude-sonnet-4-7*` | Claude Sonnet 4.7 | anthropic.com |
+| `claude-sonnet-4.7*` | Claude Sonnet 4.7 | anthropic.com |
+| `claude-sonnet-4-6*` | Claude Sonnet 4.6 | anthropic.com |
 | `claude-sonnet-4.6*` | Claude Sonnet 4.6 | anthropic.com |
+| `claude-sonnet-4*` | Claude Sonnet 4 | anthropic.com |
+| `claude-haiku-4-5*` | Claude Haiku 4.5 | anthropic.com |
+| `claude-haiku-4.5*` | Claude Haiku 4.5 | anthropic.com |
 | `claude-haiku-*` | Claude Haiku | anthropic.com |
+| `claude-opus-4*` | Claude Opus 4 | anthropic.com |
 | `claude-opus-*` | Claude Opus | anthropic.com |
+| `gpt-5.4-mini*` | GPT-5.4 Mini | openai.com |
+| `gpt-5.4*` | GPT-5.4 | openai.com |
+| `gpt-5.3-codex*` | GPT-5.3 Codex | openai.com |
+| `gpt-5.1-codex*` | GPT-5.1 Codex | openai.com |
+| `gpt-5-mini*` | GPT-5 Mini | openai.com |
 | `gpt-4.1*` | GPT-4.1 | openai.com |
 | `gpt-4o*` | GPT-4o | openai.com |
-| `gpt-5-mini*` | GPT-5 Mini | openai.com |
-| `gpt-5.1-codex*` | GPT-5.1 Codex | openai.com |
-| `gpt-5.3-codex*` | GPT-5.3 Codex | openai.com |
-| `gpt-5.4*` | GPT-5.4 | openai.com |
-| `o3*` | o3 | openai.com |
 | `o4-mini*` | o4-mini | openai.com |
+| `o3*` | o3 | openai.com |
 | `gemini-*` | Gemini | google.com |
 
+**If no pattern matches:** use the normalized identifier (after prefix strip) as the model name, with `noreply@unknown.ai` as the domain.
+
 Format: `Co-Authored-By: <human-readable name> <noreply@<domain>>`
+
+### Pattern matching rules
+
+- **First match wins.** Apply patterns top-to-bottom and stop at the first match.
+- **`*` means zero or more characters.** `gpt-5.4-mini*` matches `gpt-5.4-mini` and `gpt-5.4-mini-2025-07-01`.
+- **`gpt-5.4-mini*` MUST be checked before `gpt-5.4*`** — they are ordered correctly in the table above.
+- **`claude-sonnet-4-5*` MUST be checked before `claude-sonnet-4*`** — they are ordered correctly in the table above.
 
 ## Steps
 
@@ -79,7 +98,8 @@ Format: `Co-Authored-By: <human-readable name> <noreply@<domain>>`
 4. If ambiguous extra files are staged or unstaged, ask the user which to include before proceeding.
 5. Validate the subject (length <= 72, no trailing period, imperative voice).
 6. Stage only the intended files (`git add <paths>` or `git add -A` if no files specified).
-7. Run `git commit` using a heredoc:
+7. Determine your model name using the steps above.
+8. Run `git commit` using a heredoc:
 
 ```bash
 # With Jira ticket:
