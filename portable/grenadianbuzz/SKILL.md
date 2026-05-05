@@ -1,122 +1,195 @@
 ---
 name: grenadianbuzz
-description: Use when working on GrenadianBuzz features, architecture, or operational tasks across any surface (API, Android app, CLI, website, dashboard, CDN, newsletter).
-version: 0.4.0
-portable: false
+description: Use when working on GrenadianBuzz features, architecture, or operational tasks across any surface (API, Android app, CLI, website, dashboard, docs).
+version: 0.5.0
+portable: true
 personal_machine_only: true
 tags: [grenadianbuzz, product, mobile, api, backend, frontend, architecture]
 ---
 
 # GrenadianBuzz Product & Engineering Skill
 
-Integrated product and technical guidance across all GrenadianBuzz surfaces. Turns product ideas into coherent feature designs spanning mobile, backend, and admin tooling with API-first specifications.
+---
+## Live Repo Issue/PR Snapshot (as of 2026-05-03)
+
+- **grenadianbuzz-android**: 40 open issues / 17 open PRs _(high PR traffic, significant issue tech debt; prioritize grounding in PR/issue reality)
+- **grenadianbuzz.cli**: 18 open issues / 0 open PRs _(highest-impact pipeline/automation work, but *no* open PRs; Tier-1 work requires opening/maintaining reviewable PRs)_
+- **api.grenadianbuzz.com**: 4 open issues / 4 open PRs _(critical for newsletter support, low issue/PR volume but high impact for CLI work)_
+- **dashboard.grenadianbuzz.com**: 1 open issue / 4 open PRs _(only maintenance-level work, minimal new product feature velocity)_
+- **grenadianbuzz.com**: 1 open issue / 5 open PRs _(site is in maintenance, not a focus except for bug/security/update work)_
+
+### Routing Guidance & Repo Reality
+
+- **Reality checks**: Always verify roadmap/priority against these live counts; any non-trivial work should map to open issues/PRs.
+- **Prioritization**: Highest-impact engineering is the CLI newsletter pipeline (with corresponding API/Android dependencies); tier assignment and sequence should correspond directly to open issue/PR inventory.
+- **Sequencing signals**: CLI has *zero* open PRs (need to raise work for leader/PR review); Android has many open PRs (*review bottlenecks can slow delivery*), API has key newsletter-support PRs, dashboard/website are maintenance-only—avoid roadmap expansion unless strictly necessary (e.g., inventory/tasks change).
+
+---
+Integrated product and technical guidance across GrenadianBuzz surfaces. API-first specifications and multi-surface feature coordination.
 
 ## Use when
 
-- Designing a feature across multiple surfaces (API + Android + dashboard).
-- Specifying Android endpoint consumers or mobile-specific payload shapes.
-- Planning API changes that affect mobile clients, CLI, or admin tools.
+- Designing features across multiple surfaces (API + Android + dashboard).
+- Specifying Android endpoint consumers or mobile payload shapes.
+- Planning API changes affecting mobile, CLI, or admin tools.
 - Aligning product requirements with mobile architecture and backend contracts.
-- Designing newsletter or engagement strategy for diaspora segments.
+- Designing newsletter or diaspora engagement strategy.
+- Prioritizing work across repos or coordinating multi-surface sprints.
+- Verifying PRD/roadmap claims against actual repo/issue state.
 
-## Do not use when
+## Workspace & Surfaces
 
-- Task is only UI styling with no API or data contract changes.
-- Approved contracts exist and only implementation is needed.
-- Task is purely mobile-only with no backend integration.
+GrenadianBuzz spans 7 product surfaces across 4 repositories:
 
-## Inputs expected
+| Surface | Repo | Type | Status |
+|---------|------|------|--------|
+| **Android App** | `grenadianbuzz-android` | Mobile (Kotlin, Compose) | Active |
+| **API** | `api.grenadianbuzz.com` | Backend (FeathersJS, Node.js) | Production, active deprecation |
+| **CLI** | `grenadianbuzz.cli` | Tooling (Python 3.8+) | Growth phase |
+| **Dashboard** | `grenadianbuzz` (`web/dashboard`) | Admin (React, TailwindCSS) | Maintenance |
+| **Website** | `grenadianbuzz` (`web/grenadianbuzz.com`) | Public (Nuxt/Vue) | Stable |
+| **Docs** | `grenadianbuzz` (`docs/`) | Reference (Markdown, OpenAPI) | Living |
+| **PRD** | `grenadianbuzz` (`docs/prd/`) | Planning (Markdown) | Source of truth |
 
-- Product goal and user persona (diaspora segment, engagement type, creator/user focus).
-- Existing entities/endpoints (if any).
-- Required platforms: API, Android, CLI, dashboard, website (specify which).
-- Business rules, compliance constraints, timeline.
+## Canonical Issue Clusters
+
+High-signal work grouped by surface and dependency. **Source of truth**: GitHub issues; canonical mapping only.
+
+### Android App (`grenadianbuzz-android`)
+
+| Issue | Scope | Status | Notes |
+|-------|-------|--------|-------|
+| **#254** | Google Sign-In implementation | Queued | Auth foundation |
+| **#282** | Realm → Room database migration | Queued | Persistence foundation |
+| **#287** | Testing & instrumentation expansion | Queued | Prerequisite for stability |
+| **#255, #253** | Android 15 status bar issues | Open | OS compatibility |
+| **Android #293** | UI redesign — cultural identity & engagement | Planned | Depends on Android #287, #282 complete |
+
+**Recommended sequencing**: Android #254 → #282 → #287 → #255/#253 → #293.
+
+### CLI (`grenadianbuzz.cli`)
+
+| Issue Range | Scope | Status | Notes |
+|-------------|-------|--------|-------|
+| **#50–59** | AI newsletter pipeline (epic) | Active | Business value: monetization, engagement |
+| **#48** | Metrics aggregation & reporting | Planned | Observability post-pipeline |
+| **#47** | Environment variables documentation | Planned | Ops readiness |
+| **#46** | Operational runbook | Planned | Runbook + recovery |
+| **#49** | Dependency maintenance | Ongoing | Hygiene |
+
+**Recommended sequencing**: #50–59 → #48 → #47/#46 → #49 (continuous).
+
+### API (`api.grenadianbuzz.com`)
+
+| Issue | Scope | Status | Notes |
+|-------|-------|--------|-------|
+| **API #293** | Deprecation warnings (v2→v3 migration) | Open | Backward compatibility |
+| **#307** | Trending endpoint parameters | Planning | Engagement optimization |
+| **#308** | Email template: `email-ai-newsletter.pug` | Blocked | Coordinate with CLI #50–59 |
+
+**Recommended sequencing**: API #293 → #307 → #308 (coordinate with CLI).
+
+### Dashboard & Website
+
+| Surface | Status | Notes |
+|---------|--------|-------|
+| **Dashboard** | Maintenance | Renovate tracked; no active features |
+| **Website** | Stable | Not a blocker for engagement/revenue |
+
+## Multi-Surface Sequencing & Prioritization
+
+When coordinating work across surfaces:
+
+1. **Phase 1: Auth & Deprecation** (Android #254, API #293, CLI #50–59 setup)
+   - Auth foundation enables all platform features
+   - Deprecation warnings enable v2→v3 migration
+   - Newsletter pipeline business value justifies early investment
+
+2. **Phase 2: Persistence & Testing** (Android #282, #287, API #307)
+   - Persistence foundation stabilizes mobile data handling
+   - Test suite enables future stability and UI work
+   - Trending tuning improves engagement
+
+3. **Phase 3: Stability & Integration** (Android #255/#253, API #308, CLI #48)
+   - OS compatibility fixes isolated; low dependency impact
+   - Newsletter template finalizes CLI+API integration
+   - Metrics tracking establishes observability baseline
+
+4. **Phase 4: Enhancement** (Android #293, CLI #47/#46)
+   - UI redesign deferred until foundation stable
+   - Runbooks and env docs finalize ops readiness
+
+## Execution Guidance
+
+### PRD vs. Repo State Reconciliation
+
+**Verify PRD claims**:
+1. Check GitHub issue tracker — claims should reference open/in-progress issues
+2. Validate surface coverage — if PRD claims an endpoint exists:
+   - OpenAPI definition in `docs/` or API source
+   - Integration tests pass in CI
+   - Dashboard/Android consumers integrated and tested
+3. Timeline claims — cross-check against issue milestones and PR activity
+4. Deprecation timeline — match against API versioning strategy
+
+**Red flags** (investigate if found):
+- Issue marked closed but feature not in any surface (sync gap)
+- PRD timeline doesn't match issue milestone (misalignment)
+- API deprecation deadline passed but endpoint still active (enforcement gap)
+- Android feature flagged "done" but dashboard/CLI not updated (incomplete integration)
+
+### Validation Gates
+
+Before shipping work across surfaces, validate:
+
+- ✅ **API contract** — OpenAPI updated, example payloads, error cases documented
+- ✅ **Android integration** — Retrofit models match API, error handling, offline-first tested
+- ✅ **CLI consistency** — Commands follow existing patterns, help text, tests passing
+- ✅ **Dashboard/Website** — UI consistent with design system, mobile-responsive, feature flags if needed
+- ✅ **Docs** — API guide updated, examples work, architecture implications noted
+- ✅ **Backward compatibility** — Deprecation warnings (if removing), migration path clear
+- ✅ **Rollout readiness** — Feature flags for mobile, canary strategy, monitoring hooks
 
 ## Workflow
 
-1. **Clarify objective** — Which surfaces are involved? What's the user journey end-to-end?
-2. **Define bounded scope** — Specific endpoints, mobile screens, CLI commands, admin features.
-3. **Model entities and relationships** — Shared across all surfaces with clear ownership.
-4. **Design contracts** — API payloads, mobile request/response, error modes.
+1. **Clarify scope** — Which surfaces involved? What's the user journey end-to-end?
+2. **Bound the issue** — Specific endpoints, screens, CLI commands, admin features
+3. **Model entities & relationships** — Shared across all surfaces with clear ownership
+4. **Design contracts** — API payloads, mobile request/response, error modes
 5. **Plan surface integration** — How does Android consume the API? CLI command structure? Dashboard analytics?
-6. **Add acceptance criteria** — Measurable behavior across platforms.
-7. **Add rollout and monitoring** — Backward compatibility, feature flags for mobile, analytics hooks.
+6. **Define acceptance criteria** — Measurable behavior across platforms
+7. **Add rollout & monitoring** — Backward compatibility, feature flags, analytics hooks
 
-## Core patterns
+## Core Patterns
 
-- **API-First**: REST contracts before implementation. Mobile clients drive payload shapes. `/v1`, `/v2`, `/v3` with 90-day deprecation windows.
-- **Mobile-Aware Payloads**: Minimize JSON size (diaspora on slower networks). Support summary vs full representations. Idempotency keys for mutations.
-- **Cross-Platform Consistency**: Identical error responses across API, Android SDK, CLI. Auth JWT format shared.
-- **Trust & Safety**: Moderation workflows `flag → review → approved/removed`. Audit trails on all moderation actions. Explicit `is_flagged`, `moderation_status` in payloads.
-- **Diaspora-Aware**: Timezone-aware notifications (UTC-5 to UTC+0). Segments: USA 45%, Canada 20%, UK 15%, Caribbean 8%, other.
+- **API-First**: REST contracts before implementation. `/v1`, `/v2`, `/v3` with 90-day deprecation windows.
+- **Mobile-Aware Payloads**: Minimize JSON size (diaspora on slower networks). Summary vs full representations. Idempotency keys for mutations.
+- **Cross-Platform Consistency**: Identical error responses across API, Android SDK, CLI. Shared JWT format.
+- **Trust & Safety**: Moderation workflows `flag → review → approved/removed`. Audit trails on all actions. Explicit `is_flagged`, `moderation_status` in payloads.
+- **Diaspora-Aware**: Timezone-aware notifications (UTC-5 to UTC+0). Segments: USA 45%, Canada 20%, UK 15%, Caribbean 8%, other 12%.
 
-## Output structure
-
-- Product spec with goals, constraints, success metrics.
-- Entity model and state transitions (API, mobile, CLI contexts).
-- API endpoint matrix with auth, payloads, failure modes.
-- Mobile integration guide (API consumption, screen designs, error handling).
-- CLI command specification (if applicable).
-- Analytics and event schema.
-- OpenAPI draft sections and example JSON payloads.
-- Rollout checklist with backward compatibility, feature flags, monitoring.
-
-## Reference files
+## Reference Files
 
 | File | Use for |
 |------|---------|
-| `templates/quick-reference.md` | Fast checklist and examples for API design |
+| `templates/quick-reference.md` | API design checklist |
 | `templates/api-prd-template.md` | Comprehensive PRD template (14 sections) |
-| `templates/acceptance-criteria.md` | Story-level, testable acceptance criteria template |
-| `templates/openapi-spec-template.yaml` | OpenAPI 3 template for drafting and CI validation |
-| `templates/postman-collection.json` | Starter Postman collection for manual API exploration |
-| `templates/playwright-smoke.spec.ts` | Playwright smoke test starter for web smoke checks |
-| `templates/email-deliverability-playbook.md` | Runbook for diagnosing email deliverability issues |
-| `reference/grenadianbuzz-api-patterns.md` | Production patterns, versioning, moderation, engagement |
-| `reference/grenadianbuzz-domain-checklist.md` | Design validations across surfaces |
-| `reference/grenadianbuzz-android-context.md` | Kotlin, JetpackCompose, API integration, offline-first |
-| `reference/grenadianbuzz-android-test-matrix.md` | Device/OS/test-type matrix and release criteria for Android |
-| `reference/grenadianbuzz-cli-guide.md` | Command patterns, admin workflows, automation scripts |
-| `reference/grenadianbuzz-dashboard-guide.md` | Moderation, analytics, creator tooling |
-| `reference/grenadianbuzz-dashboard-testing.md` | Dashboard accuracy, freshness, access, and performance tests |
-| `reference/grenadianbuzz-website-guide.md` | Public pages, SEO/accessibility, engagement patterns |
-| `reference/grenadianbuzz-security-checklist.md` | Security sign-off checklist for features and releases |
-| `reference/grenadianbuzz-cdn-cache-policy.md` | CDN caching rules and invalidation guidance |
-| `reference/grenadianbuzz-observability-slos.md` | SLOs, SLIs, alerting and dashboard guidance for ops |
-| `reference/api-contract-tests.md` | Contract testing approaches, CI integration, and rollback criteria |
-| `reference/ci-cd-pipelines.md` | CI/CD stages, gating, canary strategy, and artifact handling |
-| `reference/release-rollout-playbook.md` | Step-by-step release and rollback playbook |
-| `INDEX.md` | Start-here map for API, Android, CLI, dashboard, and website |
-
-### How to use these artifacts
-- Templates live under `templates/` and are intended to be copied into feature PRs or story descriptions (OpenAPI, Playwright, Postman, acceptance criteria).
-- `reference/` files are guidance and runbooks for engineering and SRE during design, CI, and release.
-- Include links to relevant templates in PR descriptions (OpenAPI or acceptance criteria) and attach checklist items from `reference/grenadianbuzz-security-checklist.md` and `reference/release-rollout-playbook.md` before approving production deploys.
-
-Onboarding note — templates and placeholders
-- Many templates include placeholders (e.g. `YOUR_API_URL`, `YOUR_API_CLIENT_KEY`, `{{OWNER}}`, `<PROJECT_NAME>`). Replace these with real values before using or copying into a PR. For quick convenience, here is a small example (example ONLY — do not commit secrets) for `~/.config/gbuzz/config.yaml`:
-
-```yaml
-API_URL: "https://api.grenadianbuzz.com"
-# WARNING: replace with your real client key. Use environment variables or a secrets manager in CI. Do NOT commit secrets to git.
-API_CLIENT_KEY: "YOUR_API_CLIENT_KEY"
-HTTP_TIMEOUT: 30
-```
-
-This pattern applies to PRD, OpenAPI, and newsletter templates — fill title, owner, and environment values before publishing.
+| `templates/acceptance-criteria.md` | Testable story-level acceptance criteria |
+| `templates/openapi-spec-template.yaml` | OpenAPI 3 draft starter |
+| `templates/postman-collection.json` | Manual API exploration |
+| `reference/grenadianbuzz-api-patterns.md` | Production patterns, versioning, moderation |
+| `reference/grenadianbuzz-android-context.md` | Kotlin, Compose, API integration, offline-first |
+| `reference/grenadianbuzz-cli-guide.md` | Command patterns, admin workflows, scripts |
+| `reference/grenadianbuzz-dashboard-guide.md` | Moderation, analytics, creator tools |
+| `reference/release-rollout-playbook.md` | Step-by-step release and rollback |
+| `INDEX.md` | Start-here map for all surfaces |
 
 ## Personal Machine Activation
 
-This skill is personal-machine-only and stays disabled unless explicitly allowlisted.
+This skill is personal-machine-only. Add `grenadianbuzz` to `~/.personal-machine-skills.txt` (one per line) and re-run your environment's link sync command.
 
-- Add `grenadianbuzz` to `~/.personal-machine-skills.txt` (one skill name per line).
-- Re-run your runtime link sync after updating the allowlist. Example command (placeholder — replace with your environment-specific command):
+---
 
-```bash
-# Example runtime sync commands; pick the one that matches your setup or replace with your environment's command
-pi runtime link sync
-# or
-./scripts/runtime-sync.sh
-```
-
-If you use a different runtime manager, run the equivalent "link sync" operation for your environment.
+**Version**: 0.5.0  
+**Last Updated**: May 3, 2026  
+**Audience**: Engineers, product leads
