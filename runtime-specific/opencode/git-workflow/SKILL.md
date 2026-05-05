@@ -21,24 +21,24 @@ Multiple working directories from same repo, each checked out to different branc
 ### Common Use Cases
 ```bash
 # Feature development while main stays clean
-git worktree add ../dotfiles-feature feature/new-zsh-plugin
+git worktree add .worktree/feature-new-zsh-plugin feature/new-zsh-plugin
 
 # Hotfix while working on feature
-git worktree add ../dotfiles-hotfix hotfix/fix-broken-path
+git worktree add .worktree/hotfix-fix-broken-path hotfix/fix-broken-path
 
 # Review PR without stashing current work
-git worktree add ../dotfiles-pr-review pr/123
+git worktree add .worktree/pr-123 pr/123
 
 # Testing different configurations
-git worktree add ../dotfiles-test test/macos-sonoma
+git worktree add .worktree/test-macos-sonoma test/macos-sonoma
 ```
 
 ### Worktree Best Practices
 
 **Create worktree**:
 ```bash
-# Good: Relative path, descriptive name
-git worktree add ../dotfiles-feature feature/new-plugin
+# Good: Repo-local path, branch slug (`/` -> `-`)
+git worktree add .worktree/feature-new-plugin feature/new-plugin
 
 # Bad: Nested in main worktree (confusing)
 git worktree add ./feature-dir feature/new-plugin
@@ -48,29 +48,29 @@ git worktree add ./feature-dir feature/new-plugin
 ```bash
 git worktree list
 # /Users/user/dotfiles        abc123 [main]
-# /Users/user/dotfiles-feature def456 [feature/new-plugin]
+# /Users/user/dotfiles/.worktree/feature-new-plugin def456 [feature/new-plugin]
 ```
 
 **Remove worktree**:
 ```bash
 # Good: Remove worktree then delete directory
-git worktree remove ../dotfiles-feature
+git worktree remove .worktree/feature-new-plugin
 # OR: Delete directory first, then prune
-rm -rf ../dotfiles-feature && git worktree prune
+rm -rf .worktree/feature-new-plugin && git worktree prune
 
 # Bad: Just deleting directory (leaves git metadata)
-rm -rf ../dotfiles-feature  # Worktree still registered!
+rm -rf .worktree/feature-new-plugin  # Worktree still registered!
 ```
 
 **Worktree for parallel testing**:
 ```bash
 # Test nvim config change without breaking current setup
-git worktree add ../dotfiles-nvim-test experiment/new-lsp
-cd ../dotfiles-nvim-test
+git worktree add .worktree/experiment-new-lsp experiment/new-lsp
+cd .worktree/experiment-new-lsp
 ./bootstrap.sh --dry-run
 # Test changes, iterate
 cd -
-git worktree remove ../dotfiles-nvim-test
+git worktree remove .worktree/experiment-new-lsp
 ```
 
 ### Worktree Anti-Patterns
@@ -89,10 +89,10 @@ git worktree prune --dry-run
 ❌ **Don't**: Try to check out same branch in multiple worktrees
 ```bash
 # This fails (branch already checked out)
-git worktree add ../dotfiles-2 main  # ERROR!
+git worktree add .worktree/main main  # ERROR!
 
 # Instead: Create new branch
-git worktree add ../dotfiles-2 -b test-main main
+git worktree add .worktree/test-main -b test-main main
 ```
 
 ---
@@ -662,13 +662,13 @@ git filter-branch --index-filter \
 When working with git operations:
 
 ```bash
-# Worktree: ../dotfiles-feature (feature/new-plugin)
+# Worktree: .worktree/feature-new-plugin (feature/new-plugin)
 # Action: Created and switched to worktree
 # Files modified: zsh/.config/zsh/.zshrc
 # Validation: git status (clean)
 
-git worktree add ../dotfiles-feature -b feature/new-plugin
-cd ../dotfiles-feature
+git worktree add .worktree/feature-new-plugin -b feature/new-plugin
+cd .worktree/feature-new-plugin
 # Make changes...
 git commit -m "feat(zsh): add new plugin"
 ```
