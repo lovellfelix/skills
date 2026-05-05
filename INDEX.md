@@ -14,15 +14,18 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **commit** | `portable/commit/` | Use when making a git commit and need a correctly formatted subject line with optional Jira ticket and Co-Authored-By trailer. |
 | **communication-style** | `portable/communication-style/` | Use when writing PRs, documentation, RFCs, or Slack messages to improve clarity, brevity, and reduce review friction. |
 | **compose-material3** | `portable/compose-material3/` | Use when building Android UI components with Jetpack Compose and Material Design 3 to produce modern, distinctive interfaces that avoid generic boilerplate. |
+| **context-optimization** | `portable/context-optimization/` | Reduce token usage and context bloat by using targeted reads, caching, and discarding noisy tool output. Use when exploring large codebases, summarizing lengthy outputs, or optimizing for cost |
 | **deep-audit** | `portable/deep-audit/` | Use when performing a comprehensive codebase health assessment before major refactoring, migration, production readiness review, or ownership transfer. |
 | **design-doc-review** | `portable/design-doc-review/` | Use when reviewing a technical design document or RFC as a senior/staff engineer before sharing. Invoke after drafting to catch structural, clarity, and completeness issues. |
 | **documentation** | `portable/documentation/` | Use when writing or updating engineering documentation and want it grounded in runtime behavior rather than aspirational prose. |
 | **dotfiles-optimization** | `portable/dotfiles-optimization/` | Use when improving shell configs, dotfiles layout, or local automation with safe, validated changes. |
 | **email-best-practices** | `portable/email-best-practices/` | Use when building email features, emails going to spam, high bounce rates, setting up SPF/DKIM/DMARC authentication, implementing email capture, ensuring compliance (CAN-SPAM, GDPR, CASL), handling webhooks, retry logic, or deciding transactional vs marketing. |
+| **git-workflow** | `portable/git-workflow/` | Automate git workflows with worktrees, hooks, and advanced patterns. Use when setting up multi-branch workflows, automating commits, managing hooks, or handling complex merge/rebase scenarios. |
 | **github** | `portable/github/` | Use when interacting with GitHub issues, PRs, CI runs, or repository data via the gh CLI. |
+| **github-pr-review** | `portable/github-pr-review/` | Deterministic, GitHub-integrated PR review skill tuned for SRE/infra changes. Fetches PR metadata, diff, CI status, applies type-specific checklists, formats deterministic findings, and can post reviews via gh. |
 | **go-standards** | `portable/go-standards/` | Use when writing, reviewing, or refactoring Go code to apply idiomatic engineering standards. Triggers on .go files, go.mod references, or Go-related tasks. |
 | **google-docs-style** | `portable/google-docs-style/` | Use when writing content for Google Docs — internal docs, design summaries, proposals, updates, reviews — to produce clean, lightly formatted, professional output that looks natural when pasted into Google Docs. |
-| **grenadianbuzz** | `portable/grenadianbuzz/` | Use when working on GrenadianBuzz features, architecture, or operational tasks across any surface (API, Android app, CLI, website, dashboard, CDN, newsletter). |
+| **grenadianbuzz** | `portable/grenadianbuzz/` | Use when working on GrenadianBuzz features, architecture, or operational tasks across any surface (API, Android app, CLI, website, dashboard, docs). |
 | **handoff-resume** | `portable/handoff-resume/` | Use when resuming interrupted work across sessions, handing off to another agent or teammate, or creating a restart-ready status snapshot. |
 | **homelab-gitops-flux-operations** | `portable/homelab-gitops-flux-operations/` | Use when deploying, upgrading, reconciling, or debugging Flux-managed workloads on the personal homelab cluster, especially HelmRelease or Kustomization changes, Flux reconcile failures, app-template apps, CrashLoopBackOff or ImagePullBackOff pods, Home Assistant issues, kubectl exec troubleshooting, SOPS secret updates, or GitHub PR creation. |
 | **homelab-proxmox-cluster-api** | `portable/homelab-proxmox-cluster-api/` | Use when operating the personal homelab Kubernetes cluster on Proxmox through Cluster API and CAPMOX, especially for workload cluster rebuilds, kubeadm upgrades, templateID changes, ProxmoxMachineTemplate edits, CAPMOX boot bug recovery, management-cluster checks, cluster-status validation, or control-plane local-zfs migration planning. |
@@ -34,12 +37,14 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **location-search** | `portable/location-search/` | Use when planning trips, finding nearby places, or integrating location features with a no-API-key default flow, including ZIP or postal-code lookup. |
 | **marketing-psychology** | `portable/marketing-psychology/` | Use when applying psychological principles, mental models, or behavioral science to marketing decisions, messaging, or conversion strategy. Also triggers on 'cognitive bias,' 'persuasion,' 'why people buy,' or 'consumer behavior.' |
 | **nuxt** | `portable/nuxt/` | Use when working with Nuxt apps, server routes, useFetch, middleware, or hybrid rendering in a full-stack Vue application. |
+| **python** | `portable/python/` | Use when writing, reviewing, or testing Python code — establishes project style, type-safety, testing defaults, and CI quality gates. |
 | **release-notes** | `portable/release-notes/` | Use when drafting or refining changelog entries and release notes from commits, PRs, or code changes. |
 | **release-skills** | `portable/release-skills/` | Use when releasing a new version, bumping semver, generating changelogs, or publishing to npm/PyPI/Cargo/GitHub. Supports Node.js, Python, Rust, Claude Plugin, and generic projects. |
 | **rfc** | `portable/rfc/` | Use when proposing a significant engineering change, writing a technical design doc, or architecture proposal and need a tight, reviewable RFC with optional Mermaid diagrams. |
 | **session-memory-mcp** | `portable/session-memory-mcp/` | Use when building MCP-integrated workflows, caching session state, or establishing durable patterns across sessions. Practical patterns for storing, retrieving, and maintaining high-signal session memory via MCP. |
 | **shadcn-ui** | `portable/shadcn-ui/` | Use when setting up shadcn/ui, installing components, building forms with React Hook Form and Zod, customizing themes with Tailwind CSS, or implementing accessible UI patterns (buttons, dialogs, dropdowns, tables, complex layouts). |
 | **skills-and-commands-checklist** | `portable/skills-and-commands-checklist/` | Use when authoring or maintaining portable skills and custom commands to ensure correctness, discoverability, and long-term maintainability across tools and machines. |
+| **stop-slop** | `portable/stop-slop/` | Use when rewriting AI-sounding drafts into concise, human engineering writing that matches existing communication-style and documentation guidance. |
 | **summarize** | `portable/summarize/` | Use when fetching a URL or converting a local file (PDF, DOCX, HTML, etc.) to Markdown for reading or summarization via uvx markitdown. |
 | **ucm-test** | `portable/ucm-test/` | Use when testing UCM module changes against remote hosts using the ucm test CLI for hiera, puppet, package management, or catalog convergence validation. |
 | **weather-forecast** | `portable/weather-forecast/` | Use when the user asks for current weather, today's conditions, or a short forecast without relying on paid weather APIs. |
@@ -54,21 +59,14 @@ Skills with runtime-specific adapters or overlays.
 
 | Name | Location | Purpose |
 |------|----------|---------|
-| **actionable-planning** | `runtime-specific/opencode/actionable-planning/` | Create actionable plans using the CLEAR framework (Concrete, Linked, Estimated, Assigned, Resulted). Use when planning features, projects, or multi-step tasks requiring clear ownership and success criteria. |
-| **api-docs** | `runtime-specific/opencode/api-docs/` | Use when building API clients, keeping API contracts in sync across projects, or querying endpoint details. Stores and queries Swagger/OpenAPI specs in SQLite for cross-project API reference. |
-| **ask** | `runtime-specific/opencode/ask/` | OpenCode ask overlay - search work notes first, then session memory, codebase, and web. |
-| **context-optimization** | `runtime-specific/opencode/context-optimization/` | Reduce token usage and context bloat by using targeted reads, caching, and discarding noisy tool output. Use when exploring large codebases, summarizing lengthy outputs, or optimizing for cost. |
-| **git-workflow** | `runtime-specific/opencode/git-workflow/` | Automate git workflows with worktrees, hooks, and advanced patterns. Use when setting up multi-branch workflows, automating commits, managing hooks, or handling complex merge/rebase scenarios. |
+| **actionable-planning** | `runtime-specific/opencode/actionable-planning/` | DEPRECATED. Use portable/writing-plans instead — actionable planning guidance (CLEAR framework) has been consolidated into that skill. |
+| **context-optimization** | `runtime-specific/opencode/context-optimization/` | DEPRECATED. Canonical context-optimization guidance is now available under `skills/portable/context-optimization/SKILL.md`. |
+| **git-workflow** | `runtime-specific/opencode/git-workflow/` | DEPRECATED. Canonical git-workflow guidance moved to `skills/portable/git-workflow/SKILL.md`. |
 | **google-docs** | `runtime-specific/opencode/google-docs/` | Use this skill when reading, writing, or searching Google Docs, Sheets, and Drive files from OpenCode. |
-| **graph-tracker** | `runtime-specific/opencode/graph-tracker/` | Persistent graph of nodes and relationships — engineering (GitHub issues, PRs, Jira) AND personal (family, reminders, events, notes). Enables work continuity, standup dashboards, personal knowledge graphs, and cross-session resumption. |
 | **jarvis-search** | `runtime-specific/opencode/jarvis-search/` | Use this skill to search LinkedIn codebases with Jarvis from OpenCode. |
 | **jira-workflow** | `runtime-specific/opencode/jira-workflow/` | Use this skill when reading, creating, searching, and updating JIRA issues from OpenCode. |
-| **knowledge-graph** | `runtime-specific/opencode/knowledge-graph/` | Build and maintain a lightweight knowledge graph in the work knowledgebase. Use when connecting related work notes, capturing design decisions, or surfacing complex relationships across projects. |
-| **morning** | `runtime-specific/opencode/morning/` | Morning briefing — calendar, reminders, weather, GitHub issues, priorities. Use when the user says "morning", "briefing", "start my day", or asks what's on today. |
-| **obsidian-work-notes** | `runtime-specific/opencode/obsidian-work-notes/` | Official Obsidian CLI-first workflow for work notes, with local wrapper fallback for custom search, writes, and graph operations |
-| **personal-planning** | `runtime-specific/opencode/personal-planning/` | Use when planning trips, family outings, personal events, or life milestones with concrete actions and contingencies. |
+| **personal-planning** | `runtime-specific/opencode/personal-planning/` | DEPRECATED. Personal planning guidance has been merged into `skills/portable/life-organizer/SKILL.md`. |
 | **phased-rollout** | `runtime-specific/opencode/phased-rollout/` | Execute phased deployments across environments with monitoring windows and rollback capability. Use when coordinating multi-environment releases, canary deployments, or high-risk launches requiring explicit safety gates. |
-| **standup** | `runtime-specific/opencode/standup/` | Generate standup update from git activity, session memory, GitHub, and tasks. Use when the user says "standup", "daily update", or asks for a summary of recent work. |
 
 ## Archive
 

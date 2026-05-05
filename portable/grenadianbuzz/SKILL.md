@@ -186,7 +186,10 @@ Before shipping work across surfaces, validate:
 
 ## Personal Machine Activation
 
-This skill is personal-machine-only. Add `grenadianbuzz` to `~/.personal-machine-skills.txt` (one per line) and re-run your environment's link sync command.
+This skill is personal-machine only.
+
+- Add `grenadianbuzz` to the personal allowlist file: `~/.personal-machine-skills.txt`.
+- Keep one skill name per line and rerun your environment's link-sync/bootstrap command so the skill is surfaced.
 
 ---
 

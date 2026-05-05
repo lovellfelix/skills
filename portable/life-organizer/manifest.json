@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "name": "life-organizer",
   "version": "0.1.0",
-  "portable": false,
+  "portable": true,
   "personal_machine_only": true,
   "entrypoint": "SKILL.md",
   "tags": [

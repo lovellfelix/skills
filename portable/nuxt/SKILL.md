@@ -2,7 +2,7 @@
 name: nuxt
 description: Use when working with Nuxt apps, server routes, useFetch, middleware, or hybrid rendering in a full-stack Vue application.
 version: 1.0.0
-portable: false
+portable: true
 tags: [nuxt, vue, nitro, ssr, routing]
 metadata:
   author: Anthony Fu

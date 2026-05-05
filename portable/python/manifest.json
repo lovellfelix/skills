@@ -1,18 +1,16 @@
 {
   "schema_version": "1.0",
-  "name": "location-search",
-  "version": "0.3.0",
-  "description": "Use when planning trips, finding nearby places, or integrating location features with a no-API-key default flow, including ZIP or postal-code lookup.",
+  "name": "python",
+  "description": "Use when writing, reviewing, or testing Python code — establishes project style, type-safety, testing defaults, and CI quality gates.",
+  "version": "1.0.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
-    "maps",
-    "geocode",
-    "location",
-    "search",
-    "routing",
-    "navigation",
-    "places"
+    "python",
+    "style",
+    "testing",
+    "type-safety",
+    "quality"
   ],
   "adapters": {
     "opencode": {
@@ -54,6 +52,5 @@
         "min_version": "*"
       }
     }
-  },
-  "personal_machine_only": true
+  }
 }

@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "name": "homelab-proxmox-cluster-api",
   "version": "0.1.0",
-  "portable": false,
+  "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
     "homelab",

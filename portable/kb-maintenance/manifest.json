@@ -3,7 +3,7 @@
   "name": "kb-maintenance",
   "version": "0.1.0",
   "description": "Structured workflow for knowledgebase health checks, inbox processing, oncall note management, metadata cleanup, and archive operations. Use when user asks to clean up KB, run a health check, process inbox, organize notes, or archive old content.",
-  "portable": false,
+  "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
     "knowledgebase",

@@ -2,7 +2,7 @@
 name: java-to-kotlin-migration
 description: Use when migrating Android projects from Java to Kotlin while maintaining behavior and test coverage.
 version: 0.1.0
-portable: false
+portable: true
 tags: [android, kotlin, java, migration]
 ---
 

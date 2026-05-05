@@ -1,18 +1,15 @@
 {
   "schema_version": "1.0",
-  "name": "location-search",
-  "version": "0.3.0",
-  "description": "Use when planning trips, finding nearby places, or integrating location features with a no-API-key default flow, including ZIP or postal-code lookup.",
+  "name": "context-optimization",
+  "version": "0.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
-    "maps",
-    "geocode",
-    "location",
-    "search",
-    "routing",
-    "navigation",
-    "places"
+    "performance",
+    "optimization",
+    "context",
+    "tokens",
+    "efficiency"
   ],
   "adapters": {
     "opencode": {
@@ -54,6 +51,5 @@
         "min_version": "*"
       }
     }
-  },
-  "personal_machine_only": true
+  }
 }

@@ -103,13 +103,11 @@ git commit -m "feat: add specific feature"
 
 After saving the plan, offer execution choice:
 
-**"Plan complete and saved to `docs/plans/<filename>.md`. Two execution options:**
+**"Plan complete and saved to `docs/plans/<filename>.md`. Two execution options:"**
 
 **1. Subagent-Driven (this session)** - I dispatch fresh subagent per task, review between tasks, fast iteration
 
 **2. Parallel Session (separate)** - Open a new session to execute the saved plan with batch execution and checkpoints
-
-**Which approach?"**
 
 **If Subagent-Driven chosen:**
 - Stay in this session
@@ -119,3 +117,58 @@ After saving the plan, offer execution choice:
 - Guide them to open new session in worktree
 - New session: implement tasks sequentially with validation checkpoints
 ```
+
+---
+
+# Actionable Planning (CLEAR framework)
+
+This skillset from `actionable-planning` is merged here. Use when you need concrete, executable plans with clear ownership and success criteria.
+
+## The CLEAR Framework
+
+Every action item should be:
+
+- C: Concrete — specific and measurable (bad: "Improve performance"; good: "Reduce API latency from 800ms to 200ms")
+- L: Linked — dependencies explicit (e.g., "Depends on: Task A")
+- E: Estimated — time/cost quantified (e.g., "4 hours, $50 API credits")
+- A: Assigned — clear owner (e.g., "Owner: @john")
+- R: Resulted — success criteria defined (e.g., "Done when: Tests pass, PR merged")
+
+## Planning Best Practices
+
+1. Start with the End in Mind
+- Define success criteria FIRST
+- Work backwards from deadline
+- Identify the critical path
+
+2. Break Down Ruthlessly
+- Maximum 4-hour tasks (8 hours absolute max)
+- If you can't estimate, break it down more
+- Each task produces a tangible output
+
+3. Make Dependencies Explicit
+- Express dependencies (depends_on / blocked_by / blocks) in task metadata
+
+4. Front-Load Risk
+- Tackle unknowns early
+- Build proofs-of-concept before committing
+
+5. Create Parallel Batches
+- Identify independent work streams to maximize parallelization
+
+## Action Item & Plan Templates
+
+Use the included Action Item Template and Plan Structure from the original `actionable-planning` skill. Keep tasks small, owned, and measurable.
+
+## Output Checklist
+
+Before finalizing a plan, verify:
+
+- [ ] Every task has an owner
+- [ ] Every task has an estimate
+- [ ] Every task has success criteria (done when...)
+- [ ] Dependencies are explicit and form a valid DAG (no cycles)
+- [ ] Critical path is identified
+- [ ] Risks have mitigations
+- [ ] First 3 actions are immediately executable
+- [ ] Total estimate fits within timeline (with buffer)
