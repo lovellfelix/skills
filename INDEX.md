@@ -59,13 +59,9 @@ Skills with runtime-specific adapters or overlays.
 
 | Name | Location | Purpose |
 |------|----------|---------|
-| **actionable-planning** | `runtime-specific/opencode/actionable-planning/` | DEPRECATED. Use portable/writing-plans instead — actionable planning guidance (CLEAR framework) has been consolidated into that skill. |
-| **context-optimization** | `runtime-specific/opencode/context-optimization/` | DEPRECATED. Canonical context-optimization guidance is now available under `skills/portable/context-optimization/SKILL.md`. |
-| **git-workflow** | `runtime-specific/opencode/git-workflow/` | DEPRECATED. Canonical git-workflow guidance moved to `skills/portable/git-workflow/SKILL.md`. |
 | **google-docs** | `runtime-specific/opencode/google-docs/` | Use this skill when reading, writing, or searching Google Docs, Sheets, and Drive files from OpenCode. |
 | **jarvis-search** | `runtime-specific/opencode/jarvis-search/` | Use this skill to search LinkedIn codebases with Jarvis from OpenCode. |
 | **jira-workflow** | `runtime-specific/opencode/jira-workflow/` | Use this skill when reading, creating, searching, and updating JIRA issues from OpenCode. |
-| **personal-planning** | `runtime-specific/opencode/personal-planning/` | DEPRECATED. Personal planning guidance has been merged into `skills/portable/life-organizer/SKILL.md`. |
 | **phased-rollout** | `runtime-specific/opencode/phased-rollout/` | Execute phased deployments across environments with monitoring windows and rollback capability. Use when coordinating multi-environment releases, canary deployments, or high-risk launches requiring explicit safety gates. |
 
 ## Archive

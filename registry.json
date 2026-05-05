@@ -2382,100 +2382,6 @@
           }
         }
       },
-      "description": "DEPRECATED. Use portable/writing-plans instead \u2014 actionable planning guidance (CLEAR framework) has been consolidated into that skill.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/actionable-planning/",
-      "name": "actionable-planning",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "planning",
-        "execution",
-        "productivity",
-        "workflow",
-        "opencode"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": false
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "DEPRECATED. Canonical context-optimization guidance is now available under `skills/portable/context-optimization/SKILL.md`.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/context-optimization/",
-      "name": "context-optimization",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "performance",
-        "optimization",
-        "context",
-        "tokens",
-        "efficiency"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": false
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "DEPRECATED. Canonical git-workflow guidance moved to `skills/portable/git-workflow/SKILL.md`.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/git-workflow/",
-      "name": "git-workflow",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "git",
-        "automation",
-        "worktrees",
-        "hooks",
-        "workflow",
-        "version-control"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": false
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
       "description": "Use this skill when reading, writing, or searching Google Docs, Sheets, and Drive files from OpenCode.",
       "entrypoint": "SKILL.md",
       "location": "runtime-specific/opencode/google-docs/",
@@ -2554,37 +2460,6 @@
       ],
       "version": "0.1.0",
       "work_machine_only": true
-    },
-    {
-      "adapters": {
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "DEPRECATED. Personal planning guidance has been merged into `skills/portable/life-organizer/SKILL.md`.",
-      "entrypoint": "SKILL.md",
-      "location": "runtime-specific/opencode/personal-planning/",
-      "name": "personal-planning",
-      "personal_machine_only": false,
-      "portable": false,
-      "runtime": "opencode",
-      "tags": [
-        "planning",
-        "personal",
-        "travel",
-        "events",
-        "opencode"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": false
     },
     {
       "adapters": {
