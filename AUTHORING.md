@@ -85,17 +85,20 @@ Compatibility rules:
 - Write portable skill bodies to be Pi-safe first: tool-agnostic, concise, and compatible with progressive discovery. If you need OpenCode-only examples or tool calls, label them clearly or move them into runtime-specific overlays.
 - `min_version` can be `*` or a runtime-version constraint string.
 
-Optional activation metadata:
+Optional activation metadata (symmetric flag-file model):
 
 - `personal_machine_only`: boolean (manifest-only, default `false`)
-- When `true`, runtime link sync only enables the skill when the local allowlist includes the skill name.
-- Local allowlist path: `~/.personal-machine-skills.txt` (one skill name per line)
-- Validation requirement: when `personal_machine_only` is `true`, `SKILL.md` must include a `## Personal Machine Activation` section that explains allowlist setup and references `~/.personal-machine-skills.txt`.
+  - When `true`, the skill is linked only on personal machines (i.e., when `~/.work-env-skills` is **absent**).
+  - Use for skills that are irrelevant or inappropriate on work machines (personal projects, life admin, homelab, personal dev stacks).
+  - No allowlist or per-machine opt-in required — the environment signal alone determines linking.
 - `work_machine_only`: boolean (manifest-only, default `false`)
-- When `true`, runtime link sync only enables the skill when the local work-machine flag file exists.
-- Default flag path: `~/.work-env-skills`
-- Override flag path: `SKILL_WORK_MACHINE_FLAG_FILE=/path/to/flag`
-- Validation requirement: when `work_machine_only` is `true`, `SKILL.md` must include a `## Work Machine Activation` section that references `~/.work-env-skills`.
+  - When `true`, the skill is linked only on work machines (i.e., when `~/.work-env-skills` is **present**).
+  - Use for skills that are work-domain specific (LinkedIn tooling, internal workflows, work-only MCP surfaces).
+- Both flags share the same gate file: `~/.work-env-skills`
+  - Present → work machine: `work_machine_only` skills link, `personal_machine_only` skills skip.
+  - Absent → personal machine: `personal_machine_only` skills link, `work_machine_only` skills skip.
+  - Override for testing: `SKILL_WORK_MACHINE_FLAG_FILE=/dev/null` (personal) or `SKILL_WORK_MACHINE_FLAG_FILE=~/.work-env-skills` (work).
+- Skills with neither flag link on all machines (universal portable skills).
 
 ## Versioning
 
