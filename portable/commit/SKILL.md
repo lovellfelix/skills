@@ -1,124 +1,183 @@
 ---
 name: commit
-description: Use when making a git commit and need a correctly formatted subject line with optional Jira ticket and Co-Authored-By trailer.
-version: 0.2.0
+description: Use when creating a git commit for intended changes with a concise subject line and safe staging behavior.
+version: 0.3.0
 portable: true
-tags: [git, commit, conventional-commits, portable]
+tags: [git, commit]
 ---
 
-Create a git commit for the current changes using a short, imperative subject line.
+Create a local git commit for the intended changes only.
 
-## Format
+Generate a concise imperative subject line.
+Stage only relevant files.
+Commit locally only. Never push.
 
-With Jira ticket: `<JIRA-TICKET>: <summary>`
-Without Jira ticket: `<summary>`
+## Commit Format
 
-- `JIRA-TICKET` OPTIONAL. Use when the ticket is known (e.g. `PROJ-123`). Omit if unknown — do not guess.
-- `summary` REQUIRED. Short, imperative, <= 72 chars, no trailing period.
+With Jira ticket:
+`PROJ-123: <summary>`
 
-## Notes
+Without Jira ticket:
+`<summary>`
 
-- Body is OPTIONAL. If needed, add a blank line after the subject and write short paragraphs.
-- **Always use a heredoc** for multi-line messages — never pass `\n` escape sequences in `-m` strings, they render as literal backslash-n.
-- A blank line is **required** between the body (or subject) and the `Co-Authored-By` trailer; without it git does not treat it as a trailer.
-- Do NOT include `BREAKING CHANGE`, `Change-Type`, or other change-type footers.
-- Do NOT add sign-offs (no `Signed-off-by`).
-- Do not use provider-only trailers like "Claude"; include the specific model name (e.g., Claude Sonnet 4.5).
-- Only commit; do NOT push.
+Rules:
+- Jira ticket is OPTIONAL. Use only when explicitly known.
+- Subject is REQUIRED.
+- Imperative voice only.
+- Maximum 72 characters.
+- No trailing period.
+
+Examples:
+- `fix token refresh race`
+- `PROJ-123: add timeout to cb proxy client`
+
+Avoid:
+- `misc updates`
+- `fix stuff`
+- `changes`
+- `updated files`
+
+## Safety Rules
+
+- Never commit unrelated changes.
+- Never blindly use `git add .` or `git add -A`.
+- Never amend commits unless explicitly requested.
+- Never push.
+- Never create empty commits unless explicitly requested.
+- If merge conflicts exist, stop and ask the user.
+- If staged and unstaged changes appear unrelated, ask before proceeding.
 
 ## Argument Parsing
 
-Treat caller-provided arguments as follows:
-- Strings containing `/`, `.`, or glob characters (`*`, `?`, `**`) → treat as file paths/globs to stage.
-- Short imperative phrases → treat as commit summary or body guidance.
-- Mixed input (e.g. "commit auth.py and fix token expiry") → split: file = `auth.py`, summary = "fix token expiry".
-- If ambiguous, ask one clarifying question before proceeding.
+Interpret caller input as follows:
 
-## Validation (run before committing)
+File paths or globs:
+- contain `/`, `.`, `*`, `?`, or `**`
+- treat as files to stage
 
-- Subject must be <= 72 chars. If longer, truncate or ask the user to shorten.
-- Subject must not end with a period — strip trailing periods automatically.
-- Subject should be imperative voice (e.g. "add", "fix", "remove"). If not, reword before committing.
+Short imperative phrases:
+- treat as commit guidance or summary intent
+
+Mixed input:
+- separate files from commit guidance
+
+Example:
+`commit auth.py and fix token expiry`
+
+Result:
+- file: `auth.py`
+- summary intent: `fix token expiry`
+
+If commit intent is ambiguous, ask exactly one concise clarifying question.
+
+Examples of ambiguity:
+- unrelated modified areas
+- feature + refactor mixed together
+- unclear target files
+- large staged + unstaged divergence
+
+## Commit Quality
+
+Good commit subjects:
+- describe observable behavior changes
+- stay specific
+- avoid implementation noise
+- use imperative voice
+
+Prefer:
+- `fix token refresh race`
+- `remove stale hiera cache`
+- `add retry for couchbase writes`
+
+Avoid:
+- `updates`
+- `cleanup`
+- `final changes`
+- `working version`
+
+## Commit Body
+
+Commit bodies are OPTIONAL.
+
+Add a body only when useful:
+- behavior changes
+- migrations
+- operational risk
+- non-obvious reasoning
+- follow-up work
+
+Avoid bodies for trivial changes.
+
+Body format:
+- short paragraphs
+- concise language
+- no excessive formatting
 
 ## Co-Authored-By Trailer
 
-Always append a `Co-Authored-By` git trailer identifying the AI model that authored the commit.
+Always append a `Co-Authored-By` trailer for the current AI model.
 
-### How to determine your model name
+Format:
 
-**Step 1 — Get the raw identifier.** Your model identifier is provided in your system prompt or session context. Use it exactly as given.
+`Co-Authored-By: <model-name> <noreply@<domain>>`
 
-**Step 2 — Strip any provider prefix.** Remove everything up to and including the last `/` (e.g., `github-copilot/claude-sonnet-4.6` → `claude-sonnet-4.6`). Provider prefixes like `github-copilot/`, `anthropic/`, `openai/` are never part of the model name.
+Guidelines:
+- Use the specific model version when known.
+- Strip provider prefixes from raw identifiers.
+- Do not use generic names like `Claude` or `GPT`.
+- If unknown, use:
+  - model name = normalized identifier
+  - domain = `unknown.ai`
 
-**Step 3 — Match against the table below (first match wins, top to bottom).** Patterns are applied to the normalized identifier from Step 2.
+Examples:
+- `Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>`
+- `Co-Authored-By: GPT-5 Mini <noreply@openai.com>`
 
-> **Do NOT guess or use a generic name like "Claude" — always include the specific version from the table.**
+## Validation
 
-| Model identifier pattern (after prefix strip) | Human-readable name | Email domain |
-|------------------------------------------------|--------------------:|--------------|
-| `claude-sonnet-4-5*` | Claude Sonnet 4.5 | anthropic.com |
-| `claude-sonnet-4.5*` | Claude Sonnet 4.5 | anthropic.com |
-| `claude-sonnet-4-7*` | Claude Sonnet 4.7 | anthropic.com |
-| `claude-sonnet-4.7*` | Claude Sonnet 4.7 | anthropic.com |
-| `claude-sonnet-4-6*` | Claude Sonnet 4.6 | anthropic.com |
-| `claude-sonnet-4.6*` | Claude Sonnet 4.6 | anthropic.com |
-| `claude-sonnet-4*` | Claude Sonnet 4 | anthropic.com |
-| `claude-haiku-4-5*` | Claude Haiku 4.5 | anthropic.com |
-| `claude-haiku-4.5*` | Claude Haiku 4.5 | anthropic.com |
-| `claude-haiku-*` | Claude Haiku | anthropic.com |
-| `claude-opus-4*` | Claude Opus 4 | anthropic.com |
-| `claude-opus-*` | Claude Opus | anthropic.com |
-| `gpt-5.4-mini*` | GPT-5.4 Mini | openai.com |
-| `gpt-5.4*` | GPT-5.4 | openai.com |
-| `gpt-5.3-codex*` | GPT-5.3 Codex | openai.com |
-| `gpt-5.1-codex*` | GPT-5.1 Codex | openai.com |
-| `gpt-5-mini*` | GPT-5 Mini | openai.com |
-| `gpt-4.1*` | GPT-4.1 | openai.com |
-| `gpt-4o*` | GPT-4o | openai.com |
-| `o4-mini*` | o4-mini | openai.com |
-| `o3*` | o3 | openai.com |
-| `gemini-*` | Gemini | google.com |
+Before committing:
+- Check repo status.
+- Review staged and unstaged changes.
+- Detect partially staged files.
+- Ensure staged files match commit intent.
+- Ensure no merge conflicts exist.
 
-**If no pattern matches:** use the normalized identifier (after prefix strip) as the model name, with `noreply@unknown.ai` as the domain.
+Validate the subject:
+- <= 72 chars
+- imperative voice
+- no trailing period
 
-Format: `Co-Authored-By: <human-readable name> <noreply@<domain>>`
+Automatically strip trailing periods.
 
-### Pattern matching rules
+## Workflow
 
-- **First match wins.** Apply patterns top-to-bottom and stop at the first match.
-- **`*` means zero or more characters.** `gpt-5.4-mini*` matches `gpt-5.4-mini` and `gpt-5.4-mini-2025-07-01`.
-- **`gpt-5.4-mini*` MUST be checked before `gpt-5.4*`** — they are ordered correctly in the table above.
-- **`claude-sonnet-4-5*` MUST be checked before `claude-sonnet-4*`** — they are ordered correctly in the table above.
+1. Parse caller intent.
+2. Inspect repo state using:
+   - `git status`
+   - `git diff`
+   - optionally `git diff --staged`
+3. Determine intended files.
+4. Detect ambiguity or unrelated changes.
+5. Generate commit subject.
+6. Validate subject.
+7. Stage only intended files.
+8. Create commit.
+9. Append `Co-Authored-By` trailer.
 
-## Steps
+## Commit Execution
 
-1. Parse the caller's arguments: separate file paths/globs from commit guidance (see Argument Parsing above).
-2. Run `git status` and `git diff` to understand the current changes (limit to argument-specified files if provided).
-3. (Optional) Run `git log -n 20 --pretty=format:%s` to check commonly used subject patterns.
-4. If ambiguous extra files are staged or unstaged, ask the user which to include before proceeding.
-5. Validate the subject (length <= 72, no trailing period, imperative voice).
-6. Stage only the intended files (`git add <paths>` or `git add -A` if no files specified).
-7. Determine your model name using the steps above.
-8. Run `git commit` using a heredoc:
+For multi-line commit messages:
+- use a heredoc or commit message file
+- never embed literal `\n` escape sequences
+
+Example:
 
 ```bash
-# With Jira ticket:
 git commit -m "$(cat <<'EOF'
-PROJ-123: <summary>
+fix token refresh race
 
-[optional body]
+Refresh tokens before expiration during long-running requests.
 
-Co-Authored-By: <model-name> <noreply@<domain>>
+Co-Authored-By: GPT-5 Mini <noreply@openai.com>
 EOF
 )"
-
-# Without Jira ticket:
-git commit -m "$(cat <<'EOF'
-<summary>
-
-[optional body]
-
-Co-Authored-By: <model-name> <noreply@<domain>>
-EOF
-)"
-```
