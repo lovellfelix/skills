@@ -1,7 +1,7 @@
 ---
 name: communication-style
-description: Use when writing PRs, documentation, RFCs, or Slack messages to improve clarity, brevity, and reduce review friction.
-version: 0.7.0
+description: Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, and technical communication to improve clarity, brevity, and reduce review friction.
+version: 0.8.0
 portable: true
 tags: [communication, engineering-writing, pr-review, slack, clarity]
 ---
@@ -14,14 +14,6 @@ Clear, concise, direct, high-signal. Professional but natural. Confident without
 
 Use active voice. Name the actor and action. State behavior, risk, and next step clearly. Format for fast scanning.
 
-Avoid:
-- Marketing phrasing
-- Consultant-speak
-- Hidden politeness
-- Vague hedging
-- Academic over-explaining unless requested
-- Hype or exaggerated enthusiasm
-
 Output must be copy-paste ready.
 
 ## Core Rules
@@ -33,9 +25,56 @@ Output must be copy-paste ready.
 - Prefer actionable guidance over generic advice
 - State assumptions explicitly
 - Call out risks and tradeoffs directly
+- Move the main point to line 1 whenever possible
 
 For debugging or production issues:
 - Start with one line identifying the likely failure domain or system layer
+
+## Avoid
+
+- Marketing phrasing
+- Consultant-speak
+- Academic over-explaining unless requested
+- Hidden politeness
+- Generic filler transitions
+- Inflated language
+- Repeated restatements
+- Long setup before the main point
+- Empty qualifiers without measurable meaning
+- Overly casual slang
+- Passive-aggressive phrasing
+- Hype or exaggerated enthusiasm
+
+## Anti-Slop Rules
+
+Remove:
+- throat-clearing intros
+- generic filler transitions
+- repeated restatements
+- long setup before the main point
+- unnecessary softening language
+- empty qualifiers without measurable meaning
+
+Prefer:
+- outcome before explanation
+- concrete nouns and verbs
+- one idea per sentence or bullet
+- facts, decisions, risks, and actions
+- direct wording over abstract phrasing
+
+Delete any sentence that does not:
+- change a decision
+- clarify a risk
+- explain an action
+- provide necessary context
+
+## Rewrite Heuristics
+
+- "This implementation aims to..." -> "This change..."
+- "It should be noted that" -> remove
+- "In order to" -> "To"
+- "At this point in time" -> "Now"
+- "Leverage" -> "Use" (unless domain-specific meaning matters)
 
 ## Quality Bar
 
@@ -47,6 +86,8 @@ Before responding, check:
 4. Is formatting helping or distracting?
 5. Can this be shorter without losing meaning?
 6. Can em dashes be removed?
+7. Is the ask obvious?
+8. Is every sentence contributing signal?
 
 ## Formatting Rules
 
@@ -63,12 +104,33 @@ Before responding, check:
 Avoid em dashes by default.
 
 Prefer:
-- Periods
-- Commas
-- Colons
-- Parentheses
+- periods
+- commas
+- colons
+- parentheses
 
 Only use em dashes when removing them hurts readability.
+
+## Operational Framing
+
+When relevant, include:
+- affected system or layer
+- operational risk
+- rollout or rollback impact
+- likely failure mode
+- owner or next action
+
+Prefer operationally actionable wording over conceptual discussion.
+
+## Review Friction Reduction
+
+Optimize for fast review:
+- put the main point first
+- reduce reviewer interpretation work
+- surface risks early
+- avoid burying asks in paragraphs
+- separate facts from recommendations
+- prefer explicit recommendations over implied conclusions
 
 ## Audience & Intent
 
@@ -76,12 +138,12 @@ Lead with the ask.
 
 Adjust detail level based on audience:
 
-- Engineers: actionable fix, merge, review, implementation detail
-- Maintainers/Owners: rollout, rollback, metrics, operational risk
-- Product/PM: tradeoffs, user impact, recommendation
-- Security/Infra: affected surface, exploitability, mitigation, timeline
-- Cross-functional: alignment, review, coordination
-- Exec/Stakeholder: concise decision-ready summary
+- Engineers: implementation and operational detail
+- Owners: rollout, rollback, metrics, operational risk
+- Product/PM: tradeoffs, impact, recommendation
+- Security/Infra: exposure, exploitability, mitigation
+- Cross-functional: alignment and coordination
+- Exec/Stakeholder: concise decision summary
 
 For multi-audience communication:
 
