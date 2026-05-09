@@ -16,39 +16,6 @@ Consistent code style and clear documentation make codebases maintainable and co
 - Reviewing code for style consistency
 - Creating project documentation
 
-## Core Concepts
-
-### 1. Automated Formatting
-
-Let tools handle formatting debates. Configure once, enforce automatically.
-
-### 2. Consistent Naming
-
-Follow PEP 8 conventions with meaningful, descriptive names.
-
-### 3. Documentation as Code
-
-Docstrings should be maintained alongside the code they describe.
-
-### 4. Type Annotations
-
-Modern Python code should include type hints for all public APIs.
-
-## Quick Start
-
-```bash
-# Install modern tooling
-pip install ruff mypy
-
-# Configure in pyproject.toml
-[tool.ruff]
-line-length = 120
-target-version = "py312"  # Adjust based on your project's minimum Python version
-
-[tool.mypy]
-strict = true
-```
-
 ## Fundamental Patterns
 
 ### Pattern 1: Modern Python Tooling
@@ -349,15 +316,9 @@ pytest
 - Bug in Z
 ```
 
-## Best Practices Summary
+## Defaults
 
-1. **Use ruff** - Single tool for linting and formatting
-2. **Enable strict mypy** - Catch type errors before runtime
-3. **120 character lines** - Modern standard for readability
-4. **Descriptive names** - Clarity over brevity
-5. **Absolute imports** - More maintainable than relative
-6. **Google-style docstrings** - Consistent, readable documentation
-7. **Document public APIs** - Every public function needs a docstring
-8. **Keep docs updated** - Treat documentation as code
-9. **Automate in CI** - Run linters on every commit
-10. **Target Python 3.10+** - For new projects, Python 3.12+ is recommended for modern language features
+- ruff for lint + format; strict mypy or pyright for type checking
+- 120-char lines, double quotes, absolute imports
+- Google-style docstrings on all public APIs
+- Target Python 3.12+ for new projects; lint runs in CI on every commit
