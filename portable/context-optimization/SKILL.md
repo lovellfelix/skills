@@ -1,6 +1,6 @@
 ---
 name: context-optimization
-description: Reduce token usage and context bloat by using targeted reads, caching, and discarding noisy tool output. Use when exploring large codebases, summarizing lengthy outputs, or optimizing for cost
+description: Use when exploring large codebases, summarizing lengthy tool output, or optimizing a session for token cost and context bloat.
 version: 0.1.0
 portable: true
 tags: [performance, optimization, context, tokens, efficiency]

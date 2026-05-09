@@ -1,6 +1,6 @@
 ---
 name: github-pr-review
-description: Deterministic, GitHub-integrated PR review skill tuned for SRE/infra changes. Fetches PR metadata, diff, CI status, applies type-specific checklists, formats deterministic findings, and can post reviews via gh.
+description: Use when reviewing a GitHub PR end-to-end with SRE/infra-aware checklists, especially when reproducible findings are needed or the review will be posted back via the gh CLI.
 version: 0.2.0
 portable: true
 tags: [review, github, pr, sre, portable]
@@ -110,12 +110,14 @@ Fix: concrete change
 ```
 
 **Ordering rules (applied deterministically):**
+
 1. Group by severity: CRITICAL → HIGH → MEDIUM → LOW → NIT
 2. Within each severity group: sort by file path lexicographically (ascending)
 3. Within the same file: sort by line number ascending
 4. Never reorder findings within a group for narrative flow
 
 **Severity definitions (apply consistently):**
+
 - CRITICAL — causes data loss, security breach, or service outage if merged
 - HIGH — likely regression, correctness bug, or missing required safeguard
 - MEDIUM — improvement strongly recommended; does not block but degrades quality/reliability
@@ -123,6 +125,7 @@ Fix: concrete change
 - NIT — style, naming, or trivial consistency fix
 
 **Completion metrics:**
+
 - `{file_count}` = number of unique files changed (from `changedFiles` field)
 - `{line_count}` = `wc -l pr.diff` output recorded in Step 2
 - `{security_level}` = highest security-relevant finding severity (CRITICAL/HIGH/MEDIUM/LOW/None)

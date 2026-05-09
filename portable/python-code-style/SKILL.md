@@ -1,6 +1,6 @@
 ---
 name: python-code-style
-description: Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards.
+description: Use when writing or reviewing Python code style, configuring ruff/mypy/pyright, writing docstrings, or establishing naming conventions and documentation standards for a Python project.
 ---
 
 # Python Code Style & Documentation
@@ -337,12 +337,15 @@ pytest
 ## [Unreleased]
 
 ### Added
+
 - New feature X
 
 ### Changed
+
 - Modified behavior of Y
 
 ### Fixed
+
 - Bug in Z
 ```
 
