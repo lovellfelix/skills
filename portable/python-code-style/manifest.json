@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "name": "python-code-style",
+  "description": "Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards.",
+  "version": "1.0.0",
+  "portable": true,
+  "entrypoint": "SKILL.md",
+  "tags": ["python", "style", "linting", "documentation"],
+  "adapters": {
+    "opencode": { "path": "SKILL.md", "mode": "native" },
+    "cursor": { "path": "SKILL.md", "mode": "import" },
+    "claude": { "path": "SKILL.md", "mode": "include" },
+    "copilot": { "path": "SKILL.md", "mode": "include" },
+    "pi": { "path": "SKILL.md", "mode": "include" }
+  },
+  "compatibility": {
+    "runtimes": {
+      "opencode": { "min_version": "*" },
+      "cursor": { "min_version": "*" },
+      "claude": { "min_version": "*" },
+      "copilot": { "min_version": "*" },
+      "pi": { "min_version": "*" }
+    }
+  }
+}

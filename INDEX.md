@@ -11,8 +11,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | Name | Location | Purpose |
 |------|----------|---------|
 | **code-review** | `portable/code-review/` | Use when reviewing code changes, a PR, or a commit and need structured, severity-graded findings covering correctness, security, reliability, and maintainability. |
-| **commit** | `portable/commit/` | Use when making a git commit and need a correctly formatted subject line with optional Jira ticket and Co-Authored-By trailer. |
-| **communication-style** | `portable/communication-style/` | Use when writing PRs, documentation, RFCs, or Slack messages to improve clarity, brevity, and reduce review friction. |
+| **communication-style** | `portable/communication-style/` | Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, and technical communication to improve clarity, brevity, and reduce review friction. |
 | **compose-material3** | `portable/compose-material3/` | Use when building Android UI components with Jetpack Compose and Material Design 3 to produce modern, distinctive interfaces that avoid generic boilerplate. |
 | **context-optimization** | `portable/context-optimization/` | Reduce token usage and context bloat by using targeted reads, caching, and discarding noisy tool output. Use when exploring large codebases, summarizing lengthy outputs, or optimizing for cost |
 | **deep-audit** | `portable/deep-audit/` | Use when performing a comprehensive codebase health assessment before major refactoring, migration, production readiness review, or ownership transfer. |
@@ -36,15 +35,16 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **life-organizer** | `portable/life-organizer/` | Use when the user asks to review personal reminders, calendar events, Apple Notes context, family plans, or general life-admin tasks on a macOS machine. |
 | **location-search** | `portable/location-search/` | Use when planning trips, finding nearby places, or integrating location features with a no-API-key default flow, including ZIP or postal-code lookup. |
 | **marketing-psychology** | `portable/marketing-psychology/` | Use when applying psychological principles, mental models, or behavioral science to marketing decisions, messaging, or conversion strategy. Also triggers on 'cognitive bias,' 'persuasion,' 'why people buy,' or 'consumer behavior.' |
+| **mcp-builder** | `portable/mcp-builder/` | Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK). |
 | **nuxt** | `portable/nuxt/` | Use when working with Nuxt apps, server routes, useFetch, middleware, or hybrid rendering in a full-stack Vue application. |
 | **python** | `portable/python/` | Use when writing, reviewing, or testing Python code — establishes project style, type-safety, testing defaults, and CI quality gates. |
+| **python-code-style** | `portable/python-code-style/` | Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards. |
 | **release-notes** | `portable/release-notes/` | Use when drafting or refining changelog entries and release notes from commits, PRs, or code changes. |
 | **release-skills** | `portable/release-skills/` | Use when releasing a new version, bumping semver, generating changelogs, or publishing to npm/PyPI/Cargo/GitHub. Supports Node.js, Python, Rust, Claude Plugin, and generic projects. |
 | **rfc** | `portable/rfc/` | Use when proposing a significant engineering change, writing a technical design doc, or architecture proposal and need a tight, reviewable RFC with optional Mermaid diagrams. |
 | **session-memory-mcp** | `portable/session-memory-mcp/` | Use when building MCP-integrated workflows, caching session state, or establishing durable patterns across sessions. Practical patterns for storing, retrieving, and maintaining high-signal session memory via MCP. |
 | **shadcn-ui** | `portable/shadcn-ui/` | Use when setting up shadcn/ui, installing components, building forms with React Hook Form and Zod, customizing themes with Tailwind CSS, or implementing accessible UI patterns (buttons, dialogs, dropdowns, tables, complex layouts). |
 | **skills-and-commands-checklist** | `portable/skills-and-commands-checklist/` | Use when authoring or maintaining portable skills and custom commands to ensure correctness, discoverability, and long-term maintainability across tools and machines. |
-| **stop-slop** | `portable/stop-slop/` | Use when rewriting AI-sounding drafts into concise, human engineering writing that matches existing communication-style and documentation guidance. |
 | **summarize** | `portable/summarize/` | Use when fetching a URL or converting a local file (PDF, DOCX, HTML, etc.) to Markdown for reading or summarization via uvx markitdown. |
 | **ucm-test** | `portable/ucm-test/` | Use when testing UCM module changes against remote hosts using the ucm test CLI for hiera, puppet, package management, or catalog convergence validation. |
 | **weather-forecast** | `portable/weather-forecast/` | Use when the user asks for current weather, today's conditions, or a short forecast without relying on paid weather APIs. |

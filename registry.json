@@ -69,57 +69,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Use when making a git commit and need a correctly formatted subject line with optional Jira ticket and Co-Authored-By trailer.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/commit/",
-      "name": "commit",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "git",
-        "commit",
-        "conventional-commits",
-        "portable"
-      ],
-      "version": "0.2.0",
-      "work_machine_only": false
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "cursor": {
           "mode": "import",
           "path": "SKILL.md"
@@ -152,7 +101,7 @@
           }
         }
       },
-      "description": "Use when writing PRs, documentation, RFCs, or Slack messages to improve clarity, brevity, and reduce review friction.",
+      "description": "Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, and technical communication to improve clarity, brevity, and reduce review friction.",
       "entrypoint": "SKILL.md",
       "location": "portable/communication-style/",
       "name": "communication-style",
@@ -166,7 +115,7 @@
         "slack",
         "clarity"
       ],
-      "version": "0.6.0",
+      "version": "0.8.0",
       "work_machine_only": false
     },
     {
@@ -1584,6 +1533,64 @@
           }
         }
       },
+      "description": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).",
+      "entrypoint": "SKILL.md",
+      "location": "portable/mcp-builder/",
+      "name": "mcp-builder",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "mcp",
+        "tools",
+        "integration",
+        "server"
+      ],
+      "version": "1.0.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Use when working with Nuxt apps, server routes, useFetch, middleware, or hybrid rendering in a full-stack Vue application.",
       "entrypoint": "SKILL.md",
       "location": "portable/nuxt/",
@@ -1598,6 +1605,64 @@
         "ssr",
         "routing",
         "portable"
+      ],
+      "version": "1.0.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/python-code-style/",
+      "name": "python-code-style",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "python",
+        "style",
+        "linting",
+        "documentation"
       ],
       "version": "1.0.0",
       "work_machine_only": false
@@ -2015,64 +2080,6 @@
         "maintenance"
       ],
       "version": "1.1.0",
-      "work_machine_only": false
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Use when rewriting AI-sounding drafts into concise, human engineering writing that matches existing communication-style and documentation guidance.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/stop-slop/",
-      "name": "stop-slop",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "writing",
-        "editing",
-        "clarity",
-        "engineering-communication"
-      ],
-      "version": "0.1.0",
       "work_machine_only": false
     },
     {
