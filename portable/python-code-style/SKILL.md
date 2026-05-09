@@ -1,6 +1,9 @@
 ---
 name: python-code-style
 description: Use when writing or reviewing Python code style, configuring ruff/mypy/pyright, writing docstrings, or establishing naming conventions and documentation standards for a Python project.
+version: 1.0.0
+portable: true
+tags: [python, style, linting, documentation]
 ---
 
 # Python Code Style & Documentation

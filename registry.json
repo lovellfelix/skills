@@ -219,7 +219,7 @@
           }
         }
       },
-      "description": "Reduce token usage and context bloat by using targeted reads, caching, and discarding noisy tool output. Use when exploring large codebases, summarizing lengthy outputs, or optimizing for cost",
+      "description": "Use when exploring large codebases, summarizing lengthy tool output, or optimizing a session for token cost and context bloat.",
       "entrypoint": "SKILL.md",
       "location": "portable/context-optimization/",
       "name": "context-optimization",
@@ -573,7 +573,7 @@
           }
         }
       },
-      "description": "Automate git workflows with worktrees, hooks, and advanced patterns. Use when setting up multi-branch workflows, automating commits, managing hooks, or handling complex merge/rebase scenarios.",
+      "description": "Use when setting up git worktrees, configuring hooks, automating multi-branch workflows, or handling complex merge/rebase scenarios beyond routine commit/push.",
       "entrypoint": "SKILL.md",
       "location": "portable/git-workflow/",
       "name": "git-workflow",
@@ -633,7 +633,7 @@
           }
         }
       },
-      "description": "Deterministic, GitHub-integrated PR review skill tuned for SRE/infra changes. Fetches PR metadata, diff, CI status, applies type-specific checklists, formats deterministic findings, and can post reviews via gh.",
+      "description": "Use when reviewing a GitHub PR end-to-end with SRE/infra-aware checklists, especially when reproducible findings are needed or the review will be posted back via the gh CLI.",
       "entrypoint": "SKILL.md",
       "location": "portable/github-pr-review/",
       "name": "github-pr-review",
@@ -890,7 +890,7 @@
         "prd",
         "newsletter"
       ],
-      "version": "0.5.0",
+      "version": "0.6.0",
       "work_machine_only": false
     },
     {
@@ -1533,7 +1533,7 @@
           }
         }
       },
-      "description": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).",
+      "description": "Use when building or extending an MCP (Model Context Protocol) server to expose external APIs or services to LLMs, in Python (FastMCP) or Node/TypeScript (MCP SDK).",
       "entrypoint": "SKILL.md",
       "location": "portable/mcp-builder/",
       "name": "mcp-builder",
@@ -1651,7 +1651,7 @@
           }
         }
       },
-      "description": "Python code style, linting, formatting, naming conventions, and documentation standards. Use when writing new code, reviewing style, configuring linters, writing docstrings, or establishing project standards.",
+      "description": "Use when writing or reviewing Python code style, configuring ruff/mypy/pyright, writing docstrings, or establishing naming conventions and documentation standards for a Python project.",
       "entrypoint": "SKILL.md",
       "location": "portable/python-code-style/",
       "name": "python-code-style",
