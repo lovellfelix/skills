@@ -1,7 +1,7 @@
 ---
 name: grenadianbuzz
 description: Use when working on GrenadianBuzz features, architecture, or operational tasks across any surface (API, Android app, CLI, website, dashboard, docs).
-version: 0.5.0
+version: 0.6.0
 portable: true
 personal_machine_only: true
 tags: [grenadianbuzz, product, mobile, api, backend, frontend, architecture]
@@ -10,21 +10,36 @@ tags: [grenadianbuzz, product, mobile, api, backend, frontend, architecture]
 # GrenadianBuzz Product & Engineering Skill
 
 ---
-## Live Repo Issue/PR Snapshot (as of 2026-05-03)
 
-- **grenadianbuzz-android**: 40 open issues / 17 open PRs _(high PR traffic, significant issue tech debt; prioritize grounding in PR/issue reality)
-- **grenadianbuzz.cli**: 18 open issues / 0 open PRs _(highest-impact pipeline/automation work, but *no* open PRs; Tier-1 work requires opening/maintaining reviewable PRs)_
-- **api.grenadianbuzz.com**: 4 open issues / 4 open PRs _(critical for newsletter support, low issue/PR volume but high impact for CLI work)_
-- **dashboard.grenadianbuzz.com**: 1 open issue / 4 open PRs _(only maintenance-level work, minimal new product feature velocity)_
-- **grenadianbuzz.com**: 1 open issue / 5 open PRs _(site is in maintenance, not a focus except for bug/security/update work)_
+## Authoritative Roadmap
+
+The single source of truth for current planning is **`docs/ROADMAP.md`** in the workspace (`~/projects/grenadianbuzz/docs/ROADMAP.md`). When in doubt about priority, sequence, or what's superseded, read it first. This skill provides background context; ROADMAP.md provides the active plan.
+
+Five docs are explicitly superseded and bannered (do not use for current planning): `IMPLEMENTATION_ROADMAP.md`, `IMPLEMENTATION_CHECKLIST.md`, `ASSESSMENT_AND_PLAN.md`, `INTEGRATION_COMPLETE.md`, `CROSS_REPO_INTEGRATION.md`.
+
+Three PRDs were archived 2026-05-09 to `docs/prd/_archive/`: `PROJECT_PRD.md`, `WEBSITE_PRD.md`, `WEBSITE_PRD_SUMMARY.md`. Live PRDs are: `GRENADIAN_BUZZ_PRD.md` (master), `AI_NEWSLETTER_PRD.md`, `CLI_PRD.md`, `MONETIZATION_PRD.md`.
+
+---
+
+## Live Repo Issue/PR Snapshot (as of 2026-05-09)
+
+- **grenadianbuzz-android**: 40 open issues / 17 open PRs — foundation work + heavy review queue (many drafts; overlapping Compose-migration PRs #296/#298/#301/#300). Bottleneck = PR review.
+- **grenadianbuzz.cli**: 18 open issues / 0 open PRs — newsletter epic #50–59 authored as issues, _no PRs raised_. Highest delivery risk in the project.
+- **api.grenadianbuzz.com**: 4 open issues / 4 open PRs — critical inflight: PR #278 PocketBase adapter (draft, needs go/no-go), PR #277 Pug→Mustache email templates (conflicts with issue #308), PR #302 FCM newsletter notifications.
+- **dashboard.grenadianbuzz.com**: 1 open issue / 4 open PRs — Nuxt rewrite inflight (PR #71/#75). Otherwise maintenance.
+- **grenadianbuzz.com**: 1 open issue / 5 open PRs — Renovate / Jekyll bumps only.
 
 ### Routing Guidance & Repo Reality
 
-- **Reality checks**: Always verify roadmap/priority against these live counts; any non-trivial work should map to open issues/PRs.
-- **Prioritization**: Highest-impact engineering is the CLI newsletter pipeline (with corresponding API/Android dependencies); tier assignment and sequence should correspond directly to open issue/PR inventory.
-- **Sequencing signals**: CLI has *zero* open PRs (need to raise work for leader/PR review); Android has many open PRs (*review bottlenecks can slow delivery*), API has key newsletter-support PRs, dashboard/website are maintenance-only—avoid roadmap expansion unless strictly necessary (e.g., inventory/tasks change).
+- **Tier 1**: AI Newsletter pipeline (CLI #50–59 + API #307/#308 + PR #302). The single product bet for 2026.
+- **Tier 2**: Android foundation (#254 → #282 → #287 → #255/#253). No UI redesign (#293) until done.
+- **Tier 3**: inflight migrations (Compose, PocketBase, Mustache, Nuxt). Rule: no new migration until 2 of these merge.
+- **Tier 4**: maintenance — website, dashboard post-Nuxt, Android `Backlog` label, KMM (#268).
+- **Pug-vs-Mustache** decision must precede API #308 (newsletter template) — PR #277 migrates templates from Pug to Mustache; do not build the template twice.
+- Re-verify the live counts above every 2 weeks via `gh issue/pr list`; if any number changes by >20%, revisit tier ordering.
 
 ---
+
 Integrated product and technical guidance across GrenadianBuzz surfaces. API-first specifications and multi-surface feature coordination.
 
 ## Use when
@@ -41,15 +56,15 @@ Integrated product and technical guidance across GrenadianBuzz surfaces. API-fir
 
 GrenadianBuzz spans 7 product surfaces across 4 repositories:
 
-| Surface | Repo | Type | Status |
-|---------|------|------|--------|
-| **Android App** | `grenadianbuzz-android` | Mobile (Kotlin, Compose) | Active |
-| **API** | `api.grenadianbuzz.com` | Backend (FeathersJS, Node.js) | Production, active deprecation |
-| **CLI** | `grenadianbuzz.cli` | Tooling (Python 3.8+) | Growth phase |
-| **Dashboard** | `grenadianbuzz` (`web/dashboard`) | Admin (React, TailwindCSS) | Maintenance |
-| **Website** | `grenadianbuzz` (`web/grenadianbuzz.com`) | Public (Nuxt/Vue) | Stable |
-| **Docs** | `grenadianbuzz` (`docs/`) | Reference (Markdown, OpenAPI) | Living |
-| **PRD** | `grenadianbuzz` (`docs/prd/`) | Planning (Markdown) | Source of truth |
+| Surface         | Repo                                      | Type                          | Status                         |
+| --------------- | ----------------------------------------- | ----------------------------- | ------------------------------ |
+| **Android App** | `grenadianbuzz-android`                   | Mobile (Kotlin, Compose)      | Active                         |
+| **API**         | `api.grenadianbuzz.com`                   | Backend (FeathersJS, Node.js) | Production, active deprecation |
+| **CLI**         | `grenadianbuzz.cli`                       | Tooling (Python 3.8+)         | Growth phase                   |
+| **Dashboard**   | `grenadianbuzz` (`web/dashboard`)         | Admin (React, TailwindCSS)    | Maintenance                    |
+| **Website**     | `grenadianbuzz` (`web/grenadianbuzz.com`) | Public (Nuxt/Vue)             | Stable                         |
+| **Docs**        | `grenadianbuzz` (`docs/`)                 | Reference (Markdown, OpenAPI) | Living                         |
+| **PRD**         | `grenadianbuzz` (`docs/prd/`)             | Planning (Markdown)           | Source of truth                |
 
 ## Canonical Issue Clusters
 
@@ -57,44 +72,44 @@ High-signal work grouped by surface and dependency. **Source of truth**: GitHub 
 
 ### Android App (`grenadianbuzz-android`)
 
-| Issue | Scope | Status | Notes |
-|-------|-------|--------|-------|
-| **#254** | Google Sign-In implementation | Queued | Auth foundation |
-| **#282** | Realm → Room database migration | Queued | Persistence foundation |
-| **#287** | Testing & instrumentation expansion | Queued | Prerequisite for stability |
-| **#255, #253** | Android 15 status bar issues | Open | OS compatibility |
+| Issue            | Scope                                        | Status  | Notes                                  |
+| ---------------- | -------------------------------------------- | ------- | -------------------------------------- |
+| **#254**         | Google Sign-In implementation                | Queued  | Auth foundation                        |
+| **#282**         | Realm → Room database migration              | Queued  | Persistence foundation                 |
+| **#287**         | Testing & instrumentation expansion          | Queued  | Prerequisite for stability             |
+| **#255, #253**   | Android 15 status bar issues                 | Open    | OS compatibility                       |
 | **Android #293** | UI redesign — cultural identity & engagement | Planned | Depends on Android #287, #282 complete |
 
 **Recommended sequencing**: Android #254 → #282 → #287 → #255/#253 → #293.
 
 ### CLI (`grenadianbuzz.cli`)
 
-| Issue Range | Scope | Status | Notes |
-|-------------|-------|--------|-------|
-| **#50–59** | AI newsletter pipeline (epic) | Active | Business value: monetization, engagement |
-| **#48** | Metrics aggregation & reporting | Planned | Observability post-pipeline |
-| **#47** | Environment variables documentation | Planned | Ops readiness |
-| **#46** | Operational runbook | Planned | Runbook + recovery |
-| **#49** | Dependency maintenance | Ongoing | Hygiene |
+| Issue Range | Scope                               | Status  | Notes                                    |
+| ----------- | ----------------------------------- | ------- | ---------------------------------------- |
+| **#50–59**  | AI newsletter pipeline (epic)       | Active  | Business value: monetization, engagement |
+| **#48**     | Metrics aggregation & reporting     | Planned | Observability post-pipeline              |
+| **#47**     | Environment variables documentation | Planned | Ops readiness                            |
+| **#46**     | Operational runbook                 | Planned | Runbook + recovery                       |
+| **#49**     | Dependency maintenance              | Ongoing | Hygiene                                  |
 
 **Recommended sequencing**: #50–59 → #48 → #47/#46 → #49 (continuous).
 
 ### API (`api.grenadianbuzz.com`)
 
-| Issue | Scope | Status | Notes |
-|-------|-------|--------|-------|
-| **API #293** | Deprecation warnings (v2→v3 migration) | Open | Backward compatibility |
-| **#307** | Trending endpoint parameters | Planning | Engagement optimization |
-| **#308** | Email template: `email-ai-newsletter.pug` | Blocked | Coordinate with CLI #50–59 |
+| Issue        | Scope                                     | Status   | Notes                      |
+| ------------ | ----------------------------------------- | -------- | -------------------------- |
+| **API #293** | Deprecation warnings (v2→v3 migration)    | Open     | Backward compatibility     |
+| **#307**     | Trending endpoint parameters              | Planning | Engagement optimization    |
+| **#308**     | Email template: `email-ai-newsletter.pug` | Blocked  | Coordinate with CLI #50–59 |
 
 **Recommended sequencing**: API #293 → #307 → #308 (coordinate with CLI).
 
 ### Dashboard & Website
 
-| Surface | Status | Notes |
-|---------|--------|-------|
+| Surface       | Status      | Notes                                |
+| ------------- | ----------- | ------------------------------------ |
 | **Dashboard** | Maintenance | Renovate tracked; no active features |
-| **Website** | Stable | Not a blocker for engagement/revenue |
+| **Website**   | Stable      | Not a blocker for engagement/revenue |
 
 ## Multi-Surface Sequencing & Prioritization
 
@@ -124,6 +139,7 @@ When coordinating work across surfaces:
 ### PRD vs. Repo State Reconciliation
 
 **Verify PRD claims**:
+
 1. Check GitHub issue tracker — claims should reference open/in-progress issues
 2. Validate surface coverage — if PRD claims an endpoint exists:
    - OpenAPI definition in `docs/` or API source
@@ -133,6 +149,7 @@ When coordinating work across surfaces:
 4. Deprecation timeline — match against API versioning strategy
 
 **Red flags** (investigate if found):
+
 - Issue marked closed but feature not in any surface (sync gap)
 - PRD timeline doesn't match issue milestone (misalignment)
 - API deprecation deadline passed but endpoint still active (enforcement gap)
@@ -170,19 +187,19 @@ Before shipping work across surfaces, validate:
 
 ## Reference Files
 
-| File | Use for |
-|------|---------|
-| `templates/quick-reference.md` | API design checklist |
-| `templates/api-prd-template.md` | Comprehensive PRD template (14 sections) |
-| `templates/acceptance-criteria.md` | Testable story-level acceptance criteria |
-| `templates/openapi-spec-template.yaml` | OpenAPI 3 draft starter |
-| `templates/postman-collection.json` | Manual API exploration |
-| `reference/grenadianbuzz-api-patterns.md` | Production patterns, versioning, moderation |
+| File                                         | Use for                                         |
+| -------------------------------------------- | ----------------------------------------------- |
+| `templates/quick-reference.md`               | API design checklist                            |
+| `templates/api-prd-template.md`              | Comprehensive PRD template (14 sections)        |
+| `templates/acceptance-criteria.md`           | Testable story-level acceptance criteria        |
+| `templates/openapi-spec-template.yaml`       | OpenAPI 3 draft starter                         |
+| `templates/postman-collection.json`          | Manual API exploration                          |
+| `reference/grenadianbuzz-api-patterns.md`    | Production patterns, versioning, moderation     |
 | `reference/grenadianbuzz-android-context.md` | Kotlin, Compose, API integration, offline-first |
-| `reference/grenadianbuzz-cli-guide.md` | Command patterns, admin workflows, scripts |
-| `reference/grenadianbuzz-dashboard-guide.md` | Moderation, analytics, creator tools |
-| `reference/release-rollout-playbook.md` | Step-by-step release and rollback |
-| `INDEX.md` | Start-here map for all surfaces |
+| `reference/grenadianbuzz-cli-guide.md`       | Command patterns, admin workflows, scripts      |
+| `reference/grenadianbuzz-dashboard-guide.md` | Moderation, analytics, creator tools            |
+| `reference/release-rollout-playbook.md`      | Step-by-step release and rollback               |
+| `INDEX.md`                                   | Start-here map for all surfaces                 |
 
 ## Personal Machine Activation
 
