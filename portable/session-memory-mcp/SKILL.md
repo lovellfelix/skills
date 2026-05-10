@@ -1,8 +1,8 @@
 ---
 name: session-memory-mcp
-description: "Use when building MCP-integrated workflows, caching session state, or establishing durable patterns across sessions. Practical patterns for storing, retrieving, and maintaining high-signal session memory via MCP."
+description: Use when preserving cross-session workflow context, tracking in-flight tasks, or promoting durable handoff artifacts across agent runs.
 metadata:
-  version: 0.2.0
+  version: 0.3.2
   portable: true
   tags: [mcp, memory, workflow, continuity]
 ---
@@ -24,6 +24,8 @@ Use session-memory as a durable context layer so sessions resume quickly without
 - Information is sensitive and must not be stored.
 - You would store duplicated low-signal output (raw logs, command spam).
 
+**Never store secrets/tokens/credentials/private personal data** in session, workflow, or durable memory records.
+
 ## Store-or-skip filter
 
 Store only when at least one is true:
@@ -41,10 +43,10 @@ Skip if it is pure command output, redundant status, or temporary reasoning.
 
 Prefer small records with predictable keys:
 
-- `context_key`: stable lookup key (`task:auth-refactor`, `decision:path-layout`).
-- `context_type`: `workflow` · `decision` · `blocker` · `convention` · `handoff` · `interaction`.
-- `context_value`: Situation + Decision + Next (3-line structure).
-- `metadata`: optional JSON (owner, due date, links, confidence).
+- `key`: stable lookup key (`task:auth-refactor`, `decision:path-layout`).
+- `contextType`: `workflow` · `decision` · `blocker` · `convention` · `handoff` · `interaction`.
+- `value`: Situation + Decision + Next (3-line structure).
+- `metadataJson`: optional JSON string (owner, due date, links, confidence).
 
 ### Project conventions
 
@@ -71,9 +73,9 @@ At handoff:
 - Write one summary record pointing to key context keys and durable file paths.
 - Keep `projects/<project>/current.md` and the latest handoff packet aligned.
 
-## Pi tool mapping
+## Tool mapping (Pi and similar harnesses)
 
-In Pi, session memory is split by role — use the right surface:
+In Pi, memory surfaces are split by role. Use this mapping and translate to equivalent tools in other harnesses:
 
 | Need                                            | Tool                 |
 | ----------------------------------------------- | -------------------- |
@@ -90,6 +92,40 @@ Key `session_memory` actions:
 - `learn_project_convention` — record a stable project pattern.
 - `assemble_context` — pull active context for resume/continue signals.
 - `get_user_preferences` — read preferences before style decisions.
+
+## Practical examples
+
+Note: exact argument names are harness-specific; confirm the active tool schema before calling memory tools.
+
+### Example: store_context for an in-flight blocker
+
+Use `session_memory.store_context` when work should resume in the same project/session stream:
+
+```json
+{
+  "action": "store_context",
+  "contextType": "blocker",
+  "key": "api:migration:blocker:missing-scope",
+  "value": "Situation: OAuth scope missing for write endpoint.\nDecision: pause write-tool rollout.\nNext: request scope update and re-test.",
+  "metadataJson": "{\"owner\":\"platform\",\"priority\":\"high\"}"
+}
+```
+
+### Example: retrieve + assemble before resuming work
+
+Use `workflow_tasks` for task status, then `session_memory` for targeted context:
+
+```text
+1) workflow_tasks action=list status=in_progress -> find in_progress item IDs (or omit filters to list current session tasks)
+2) session_memory.retrieve_context(key=task:<id>)
+3) session_memory.assemble_context(query="resume auth refactor") if continuity is unclear — confirm the active MCP schema before calling
+```
+
+### When to use which memory surface
+
+- `session_memory`: active decisions, blockers, conventions, preferences.
+- `workflow_tasks`: task lifecycle state (queued/in_progress/done/fail).
+- `durable_memory`: promoted handoffs, compact summaries, cross-session artifacts.
 
 ## Path conventions
 
@@ -119,10 +155,12 @@ Autodream runs automatically:
 
 ## Fallback: MCP unavailable
 
-When the MCP server is unreachable (different harness, CLI context, or server not running), use the SQLite CLI fallback directly against `~/.agents/memory/session.db`:
+When the MCP server is unreachable (different harness, CLI context, or server not running), you can either use the repository-provided helper script (if present) or query the SQLite DB directly with local tools.
+
+If this dotfiles layout includes the convenience helper, it lives at `~/.dotfiles/hacks/smem.sh` and provides simple commands, for example:
 
 ```bash
-# Portable CLI — no MCP required
+# Portable CLI — repo-provided helper (only present if your dotfiles include it)
 ~/.dotfiles/hacks/smem.sh sessions                        # list known session IDs
 ~/.dotfiles/hacks/smem.sh list [session_id]               # recent context records
 ~/.dotfiles/hacks/smem.sh get <key> [session_id]          # read a value by key
@@ -134,13 +172,29 @@ When the MCP server is unreachable (different harness, CLI context, or server no
 ~/.dotfiles/hacks/smem.sh dump [session_id]               # all records for session
 ```
 
-Override DB path: `SESSION_DB=/path/to/session.db smem.sh list`
+If the helper is not available, inspect or query the SQLite DB directly with tools you already have (sqlite3, a DB browser, or other CLI utilities). For example:
 
-Use `smem.sh` when:
+```bash
+# Example direct SQLite queries (adjust path if your session DB is elsewhere)
+sqlite3 ~/.agents/memory/session.db "SELECT key, contextType, value FROM records LIMIT 20;"
+# or open an interactive shell:
+sqlite3 ~/.agents/memory/session.db
+sqlite> .tables
+sqlite> SELECT * FROM records WHERE key LIKE '%auth%';
+```
 
-- Harness has no MCP tools configured (Cursor, Copilot, raw shell).
-- Debugging session memory content outside of an agent session.
-- Scripting batch reads or writes from shell automation.
+Override DB path when needed: `SESSION_DB=/path/to/session.db smem.sh list`
+
+Use the helper when the harness has no MCP tools configured (Cursor, Copilot, raw shell), for debugging session memory content outside of an agent session, or when scripting batch reads/writes from shell automation.
+
+## Validation checks
+
+After writes, verify memory flow worked:
+
+1. Read back the same key with `retrieve_context` and confirm Situation/Decision/Next matches.
+2. Confirm related task state exists in `workflow_tasks` (if task-tracked).
+3. For promoted artifacts, verify expected file exists under `~/.agents/memory/projects/<project>/` or `~/.agents/memory/handoffs/...`.
+4. If MCP path is unavailable, verify via `~/.dotfiles/hacks/smem.sh get <key>`.
 
 ## Noise control
 

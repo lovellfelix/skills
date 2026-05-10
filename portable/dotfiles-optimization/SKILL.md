@@ -2,7 +2,7 @@
 name: dotfiles-optimization
 description: Use when improving shell configs, dotfiles layout, or local automation with safe, validated changes.
 metadata:
-  version: 0.1.0
+  version: 0.1.1
   portable: true
   tags: [dotfiles, shell, zsh, nvim, stow, automation, portable]
 ---
@@ -92,6 +92,12 @@ nvm() {
 | Zsh syntax | `zsh -n ~/.zshrc` |
 | Lua lint | `selene .` |
 | Stow preview | `stow --dry-run --verbose=2 <module>` |
+
+## Cross-Harness Notes
+
+- Keep repo-managed skills/config canonical so Claude, OpenCode, Pi, Copilot, and Cursor stay aligned where practical.
+- Prefer shared portable sources over runtime-local edits; use `~/.agents/memory/` for durable/session context.
+- After changing skills or agents, run the repo validation/sync commands before considering the update complete.
 
 ## Working Style
 

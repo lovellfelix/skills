@@ -3,7 +3,7 @@ name: mcp-builder
 description: Use when building or extending an MCP (Model Context Protocol) server to expose external APIs or services to LLMs, in Python (FastMCP) or Node/TypeScript (MCP SDK).
 license: Complete terms in LICENSE.txt
 metadata:
-  version: 1.0.0
+  version: 1.1.1
   portable: true
   tags: [mcp, tools, integration, server]
 ---
@@ -13,6 +13,14 @@ metadata:
 ## Overview
 
 Create MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. The quality of an MCP server is measured by how well it enables LLMs to accomplish real-world tasks.
+
+## Quick Start (common path)
+
+- Confirm API auth method and required scopes before coding.
+- Implement 3-5 high-value **read-only** tools first.
+- Add clear schemas, actionable errors, and pagination/filtering.
+- Add mutating tools only after read paths are stable; mark destructive annotations.
+- Run build + MCP Inspector/manual exercise + one evaluation sanity check.
 
 ---
 
@@ -65,18 +73,18 @@ Key pages to review:
 
 **For TypeScript (recommended):**
 
-- **TypeScript SDK**: Use WebFetch to load `https://raw.githubusercontent.com/modelcontextprotocol/typescript-sdk/main/README.md`
+- **TypeScript SDK**: Use the available fetch/web/documentation tool in your harness to load `https://raw.githubusercontent.com/modelcontextprotocol/typescript-sdk/main/README.md`
 - [⚡ TypeScript Guide](./reference/node_mcp_server.md) - TypeScript patterns and examples
 
 **For Python:**
 
-- **Python SDK**: Use WebFetch to load `https://raw.githubusercontent.com/modelcontextprotocol/python-sdk/main/README.md`
+- **Python SDK**: Use the available fetch/web/documentation tool in your harness to load `https://raw.githubusercontent.com/modelcontextprotocol/python-sdk/main/README.md`
 - [🐍 Python Guide](./reference/python_mcp_server.md) - Python patterns and examples
 
 #### 1.4 Plan Your Implementation
 
 **Understand the API:**
-Review the service's API documentation to identify key endpoints, authentication requirements, and data models. Use web search and WebFetch as needed.
+Review the service's API documentation to identify key endpoints, authentication requirements, and data models. Use web search plus whatever URL/document fetch tools are available in your harness.
 
 **Tool Selection:**
 Prioritize comprehensive API coverage. List endpoints to implement, starting with the most common operations.
@@ -130,12 +138,26 @@ For each tool:
 - Support pagination where applicable
 - Return both text content and structured data when using modern SDKs
 
+**Read-only vs mutating tools:**
+
+- Default to read-only tools first and set `readOnlyHint: true` when applicable.
+- For write/update/delete actions, set `destructiveHint` and `idempotentHint` accurately.
+- Require explicit confirmation in tool logic for destructive operations (delete/close/publish/overwrite).
+- Scope mutating tools narrowly to minimize blast radius.
+
 **Annotations:**
 
 - `readOnlyHint`: true/false
 - `destructiveHint`: true/false
 - `idempotentHint`: true/false
 - `openWorldHint`: true/false
+
+**Auth and secret handling:**
+
+- Keep credentials outside code (env vars, secret manager, or harness secret store).
+- Never log tokens, API keys, or full auth headers.
+- Validate required scopes on startup and return actionable auth errors.
+- Document least-privilege setup for users.
 
 ---
 
@@ -163,6 +185,12 @@ Review for:
 - Test with MCP Inspector
 
 See language-specific guides for detailed testing approaches and quality checklists.
+
+#### 3.3 Validation checklist (minimum)
+
+- Build passes (`npm run build` or Python compile/tests).
+- MCP Inspector/manual exercise succeeds for at least one read-only and one mutating path (if mutating tools exist).
+- One evaluation sanity check proves multi-step tool composition returns a stable, verifiable answer.
 
 ---
 

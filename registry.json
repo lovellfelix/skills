@@ -470,7 +470,7 @@
         "stow",
         "automation"
       ],
-      "version": "0.1.0",
+      "version": "0.1.1",
       "work_machine_only": false
     },
     {
@@ -1546,7 +1546,7 @@
         "integration",
         "server"
       ],
-      "version": "1.0.0",
+      "version": "1.1.1",
       "work_machine_only": false
     },
     {
@@ -1947,7 +1947,7 @@
           }
         }
       },
-      "description": "Use when building MCP-integrated workflows, caching session state, or establishing durable patterns across sessions. Practical patterns for storing, retrieving, and maintaining high-signal session memory via MCP.",
+      "description": "Use when preserving cross-session workflow context, tracking in-flight tasks, or promoting durable handoff artifacts across agent runs.",
       "entrypoint": "SKILL.md",
       "location": "portable/session-memory-mcp/",
       "name": "session-memory-mcp",
@@ -1960,7 +1960,7 @@
         "workflow",
         "continuity"
       ],
-      "version": "0.2.0",
+      "version": "0.3.2",
       "work_machine_only": false
     },
     {
@@ -2079,7 +2079,7 @@
         "validation",
         "maintenance"
       ],
-      "version": "1.2.0",
+      "version": "1.3.0",
       "work_machine_only": false
     },
     {
@@ -2358,7 +2358,7 @@
           }
         }
       },
-      "description": "Use when creating new skills, editing existing skills, or verifying skills work before deployment",
+      "description": "Use when creating new skills, editing existing skills, or verifying skills work before deployment.",
       "entrypoint": "SKILL.md",
       "location": "portable/writing-skills/",
       "name": "writing-skills",
@@ -2372,7 +2372,7 @@
         "documentation",
         "portable"
       ],
-      "version": "0.1.0",
+      "version": "0.2.1",
       "work_machine_only": false
     },
     {

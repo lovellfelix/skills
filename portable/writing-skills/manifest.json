@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "name": "writing-skills",
   "description": "Use when creating new skills, editing existing skills, or verifying skills work before deployment.",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [

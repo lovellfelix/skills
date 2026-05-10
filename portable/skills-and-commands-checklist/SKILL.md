@@ -2,7 +2,7 @@
 name: skills-and-commands-checklist
 description: Use when authoring or maintaining portable skills and custom commands to ensure correctness, discoverability, and long-term maintainability across tools and machines.
 metadata:
-  version: "1.2.0"
+  version: "1.3.0"
   portable: true
   tags: [authoring, skills, commands, quality, portability, validation, maintenance]
 ---
@@ -13,7 +13,7 @@ Covers both **portable skills** (SKILL.md + manifest.json) and **custom commands
 
 ## 10 Key Rules
 
-1. **Metadata must match** — SKILL.md frontmatter = manifest.json exactly (name, version, tags)
+1. **Metadata must match** — SKILL.md frontmatter = manifest.json for name, description, version, tags, and portability metadata (portable/license/compatibility when present)
 2. **Describe the trigger** — `description:` starts with "Use when..." for agent discovery
 3. **Ground in source truth** — one canonical SKILL.md or script; all symlinks resolve to it
 4. **Test examples** — every code snippet must work as written
@@ -71,8 +71,9 @@ metadata:
 ```
 
 The local validator and registry generator read both top-level and
-`metadata:`-nested values, so name/version/portable/tags are still
-checked for consistency against `manifest.json`.
+`metadata:`-nested values, so name/description/version/portable/tags
+(and relevant portability fields such as license/compatibility) should
+stay consistent with `manifest.json`.
 
 ## Version bumps
 
@@ -83,6 +84,12 @@ checked for consistency against `manifest.json`.
 | Breaking workflow change   | MAJOR (0.1.0 → 1.0.0) |
 
 Update version in **both** SKILL.md and manifest.json simultaneously.
+
+## Post-edit validation sequence
+
+1. Run `./hacks/validate-skills.sh`.
+2. If tags/description/metadata changed, run `python3 ./hacks/generate-skills-index.py`.
+3. Review `git diff` to confirm only intended skill, manifest, and required generated registry/index outputs changed.
 
 ## Full checklist
 

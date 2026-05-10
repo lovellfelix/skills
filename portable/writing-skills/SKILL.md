@@ -1,8 +1,8 @@
 ---
 name: writing-skills
-description: Use when creating new skills, editing existing skills, or verifying skills work before deployment
+description: Use when creating new skills, editing existing skills, or verifying skills work before deployment.
 metadata:
-  version: 0.1.0
+  version: 0.2.1
   portable: true
   tags: [skills, authoring, validation, documentation, portable]
 ---
@@ -105,8 +105,8 @@ skills/
 
 **Frontmatter (YAML):**
 
-- Required fields: `name` and `description`
-- Optional fields used in this repo: `version`, `portable`, and `tags`
+- Standard top-level keys: `name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`
+- Put `version`, `portable`, and `tags` under `metadata`
 - Max 1024 characters total
 - `name`: Use letters, numbers, and hyphens only (no parentheses, special chars)
 - `description`: Third-person, describes ONLY when to use (NOT what it does)
@@ -119,6 +119,10 @@ skills/
 ---
 name: Skill-Name-With-Hyphens
 description: Use when [specific triggering conditions and symptoms]
+metadata:
+  version: 0.1.0
+  portable: true
+  tags: [tag1, tag2]
 ---
 
 # Skill Name
@@ -260,7 +264,10 @@ search-conversations supports multiple modes and filters. Run --help for details
 # ❌ BAD: Repeat workflow details
 
 When searching, dispatch subagent with template...
-[20 lines of repeated instructions]
+- define intent in one sentence
+- dispatch subagent with task + constraints
+- collect result and synthesize in 3 bullets
+- link full workflow once: see workflow-orchestration
 
 # ✅ GOOD: Reference other skill
 
@@ -317,10 +324,10 @@ Use skill name only, with explicit requirement markers:
 
 - ✅ Good: `**REQUIRED SUB-SKILL:** Use test-driven-development`
 - ✅ Good: `**REQUIRED BACKGROUND:** You MUST understand systematic-debugging`
-- ❌ Bad: `See skills/testing/test-driven-development` (unclear if required)
-- ❌ Bad: `@skills/testing/test-driven-development/SKILL.md` (force-loads, burns context)
+- ❌ Bad: `See test-driven-development` (unclear if required)
+- ❌ Bad: `@test-driven-development` (eager-load pattern, burns context)
 
-**Why no @ links:** `@` syntax force-loads files immediately, consuming 200k+ context before you need them.
+Prefer naming the skill by its canonical skill name instead of eager-loading references.
 
 ## Flowchart Usage
 
@@ -350,7 +357,7 @@ digraph when_flowchart {
 - Linear instructions → Numbered lists
 - Labels without semantic meaning (step1, helper2)
 
-See @graphviz-conventions.dot for graphviz style rules.
+See `graphviz-conventions.dot` in this directory for graphviz style rules.
 
 **Visualizing for your human partner:** Use `render-graphs.js` in this directory to render a skill's flowcharts to SVG:
 
@@ -546,7 +553,8 @@ helper1, helper2, step3, pattern4
 **GREEN Phase - Write Minimal Skill:**
 
 - [ ] Name uses only letters, numbers, hyphens (no parentheses/special chars)
-- [ ] YAML frontmatter with only name and description (max 1024 chars)
+- [ ] YAML frontmatter follows portable spec (name/description/license/compatibility/metadata/allowed-tools)
+- [ ] version/portable/tags are under metadata and match manifest.json
 - [ ] Description starts with "Use when..." and includes specific triggers/symptoms
 - [ ] Description written in third person
 - [ ] Keywords throughout for search (errors, symptoms, tools)
@@ -574,5 +582,8 @@ helper1, helper2, step3, pattern4
 
 **Deployment:**
 
+- [ ] Run `./hacks/validate-skills.sh` for schema and metadata checks
+- [ ] Run `python3 ./hacks/generate-skills-index.py` if discoverability metadata changed
+- [ ] Review the resulting diff for only intended skill/manifest changes
 - [ ] Commit skill to git and push to your fork (if configured)
 - [ ] Consider contributing back via PR (if broadly useful)
