@@ -1,9 +1,10 @@
 ---
 name: google-docs-style
 description: Use when writing content for Google Docs — internal docs, design summaries, proposals, updates, reviews — to produce clean, lightly formatted, professional output that looks natural when pasted into Google Docs.
-version: 0.1.0
-portable: true
-tags: [writing, google-docs, formatting, style, portable]
+metadata:
+  version: 0.1.0
+  portable: true
+  tags: [writing, google-docs, formatting, style, portable]
 ---
 
 # Google Docs Style

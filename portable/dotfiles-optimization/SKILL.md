@@ -1,9 +1,10 @@
 ---
 name: dotfiles-optimization
 description: Use when improving shell configs, dotfiles layout, or local automation with safe, validated changes.
-version: 0.1.0
-portable: true
-tags: [dotfiles, shell, zsh, nvim, stow, automation, portable]
+metadata:
+  version: 0.1.0
+  portable: true
+  tags: [dotfiles, shell, zsh, nvim, stow, automation, portable]
 ---
 
 # Dotfiles Optimization

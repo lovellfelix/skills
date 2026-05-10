@@ -1,9 +1,10 @@
 ---
 name: skills-and-commands-checklist
 description: Use when authoring or maintaining portable skills and custom commands to ensure correctness, discoverability, and long-term maintainability across tools and machines.
-version: 1.1.0
-portable: true
-tags: [authoring, skills, commands, quality, portability, validation, maintenance]
+metadata:
+  version: "1.2.0"
+  portable: true
+  tags: [authoring, skills, commands, quality, portability, validation, maintenance]
 ---
 
 # Skills and Commands Best-Practices Checklist
@@ -42,31 +43,44 @@ shellcheck hacks/my-command.sh
 ## Artifact structure
 
 **Portable skill:**
+
 ```text
 skills/portable/my-skill/
-├── SKILL.md          # required; frontmatter: name, description, version, portable, tags
-├── manifest.json     # required; must match SKILL.md frontmatter exactly
+├── SKILL.md          # required; frontmatter follows agentskills.io spec
+├── manifest.json     # required; shared fields must match SKILL.md
 ├── examples/         # optional
 ├── reference/        # optional (heavy reference material)
 └── scripts/          # optional
 ```
 
-**Frontmatter minimum:**
+**Frontmatter (agentskills.io spec):**
+
+Only these top-level keys are part of the standard: `name`, `description`,
+`license`, `compatibility`, `metadata`, `allowed-tools`. Anything else
+(version, portable, tags, applies_to, author, source, …) goes under the
+`metadata:` map for cross-tool portability.
+
 ```yaml
-name: my-skill          # kebab-case, globally unique
-description: Use when…  # trigger conditions only, ≤500 chars
-version: 0.1.0
-portable: true          # false for personal/work-machine-only
-tags: [tag1, tag2]
+name: my-skill # kebab-case, matches dir name, ≤64 chars
+description: Use when… # trigger conditions only, ≤1024 chars
+license: MIT # optional, only if applicable
+metadata:
+  version: "0.1.0"
+  portable: true # false for personal/work-machine-only
+  tags: [tag1, tag2]
 ```
+
+The local validator and registry generator read both top-level and
+`metadata:`-nested values, so name/version/portable/tags are still
+checked for consistency against `manifest.json`.
 
 ## Version bumps
 
-| Change | Bump |
-|--------|------|
+| Change                     | Bump                  |
+| -------------------------- | --------------------- |
 | Typos, link fixes, clarity | PATCH (0.1.0 → 0.1.1) |
 | New sections, new examples | MINOR (0.1.0 → 0.2.0) |
-| Breaking workflow change | MAJOR (0.1.0 → 1.0.0) |
+| Breaking workflow change   | MAJOR (0.1.0 → 1.0.0) |
 
 Update version in **both** SKILL.md and manifest.json simultaneously.
 

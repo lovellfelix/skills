@@ -1,9 +1,10 @@
 ---
 name: shadcn-ui
 description: Use when setting up shadcn/ui, installing components, building forms with React Hook Form and Zod, customizing themes with Tailwind CSS, or implementing accessible UI patterns (buttons, dialogs, dropdowns, tables, complex layouts).
-version: 0.2.0
-portable: true
-tags: [shadcn, react, ui, portable]
+metadata:
+  version: 0.2.0
+  portable: true
+  tags: [shadcn, react, ui, portable]
 ---
 
 # shadcn/ui Component Patterns

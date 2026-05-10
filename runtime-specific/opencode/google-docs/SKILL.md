@@ -1,9 +1,10 @@
 ---
 name: google-docs
 description: Use this skill when reading, writing, or searching Google Docs, Sheets, and Drive files from OpenCode.
-version: 0.1.0
-portable: false
-tags: [google-docs, google-sheets, google-drive, opencode, work]
+metadata:
+  version: 0.1.0
+  portable: false
+  tags: [google-docs, google-sheets, google-drive, opencode, work]
 ---
 
 # Google Docs Skill

@@ -1,9 +1,10 @@
 ---
 name: incident-postmortem
 description: "Use when writing a postmortem after a production incident or operational failure to produce a concise, blameless analysis focused on decisions, causes, and concrete follow-ups."
-version: 0.3.0
-portable: true
-tags: [incident, postmortem, reliability, root-cause-analysis, operations]
+metadata:
+  version: 0.3.0
+  portable: true
+  tags: [incident, postmortem, reliability, root-cause-analysis, operations]
 ---
 
 # Incident Postmortem

@@ -1606,7 +1606,7 @@
         "routing",
         "portable"
       ],
-      "version": "1.0.0",
+      "version": "2026.1.28",
       "work_machine_only": false
     },
     {
@@ -2079,7 +2079,7 @@
         "validation",
         "maintenance"
       ],
-      "version": "1.1.0",
+      "version": "1.2.0",
       "work_machine_only": false
     },
     {

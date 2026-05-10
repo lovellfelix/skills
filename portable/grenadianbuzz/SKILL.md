@@ -1,10 +1,11 @@
 ---
 name: grenadianbuzz
 description: Use when working on GrenadianBuzz features, architecture, or operational tasks across any surface (API, Android app, CLI, website, dashboard, docs).
-version: 0.6.0
-portable: true
-personal_machine_only: true
-tags: [grenadianbuzz, product, mobile, api, backend, frontend, architecture]
+metadata:
+  version: 0.6.0
+  portable: true
+  personal_machine_only: true
+  tags: [grenadianbuzz, product, mobile, api, backend, frontend, architecture]
 ---
 
 # GrenadianBuzz Product & Engineering Skill

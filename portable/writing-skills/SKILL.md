@@ -1,9 +1,10 @@
 ---
 name: writing-skills
 description: Use when creating new skills, editing existing skills, or verifying skills work before deployment
-version: 0.1.0
-portable: true
-tags: [skills, authoring, validation, documentation, portable]
+metadata:
+  version: 0.1.0
+  portable: true
+  tags: [skills, authoring, validation, documentation, portable]
 ---
 
 # Writing Skills

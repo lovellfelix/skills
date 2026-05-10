@@ -1,9 +1,10 @@
 ---
 name: deep-audit
 description: Use when performing a comprehensive codebase health assessment before major refactoring, migration, production readiness review, or ownership transfer.
-version: 0.2.0
-portable: true
-tags: [audit, architecture, quality, portable]
+metadata:
+  version: 0.2.0
+  portable: true
+  tags: [audit, architecture, quality, portable]
 ---
 
 # Deep Audit

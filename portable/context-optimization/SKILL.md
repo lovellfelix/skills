@@ -1,10 +1,11 @@
 ---
 name: context-optimization
 description: Use when exploring large codebases, summarizing lengthy tool output, or optimizing a session for token cost and context bloat.
-version: 0.1.0
-portable: true
-tags: [performance, optimization, context, tokens, efficiency]
-applies_to: [all]
+metadata:
+  version: 0.1.0
+  portable: true
+  tags: [performance, optimization, context, tokens, efficiency]
+  applies_to: [all]
 ---
 
 # Context Optimization

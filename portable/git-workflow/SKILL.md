@@ -1,10 +1,11 @@
 ---
 name: git-workflow
 description: Use when setting up git worktrees, configuring hooks, automating multi-branch workflows, or handling complex merge/rebase scenarios beyond routine commit/push.
-version: 0.1.0
-portable: true
-tags: [git, automation, worktrees, hooks, workflow, version-control]
-applies_to: [all, shell, bash, zsh]
+metadata:
+  version: 0.1.0
+  portable: true
+  tags: [git, automation, worktrees, hooks, workflow, version-control]
+  applies_to: [all, shell, bash, zsh]
 ---
 
 # Git Workflow Skill

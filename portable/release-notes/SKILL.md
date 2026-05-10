@@ -1,9 +1,10 @@
 ---
 name: release-notes
 description: "Use when drafting or refining changelog entries and release notes from commits, PRs, or code changes."
-version: 1.0.0
-portable: true
-tags: [release, changelog, version, documentation]
+metadata:
+  version: 1.0.0
+  portable: true
+  tags: [release, changelog, version, documentation]
 ---
 
 # Release Notes

@@ -1,9 +1,10 @@
 ---
 name: handoff-resume
 description: Use when resuming interrupted work across sessions, handing off to another agent or teammate, or creating a restart-ready status snapshot.
-version: 0.2.0
-portable: true
-tags: [workflow, continuity, handoff, resume]
+metadata:
+  version: 0.2.0
+  portable: true
+  tags: [workflow, continuity, handoff, resume]
 ---
 
 # Handoff Resume

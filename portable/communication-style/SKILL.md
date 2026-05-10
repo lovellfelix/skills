@@ -1,9 +1,10 @@
 ---
 name: communication-style
 description: Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, and technical communication to improve clarity, brevity, and reduce review friction.
-version: 0.8.0
-portable: true
-tags: [communication, engineering-writing, pr-review, slack, clarity]
+metadata:
+  version: 0.8.0
+  portable: true
+  tags: [communication, engineering-writing, pr-review, slack, clarity]
 ---
 
 # Communication Style

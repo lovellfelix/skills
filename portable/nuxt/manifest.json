@@ -2,17 +2,10 @@
   "schema_version": "1.0",
   "name": "nuxt",
   "description": "Use when working with Nuxt apps, server routes, useFetch, middleware, or hybrid rendering in a full-stack Vue application.",
-  "version": "1.0.0",
+  "version": "2026.1.28",
   "portable": true,
   "entrypoint": "SKILL.md",
-  "tags": [
-    "nuxt",
-    "vue",
-    "nitro",
-    "ssr",
-    "routing",
-    "portable"
-  ],
+  "tags": ["nuxt", "vue", "nitro", "ssr", "routing", "portable"],
   "adapters": {
     "opencode": {
       "path": "SKILL.md",

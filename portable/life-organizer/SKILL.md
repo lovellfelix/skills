@@ -1,11 +1,12 @@
 ---
 name: life-organizer
 description: Use when the user asks to review personal reminders, calendar events, Apple Notes context, family plans, or general life-admin tasks on a macOS machine.
-version: 0.1.0
-portable: true
-personal_machine_only: true
-tags: [personal, reminders, calendar, notes, family, planning, macos]
-applies_to: [personal-assistant, life, planning, reminders]
+metadata:
+  version: 0.1.0
+  portable: true
+  personal_machine_only: true
+  tags: [personal, reminders, calendar, notes, family, planning, macos]
+  applies_to: [personal-assistant, life, planning, reminders]
 ---
 
 # Life Organizer Skill

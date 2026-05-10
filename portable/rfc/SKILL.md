@@ -1,9 +1,10 @@
 ---
 name: rfc
 description: "Use when proposing a significant engineering change, writing a technical design doc, or architecture proposal and need a tight, reviewable RFC with optional Mermaid diagrams."
-version: 1.0.0
-portable: true
-tags: [rfc, architecture, design, blueprint, mermaid]
+metadata:
+  version: 1.0.0
+  portable: true
+  tags: [rfc, architecture, design, blueprint, mermaid]
 ---
 
 # RFC

@@ -1,9 +1,10 @@
 ---
 name: github-pr-review
 description: Use when reviewing a GitHub PR end-to-end with SRE/infra-aware checklists, especially when reproducible findings are needed or the review will be posted back via the gh CLI.
-version: 0.2.0
-portable: true
-tags: [review, github, pr, sre, portable]
+metadata:
+  version: 0.2.0
+  portable: true
+  tags: [review, github, pr, sre, portable]
 ---
 
 # GitHub PR Review (portable)

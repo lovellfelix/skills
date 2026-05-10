@@ -1,9 +1,10 @@
 ---
 name: jarvis-search
 description: Use this skill to search LinkedIn codebases with Jarvis from OpenCode.
-version: 0.1.0
-portable: false
-tags: [jarvis, code-search, linkedin, opencode, work]
+metadata:
+  version: 0.1.0
+  portable: false
+  tags: [jarvis, code-search, linkedin, opencode, work]
 ---
 
 # Jarvis Code Search Skill
