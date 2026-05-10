@@ -1,9 +1,10 @@
 ---
 name: summarize
 description: Use when fetching a URL or converting a local file (PDF, DOCX, HTML, etc.) to Markdown for reading or summarization via uvx markitdown.
-version: 0.1.0
-portable: true
-tags: [summarization, markdown, documents, urls, portable]
+metadata:
+  version: 0.1.0
+  portable: true
+  tags: [summarization, markdown, documents, urls, portable]
 ---
 
 Turn “things” (URLs, PDFs, Word docs, PowerPoints, HTML pages, text files, etc.) into **Markdown** so they can be inspected/quoted/processed like normal text.

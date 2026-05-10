@@ -1,9 +1,10 @@
 ---
 name: marketing-psychology
 description: Use when applying psychological principles, mental models, or behavioral science to marketing decisions, messaging, or conversion strategy. Also triggers on 'cognitive bias,' 'persuasion,' 'why people buy,' or 'consumer behavior.'
-version: 1.1.0
-portable: true
-tags: [marketing, psychology, persuasion, behavioral-science]
+metadata:
+  version: 1.1.0
+  portable: true
+  tags: [marketing, psychology, persuasion, behavioral-science]
 ---
 
 # Marketing Psychology & Mental Models

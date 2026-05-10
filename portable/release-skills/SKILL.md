@@ -1,9 +1,10 @@
 ---
 name: release-skills
 description: "Use when releasing a new version, bumping semver, generating changelogs, or publishing to npm/PyPI/Cargo/GitHub. Supports Node.js, Python, Rust, Claude Plugin, and generic projects."
-version: 1.0.0
-portable: true
-tags: [release, versioning, changelog, semver, publishing, sbom, portable]
+metadata:
+  version: 1.0.0
+  portable: true
+  tags: [release, versioning, changelog, semver, publishing, sbom, portable]
 ---
 
 # Release Skills

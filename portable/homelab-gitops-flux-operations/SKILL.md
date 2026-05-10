@@ -1,10 +1,11 @@
 ---
 name: homelab-gitops-flux-operations
 description: Use when deploying, upgrading, reconciling, or debugging Flux-managed workloads on the personal homelab cluster, especially HelmRelease or Kustomization changes, Flux reconcile failures, app-template apps, CrashLoopBackOff or ImagePullBackOff pods, Home Assistant issues, kubectl exec troubleshooting, SOPS secret updates, or GitHub PR creation.
-version: 0.1.0
-portable: true
-personal_machine_only: true
-tags: [homelab, flux, gitops, kubernetes, helmrelease, home-assistant, sops, troubleshooting]
+metadata:
+  version: 0.1.0
+  portable: true
+  personal_machine_only: true
+  tags: [homelab, flux, gitops, kubernetes, helmrelease, home-assistant, sops, troubleshooting]
 ---
 
 # Homelab GitOps Flux Operations

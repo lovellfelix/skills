@@ -1,10 +1,11 @@
 ---
 name: git-workflow
-description: Automate git workflows with worktrees, hooks, and advanced patterns. Use when setting up multi-branch workflows, automating commits, managing hooks, or handling complex merge/rebase scenarios.
-version: 0.1.0
-portable: true
-tags: [git, automation, worktrees, hooks, workflow, version-control]
-applies_to: [all, shell, bash, zsh]
+description: Use when setting up git worktrees, configuring hooks, automating multi-branch workflows, or handling complex merge/rebase scenarios beyond routine commit/push.
+metadata:
+  version: 0.1.0
+  portable: true
+  tags: [git, automation, worktrees, hooks, workflow, version-control]
+  applies_to: [all, shell, bash, zsh]
 ---
 
 # Git Workflow Skill
@@ -16,9 +17,11 @@ Git automation, worktrees, hooks, commit conventions, branch strategies, dotfile
 ## Git Worktree Patterns
 
 ### What are Worktrees?
+
 Multiple working directories from same repo, each checked out to different branch.
 
 ### Common Use Cases
+
 ```bash
 # Feature development while main stays clean
 git worktree add .worktree/feature-new-zsh-plugin feature/new-zsh-plugin
@@ -36,6 +39,7 @@ git worktree add .worktree/test-macos-sonoma test/macos-sonoma
 ### Worktree Best Practices
 
 **Create worktree**:
+
 ```bash
 # Good: Repo-local path, branch slug (`/` -> `-`)
 git worktree add .worktree/feature-new-plugin feature/new-plugin
@@ -45,6 +49,7 @@ git worktree add ./feature-dir feature/new-plugin
 ```
 
 **List worktrees**:
+
 ```bash
 git worktree list
 # /Users/user/dotfiles        abc123 [main]
@@ -52,6 +57,7 @@ git worktree list
 ```
 
 **Remove worktree**:
+
 ```bash
 # Good: Remove worktree then delete directory
 git worktree remove .worktree/feature-new-plugin
@@ -63,6 +69,7 @@ rm -rf .worktree/feature-new-plugin  # Worktree still registered!
 ```
 
 **Worktree for parallel testing**:
+
 ```bash
 # Test nvim config change without breaking current setup
 git worktree add .worktree/experiment-new-lsp experiment/new-lsp
@@ -76,17 +83,20 @@ git worktree remove .worktree/experiment-new-lsp
 ### Worktree Anti-Patterns
 
 ❌ **Don't**: Create worktree in same directory
+
 ```bash
 git worktree add ./feature feature/test  # Confusing structure
 ```
 
 ❌ **Don't**: Forget to remove worktrees
+
 ```bash
 # Check for orphaned worktrees
 git worktree prune --dry-run
 ```
 
 ❌ **Don't**: Try to check out same branch in multiple worktrees
+
 ```bash
 # This fails (branch already checked out)
 git worktree add .worktree/main main  # ERROR!
@@ -100,6 +110,7 @@ git worktree add .worktree/test-main -b test-main main
 ## Git Hooks
 
 ### Hook Locations
+
 ```bash
 # Repository-specific (not tracked)
 .git/hooks/pre-commit
@@ -112,6 +123,7 @@ scripts/hooks/pre-commit
 ### Common Hooks for Dotfiles
 
 **pre-commit** - Validation before commit:
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -143,6 +155,7 @@ echo "✅ Pre-commit checks passed"
 ```
 
 **post-commit** - Automation after commit:
+
 ```bash
 #!/usr/bin/env bash
 
@@ -156,6 +169,7 @@ echo "$(date +%Y-%m-%d) $(git log -1 --format='%h %s')" >> .git/commit-log
 ```
 
 **pre-push** - Safety checks before push:
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail

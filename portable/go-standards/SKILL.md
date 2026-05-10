@@ -1,9 +1,10 @@
 ---
 name: go-standards
 description: "Use when writing, reviewing, or refactoring Go code to apply idiomatic engineering standards. Triggers on .go files, go.mod references, or Go-related tasks."
-version: 0.1.0
-portable: true
-tags: [go, standards, idioms, error-handling, concurrency]
+metadata:
+  version: 0.1.0
+  portable: true
+  tags: [go, standards, idioms, error-handling, concurrency]
 ---
 
 # Go Standards

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "name": "grenadianbuzz",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [

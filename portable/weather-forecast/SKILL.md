@@ -1,10 +1,11 @@
 ---
 name: weather-forecast
 description: Use when the user asks for current weather, today's conditions, or a short forecast without relying on paid weather APIs.
-version: 0.1.0
-portable: true
-tags: [weather, forecast, portable, personal-assistant]
-applies_to: [personal-assistant, workflow, automation]
+metadata:
+  version: 0.1.0
+  portable: true
+  tags: [weather, forecast, portable, personal-assistant]
+  applies_to: [personal-assistant, workflow, automation]
 ---
 
 # Weather Forecast Skill

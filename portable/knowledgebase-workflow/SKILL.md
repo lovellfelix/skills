@@ -1,10 +1,11 @@
 ---
 name: knowledgebase-workflow
 description: Use when organizing, searching, or updating the personal knowledgebase via Obsidian vault or work notes.
-version: 1.1.0
-portable: true
-personal_machine_only: true
-tags: [knowledgebase, workflow, documentation, notes, obsidian, backlinks, graph]
+metadata:
+  version: 1.1.0
+  portable: true
+  personal_machine_only: true
+  tags: [knowledgebase, workflow, documentation, notes, obsidian, backlinks, graph]
 ---
 
 # Knowledgebase Workflow

@@ -1,9 +1,10 @@
 ---
 name: github
 description: "Use when interacting with GitHub issues, PRs, CI runs, or repository data via the gh CLI."
-version: 0.1.0
-portable: true
-tags: [github, gh, cli, pr, ci, issues]
+metadata:
+  version: 0.1.0
+  portable: true
+  tags: [github, gh, cli, pr, ci, issues]
 ---
 
 # GitHub Skill

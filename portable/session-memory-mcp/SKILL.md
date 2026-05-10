@@ -1,9 +1,10 @@
 ---
 name: session-memory-mcp
 description: "Use when building MCP-integrated workflows, caching session state, or establishing durable patterns across sessions. Practical patterns for storing, retrieving, and maintaining high-signal session memory via MCP."
-version: 0.2.0
-portable: true
-tags: [mcp, memory, workflow, continuity]
+metadata:
+  version: 0.2.0
+  portable: true
+  tags: [mcp, memory, workflow, continuity]
 ---
 
 # Session Memory MCP

@@ -1,9 +1,10 @@
 ---
 name: python
 description: "Use when writing, reviewing, or testing Python code — establishes project style, type-safety, testing defaults, and CI quality gates."
-version: 1.0.0
-portable: true
-tags: [python, style, testing, type-safety, quality]
+metadata:
+  version: 1.0.0
+  portable: true
+  tags: [python, style, testing, type-safety, quality]
 ---
 
 # Python (Style, Safety, Testing)

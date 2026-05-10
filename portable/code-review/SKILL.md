@@ -1,9 +1,10 @@
 ---
 name: code-review
 description: Use when reviewing code changes, a PR, or a commit and need structured, severity-graded findings covering correctness, security, reliability, and maintainability.
-version: 0.2.0
-portable: true
-tags: [review, quality, security, portable]
+metadata:
+  version: 0.2.0
+  portable: true
+  tags: [review, quality, security, portable]
 ---
 
 # Code Review

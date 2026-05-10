@@ -1,9 +1,10 @@
 ---
 name: jira-workflow
 description: Use this skill when reading, creating, searching, and updating JIRA issues from OpenCode.
-version: 0.1.0
-portable: false
-tags: [jira, atlassian, workflow, opencode, work]
+metadata:
+  version: 0.1.0
+  portable: false
+  tags: [jira, atlassian, workflow, opencode, work]
 ---
 
 # JIRA Workflow Skill

@@ -1,9 +1,10 @@
 ---
 name: kb-maintenance
 description: "Use when performing knowledgebase health checks, inbox processing, oncall note management, metadata cleanup, or archive operations."
-version: 0.1.0
-portable: true
-tags: [knowledgebase, maintenance, workflow, documentation, notes]
+metadata:
+  version: 0.1.0
+  portable: true
+  tags: [knowledgebase, maintenance, workflow, documentation, notes]
 ---
 
 # KB Maintenance Skill

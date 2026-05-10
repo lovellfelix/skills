@@ -1,10 +1,11 @@
 ---
 name: homelab-proxmox-cluster-api
 description: Use when operating the personal homelab Kubernetes cluster on Proxmox through Cluster API and CAPMOX, especially for workload cluster rebuilds, kubeadm upgrades, templateID changes, ProxmoxMachineTemplate edits, CAPMOX boot bug recovery, management-cluster checks, cluster-status validation, or control-plane local-zfs migration planning.
-version: 0.1.0
-portable: true
-personal_machine_only: true
-tags: [homelab, proxmox, cluster-api, capmox, kubernetes, kubeadm, ceph, infrastructure]
+metadata:
+  version: 0.1.0
+  portable: true
+  personal_machine_only: true
+  tags: [homelab, proxmox, cluster-api, capmox, kubernetes, kubeadm, ceph, infrastructure]
 ---
 
 # Homelab Proxmox Cluster API

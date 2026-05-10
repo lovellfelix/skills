@@ -1,9 +1,10 @@
 ---
 name: ucm-test
 description: "Use when testing UCM module changes against remote hosts using the ucm test CLI for hiera, puppet, package management, or catalog convergence validation."
-version: 0.1.0
-portable: true
-tags: [ucm, puppet, hiera, linkedin, infrastructure, work]
+metadata:
+  version: 0.1.0
+  portable: true
+  tags: [ucm, puppet, hiera, linkedin, infrastructure, work]
 ---
 
 # UCM Test — Remote Host Validation via the UCM CLI

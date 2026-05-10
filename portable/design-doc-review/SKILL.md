@@ -1,9 +1,10 @@
 ---
 name: design-doc-review
 description: "Use when reviewing a technical design document or RFC as a senior/staff engineer before sharing. Invoke after drafting to catch structural, clarity, and completeness issues."
-version: 0.1.0
-portable: true
-tags: [review, design, rfc, quality, rubric]
+metadata:
+  version: 0.1.0
+  portable: true
+  tags: [review, design, rfc, quality, rubric]
 ---
 
 # Design Doc Review
