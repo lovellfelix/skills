@@ -8,9 +8,8 @@
 skills/
 ├── community-work.json      # Skills to install on work laptop
 ├── community-personal.json  # Skills to install on personal laptop
-├── portable/              # 38 portable skills (cross-harness)
+├── portable/              # 37 portable skills (cross-harness)
 │   ├── code-review/
-│   ├── commit/
 │   └── ...
 └── runtime-specific/      # 15 runtime-specific skills
     └── opencode/
