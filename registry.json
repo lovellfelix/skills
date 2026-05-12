@@ -395,6 +395,65 @@
           }
         }
       },
+      "description": "Use when debugging bugs or regressions with a disciplined loop: feedback signal, reproduce, hypothesize, instrument, fix, and lock with regression coverage.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/diagnose/",
+      "name": "diagnose",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "debugging",
+        "diagnosis",
+        "regression",
+        "reliability",
+        "portable"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Use when writing or updating engineering documentation and want it grounded in runtime behavior rather than aspirational prose.",
       "entrypoint": "SKILL.md",
       "location": "portable/documentation/",
@@ -935,6 +994,65 @@
           }
         }
       },
+      "description": "Use when stress-testing a plan against existing domain language and decisions while capturing clarified terms and trade-offs in docs.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/grill-with-docs/",
+      "name": "grill-with-docs",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "planning",
+        "domain-language",
+        "adr",
+        "documentation",
+        "portable"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Use when resuming interrupted work across sessions, handing off to another agent or teammate, or creating a restart-ready status snapshot.",
       "entrypoint": "SKILL.md",
       "location": "portable/handoff-resume/",
@@ -1070,6 +1188,65 @@
         "kubernetes",
         "kubeadm",
         "infrastructure"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Use when reviewing architecture for deep-module opportunities, better test seams, and stronger locality/leverage across modules.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/improve-codebase-architecture/",
+      "name": "improve-codebase-architecture",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "architecture",
+        "refactoring",
+        "testability",
+        "modularity",
+        "portable"
       ],
       "version": "0.1.0",
       "work_machine_only": false
