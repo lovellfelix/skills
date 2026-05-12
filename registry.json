@@ -2360,66 +2360,6 @@
           }
         }
       },
-      "description": "Use when testing UCM module changes against remote hosts using the ucm test CLI for hiera, puppet, package management, or catalog convergence validation.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/ucm-test/",
-      "name": "ucm-test",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "ucm",
-        "puppet",
-        "hiera",
-        "linkedin",
-        "infrastructure",
-        "work"
-      ],
-      "version": "0.1.0",
-      "work_machine_only": true
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
       "description": "Use when the user asks for current weather, today's conditions, or a short forecast without relying on paid weather APIs.",
       "entrypoint": "SKILL.md",
       "location": "portable/weather-forecast/",

@@ -49,7 +49,6 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **shadcn-ui** | `portable/shadcn-ui/` | Use when setting up shadcn/ui, installing components, building forms with React Hook Form and Zod, customizing themes with Tailwind CSS, or implementing accessible UI patterns (buttons, dialogs, dropdowns, tables, complex layouts). |
 | **skills-and-commands-checklist** | `portable/skills-and-commands-checklist/` | Use when authoring or maintaining portable skills and custom commands to ensure correctness, discoverability, and long-term maintainability across tools and machines. |
 | **summarize** | `portable/summarize/` | Use when fetching a URL or converting a local file (PDF, DOCX, HTML, etc.) to Markdown for reading or summarization via uvx markitdown. |
-| **ucm-test** | `portable/ucm-test/` | Use when testing UCM module changes against remote hosts using the ucm test CLI for hiera, puppet, package management, or catalog convergence validation. |
 | **weather-forecast** | `portable/weather-forecast/` | Use when the user asks for current weather, today's conditions, or a short forecast without relying on paid weather APIs. |
 | **writing-plans** | `portable/writing-plans/` | Use when you have a spec or requirements for a multi-step task, before touching code |
 | **writing-skills** | `portable/writing-skills/` | Use when creating new skills, editing existing skills, or verifying skills work before deployment. |
@@ -71,7 +70,7 @@ Skills with runtime-specific adapters or overlays.
 
 Deprecated or superseded skills kept for historical traceability.
 
-(No archived skills yet)
+- `ucm-test/`
 
 ## Discovery & Convention
 
