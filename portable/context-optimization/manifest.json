@@ -1,6 +1,7 @@
 {
   "schema_version": "1.0",
   "name": "context-optimization",
+  "description": "Use when exploring large codebases, summarizing lengthy tool output, or optimizing a session for token cost and context bloat.",
   "version": "0.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",

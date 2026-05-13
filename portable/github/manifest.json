@@ -1,6 +1,7 @@
 {
   "schema_version": "1.0",
   "name": "github",
+  "description": "Use when interacting with GitHub issues, PRs, CI runs, or repository data via the gh CLI.",
   "version": "0.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",

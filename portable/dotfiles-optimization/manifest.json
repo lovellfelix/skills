@@ -1,6 +1,7 @@
 {
   "schema_version": "1.0",
   "name": "dotfiles-optimization",
+  "description": "Use when improving shell configs, dotfiles layout, or local automation with safe, validated changes.",
   "version": "0.1.1",
   "portable": true,
   "entrypoint": "SKILL.md",

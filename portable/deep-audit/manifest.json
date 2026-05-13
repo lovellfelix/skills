@@ -1,6 +1,7 @@
 {
   "schema_version": "1.0",
   "name": "deep-audit",
+  "description": "Use when performing a comprehensive codebase health assessment before major refactoring, migration, production readiness review, or ownership transfer.",
   "version": "0.2.0",
   "portable": true,
   "entrypoint": "SKILL.md",

@@ -1,6 +1,7 @@
 {
   "schema_version": "1.0",
   "name": "knowledgebase-workflow",
+  "description": "Use when organizing, searching, or updating the personal knowledgebase via Obsidian vault or work notes.",
   "version": "1.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",

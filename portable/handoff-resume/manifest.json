@@ -1,6 +1,7 @@
 {
   "schema_version": "1.0",
   "name": "handoff-resume",
+  "description": "Use when resuming interrupted work across sessions, handing off to another agent or teammate, or creating a restart-ready status snapshot.",
   "version": "0.2.0",
   "portable": true,
   "entrypoint": "SKILL.md",

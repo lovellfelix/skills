@@ -1,6 +1,7 @@
 {
   "schema_version": "1.0",
   "name": "grenadianbuzz",
+  "description": "Use when working on GrenadianBuzz features, architecture, or operational tasks across any surface (API, Android app, CLI, website, dashboard, docs).",
   "version": "0.6.0",
   "portable": true,
   "entrypoint": "SKILL.md",
