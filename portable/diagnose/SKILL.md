@@ -1,6 +1,6 @@
 ---
 name: diagnose
-description: Use when debugging bugs or regressions with a disciplined loop: feedback signal, reproduce, hypothesize, instrument, fix, and lock with regression coverage.
+description: "Use when debugging bugs or regressions with a disciplined loop: feedback signal, reproduce, hypothesize, instrument, fix, and lock with regression coverage."
 metadata:
   version: 0.1.0
   portable: true
