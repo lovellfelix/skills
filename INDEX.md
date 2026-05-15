@@ -33,7 +33,6 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **improve-codebase-architecture** | `portable/improve-codebase-architecture/` | Use when reviewing architecture for deep-module opportunities, better test seams, and stronger locality/leverage across modules. |
 | **incident-postmortem** | `portable/incident-postmortem/` | Use when writing a postmortem after a production incident or operational failure to produce a concise, blameless analysis focused on decisions, causes, and concrete follow-ups. |
 | **java-to-kotlin-migration** | `portable/java-to-kotlin-migration/` | Use when migrating Android projects from Java to Kotlin while maintaining behavior and test coverage. |
-| **kb-maintenance** | `portable/kb-maintenance/` | Use when performing knowledgebase health checks, inbox processing, oncall note management, metadata cleanup, or archive operations. |
 | **knowledgebase-workflow** | `portable/knowledgebase-workflow/` | Use when organizing, searching, or updating the personal knowledgebase via Obsidian vault or work notes. |
 | **life-organizer** | `portable/life-organizer/` | Use when the user asks to review personal reminders, calendar events, Apple Notes context, family plans, or general life-admin tasks on a macOS machine. |
 | **location-search** | `portable/location-search/` | Use when planning trips, finding nearby places, or integrating location features with a no-API-key default flow, including ZIP or postal-code lookup. |
@@ -61,15 +60,16 @@ Skills with runtime-specific adapters or overlays.
 
 | Name | Location | Purpose |
 |------|----------|---------|
-| **google-docs** | `runtime-specific/opencode/google-docs/` | Use this skill when reading, writing, or searching Google Docs, Sheets, and Drive files from OpenCode. |
-| **jarvis-search** | `runtime-specific/opencode/jarvis-search/` | Use this skill to search LinkedIn codebases with Jarvis from OpenCode. |
-| **jira-workflow** | `runtime-specific/opencode/jira-workflow/` | Use this skill when reading, creating, searching, and updating JIRA issues from OpenCode. |
-| **phased-rollout** | `runtime-specific/opencode/phased-rollout/` | Execute phased deployments across environments with monitoring windows and rollback capability. Use when coordinating multi-environment releases, canary deployments, or high-risk launches requiring explicit safety gates. |
 
 ## Archive
 
 Deprecated or superseded skills kept for historical traceability.
 
+- `kb-maintenance/`
+- `opencode-google-docs/`
+- `opencode-jarvis-search/`
+- `opencode-jira-workflow/`
+- `opencode-phased-rollout/`
 - `ucm-test/`
 
 ## Discovery & Convention
