@@ -17,6 +17,24 @@ Use active voice. Name the actor and action. State behavior, risk, and next step
 
 Output must be copy-paste ready.
 
+## Use when
+
+- Rewriting technical updates for clarity and brevity.
+- Drafting PR notes, RFC comments, review feedback, or incident updates.
+- Tightening wording so asks, risks, and decisions are obvious.
+
+## When not to use
+
+- You need domain-specific technical analysis rather than wording help.
+- You are generating long-form tutorial content by design.
+- The user asks for a distinct voice that conflicts with these defaults.
+
+## Related Skills
+
+- `documentation` for structured engineering docs.
+- `incident-postmortem` for blameless incident writeups.
+- `design-doc-review` for design/RFC quality checks.
+
 ## Core Rules
 
 - Preserve technical meaning exactly
@@ -156,3 +174,5 @@ Primary:
 
 Secondary:
 - Context: [short supporting detail]
+```
+

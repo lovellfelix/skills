@@ -11,6 +11,24 @@ metadata:
 
 Structured review focused on bugs, risk, and actionable improvements — not style opinions.
 
+## Use when
+
+- Reviewing a PR, commit, or diff for merge readiness.
+- You need severity-ranked findings with concrete fixes.
+- You want a reliability/security pass, not just style feedback.
+
+## When not to use
+
+- You only need formatting/lint cleanup.
+- You are doing a broad architecture or roadmap critique.
+- You need implementation planning rather than review findings.
+
+## Related Skills
+
+- `github-pr-review` for end-to-end PR review workflows.
+- `github` for fetching PR context, checks, and CI data via `gh`.
+- `communication-style` for concise review writeups with low friction.
+
 ## Review structure
 
 For each issue, use this format:
@@ -82,3 +100,4 @@ Every review MUST end with:
 - Do not suggest rewrites for style when behavior is correct.
 - Do not block on NITs — flag separately.
 - Keep feedback specific and actionable; no vague "consider refactoring this".
+

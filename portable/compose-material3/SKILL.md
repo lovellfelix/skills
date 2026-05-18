@@ -1,6 +1,6 @@
 ---
 name: compose-material3
-description: Use when building Android UI components with Jetpack Compose and Material Design 3 to produce modern, distinctive interfaces that avoid generic boilerplate.
+description: Use when you need Jetpack Compose UI help (Android), Material 3 component patterns, Compose screen design review, or accessible Compose theming fixes.
 metadata:
   version: 0.1.0
   portable: true
@@ -9,7 +9,24 @@ metadata:
 
 # Compose Material 3
 
-Use this skill to design and implement polished Android interfaces with Jetpack Compose and Material 3.
+Canonical handle: `compose-material3` (Jetpack Compose UI + Material 3).
+
+## Use when
+
+- Building or refactoring Jetpack Compose UI with Material 3 tokens/components
+- Improving visual hierarchy, states, accessibility, and light/dark behavior
+
+## When not to use
+
+- Non-Android UI work
+- Backend/service-only Kotlin changes with no UI impact
+
+## Related Skills
+
+- `java-to-kotlin-migration`
+- `documentation`
+
+Use this skill for Jetpack Compose UI implementation, Compose design polish, and Material 3 best-practice reviews.
 
 ## Outcomes
 

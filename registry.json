@@ -160,7 +160,7 @@
           }
         }
       },
-      "description": "Use when building Android UI components with Jetpack Compose and Material Design 3 to produce modern, distinctive interfaces that avoid generic boilerplate.",
+      "description": "Use when you need Jetpack Compose UI help (Android), Material 3 component patterns, Compose screen design review, or accessible Compose theming fixes.",
       "entrypoint": "SKILL.md",
       "location": "portable/compose-material3/",
       "name": "compose-material3",

@@ -12,7 +12,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 |------|----------|---------|
 | **code-review** | `portable/code-review/` | Use when reviewing code changes, a PR, or a commit and need structured, severity-graded findings covering correctness, security, reliability, and maintainability. |
 | **communication-style** | `portable/communication-style/` | Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, and technical communication to improve clarity, brevity, and reduce review friction. |
-| **compose-material3** | `portable/compose-material3/` | Use when building Android UI components with Jetpack Compose and Material Design 3 to produce modern, distinctive interfaces that avoid generic boilerplate. |
+| **compose-material3** | `portable/compose-material3/` | Use when you need Jetpack Compose UI help (Android), Material 3 component patterns, Compose screen design review, or accessible Compose theming fixes. |
 | **context-optimization** | `portable/context-optimization/` | Use when exploring large codebases, summarizing lengthy tool output, or optimizing a session for token cost and context bloat. |
 | **deep-audit** | `portable/deep-audit/` | Use when performing a comprehensive codebase health assessment before major refactoring, migration, production readiness review, or ownership transfer. |
 | **design-doc-review** | `portable/design-doc-review/` | Use when reviewing a technical design document or RFC as a senior/staff engineer before sharing. Invoke after drafting to catch structural, clarity, and completeness issues. |
@@ -55,11 +55,6 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 ## Runtime-Specific Skills
 
 Skills with runtime-specific adapters or overlays.
-
-### OpenCode
-
-| Name | Location | Purpose |
-|------|----------|---------|
 
 ## Archive
 
