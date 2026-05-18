@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "name": "compose-material3",
-  "description": "Use when building Android UI components with Jetpack Compose and Material Design 3 to produce modern, distinctive interfaces that avoid generic boilerplate.",
+  "description": "Use when you need Jetpack Compose UI help (Android), Material 3 component patterns, Compose screen design review, or accessible Compose theming fixes.",
   "version": "0.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",
