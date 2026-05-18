@@ -122,7 +122,7 @@ class AuthManager(private val context: Context) {
     fun getToken(): String? {
         val token = prefs.getString(tokenKey, null)
         val expiry = prefs.getLong(expiryKey, 0L)
-        
+
         return if (token != null && System.currentTimeMillis() < expiry) {
             token
         } else {
@@ -381,7 +381,7 @@ fun ArticleDetailScreen(
                         Text("Offline - showing cached content", Modifier.padding(8.dp))
                     }
                 }
-                
+
                 ArticleContent(article = state.data)
                 ReactionBar(
                     article = state.data,
@@ -520,21 +520,21 @@ android {
 dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.10"
-    
+
     // Compose
     implementation "androidx.compose.ui:ui:1.5.4"
     implementation "androidx.compose.material3:material3:1.1.2"
-    
+
     // Networking
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.okhttp3:okhttp:4.11.0"
-    
+
     // Persistence
     implementation "androidx.room:room-runtime:2.5.2"
-    
+
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
-    
+
     // Analytics
     implementation "com.google.firebase:firebase-analytics:21.3.0"
 }
@@ -555,31 +555,173 @@ dependencies {
 
 ---
 
+## ADB Local Verification (Emulator)
+
+Use ADB to verify builds on the connected emulator without relying on build success alone.
+
+**ADB path**: `export PATH="$PATH:/Users/lovellfelix/Library/Android/sdk/platform-tools"`
+
+**Package names** (verified via `adb shell pm list packages | grep grenadian`):
+
+- Debug: `com.lovellfelix.grenadianbuzzz.debug`
+- Release: `com.lovellfelix.grenadianbuzz`
+
+**Launcher activity**: `com.lovellfelix.grenadianbuzzz.activities.HomeActivity` (NOT `MainActivity`)
+
+**APK filename**: Debug output is NOT `app-debug.apk` — it follows `grenadianbuzz-v{version}(debug)-{hash}-{date}.apk`
+
+```bash
+find app/build/outputs/apk/debug -name "*.apk"  # always locate before installing
+```
+
+**Emulator display**: 1280×2856 @ 480dpi — always use UI dump for tap coordinates, never guess from screenshots.
+
+```bash
+# Install
+adb -s emulator-5554 install -r "app/build/outputs/apk/debug/<name>.apk"
+
+# Launch
+adb -s emulator-5554 shell am start -n \
+  "com.lovellfelix.grenadianbuzzz.debug/com.lovellfelix.grenadianbuzzz.activities.HomeActivity"
+
+# Screenshot
+adb -s emulator-5554 shell screencap -p /sdcard/s.png && adb -s emulator-5554 pull /sdcard/s.png /tmp/s.png
+
+# Exact element coordinates (never guess)
+adb -s emulator-5554 shell uiautomator dump /sdcard/ui.xml && adb -s emulator-5554 pull /sdcard/ui.xml /tmp/ui.xml
+grep -o 'text="<label>"[^>]*>' /tmp/ui.xml  # extract bounds="[x1,y1][x2,y2]", tap center
+
+# App-only logcat (no system noise)
+adb -s emulator-5554 logcat -d --pid=$(adb -s emulator-5554 shell pidof com.lovellfelix.grenadianbuzzz.debug)
+```
+
+**Worktree setup**: Worktrees do NOT inherit `local.properties` or `google-services.json` from the main repo.
+
+```bash
+cp /path/to/main/repo/local.properties .
+cp /path/to/main/repo/app/google-services.json app/
+```
+
+---
+
+## Radio Architecture & EventBus Patterns
+
+The radio feature uses ExoPlayer inside a `MediaBrowserServiceCompat` (`RadioService`) with EventBus for cross-component status updates.
+
+### Status flow
+
+```
+User tap → RadioFragment.itemClicked() → RadioManager.playOrPause()
+  → RadioService.playOrPause() → ExoPlayer.prepare() + playWhenReady=true
+  → RadioService.onPlayerStateChanged() → EventBus.post(status)
+  → MiniPlayerController.onPlaybackStatusChanged() → show/hide mini player
+  → RadioFragment.onEvent() → handle ERROR only
+```
+
+### EventBus + `bindService` gotcha
+
+`bindService()` is async — `service` is **always `null`** immediately after calling it. Any `EventBus.post()` that reads `service` in `bind()` is a silent no-op.
+
+```kotlin
+// WRONG — service is null, post never fires
+fun bind() {
+    context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+    service?.let { EventBus.getDefault().post(it.getStatus()) }  // silent no-op
+}
+
+// CORRECT
+fun bind() {
+    if (serviceBound) {
+        service?.let { EventBus.getDefault().post(it.getStatus()) }
+        return
+    }
+    context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+}
+
+override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
+    service = (binder as? RadioService.LocalBinder)?.getService()
+    serviceBound = true
+    service?.let { EventBus.getDefault().post(it.getStatus()) }  // service is live here
+}
+```
+
+The `serviceBound` short-circuit lets `RadioFragment.onResume()` re-trigger a status post without re-binding (e.g., when returning to the Radio tab mid-playback).
+
+### Mini player visibility
+
+`MiniPlayerController` is attached in `MainActivity.onCreate()`. Its container (`R.id.mini_player_container`) is in `content_main.xml` — a sibling to `fragment_layout`, **not** inside any fragment. It persists across all tab switches.
+
+Visibility is entirely driven by EventBus:
+
+- `PLAYING` / `LOADING` / `PAUSED` → show
+- `IDLE` / `STOPPED` / `ERROR` → hide
+
+If the mini player disappears unexpectedly: first check `onPlayerStateChanged` logs — it may be a genuine STOPPED/ERROR from a failed stream, not a layout bug.
+
+### Companion object `MutableList` in Fragment
+
+Static lists in `companion object` survive Fragment destruction. If a list is populated in a lifecycle method called on every Fragment creation, it **accumulates** entries across tab navigations.
+
+```kotlin
+// WRONG — accumulates across navigations
+companion object {
+    val stationList: MutableList<MediaMetaData> = ArrayList()
+}
+private fun setUpRecyclerView() {
+    for (station in stations) { stationList.add(...) }  // doubles on every navigate
+}
+
+// CORRECT
+private fun setUpRecyclerView() {
+    stationList.clear()  // reset before repopulating
+    for (station in stations) { stationList.add(...) }
+}
+```
+
+---
+
 ## Troubleshooting
 
 **App crashes on launch**
+
 - Check logcat: `adb logcat | grep FATAL`
 - Verify API key/auth in Retrofit configuration
 - Check Room database initialization
 
 **Offline feed not showing cached articles**
+
 - Verify ArticleDao queries return data: debug with `adb shell`
 - Check cache expiration logic (deleteOlderThan timing)
 - Ensure Room database file exists: `adb shell ls /data/data/com.grenadianbuzz/databases/`
 
 **Token expired in middle of session**
+
 - Verify token refresh in AuthInterceptor
 - Check JWT exp claim parsing
 - Ensure Retrofit retries failed requests after token refresh
 
 **Moderation status showing in user feed (should be hidden)**
+
 - Verify is_flagged check in ArticleCard Composable
 - Add safety filter: `articles.filter { !it.is_flagged }`
 
 **Rate limiting errors (429) on image loading**
+
 - Check image size optimization (ImageUrl compression on server)
 - Implement caching in OkHttp: `CacheControl.FORCE_CACHE` for images
 - Use ETag/conditional requests to reduce bandwidth
+
+**Radio mini player doesn't appear after tapping a station**
+
+- Check logcat for `onServiceConnected` — if missing, service failed to bind
+- Confirm EventBus post is in `onServiceConnected`, not in `bind()` (async timing)
+- Check `stationList` for stale entries — `itemClicked(position)` may reference wrong station
+
+**Radio stream stops immediately after starting**
+
+- Stream URL may be expired (check for old timestamps in URL params)
+- STOPPED/ERROR EventBus event will correctly hide the mini player — this is expected behavior
+- Test with a known-live stream URL to isolate service vs. stream issues
 
 ---
 
