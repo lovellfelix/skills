@@ -81,7 +81,7 @@ In Pi, memory surfaces are split by role. Use this mapping and translate to equi
 | ----------------------------------------------- | -------------------- |
 | Active working context (live session)           | `session_memory`     |
 | Task state and progress tracking                | `workflow_tasks`     |
-| On-disk promoted summaries, handoffs, autodream | `durable_memory`     |
+| On-disk promoted summaries and handoffs         | `durable_memory`     |
 | Work notes / runbooks in `~/knowledgebase`      | `work_knowledgebase` |
 
 Key `session_memory` actions:
@@ -140,18 +140,17 @@ Use `workflow_tasks` for task status, then `session_memory` for targeted context
 
 When reading durable artifacts, prefer:
 
-1. `projects/<project>/artifacts/autodream-*-latest.md`
+1. `projects/<project>/artifacts/*-latest.md`
 2. `promoted/*-compact.md`
 3. `handoffs/YYYY/MM/*.md`
 
-## Autodream promotion
+## Durable promotion
 
-Autodream runs automatically:
+Promote session memory to durable artifacts manually or via explicit tooling; Pi does not automatically trigger promotions.
 
-- After each `agent_end` (throttled to 1h) and on `session_shutdown`.
-- Mode defaults to `apply` (writes to disk).
-- Trigger manually: `durable_memory` tool with `autodream_apply`.
-- Override: `PI_DURABLE_MEMORY_AUTO_MODE=report|apply|off`.
+- Manual (recommended): `./hacks/promote-session-memory.sh --session-id <session-id>`
+- Via MCP helper: use the `durable_memory` tool or the repo-provided promotion scripts with explicit `--apply` to write artifacts.
+- Use `--dry-run` to preview actions before writing promoted files under `~/.agents/memory/promoted/`.
 
 ## Fallback: MCP unavailable
 
