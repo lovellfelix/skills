@@ -73,16 +73,52 @@ At handoff:
 - Write one summary record pointing to key context keys and durable file paths.
 - Keep `projects/<project>/current.md` and the latest handoff packet aligned.
 
+## Token budget and cross-harness guidance
+
+The session-memory MCP exposes 60+ tools. Not all harnesses need the full surface — injecting 60 tool definitions into every session wastes context budget and slows inference.
+
+**Use only these core tools in normal sessions:**
+
+| Tool                                        | Purpose                                         |
+| ------------------------------------------- | ----------------------------------------------- |
+| `store_session_context`                     | Write a workflow/decision/blocker record        |
+| `retrieve_session_context`                  | Read by key or type                             |
+| `update_session_context`                    | Append without overwriting                      |
+| `assemble_active_context`                   | Pull full active context for resume/continue    |
+| `track_user_preference`                     | Persist a style or workflow preference (silent) |
+| `get_user_preferences`                      | Read preferences before style decisions         |
+| `learn_project_convention`                  | Record a stable project pattern                 |
+| `get_project_conventions`                   | Read conventions before pattern-sensitive work  |
+| `create_task` / `get_tasks` / `update_task` | Task lifecycle                                  |
+| `search_memories`                           | FTS5 search across all records                  |
+| `server_health`                             | Check MCP availability                          |
+
+**Avoid in token-constrained contexts:** API spec tools (`store_api_spec`, `get_api_endpoints`, etc.), analytics (`analysis_memory_map`, `analysis_conflicts`), routing pattern tools, batch tools, and the web dashboard. These are maintenance surfaces, not runtime tools.
+
+**CLI-first for non-agent tasks:** For shell scripts, hooks, and inspection outside an agent session, prefer the built-in CLI over starting an MCP session:
+
+```bash
+# The MCP package ships a CLI at mcp-cli.js
+node ~/.dotfiles/mcp/session-memory/mcp-cli.js stats
+node ~/.dotfiles/mcp/session-memory/mcp-cli.js recent 10
+node ~/.dotfiles/mcp/session-memory/mcp-cli.js search <term>
+node ~/.dotfiles/mcp/session-memory/mcp-cli.js health
+```
+
+Use the CLI for: startup hooks, post-session summaries, cron-based cleanup, shell aliases that query memory, and debugging data without consuming agent context.
+
+**Cross-harness note:** Claude Code and OpenCode load session-memory as a full MCP server. Cursor and Copilot should use the CLI or skip MCP entirely — the token overhead is not justified for those harnesses unless you restrict to the core 11 tools above.
+
 ## Tool mapping (Pi and similar harnesses)
 
 In Pi, memory surfaces are split by role. Use this mapping and translate to equivalent tools in other harnesses:
 
-| Need                                            | Tool                 |
-| ----------------------------------------------- | -------------------- |
-| Active working context (live session)           | `session_memory`     |
-| Task state and progress tracking                | `workflow_tasks`     |
-| On-disk promoted summaries and handoffs         | `durable_memory`     |
-| Work notes / runbooks in `~/knowledgebase`      | `work_knowledgebase` |
+| Need                                       | Tool                 |
+| ------------------------------------------ | -------------------- |
+| Active working context (live session)      | `session_memory`     |
+| Task state and progress tracking           | `workflow_tasks`     |
+| On-disk promoted summaries and handoffs    | `durable_memory`     |
+| Work notes / runbooks in `~/knowledgebase` | `work_knowledgebase` |
 
 Key `session_memory` actions:
 
