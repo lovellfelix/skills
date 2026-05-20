@@ -35,6 +35,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **java-to-kotlin-migration** | `portable/java-to-kotlin-migration/` | Use when migrating Android projects from Java to Kotlin while maintaining behavior and test coverage. |
 | **knowledgebase-workflow** | `portable/knowledgebase-workflow/` | Use when organizing, searching, or updating the personal knowledgebase via Obsidian vault or work notes. |
 | **life-organizer** | `portable/life-organizer/` | Use when the user asks to review personal reminders, calendar events, Apple Notes context, family plans, or general life-admin tasks on a macOS machine. |
+| **llm-wiki-workflow** | `portable/llm-wiki-workflow/` | Use when searching, reading, ingesting, or updating ~/llm-wiki from durable memory and session-memory context. |
 | **location-search** | `portable/location-search/` | Use when planning trips, finding nearby places, or integrating location features with a no-API-key default flow, including ZIP or postal-code lookup. |
 | **marketing-psychology** | `portable/marketing-psychology/` | Use when applying psychological principles, mental models, or behavioral science to marketing decisions, messaging, or conversion strategy. Also triggers on 'cognitive bias,' 'persuasion,' 'why people buy,' or 'consumer behavior.' |
 | **mcp-builder** | `portable/mcp-builder/` | Use when building or extending an MCP (Model Context Protocol) server to expose external APIs or services to LLMs, in Python (FastMCP) or Node/TypeScript (MCP SDK). |
@@ -51,10 +52,6 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **weather-forecast** | `portable/weather-forecast/` | Use when the user asks for current weather, today's conditions, or a short forecast without relying on paid weather APIs. |
 | **writing-plans** | `portable/writing-plans/` | Use when you have a spec or requirements for a multi-step task, before touching code |
 | **writing-skills** | `portable/writing-skills/` | Use when creating new skills, editing existing skills, or verifying skills work before deployment. |
-
-## Runtime-Specific Skills
-
-Skills with runtime-specific adapters or overlays.
 
 ## Archive
 

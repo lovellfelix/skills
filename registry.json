@@ -1532,6 +1532,65 @@
           }
         }
       },
+      "description": "Use when searching, reading, ingesting, or updating ~/llm-wiki from durable memory and session-memory context.",
+      "entrypoint": "SKILL.md",
+      "location": "portable/llm-wiki-workflow/",
+      "name": "llm-wiki-workflow",
+      "personal_machine_only": true,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "llm-wiki",
+        "memory",
+        "workflow",
+        "obsidian",
+        "markdown"
+      ],
+      "version": "0.1.0",
+      "work_machine_only": false
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Use when planning trips, finding nearby places, or integrating location features with a no-API-key default flow, including ZIP or postal-code lookup.",
       "entrypoint": "SKILL.md",
       "location": "portable/location-search/",
