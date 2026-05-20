@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "name": "llm-wiki-workflow",
-  "description": "Use when searching, reading, ingesting, or updating ~/llm-wiki. Wiki is the primary durable layer for curated project knowledge; session-memory is for live in-session context.",
-  "version": "0.2.0",
+  "description": "Use when searching, reading, ingesting, or updating ~/llm-wiki via the llm-wiki CLI. Wiki is the primary durable layer for curated project knowledge; session-memory is for live in-session context.",
+  "version": "0.3.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": ["llm-wiki", "memory", "workflow", "obsidian", "markdown"],

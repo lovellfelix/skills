@@ -2,7 +2,7 @@
 name: llm-wiki-workflow
 description: Use when searching, reading, ingesting, or updating ~/llm-wiki. Wiki is the primary durable layer for curated project knowledge; session-memory is for live in-session context.
 metadata:
-  version: 0.2.0
+  version: 0.3.0
   portable: true
   tags: [llm-wiki, memory, workflow, obsidian, markdown]
 ---
@@ -10,6 +10,8 @@ metadata:
 # LLM Wiki Workflow
 
 `~/llm-wiki` is the primary durable knowledge store. It replaces `durable_memory` for curated, long-lived content and complements session-memory, which handles fast in-session context.
+
+CLI: `llm-wiki` — a thin wrapper around `obsidian-notes` with `KNOWLEDGEBASE_PATH=~/llm-wiki`. Override vault path with `LLM_WIKI_PATH`.
 
 ## Personal Machine Activation
 
@@ -44,29 +46,50 @@ This skill is personal-machine only.
 - Content is sensitive, secret, or credential-like.
 - About to overwrite a source note (sources are immutable).
 
+## CLI reference
+
+The `llm-wiki` command wraps `obsidian-notes` against the `~/llm-wiki` vault.
+
+```
+llm-wiki search <query>               # full-text search across notes and sources
+llm-wiki read <path>                  # read a note (relative to vault root)
+llm-wiki recent                       # list recently modified notes
+llm-wiki write <path> --title "T" \
+  --content "..." --tags tag1,tag2    # create or overwrite a note
+llm-wiki append <path> --content "…" # append to an existing note
+llm-wiki backlinks <path>             # show notes that link to this note
+llm-wiki graph <path>                 # show relationship graph for a note
+llm-wiki query-tag <tag>             # list notes with a given tag
+llm-wiki commit --type notes \
+  --message "dotfiles: session notes" # commit vault changes to git
+```
+
 ## Session-start protocol
 
-1. Check `~/llm-wiki/index.md` for the active project entry.
-2. Read `~/llm-wiki/notes/projects/<project>.md` if it exists.
-3. Scan `~/llm-wiki/log.md` (last 30 lines) for recent activity.
-4. Fall back to session-memory `assemble_active_context` for transient state not yet promoted.
+1. `llm-wiki read notes/projects/<project>.md` — restore project context.
+2. `llm-wiki recent` — scan recent changes if context is stale.
+3. Fall back to session-memory `assemble_active_context` for transient state not yet promoted.
 
 ```bash
-tail -30 ~/llm-wiki/log.md
-cat ~/llm-wiki/notes/projects/dotfiles.md
+llm-wiki read notes/projects/dotfiles.md
+llm-wiki recent
 ```
 
 ## Session-end / milestone protocol
 
 After completing significant work, promote durable insights:
 
-1. Update `~/llm-wiki/notes/projects/<project>.md` with decisions and status.
-2. Append a log entry to `~/llm-wiki/log.md`.
-3. If the insight is a reusable workflow, add to `~/llm-wiki/notes/workflows/`.
-4. Leave transient task state in session-memory; do not promote noise.
+1. Update the project note with decisions and status.
+2. Commit vault changes.
+3. If the insight is reusable, add to `notes/workflows/`.
 
 ```bash
-printf '\n## [%s] dotfiles | <summary>\n- <bullet>\n' "$(date +%Y-%m-%d)" >> ~/llm-wiki/log.md
+llm-wiki append notes/projects/dotfiles.md --content "$(cat <<'EOF'
+## [2026-05-20] session summary
+- Improved llm-wiki skill to use obsidian-notes CLI
+EOF
+)"
+llm-wiki commit --type notes --message "dotfiles: session summary"
 ```
 
 ## Vault structure
@@ -87,7 +110,7 @@ printf '\n## [%s] dotfiles | <summary>\n- <bullet>\n' "$(date +%Y-%m-%d)" >> ~/l
 
 ## Project note pattern
 
-`~/llm-wiki/notes/projects/<project>.md` is the single source of truth for a project. It replaces the old `durable_memory` `current.md` pattern.
+`notes/projects/<project>.md` is the single source of truth per project. Replaces the old `durable_memory` `current.md` pattern.
 
 ```yaml
 ---
@@ -113,77 +136,49 @@ Current state in one sentence.
 - Unresolved items
 ```
 
-## Ingestion commands
+Create it with:
 
-### Import a durable_memory artifact
+```bash
+llm-wiki write notes/projects/<project>.md \
+  --title "Project Name" \
+  --tags project,active \
+  --content "## Status\n..."
+```
+
+## Ingestion: durable_memory artifact
 
 ```bash
 cp ~/.agents/memory/projects/<project>/current.md \
    ~/llm-wiki/sources/durable/<project>-$(date +%Y%m%d).md
-# then add immutable frontmatter and link from the project note
-```
-
-### Promote a session insight
-
-```bash
-# Write the curated note
-$EDITOR ~/llm-wiki/notes/projects/<project>.md
-# Append log entry
-printf '\n## [%s] <project> | <change>\n- <detail>\n' "$(date +%Y-%m-%d)" >> ~/llm-wiki/log.md
-# Commit
-git -C ~/llm-wiki add -A && git -C ~/llm-wiki commit -m "<project>: <summary>"
-```
-
-## Search / read / update flow
-
-1. Search for an existing note first — don't create duplicates.
-2. Read the exact note path before editing.
-3. Update the smallest note that fits; prefer existing notes over new files.
-4. Append a log entry.
-5. Validate frontmatter and commit.
-
-## Concise commands
-
-### Search
-
-```bash
-rg -n "gitops-homelab\|grenadianbuzz\|personal-assistant\|dotfiles" ~/llm-wiki
-```
-
-### Read a project note
-
-```bash
-cat ~/llm-wiki/notes/projects/dotfiles.md
-```
-
-### Read sources
-
-```bash
-sed -n '1,160p' ~/llm-wiki/sources/durable/grenadianbuzz.md
+# add immutable: true frontmatter, then link from the project note
+llm-wiki commit --type notes --message "<project>: import durable artifact"
 ```
 
 ## Vault rules
 
-- `sources/` entries are **immutable** — never edit, only append frontmatter.
+- `sources/` entries are **immutable** — never edit after import.
 - `notes/` is LLM-maintained synthesis — edit freely.
-- `log.md` is **append-only** — never delete or reorder entries.
-- `schema.md` is the note contract — follow it for all frontmatter.
+- Always commit after writing. Do not leave uncommitted wiki state.
 
 ## Validation
 
 ```bash
-find ~/llm-wiki -name '*.md' | sort
-rg -n '^---$|^title: |^type: |^created: |^updated: |^immutable:' ~/llm-wiki
+llm-wiki recent
 git -C ~/llm-wiki status --short
 ```
 
-## Relationship to session-memory-mcp
+## Bootstrap
 
-The two layers are complementary, not competing:
+`llm-wiki` is installed at `~/.local/bin/llm-wiki` via stow (opencode module). Bootstrap's `setup_opencode_cli()` verifies it after stow.
+
+- Requires `obsidian-notes` and `python3` (both verified by bootstrap).
+- Override vault path: `LLM_WIKI_PATH=/path/to/vault llm-wiki <command>`.
+
+## Relationship to session-memory-mcp
 
 - session-memory: fast lookup, current blockers, live task state, cross-session conventions.
 - llm-wiki: curated synthesis, project history, decision records, workflow notes.
 
 Promote from session-memory to wiki at session end or milestone. Query wiki at session start to restore project context without relying on session-memory being warm.
 
-See also: `session-memory-mcp` skill for in-session memory operations.
+See also: `session-memory-mcp` skill and `knowledgebase-workflow` skill (uses `~/knowledgebase` via same `obsidian-notes` backend).
