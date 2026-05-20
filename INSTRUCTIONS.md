@@ -1,13 +1,12 @@
 # Shared Agent Instructions
 
-Harness-agnostic core instructions used across all coding tools (Claude Code, OpenCode, Pi, Cursor).
+Harness-agnostic core instructions used across all coding tools (Claude Code, OpenCode, Pi).
 
 Each harness references or adapts these into its native format:
 
 - **Claude Code**: `~/.claude/CLAUDE.md`
 - **OpenCode**: `~/.config/opencode/AGENTS-CORE.md`
 - **Pi**: `~/.pi/agent/AGENTS.md`
-- **Cursor**: `~/.cursor/rules/global.mdc`
 
 ## Communication Style
 
@@ -34,6 +33,20 @@ Progressive discovery: glob → grep → targeted read with limit. Don't dump en
 - When user corrects something or establishes a pattern: silently track via session-memory
 - Session ID convention: use git repository basename (e.g., `dotfiles`, `myapp`)
 
+## Memory hierarchy
+
+| Layer           | Store                            | Use for                                            | Lifetime        |
+| --------------- | -------------------------------- | -------------------------------------------------- | --------------- |
+| Live context    | session-memory (SQLite)          | Active blockers, task state, conventions           | Current session |
+| Durable curated | `~/llm-wiki/notes/`              | Project synthesis, decisions, workflow notes       | Long-term       |
+| Durable raw     | `~/llm-wiki/sources/`            | Immutable imports from session or external sources | Permanent       |
+| Preferences     | `~/.claude/projects/.../memory/` | User feedback, preferences (Claude only)           | Persistent      |
+| _(deprecated)_  | `~/.agents/memory/projects/`     | Old durable_memory — migrate to wiki               | Deprecated      |
+
+- For project knowledge: write to `~/llm-wiki` using `llm-wiki` CLI, not `durable_memory`.
+- At session start for a known project: `llm-wiki read notes/projects/<project>.md`.
+- At session end / milestone: promote curated insights with `llm-wiki append` + `llm-wiki commit`.
+
 ## Reliability Bias
 
 For system design, architecture, or infrastructure work, briefly suggest when relevant:
@@ -47,7 +60,7 @@ circuit breakers, health checks, canary validation, phased rollouts, blast radiu
 
 ## Cross-Harness Awareness
 
-This user works across multiple coding harnesses: Claude Code, OpenCode, Pi, and Cursor.
+This user works across multiple coding harnesses: Claude Code, OpenCode, and Pi.
 
 - **Shared state**: Session-memory MCP is shared across harnesses. Preferences and conventions are available everywhere.
 - **Portable skills**: Skills in `~/.dotfiles/skills/portable/` work across all harnesses.

@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "name": "grenadianbuzz",
   "description": "Use when working on GrenadianBuzz features, architecture, or operational tasks across any surface (API, Android app, CLI, website, dashboard, docs).",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
@@ -23,15 +23,7 @@
       "path": "SKILL.md",
       "mode": "native"
     },
-    "cursor": {
-      "path": "SKILL.md",
-      "mode": "import"
-    },
     "claude": {
-      "path": "SKILL.md",
-      "mode": "include"
-    },
-    "copilot": {
       "path": "SKILL.md",
       "mode": "include"
     },
@@ -45,13 +37,7 @@
       "opencode": {
         "min_version": "*"
       },
-      "cursor": {
-        "min_version": "*"
-      },
       "claude": {
-        "min_version": "*"
-      },
-      "copilot": {
         "min_version": "*"
       },
       "pi": {

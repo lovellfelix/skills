@@ -5,21 +5,20 @@
   "version": "2026.1.28",
   "portable": true,
   "entrypoint": "SKILL.md",
-  "tags": ["nuxt", "vue", "nitro", "ssr", "routing", "portable"],
+  "tags": [
+    "nuxt",
+    "vue",
+    "nitro",
+    "ssr",
+    "routing",
+    "portable"
+  ],
   "adapters": {
     "opencode": {
       "path": "SKILL.md",
       "mode": "native"
     },
-    "cursor": {
-      "path": "SKILL.md",
-      "mode": "import"
-    },
     "claude": {
-      "path": "SKILL.md",
-      "mode": "include"
-    },
-    "copilot": {
       "path": "SKILL.md",
       "mode": "include"
     },
@@ -33,13 +32,7 @@
       "opencode": {
         "min_version": "*"
       },
-      "cursor": {
-        "min_version": "*"
-      },
       "claude": {
-        "min_version": "*"
-      },
-      "copilot": {
         "min_version": "*"
       },
       "pi": {

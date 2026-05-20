@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "name": "google-docs-style",
-  "description": "Use when writing content for Google Docs — internal docs, design summaries, proposals, updates, reviews — to produce clean, lightly formatted, professional output that looks natural when pasted into Google Docs.",
+  "description": "Use when writing content for Google Docs \u2014 internal docs, design summaries, proposals, updates, reviews \u2014 to produce clean, lightly formatted, professional output that looks natural when pasted into Google Docs.",
   "version": "0.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",
@@ -17,15 +17,7 @@
       "path": "SKILL.md",
       "mode": "native"
     },
-    "cursor": {
-      "path": "SKILL.md",
-      "mode": "import"
-    },
     "claude": {
-      "path": "SKILL.md",
-      "mode": "include"
-    },
-    "copilot": {
       "path": "SKILL.md",
       "mode": "include"
     },
@@ -39,13 +31,7 @@
       "opencode": {
         "min_version": "*"
       },
-      "cursor": {
-        "min_version": "*"
-      },
       "claude": {
-        "min_version": "*"
-      },
-      "copilot": {
         "min_version": "*"
       },
       "pi": {

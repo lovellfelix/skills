@@ -2,7 +2,7 @@
 name: grenadianbuzz
 description: Use when working on GrenadianBuzz features, architecture, or operational tasks across any surface (API, Android app, CLI, website, dashboard, docs).
 metadata:
-  version: 0.6.0
+  version: 0.7.0
   portable: true
   personal_machine_only: true
   tags: [grenadianbuzz, product, mobile, api, backend, frontend, architecture]
@@ -22,22 +22,30 @@ Three PRDs were archived 2026-05-09 to `docs/prd/_archive/`: `PROJECT_PRD.md`, `
 
 ---
 
-## Live Repo Issue/PR Snapshot (as of 2026-05-09)
+## Live Repo Issue/PR Snapshot (base 2026-05-09; deltas to 2026-05-14)
 
-- **grenadianbuzz-android**: 40 open issues / 17 open PRs — foundation work + heavy review queue (many drafts; overlapping Compose-migration PRs #296/#298/#301/#300). Bottleneck = PR review.
-- **grenadianbuzz.cli**: 18 open issues / 0 open PRs — newsletter epic #50–59 authored as issues, _no PRs raised_. Highest delivery risk in the project.
-- **api.grenadianbuzz.com**: 4 open issues / 4 open PRs — critical inflight: PR #278 PocketBase adapter (draft, needs go/no-go), PR #277 Pug→Mustache email templates (conflicts with issue #308), PR #302 FCM newsletter notifications.
+- **grenadianbuzz-android**: 40 open issues / ~15 open PRs — Compose pile-up triaged 2026-05-09: #296/#298 closed, #301 canonical, #300 awaiting author. _Deltas: Draft PR #302 (Android, #254 Google Sign-In) opened 2026-05-13; Draft PRs #305 (Room P1) + #308 (Room P2) opened 2026-05-13/14._
+- **grenadianbuzz.cli**: 18 open issues / ~1 open PRs — newsletter epic #50–59 authored as issues. _Delta 2026-05-10: Draft PR #62 (fetcher, #51) opened on `feat/newsletter-fetcher`. #52/#53 still need PRs._
+- **api.grenadianbuzz.com**: 4 open issues / 4 open PRs — critical inflight: PR #278 PocketBase adapter (draft, needs explicit go/no-go), PR #277 Pug→Mustache migration (proceed to merge), PR #302 FCM newsletter notifications.
 - **dashboard.grenadianbuzz.com**: 1 open issue / 4 open PRs — Nuxt rewrite inflight (PR #71/#75). Otherwise maintenance.
 - **grenadianbuzz.com**: 1 open issue / 5 open PRs — Renovate / Jekyll bumps only.
 
-### Routing Guidance & Repo Reality
+### Routing Guidance & Critical Decisions
 
-- **Tier 1**: AI Newsletter pipeline (CLI #50–59 + API #307/#308 + PR #302). The single product bet for 2026.
+- **Tier 1**: AI Newsletter pipeline (CLI #50–59 + **#48 metrics, promoted to Tier 1** + API #307/#308 + PR #302). The single product bet for 2026.
 - **Tier 2**: Android foundation (#254 → #282 → #287 → #255/#253). No UI redesign (#293) until done.
-- **Tier 3**: inflight migrations (Compose, PocketBase, Mustache, Nuxt). Rule: no new migration until 2 of these merge.
-- **Tier 4**: maintenance — website, dashboard post-Nuxt, Android `Backlog` label, KMM (#268).
-- **Pug-vs-Mustache** decision must precede API #308 (newsletter template) — PR #277 migrates templates from Pug to Mustache; do not build the template twice.
-- Re-verify the live counts above every 2 weeks via `gh issue/pr list`; if any number changes by >20%, revisit tier ordering.
+- **Tier 3**: inflight migrations (Compose #301, PocketBase #278, Mustache #277, Nuxt #71). Rule: no new migration starts until ≥2 of these merge.
+- **Tier 4**: maintenance — website, dashboard post-Nuxt, Android `Backlog` label, KMM (#268 — out of scope for 2026).
+- **Mustache is the email standard** (decided 2026-05-09): all new templates in Mustache; PR #277 bridges existing Pug. Issue #308 template name is `email-ai-newsletter.mustache`, not `.pug`. Do not author in Pug.
+- **Cron timezone bug** (critical): `"0 8 * * 1"` in `gbuzz/task.py` = 03:00–04:00 EST — unusable. Must be **`"0 13 * * 1"`** (09:00 EST). Fix before any production enable.
+- Re-verify live counts every 2 weeks via `gh issue/pr list`; if any count changes >20%, revisit tier ordering.
+
+### Newsletter Live Prerequisites (no GitHub issues yet — file before CLI #59 closes)
+
+1. **Subscriber list** — import or build opt-in list before first send.
+2. **Email auth** — SPF, DKIM, DMARC on `grenadianbuzz.com`; without this, Gmail/Outlook deliverability is broken.
+3. **Staging dry run** — full pipeline against ≥10 real addresses; verify render in Gmail/Apple Mail/Outlook web.
+4. **Cron timezone fix** — change to `"0 13 * * 1"` and confirm in staging before production enable.
 
 ---
 
@@ -73,37 +81,42 @@ High-signal work grouped by surface and dependency. **Source of truth**: GitHub 
 
 ### Android App (`grenadianbuzz-android`)
 
-| Issue            | Scope                                        | Status  | Notes                                  |
-| ---------------- | -------------------------------------------- | ------- | -------------------------------------- |
-| **#254**         | Google Sign-In implementation                | Queued  | Auth foundation                        |
-| **#282**         | Realm → Room database migration              | Queued  | Persistence foundation                 |
-| **#287**         | Testing & instrumentation expansion          | Queued  | Prerequisite for stability             |
-| **#255, #253**   | Android 15 status bar issues                 | Open    | OS compatibility                       |
-| **Android #293** | UI redesign — cultural identity & engagement | Planned | Depends on Android #287, #282 complete |
+| Issue            | Scope                                        | Status    | Notes                                                                             |
+| ---------------- | -------------------------------------------- | --------- | --------------------------------------------------------------------------------- |
+| **#254**         | Google Sign-In implementation                | Draft PR  | Android PR #302 open 2026-05-13; needs Google Cloud Console OAuth config          |
+| **#282**         | Realm → Room database migration              | Draft PRs | PR #305 (P1: empty DB + flag) + PR #308 (P2: AuditTrailRepository, -120 LOC) open |
+| **#287**         | Testing & instrumentation expansion          | PR needed | Draft PR needed; gates all remaining Tier 2 items                                 |
+| **#255, #253**   | Android 15 status bar issues                 | Open      | OS compatibility                                                                  |
+| **Android #293** | UI redesign — cultural identity & engagement | Blocked   | Explicitly blocked behind Tier 2 completion                                       |
 
-**Recommended sequencing**: Android #254 → #282 → #287 → #255/#253 → #293.
+**Recommended sequencing**: Android #254 (unblock OAuth config) → #282 (PRs open, need review) → #287 (open PR) → #255/#253 → #293.
 
 ### CLI (`grenadianbuzz.cli`)
 
-| Issue Range | Scope                               | Status  | Notes                                    |
-| ----------- | ----------------------------------- | ------- | ---------------------------------------- |
-| **#50–59**  | AI newsletter pipeline (epic)       | Active  | Business value: monetization, engagement |
-| **#48**     | Metrics aggregation & reporting     | Planned | Observability post-pipeline              |
-| **#47**     | Environment variables documentation | Planned | Ops readiness                            |
-| **#46**     | Operational runbook                 | Planned | Runbook + recovery                       |
-| **#49**     | Dependency maintenance              | Ongoing | Hygiene                                  |
+| Issue Range | Scope                               | Status      | Notes                                                               |
+| ----------- | ----------------------------------- | ----------- | ------------------------------------------------------------------- |
+| **#51**     | `newsletter/fetcher.py`             | In progress | Draft PR #62 open on `feat/newsletter-fetcher`; depends on API #307 |
+| **#52**     | `newsletter/ai_client.py`           | PR needed   | Needs draft PR this sprint                                          |
+| **#53**     | `newsletter/generator.py`           | PR needed   | Needs draft PR this sprint                                          |
+| **#54–59**  | notifier, commands, task, tests     | Queued      | Can start in parallel with #52/#53                                  |
+| **#48**     | Metrics aggregation & reporting     | **Tier 1**  | Promoted — exit criteria require metrics before newsletter is live  |
+| **#46**     | Operational runbook                 | Planned     | Runbook + recovery                                                  |
+| **#47**     | Environment variables documentation | Planned     | Ops readiness                                                       |
+| **#49**     | Dependency maintenance              | Ongoing     | Hygiene (Tier 4)                                                    |
 
-**Recommended sequencing**: #50–59 → #48 → #47/#46 → #49 (continuous).
+**Recommended sequencing**: #51 (inflight) → #52/#53 (this sprint) → #54–59 → #48 → subscriber list + email auth + staging dry run → production.
 
 ### API (`api.grenadianbuzz.com`)
 
-| Issue        | Scope                                     | Status   | Notes                      |
-| ------------ | ----------------------------------------- | -------- | -------------------------- |
-| **API #293** | Deprecation warnings (v2→v3 migration)    | Open     | Backward compatibility     |
-| **#307**     | Trending endpoint parameters              | Planning | Engagement optimization    |
-| **#308**     | Email template: `email-ai-newsletter.pug` | Blocked  | Coordinate with CLI #50–59 |
+| Issue        | Scope                                          | Status   | Notes                                                         |
+| ------------ | ---------------------------------------------- | -------- | ------------------------------------------------------------- |
+| **API #293** | Deprecation warnings (v2→v3 migration)         | Open     | Backward compatibility                                        |
+| **#307**     | `/v1/trending` `date`+`last` params            | Planning | Unblocks CLI #51 (fetcher)                                    |
+| **#308**     | Email template: `email-ai-newsletter.mustache` | Active   | Mustache format (decided 2026-05-09); coordinate with CLI #58 |
 
-**Recommended sequencing**: API #293 → #307 → #308 (coordinate with CLI).
+**Note on API #308**: template name is `email-ai-newsletter.mustache`, not `.pug`. Mustache is the project standard for all new email templates. See PR #277 for Pug→Mustache migration of existing templates.
+
+**Recommended sequencing**: #307 (unblocks CLI) → #308 (coordinate with CLI #58) → API #293 (opportunistically).
 
 ### Dashboard & Website
 
@@ -211,6 +224,7 @@ This skill is personal-machine only.
 
 ---
 
-**Version**: 0.5.0  
-**Last Updated**: May 3, 2026  
-**Audience**: Engineers, product leads
+**Version**: 0.7.0  
+**Last Updated**: May 20, 2026  
+**Audience**: Engineers, product leads  
+**Wiki**: `~/llm-wiki/notes/projects/grenadianbuzz.md` — live project synthesis with tier state and key decisions

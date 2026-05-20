@@ -50,6 +50,7 @@ python3 ./hacks/generate-skills-index.py
 CI runs this generator and fails if generated artifacts are out of date.
 
 Validates:
+
 - `SKILL.md` frontmatter (name, description, version, portable flag, tags)
 - `manifest.json` structure, adapter definitions, and compatibility metadata
 - Adapter path health (runtime link targets exist)
@@ -64,13 +65,14 @@ Validates:
 ./hacks/new-skill.sh my-skill-name
 ```
 
-**Runtime-specific skill** (OpenCode, Claude, Cursor, etc.):
+**Runtime-specific skill** (OpenCode, Claude, Pi, etc.):
 
 ```bash
 ./hacks/new-skill.sh my-skill-name --runtime opencode
 ```
 
 Both generate scaffolding with:
+
 - `SKILL.md` template with YAML frontmatter
 - `manifest.json` with adapter mappings
 - `examples/` and `reference/` directories (optional)
@@ -88,12 +90,11 @@ Runtime-facing paths can be generated as symlinks using:
 ./hacks/sync-skill-runtime-links.sh
 ```
 
-By default it syncs links for OpenCode, Claude, and Cursor (when detected):
+By default it syncs links for OpenCode, Claude, and Pi:
 
 - OpenCode: `~/.config/opencode/skills/portable` and `~/.config/opencode/skills/runtime`
 - Claude: `~/.claude/skills/portable`
-- Cursor: `~/.cursor/skills/portable`
-- Pi: usually consumes shared portable skills from `~/.agents/skills/` without requiring a dedicated manifest adapter key; `~/.pi/agent/skills/` remains available for Pi-local overlays
+- Pi: consumes shared portable skills from `~/.agents/skills/`; `~/.pi/agent/skills/` available for Pi-local overlays
 
 The sync script focuses on runtimes that need explicit materialized links. Pi normally reads the shared skill directory directly.
 
@@ -138,5 +139,5 @@ Target a runtime explicitly:
 ```bash
 ./hacks/sync-skill-runtime-links.sh --runtime opencode
 ./hacks/sync-skill-runtime-links.sh --runtime claude
-./hacks/sync-skill-runtime-links.sh --runtime cursor
+./hacks/sync-skill-runtime-links.sh --runtime pi
 ```
