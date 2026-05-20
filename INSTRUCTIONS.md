@@ -1,13 +1,12 @@
 # Shared Agent Instructions
 
-Harness-agnostic core instructions used across all coding tools (Claude Code, OpenCode, Pi, Cursor).
+Harness-agnostic core instructions used across all coding tools (Claude Code, OpenCode, Pi).
 
 Each harness references or adapts these into its native format:
 
 - **Claude Code**: `~/.claude/CLAUDE.md`
 - **OpenCode**: `~/.config/opencode/AGENTS-CORE.md`
 - **Pi**: `~/.pi/agent/AGENTS.md`
-- **Cursor**: `~/.cursor/rules/global.mdc`
 
 ## Communication Style
 
@@ -47,7 +46,7 @@ circuit breakers, health checks, canary validation, phased rollouts, blast radiu
 
 ## Cross-Harness Awareness
 
-This user works across multiple coding harnesses: Claude Code, OpenCode, Pi, and Cursor.
+This user works across multiple coding harnesses: Claude Code, OpenCode, and Pi.
 
 - **Shared state**: Session-memory MCP is shared across harnesses. Preferences and conventions are available everywhere.
 - **Portable skills**: Skills in `~/.dotfiles/skills/portable/` work across all harnesses.

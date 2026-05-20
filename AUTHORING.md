@@ -44,15 +44,7 @@ tags: [workflow, example]
       "path": "SKILL.md",
       "mode": "native"
     },
-    "cursor": {
-      "path": "SKILL.md",
-      "mode": "import"
-    },
     "claude": {
-      "path": "SKILL.md",
-      "mode": "include"
-    },
-    "copilot": {
       "path": "SKILL.md",
       "mode": "include"
     }
@@ -62,13 +54,10 @@ tags: [workflow, example]
       "opencode": {
         "min_version": "*"
       },
-      "cursor": {
-        "min_version": "*"
-      },
       "claude": {
         "min_version": "*"
       },
-      "copilot": {
+      "pi": {
         "min_version": "*"
       }
     }
@@ -80,7 +69,7 @@ Compatibility rules:
 
 - `compatibility.runtimes` is required.
 - Runtime keys must match `adapters` keys.
-- All supported runtimes (`opencode`, `cursor`, `claude`, `copilot`) should be declared for portable skills.
+- All supported runtimes (`opencode`, `claude`, `pi`) should be declared for portable skills.
 - Pi currently consumes portable skills through shared discovery (`~/.agents/skills/`) and does not require a dedicated `pi` adapter key in `manifest.json`.
 - Write portable skill bodies to be Pi-safe first: tool-agnostic, concise, and compatible with progressive discovery. If you need OpenCode-only examples or tool calls, label them clearly or move them into runtime-specific overlays.
 - `min_version` can be `*` or a runtime-version constraint string.
