@@ -1168,7 +1168,7 @@
           }
         }
       },
-      "description": "Use when searching, reading, ingesting, or updating ~/llm-wiki from durable memory and session-memory context.",
+      "description": "Use when searching, reading, ingesting, or updating ~/llm-wiki. Wiki is the primary durable layer for curated project knowledge; session-memory is for live in-session context.",
       "entrypoint": "SKILL.md",
       "location": "portable/llm-wiki-workflow/",
       "name": "llm-wiki-workflow",
@@ -1182,21 +1182,13 @@
         "obsidian",
         "markdown"
       ],
-      "version": "0.1.0",
+      "version": "0.2.0",
       "work_machine_only": false
     },
     {
       "adapters": {
         "claude": {
           "mode": "include",
-          "path": "SKILL.md"
-        },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "cursor": {
-          "mode": "import",
           "path": "SKILL.md"
         },
         "opencode": {
@@ -1211,12 +1203,6 @@
       "compatibility": {
         "runtimes": {
           "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
-            "min_version": "*"
-          },
-          "cursor": {
             "min_version": "*"
           },
           "opencode": {
