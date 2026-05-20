@@ -1,9 +1,11 @@
 # Skills Setup Summary
 
 ## Source of Truth (SOT)
+
 `~/.dotfiles/skills/` — All custom skills authored and versioned here.
 
 ### Directory Structure
+
 ```
 skills/
 ├── community-work.json      # Skills to install on work laptop
@@ -23,7 +25,7 @@ skills/
 OpenCode scans these locations (default, no config needed):
 | Path | Used By |
 |------|---------|
-| `~/.agents/skills/` | **Primary** - OpenCode, Cursor, Windsurf, Claude Code, Pi |
+| `~/.agents/skills/` | **Primary** - OpenCode, Claude Code, Pi |
 | `~/.config/opencode/skills/` | Legacy fallback |
 | `~/.claude/skills/` | Claude Code fallback |
 
@@ -39,12 +41,12 @@ Community skills install to `~/.agents/skills/` (primary) then symlink to `~/.cl
 
 ## Skills by Location
 
-| Skill Type | SOT Location | Runtime Location | Access |
-|-----------|--------------|------------------|--------|
-| **Local portable** | `skills/portable/` | `~/.agents/skills/portable/` | All harnesses |
-| **Local runtime** | `skills/runtime-specific/opencode/` | `~/.config/opencode/skills/` | OpenCode only |
-| **Community work** | Installed via bootstrap | `~/.agents/skills/` | All harnesses |
-| **Community personal** | Installed via bootstrap | `~/.agents/skills/` | All harnesses |
+| Skill Type             | SOT Location                        | Runtime Location             | Access        |
+| ---------------------- | ----------------------------------- | ---------------------------- | ------------- |
+| **Local portable**     | `skills/portable/`                  | `~/.agents/skills/portable/` | All harnesses |
+| **Local runtime**      | `skills/runtime-specific/opencode/` | `~/.config/opencode/skills/` | OpenCode only |
+| **Community work**     | Installed via bootstrap             | `~/.agents/skills/`          | All harnesses |
+| **Community personal** | Installed via bootstrap             | `~/.agents/skills/`          | All harnesses |
 
 ## Key Files
 

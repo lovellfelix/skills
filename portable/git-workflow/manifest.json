@@ -18,15 +18,7 @@
       "path": "SKILL.md",
       "mode": "native"
     },
-    "cursor": {
-      "path": "SKILL.md",
-      "mode": "import"
-    },
     "claude": {
-      "path": "SKILL.md",
-      "mode": "include"
-    },
-    "copilot": {
       "path": "SKILL.md",
       "mode": "include"
     },
@@ -40,13 +32,7 @@
       "opencode": {
         "min_version": "*"
       },
-      "cursor": {
-        "min_version": "*"
-      },
       "claude": {
-        "min_version": "*"
-      },
-      "copilot": {
         "min_version": "*"
       },
       "pi": {
