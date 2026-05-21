@@ -9,7 +9,9 @@ metadata:
 
 # KB Maintenance Skill
 
-> Structured workflow for knowledgebase health checks, inbox processing, metadata cleanup, and archiving.
+> Archived legacy skill. Do not use for new work.
+> Prefer `llm-wiki-workflow` + `session_memory` instead of `work_knowledgebase` flows.
+> Examples below are retained for historical reference only.
 
 ## Trigger Conditions
 

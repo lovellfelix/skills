@@ -1,14 +1,18 @@
 ---
 name: knowledgebase-workflow
-description: Use when organizing, searching, or updating the personal knowledgebase via Obsidian vault or work notes.
+description: DEPRECATED/ARCHIVED — use llm-wiki-workflow for knowledgebase tasks.
 metadata:
-  version: 1.1.0
+  version: 1.1.1
   portable: true
   personal_machine_only: true
-  tags: [knowledgebase, workflow, documentation, notes, obsidian, backlinks, graph]
+  archived: true
+  replacement: llm-wiki-workflow
+  tags: [knowledgebase, workflow, documentation, notes, obsidian, backlinks, graph, deprecated]
 ---
 
-# Knowledgebase Workflow
+# Knowledgebase Workflow (Archived)
+
+> Deprecated: This skill is archived. Use `llm-wiki-workflow` and `session_memory` instead.
 
 Operating guide for `~/knowledgebase` note retrieval, updates, and relationship-aware lookups.
 

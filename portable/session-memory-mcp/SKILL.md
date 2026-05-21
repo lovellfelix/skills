@@ -118,7 +118,7 @@ In Pi, memory surfaces are split by role. Use this mapping and translate to equi
 | Active working context (live session)      | `session_memory`     |
 | Task state and progress tracking           | `workflow_tasks`     |
 | On-disk promoted summaries and handoffs    | `durable_memory`     |
-| Work notes / runbooks in `~/knowledgebase` | `work_knowledgebase` |
+| Durable work notes / runbooks in `~/llm-wiki` | `llm-wiki` |
 
 Key `session_memory` actions:
 
