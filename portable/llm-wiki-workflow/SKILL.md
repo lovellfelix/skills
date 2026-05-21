@@ -11,7 +11,7 @@ metadata:
 
 `~/llm-wiki` is the primary durable knowledge store. It replaces `durable_memory` for curated, long-lived content and complements session-memory, which handles fast in-session context.
 
-CLI: `llm-wiki` — a thin wrapper around `obsidian-notes` with `KNOWLEDGEBASE_PATH=~/llm-wiki`. Override vault path with `LLM_WIKI_PATH`.
+CLI: `llm-wiki` — a thin wrapper around `obsidian-notes` that defaults to `~/llm-wiki`. Override the vault path with `LLM_WIKI_PATH`.
 
 ## Personal Machine Activation
 
@@ -55,7 +55,7 @@ llm-wiki search <query>               # full-text search across notes and source
 llm-wiki read <path>                  # read a note (relative to vault root)
 llm-wiki recent                       # list recently modified notes
 llm-wiki write <path> --title "T" \
-  --content "..." --tags tag1,tag2    # create or overwrite a note
+  --content "..." --tags tag1,tag2    # create or overwrite a note at that exact path
 llm-wiki append <path> --content "…" # append to an existing note
 llm-wiki backlinks <path>             # show notes that link to this note
 llm-wiki graph <path>                 # show relationship graph for a note
@@ -169,7 +169,7 @@ git -C ~/llm-wiki status --short
 
 ## Bootstrap
 
-`llm-wiki` is installed at `~/.local/bin/llm-wiki` via stow (opencode module). Bootstrap's `setup_opencode_cli()` verifies it after stow.
+`llm-wiki` is installed at `~/.local/bin/llm-wiki` via stow (shared module). Bootstrap's `setup_note_tools_cli()` verifies it with a help check after stow.
 
 - Requires `obsidian-notes` and `python3` (both verified by bootstrap).
 - Override vault path: `LLM_WIKI_PATH=/path/to/vault llm-wiki <command>`.

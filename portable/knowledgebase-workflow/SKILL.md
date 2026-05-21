@@ -21,7 +21,7 @@ This skill is personal-machine only.
 
 ## Tool Routing (Default)
 
-1. Use `~/.config/opencode/scripts/obsidian-notes.sh` for automation (`search`, `read`, `write`, `append`, `query-*`, `backlinks`, `graph`, `reindex-graph`).
+1. Use `obsidian-notes` for automation (`search`, `read`, `write`, `append`, `query-*`, `backlinks`, `graph`, `reindex-graph`).
 2. Use official `obsidian` CLI only when app-native behavior is explicitly useful (`open`, rename/move with Obsidian-managed link updates, interactive flows).
 3. Use session-memory graph-shaped context as durability/continuity support, not as the source of note content.
 
@@ -52,18 +52,18 @@ This skill is personal-machine only.
 
 ## Read/Write Patterns
 
-- Exact note path known → `obsidian-notes.sh read`
-- Broad query → `obsidian-notes.sh search`
-- Structured creation/update → `obsidian-notes.sh write` or `append`
-- Tag/type views → `obsidian-notes.sh query-tag` / `query-type`
-- Relationship context → `obsidian-notes.sh backlinks` / `graph`
+- Exact note path known → `obsidian-notes read`
+- Broad query → `obsidian-notes search`
+- Structured creation/update → `obsidian-notes write` or `append`
+- Tag/type views → `obsidian-notes query-tag` / `query-type`
+- Relationship context → `obsidian-notes backlinks` / `graph`
 
 ## Graph & Backlink Guidance
 
 - Keep markdown as source of truth.
 - Use backlinks/graph commands for traversal; use session-memory context for continuity between sessions.
 - Keep graph links sparse and high-signal; avoid noisy cross-linking.
-- If reindexing is needed, run `obsidian-notes.sh reindex-graph`.
+- If reindexing is needed, run `obsidian-notes reindex-graph`.
 
 ## Inbox Processing
 
