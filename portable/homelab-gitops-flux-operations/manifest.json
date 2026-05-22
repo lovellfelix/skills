@@ -41,6 +41,6 @@
       }
     }
   },
-  "work_machine_only": false,
+  "local_overlay_only": false,
   "personal_machine_only": true
 }

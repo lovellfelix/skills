@@ -134,7 +134,7 @@ bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh improve-tag-cluster 
 ## Rules
 
 - Never invent personal data; summarize only what the scripts return.
-- Keep work context out of Apple Notes workflows.
+- Keep repository execution context out of Apple Notes workflows.
 - Prefer stable shared tags like `family`, `school`, `health`, `event-birthday`, `resource-school`.
 - If a reminder really belongs on the calendar, say so explicitly.
 - If location or weather affects the plan, include one fallback.

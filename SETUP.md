@@ -8,7 +8,6 @@
 
 ```
 skills/
-├── community-work.json      # Skills to install on work laptop
 ├── community-personal.json  # Skills to install on personal laptop
 ├── portable/              # 37 portable skills (cross-harness)
 │   ├── code-review/
@@ -50,7 +49,7 @@ Community skills install to `~/.agents/skills/` (primary) then symlink to `~/.cl
 
 ## Key Files
 
-- `~/.work-env-skills` — Work machine flag (triggers work context)
+- `~/.dotfiles.local/overlays/local/.enabled` — Local overlay flag (triggers machine-specific skill gating)
 - `~/.personal-machine-skills.txt` — Personal-only allowlist
 - `skills/community-{work,personal}.json` — Community skill lists
 

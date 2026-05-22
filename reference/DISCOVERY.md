@@ -165,7 +165,7 @@ Quick triage when Pi cannot find a skill:
 
 1. Confirm `~/.agents/skills/<skill>/SKILL.md` exists.
 2. Confirm skill metadata passes `./hacks/validate-skills.sh`.
-3. If the skill is work-gated, confirm `~/.work-env-skills` exists (or override flag path).
+3. If the skill is local-overlay-gated, confirm `~/.dotfiles.local/overlays/local/.enabled` exists (or override flag path).
 4. Re-run sync only when you explicitly want Pi-local overlays: `./hacks/sync-skill-runtime-links.sh --runtime pi`.
 
 ## Trigger Documentation

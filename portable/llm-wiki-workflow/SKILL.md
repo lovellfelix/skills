@@ -181,4 +181,4 @@ git -C ~/llm-wiki status --short
 
 Promote from session-memory to wiki at session end or milestone. Query wiki at session start to restore project context without relying on session-memory being warm.
 
-See also: `session-memory-mcp` skill and `knowledgebase-workflow` skill (uses `~/knowledgebase` via same `obsidian-notes` backend).
+See also: `session-memory-mcp` skill. The legacy `knowledgebase-workflow` skill is archived.

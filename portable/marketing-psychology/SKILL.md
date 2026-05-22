@@ -28,7 +28,7 @@ Expert application of psychological principles and mental models to marketing. H
 This skill is personal-machine only.
 
 - Add `marketing-psychology` to `~/.personal-machine-skills.txt`.
-- Keep it off shared/work machines unless you explicitly allowlist it.
+- Keep it off shared/shared machines unless you explicitly allowlist it.
 
 ## How to apply
 

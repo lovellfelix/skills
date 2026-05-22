@@ -59,4 +59,4 @@ Run the smallest existing checks that provide confidence:
 This skill is personal-machine only.
 
 - Add `java-to-kotlin-migration` to `~/.personal-machine-skills.txt`.
-- Keep it off shared/work machines unless you explicitly allowlist it there.
+- Keep it off shared/shared machines unless you explicitly allowlist it there.

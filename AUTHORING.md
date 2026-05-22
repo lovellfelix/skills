@@ -77,16 +77,16 @@ Compatibility rules:
 Optional activation metadata (symmetric flag-file model):
 
 - `personal_machine_only`: boolean (manifest-only, default `false`)
-  - When `true`, the skill is linked only on personal machines (i.e., when `~/.work-env-skills` is **absent**).
-  - Use for skills that are irrelevant or inappropriate on work machines (personal projects, life admin, homelab, personal dev stacks).
+  - When `true`, the skill is linked only on personal machines (i.e., when `~/.dotfiles.local/overlays/local/.enabled` is **absent**).
+  - Use for skills that are irrelevant or inappropriate on local-overlay machines (personal projects, life admin, homelab, personal dev stacks).
   - No allowlist or per-machine opt-in required — the environment signal alone determines linking.
-- `work_machine_only`: boolean (manifest-only, default `false`)
-  - When `true`, the skill is linked only on work machines (i.e., when `~/.work-env-skills` is **present**).
-  - Use for skills that are work-domain specific (LinkedIn tooling, internal workflows, work-only MCP surfaces).
-- Both flags share the same gate file: `~/.work-env-skills`
-  - Present → work machine: `work_machine_only` skills link, `personal_machine_only` skills skip.
-  - Absent → personal machine: `personal_machine_only` skills link, `work_machine_only` skills skip.
-  - Override for testing: `SKILL_WORK_MACHINE_FLAG_FILE=/dev/null` (personal) or `SKILL_WORK_MACHINE_FLAG_FILE=~/.work-env-skills` (work).
+- `local_overlay_only`: boolean (manifest-only, default `false`)
+  - When `true`, the skill is linked only on machines where `~/.dotfiles.local/overlays/local/.enabled` is **present**.
+  - Use for skills that are local-overlay specific (private tooling, internal workflows, local-overlay MCP surfaces).
+- Both flags share the same gate file: `~/.dotfiles.local/overlays/local/.enabled`
+  - Present → local-overlay machine: `local_overlay_only` skills link, `personal_machine_only` skills skip.
+  - Absent → personal machine: `personal_machine_only` skills link, `local_overlay_only` skills skip.
+  - Override for testing: `SKILL_WORK_MACHINE_FLAG_FILE=/dev/null` (personal) or `SKILL_WORK_MACHINE_FLAG_FILE=~/.dotfiles.local/overlays/local/.enabled` (work).
 - Skills with neither flag link on all machines (universal portable skills).
 
 ## Versioning

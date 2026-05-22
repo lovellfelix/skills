@@ -113,14 +113,14 @@ Referenced from the `skills-and-commands-checklist` skill.
   - How to enable locally: Add skill name to `~/.personal-machine-skills.txt` (one per line)
   - Reference the allowlist file explicitly
   
-- [ ] **Alternative: Work-machine-only skills:**
-  - [ ] **In manifest.json:** Add `"work_machine_only": true`.
+- [ ] **Alternative: Local-overlay-only skills:**
+  - [ ] **In manifest.json:** Add `"local_overlay_only": true`.
   - [ ] **In SKILL.md:** Include a `## Work Machine Activation` section:
-    - Reference `~/.work-env-skills` flag file
+    - Reference `~/.dotfiles.local/overlays/local/.enabled` flag file
     - Explain how to create the flag file if needed
     - Document behavior when flag is missing
 
-**Rule:** If metadata says `personal_machine_only: true` or `work_machine_only: true`, the SKILL.md MUST have corresponding activation guidance section.
+**Rule:** If metadata says `personal_machine_only: true` or `local_overlay_only: true`, the SKILL.md MUST have corresponding activation guidance section.
 
 ---
 
@@ -143,7 +143,7 @@ Checks include:
 - [ ] Name in SKILL.md matches manifest.json (kebab-case)
 - [ ] Tags in SKILL.md match manifest.json
 - [ ] If `personal_machine_only: true`, SKILL.md includes activation section
-- [ ] If `work_machine_only: true`, SKILL.md includes activation section
+- [ ] If `local_overlay_only: true`, SKILL.md includes activation section
 
 ### 3.2 Content Validation
 
@@ -321,7 +321,7 @@ git symbolic-ref --list               # Check symlink targets
 - [ ] All adapter paths in `manifest.json` point to real files
 - [ ] Version matches in both files
 - [ ] If `personal_machine_only: true`, SKILL.md includes activation section
-- [ ] If `work_machine_only: true`, SKILL.md includes activation section
+- [ ] If `local_overlay_only: true`, SKILL.md includes activation section
 
 **Content:**
 - [ ] No TODO, FIXME, or placeholder sections remain

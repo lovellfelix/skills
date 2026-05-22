@@ -134,7 +134,7 @@ Example:
 
 ## Tooling / Markdown guidance
 
-- Use Markdown as the primary authoring source for Google Docs content. When publishing, call the Captain tools create_google_docs_document and write_to_google_docs_document with operation="append". Prefer not to pass a tab_id by default — this preserves conversion fidelity and reduces accidental nested-list artifacts. Supply tab_id only when you intentionally target a specific tab and accept lower formatting fidelity.
+- Use Markdown as the primary authoring source for Google Docs content. When publishing, call the document tools to create and append content. Prefer not to pass a tab_id by default — this preserves conversion fidelity and reduces accidental nested-list artifacts. Supply tab_id only when you intentionally target a specific tab and accept lower formatting fidelity.
 - Avoid pipe-delimited metadata lines at the top of a document — they often convert poorly to Google Docs and look machine-generated.
 - Prefer descriptive anchor text for links (e.g., "Design doc" → link) rather than pasting raw URLs when the tooling supports it.
 - Watch for stray tab characters or trailing spaces: these commonly cause unwanted list behavior. Use plain hyphen bullets (-) and do not indent list items with tabs.
@@ -172,4 +172,4 @@ Based on the provided bad-example, call out these avoidable mistakes explicitly:
 
 ## Related Skills
 
-This skill controls writing style and formatting for Google Docs content. For Google Docs MCP API tooling (creating, reading, writing documents), see the `writing-google-docs` LinkedIn plugin skill.
+This skill controls writing style and formatting for Google Docs content. For Google Docs API tooling (creating, reading, writing documents), use a machine-local overlay skill if one is configured.

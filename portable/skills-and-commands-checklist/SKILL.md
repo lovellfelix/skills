@@ -66,7 +66,7 @@ description: Use when… # trigger conditions only, ≤1024 chars
 license: MIT # optional, only if applicable
 metadata:
   version: "0.1.0"
-  portable: true # false for personal/work-machine-only
+  portable: true # false for personal/local-overlay-only
   tags: [tag1, tag2]
 ```
 
