@@ -80,16 +80,20 @@ llm-wiki recent
 After completing significant work, promote durable insights:
 
 1. Update the project note with decisions and status.
-2. Commit vault changes.
+2. Pull and reconcile remote wiki changes (e.g. `git -C ~/llm-wiki pull --rebase` or `git -C ~/llm-wiki pull`) and resolve any conflicts; then commit vault changes locally and push the branch to publish the curated note.
 3. If the insight is reusable, add to `notes/workflows/`.
 
 ```bash
+# update note
 llm-wiki append notes/projects/dotfiles.md --content "$(cat <<'EOF'
 ## [2026-05-20] session summary
 - Improved llm-wiki skill to use obsidian-notes CLI
 EOF
 )"
+# reconcile remote, resolve conflicts, then commit & push
+git -C ~/llm-wiki pull --rebase   # or 'git pull' to merge; resolve any conflicts
 llm-wiki commit --type notes --message "dotfiles: session summary"
+git -C ~/llm-wiki push
 ```
 
 ## Vault structure
@@ -158,13 +162,19 @@ llm-wiki commit --type notes --message "<project>: import durable artifact"
 
 - `sources/` entries are **immutable** — never edit after import.
 - `notes/` is LLM-maintained synthesis — edit freely.
-- Always commit after writing. Do not leave uncommitted wiki state.
+- Always pull and reconcile remote changes before committing and pushing; commit after resolving any conflicts and do not leave uncommitted or unresolved wiki state.
 
 ## Validation
 
+Before committing or pushing, pull remote changes and resolve any conflicts:
+
 ```bash
+git -C ~/llm-wiki pull --rebase   # or 'git pull' to merge; resolve conflicts if any
+# resolve conflicts, then verify
 llm-wiki recent
 git -C ~/llm-wiki status --short
+# finally push
+git -C ~/llm-wiki push
 ```
 
 ## Bootstrap
