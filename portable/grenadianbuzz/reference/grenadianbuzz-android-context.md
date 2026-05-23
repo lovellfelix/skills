@@ -4,39 +4,49 @@ Reference for building and maintaining the Android app for GrenadianBuzz.
 
 ## Android App Overview
 
-- **Language**: Kotlin
-- **UI Framework**: JetpackCompose
-- **Minimum SDK**: Android 10+
+- **Language**: Kotlin (≈85% migrated from Java; all new code must be Kotlin)
+- **UI Framework**: ViewBinding (fragments complete; activities in progress) + Jetpack Compose (Phase 7+, new screens)
+- **Minimum SDK**: Android 7.0+ (API 24)
 - **Architecture**: MVVM with Repository pattern
-- **Storage**: SQLite for local cache, encrypted SharedPreferences for auth
+- **Storage**: Realm (primary, legacy) + Room (strangler-fig replacement, one entity at a time behind `AuditTrailRepository` interface)
 - **Networking**: Retrofit + OkHttp with custom interceptors
 - **Async**: Coroutines with Flow
 - **Analytics**: Firebase Analytics + custom events
-- **Moderation**: Admin variant with moderation queue interface
+- **Build toolchain**: **Java 17 required** — KAPT is incompatible with Java 25; the build enforces `jvmToolchain(17)`. Use `./gradle-java17.sh` if your system JDK is not 17.
 
 ---
 
 ## Project Structure
 
 ```
-GrenadianBuzz/
-├── app/                        # Main app module
-│   ├── src/main/kotlin/
-│   │   ├── ui/
-│   │   │   ├── screens/        # Composables: Feed, Article, Events, Settings
-│   │   │   ├── components/     # Reusable: ArticleCard, CommentThread, ReactionPicker
-│   │   │   └── theme/          # Colors, typography, spacing
-│   │   ├── viewmodels/         # ViewModel: FeedViewModel, ArticleViewModel, etc.
-│   │   ├── data/
-│   │   │   ├── api/            # Retrofit services, interceptors, error handling
-│   │   │   ├── db/             # Room database, DAOs
-│   │   │   ├── repository/     # Repository pattern (local + remote)
-│   │   │   └── models/         # Data classes mirroring API payloads
-│   │   ├── utils/              # Helpers, date parsing, analytics
-│   │   └── App.kt              # Application entry point
-│   └── AndroidManifest.xml     # Permissions, app configuration
-├── admin/                      # Admin app variant (moderation queue)
-└── build.gradle                # Dependencies, build config
+com.lovellfelix.grenadianbuzzz/   ← package name (3 z's — critical)
+├── activities/          # All Activity classes (Kotlin)
+├── fragments/           # All Fragment classes (Kotlin, ViewBinding)
+├── adapters/            # RecyclerView adapters (legacy Java/Kotlin mix)
+├── models/              # Realm model objects + REST response models
+├── rest/                # Retrofit: RestClient.kt, RestInterface.kt
+├── data/
+│   ├── room/            # Room database (strangler-fig Realm replacement)
+│   │   ├── GrenadianBuzzDatabase.kt
+│   │   ├── DatabaseProvider.kt
+│   │   ├── entities/    # AuditTrailEntity, ObituaryEntity, ObituaryBookmarkEntity, …
+│   │   ├── daos/        # AuditTrailDao, ObituaryDao, ObituaryBookmarkDao
+│   │   └── migration/
+│   └── repository/      # AuditTrailRepository (interface) + implementations
+│       └── RepositoryProvider.kt  # selects Realm vs Room implementation
+├── ui/
+│   ├── compose/
+│   │   ├── screens/     # NewsScreen, ObituaryListScreen, ObituaryDetailScreen, RadioScreen
+│   │   ├── components/  # ObituaryCompactCard, ArticleCard, StationCard, …
+│   │   ├── obituary/    # ObituaryViewModel, ObituaryDetailViewModel
+│   │   ├── news/
+│   │   ├── radio/
+│   │   └── theme/
+├── services/            # Background services
+├── workers/             # WorkManager workers
+├── player/              # ExoPlayer integration
+├── utils/               # RealmHelper, ObituariesUtils, …
+└── views/               # Custom views
 ```
 
 ---
@@ -214,7 +224,9 @@ viewModelScope.launch {
 
 ## Local Storage & Offline-First
 
-SQLite + Room for local cache:
+**Current state**: Realm is the primary local database. Room is being introduced as a strangler-fig replacement — entities migrate one at a time behind the `AuditTrailRepository` interface. `RepositoryProvider.kt` selects the active implementation. Room schema snapshots are committed under `app/schemas/` and tracked in diffs.
+
+Example Room entity pattern (for new entities being migrated):
 
 ```kotlin
 @Entity(tableName = "articles")
@@ -278,12 +290,14 @@ class ArticleRepository(
 
 ## UI Patterns with JetpackCompose
 
-### Feed Screen
+Actual Compose screens live in `ui/compose/screens/`: `NewsScreen`, `ObituaryListScreen`, `ObituaryDetailScreen`, `RadioScreen`. Reusable components are in `ui/compose/components/`.
+
+### News Screen (example pattern)
 
 ```kotlin
 @Composable
-fun FeedScreen(
-    viewModel: FeedViewModel,
+fun NewsScreen(
+    viewModel: NewsViewModel,
     modifier: Modifier = Modifier
 ) {
     val articles by viewModel.articles.collectAsState()
@@ -437,121 +451,41 @@ class AnalyticsManager(private val context: Context) {
 
 ---
 
-## Admin App Variant
-
-Separate admin variant with moderation queue interface:
-
-```
-admin/
-├── src/main/AndroidManifest.xml  # Different app ID: com.grenadianbuzz.admin
-├── src/main/kotlin/
-│   ├── ui/screens/
-│   │   ├── ModerationQueueScreen.kt   # Flagged content list
-│   │   ├── ReviewDetailScreen.kt      # Single item review, approve/remove buttons
-│   │   └── StatsScreen.kt             # Moderation SLA, queue depth
-│   ├── viewmodels/
-│   │   └── ModerationQueueViewModel.kt
-│   └── data/
-│       └── api/ModerationService.kt
-└── build.gradle                        # Extends app/, additional dependencies
-```
-
-Example moderation endpoints consumed by admin app:
-
-```kotlin
-interface ModerationService {
-    @GET("/moderation/queue")
-    suspend fun getQueue(
-        @Query("status") status: String = "flagged",
-        @Query("limit") limit: Int = 50,
-        @Query("cursor") cursor: String? = null
-    ): Response<ModerationQueueResponse>
-
-    @GET("/moderation/{resource}/{id}")
-    suspend fun getReviewItem(
-        @Path("resource") resource: String,
-        @Path("id") id: String
-    ): Response<ReviewItemResponse>
-
-    @PATCH("/moderation/{resource}/{id}")
-    suspend fun updateReviewStatus(
-        @Path("resource") resource: String,
-        @Path("id") id: String,
-        @Body update: ModerationStatusUpdate
-    ): Response<ReviewItemResponse>
-}
-
-data class ModerationStatusUpdate(
-    val moderation_status: String,  // "approved", "removed", "needs_revision"
-    val reviewer_notes: String? = null
-)
-```
-
 ---
 
 ## Build & Deployment
 
 ### Build Configuration
 
-```gradle
-android {
-    compileSdk 34
-    defaultConfig {
-        applicationId "com.grenadianbuzz"
-        minSdk 30
-        targetSdk 34
-        versionCode 42
-        versionName "2.1.0"
-    }
+Key build facts (see `app/build.gradle` for full config):
 
-    flavorDimensions "variant"
-    productFlavors {
-        user {
-            dimension "variant"
-            applicationId "com.grenadianbuzz"
-        }
-        admin {
-            dimension "variant"
-            applicationId "com.grenadianbuzz.admin"
-        }
-    }
-}
-
-dependencies {
-    // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.10"
-
-    // Compose
-    implementation "androidx.compose.ui:ui:1.5.4"
-    implementation "androidx.compose.material3:material3:1.1.2"
-
-    // Networking
-    implementation "com.squareup.retrofit2:retrofit:2.9.0"
-    implementation "com.squareup.okhttp3:okhttp:4.11.0"
-
-    // Persistence
-    implementation "androidx.room:room-runtime:2.5.2"
-
-    // Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
-
-    // Analytics
-    implementation "com.google.firebase:firebase-analytics:21.3.0"
-}
 ```
+applicationId:  com.lovellfelix.grenadianbuzzz   ← 3 z's
+minSdk:         24 (Android 7.0)
+targetSdk:      35
+compileSdk:     35
+jvmToolchain:   17 (enforced; KAPT fails on Java 25)
+```
+
+Build types:
+
+- `debug` — `applicationIdSuffix ".debug"`, points at `API_HOST_IP` (local dev)
+- `release` — minify + shrink enabled, points at `GBUZZ_API_HOST_URL` (production)
+
+Version code is derived from `git rev-list --count HEAD` + offset 8930. Version name from latest git tag.
+
+No product flavors / no admin app variant in this repo.
 
 ### Release Checklist
 
-- [ ] Update version code and version name
-- [ ] Test on Android 10+ devices (emulator + real devices if possible)
-- [ ] Verify offline-first: kill network, check cached articles display
+- [ ] Update version tag (version name derived from git tag)
+- [ ] Test on Android 7.0+ devices (min SDK 24)
+- [ ] Run `./gradlew test` and `./gradlew connectedAndroidTest`
 - [ ] Check auth flow: login, token expiry, token refresh
-- [ ] Test moderation flow: verify is_flagged is respected in feed
 - [ ] Analytics: verify Firebase events firing
-- [ ] Admin app: test moderation queue, approve/remove actions
-- [ ] Performance: check ANR (Application Not Responding) logs
+- [ ] Performance: check ANR logs in Android Studio Profiler
 - [ ] Battery/memory: profile with Android Studio Profiler
-- [ ] Play Store release: upload APK/AAB, staged rollout (5% → 25% → 100%)
+- [ ] Play Store release: `./gradlew publishBundle --track=beta`; staged rollout to production via `promoteArtifact`
 
 ---
 
@@ -692,7 +626,7 @@ private fun setUpRecyclerView() {
 
 - Verify ArticleDao queries return data: debug with `adb shell`
 - Check cache expiration logic (deleteOlderThan timing)
-- Ensure Room database file exists: `adb shell ls /data/data/com.grenadianbuzz/databases/`
+- Ensure Room database file exists: `adb shell ls /data/data/com.lovellfelix.grenadianbuzzz.debug/databases/`
 
 **Token expired in middle of session**
 
