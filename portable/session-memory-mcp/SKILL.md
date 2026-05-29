@@ -57,6 +57,8 @@ Store separately from per-session updates:
 
 ### Retrieval strategy
 
+**IDs:** `project_id` = git repo basename (e.g. `"dotfiles"`); `session_id` = `"personal-assistant"` for conversational sessions. `assemble_active_context` searches across all harnesses regardless of `session_id`.
+
 At session start (first turn):
 
 1. Durable context is auto-injected from `durable_memory` — read and apply it.
@@ -113,12 +115,12 @@ Use the CLI for: startup hooks, post-session summaries, cron-based cleanup, shel
 
 In Pi, memory surfaces are split by role. Use this mapping and translate to equivalent tools in other harnesses:
 
-| Need                                       | Tool                 |
-| ------------------------------------------ | -------------------- |
-| Active working context (live session)      | `session_memory`     |
-| Task state and progress tracking           | `workflow_tasks`     |
-| On-disk promoted summaries and handoffs    | `durable_memory`     |
-| Durable work notes / runbooks in `~/llm-wiki` | `llm-wiki` |
+| Need                                          | Tool             |
+| --------------------------------------------- | ---------------- |
+| Active working context (live session)         | `session_memory` |
+| Task state and progress tracking              | `workflow_tasks` |
+| On-disk promoted summaries and handoffs       | `durable_memory` |
+| Durable work notes / runbooks in `~/llm-wiki` | `llm-wiki`       |
 
 Key `session_memory` actions:
 
