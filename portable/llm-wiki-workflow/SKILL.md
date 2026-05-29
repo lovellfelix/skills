@@ -184,6 +184,42 @@ git -C ~/llm-wiki push
 - Requires `obsidian-notes` and `python3` (both verified by bootstrap).
 - Override vault path: `LLM_WIKI_PATH=/path/to/vault llm-wiki <command>`.
 
+## Wiki maintenance procedure
+
+### Corrections file format
+
+```
+### <topic>
+
+<one-sentence rule>
+
+**Why:** <the incident or reason>
+
+**How to apply:** <where/when this guidance kicks in>
+```
+
+Add under `## Active` in `notes/learnings/corrections.md`. Move stale entries to `## Archive`.
+
+### Promotion triggers
+
+Promote session work to wiki when ≥1 is true:
+
+- ≥2 corrections in the session
+- A new reusable pattern or workflow was established
+- Significant project state changed (new blocker, decision, milestone)
+- User says "remember this", "add to wiki", or "promote this"
+
+### After any wiki write → commit and push
+
+```bash
+cd ~/llm-wiki
+git add -A
+git commit -m "<type>(<scope>): <summary>"  # feat | ingest | curate | config | fix
+git push
+```
+
+One commit per logical batch. Do this immediately after the write step, not at session end.
+
 ## Relationship to session-memory-mcp
 
 - session-memory: fast lookup, current blockers, live task state, cross-session conventions.
