@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-# Lightweight pre-commit hook for KB validation.
-set -euo pipefail
-ROOT=$(git rev-parse --show-toplevel)
-cd "$ROOT"
-./scripts/kb-change-summary.sh
