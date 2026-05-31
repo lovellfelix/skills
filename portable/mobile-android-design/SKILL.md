@@ -1,7 +1,18 @@
 ---
 name: mobile-android-design
 description: Material Design 3 and Jetpack Compose patterns for native Android. Use when designing Android interfaces, implementing Compose UI, building adaptive layouts, or applying M3 theming. Deep-dives in references/: material3-theming.md, compose-components.md, android-navigation.md.
+metadata:
+  version: 0.1.0
+  portable: false
+  tags: [android, kotlin, compose, material3, ui, grenadianbuzz]
 ---
+
+## Personal Machine Activation
+
+This skill is personal-machine only.
+
+- Add `mobile-android-design` to the allowlist in `~/.personal-machine-skills.txt`.
+- Bootstrap and runtime sync only expose it when that allowlist includes the skill.
 
 # Android Mobile Design
 
