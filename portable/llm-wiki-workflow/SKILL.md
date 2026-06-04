@@ -11,7 +11,7 @@ metadata:
 
 `~/llm-wiki` is the primary durable knowledge store. It replaces `durable_memory` for curated, long-lived content and complements session-memory, which handles fast in-session context.
 
-CLI: `llm-wiki` — a thin wrapper around `obsidian-notes` that defaults to `~/llm-wiki`. Override the vault path with `LLM_WIKI_PATH`.
+CLI: `llm-wiki` — standalone bash script (no external dependencies beyond git and coreutils) that defaults to `~/llm-wiki`. Override the vault path with `LLM_WIKI_PATH`.
 
 ## Personal Machine Activation
 
@@ -48,7 +48,7 @@ This skill is personal-machine only.
 
 ## CLI reference
 
-The `llm-wiki` command wraps `obsidian-notes` against the `~/llm-wiki` vault.
+The `llm-wiki` command is a standalone bash script managing the `~/llm-wiki` vault.
 
 ```
 llm-wiki search <query>               # full-text search across notes and sources
@@ -58,8 +58,8 @@ llm-wiki write <path> --title "T" \
   --content "..." --tags tag1,tag2    # create or overwrite a note at that exact path
 llm-wiki append <path> --content "…" # append to an existing note
 llm-wiki backlinks <path>             # show notes that link to this note
-llm-wiki graph <path>                 # show relationship graph for a note
 llm-wiki query-tag <tag>             # list notes with a given tag
+llm-wiki import <path> [--project <slug>] # import a durable artifact into sources/durable/
 llm-wiki commit --type notes \
   --message "dotfiles: session notes" # commit vault changes to git
 ```
@@ -87,7 +87,7 @@ After completing significant work, promote durable insights:
 # update note
 llm-wiki append notes/projects/dotfiles.md --content "$(cat <<'EOF'
 ## [2026-05-20] session summary
-- Improved llm-wiki skill to use obsidian-notes CLI
+- Improved llm-wiki skill (standalone CLI)
 EOF
 )"
 # reconcile remote, resolve conflicts, then commit & push
@@ -181,7 +181,7 @@ git -C ~/llm-wiki push
 
 `llm-wiki` is installed at `~/.local/bin/llm-wiki` via stow (shared module). Bootstrap's `setup_note_tools_cli()` verifies it with a help check after stow.
 
-- Requires `obsidian-notes` and `python3` (both verified by bootstrap).
+- Requires `git` and coreutils (verified by bootstrap).
 - Override vault path: `LLM_WIKI_PATH=/path/to/vault llm-wiki <command>`.
 
 ## Wiki maintenance procedure
