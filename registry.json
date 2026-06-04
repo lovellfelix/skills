@@ -1074,53 +1074,6 @@
           }
         }
       },
-      "description": "Use when organizing, searching, or updating the personal knowledgebase via Obsidian vault or work notes.",
-      "entrypoint": "SKILL.md",
-      "location": "portable/knowledgebase-workflow/",
-      "name": "knowledgebase-workflow",
-      "personal_machine_only": true,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "knowledgebase",
-        "workflow",
-        "documentation",
-        "notes",
-        "obsidian",
-        "backlinks",
-        "graph"
-      ],
-      "version": "1.1.0",
-      "local_overlay_only": false
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
       "description": "Use when the user asks to review personal reminders, calendar events, Apple Notes context, family plans, or general life-admin tasks on a macOS machine.",
       "entrypoint": "SKILL.md",
       "location": "portable/life-organizer/",
