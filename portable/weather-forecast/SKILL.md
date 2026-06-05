@@ -53,7 +53,7 @@ bash ~/.dotfiles/hacks/personal-assistant/weather.sh forecast --zip 75077 --days
 bash ~/.dotfiles/hacks/personal-assistant/weather.sh today --lat 32.9919 --lon -97.0700 --json
 ```
 
-## Session-Memory Pattern
+## Session Memory (LeanCTX-backed)
 
 If the user often asks for local weather, reuse a saved ZIP value.
 

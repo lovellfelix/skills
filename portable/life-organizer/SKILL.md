@@ -225,8 +225,8 @@ The following planning guidance is merged from the previous `personal-planning` 
 
 Capture recurring preferences in session memory when users reveal them.
 
-```javascript
-session-memory_track_user_preference({ user_id: "default", preference_key: "travel_style", preference_value: "mid-range" })
-session-memory_track_user_preference({ user_id: "default", preference_key: "accommodation_preference", preference_value: "Airbnb over hotels" })
-session-memory_track_user_preference({ user_id: "default", preference_key: "dietary_restrictions", preference_value: "nut allergy" })
+```text
+session_memory action=track_user_preference category=lifestyle key=travel_style value=mid-range confidence=1.0
+session_memory action=track_user_preference category=lifestyle key=accommodation_preference value="Airbnb over hotels" confidence=1.0
+session_memory action=track_user_preference category=health key=dietary_restrictions value="nut allergy" confidence=1.0
 ```

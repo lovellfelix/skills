@@ -36,19 +36,10 @@ read("src/user-service.ts", { offset: 42, limit: 40 })
 ## MCP Caching
 
 ```text
-session-memory_learn_project_convention({
-  project_id: "dotfiles",
-  language: "shell",
-  convention_type: "style",
-  convention_key: "function_naming",
-  convention_value: "snake_case"
-})
-
-session-memory_store_session_context({
-  session_id: "personal-assistant",
-  context_key: "explored:auth-flow",
-  context_value: JSON.stringify({ entry: "src/auth/index.ts:15" })
-})
+// LeanCTX-backed (via session_memory compatibility facade)
+// LeanCTX-backed (via session_memory compatibility facade)
+session_memory action=learn_project_convention project_id=dotfiles language=shell convention_type=style
+session_memory action=store_context key=explored:auth-flow contextType=exploration value="entry: src/auth/index.ts:15"
 ```
 
 ## Shell Guidance

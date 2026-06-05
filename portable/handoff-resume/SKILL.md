@@ -27,8 +27,8 @@ Resume work quickly from prior session state, then leave a crisp handoff for the
 ## Resume workflow
 
 1. Pull durable context — auto-injected on first turn from `durable_memory`; read and apply it.
-2. Check task state: `workflow_tasks action=list` for current session tasks.
-3. Check session memory: `session_memory action=retrieve_context` for recent decisions and blockers.
+2. Check task state: `workflow_tasks action=list` (LeanCTX-backed) for current session tasks.
+3. Check session memory: `session_memory action=retrieve_context` (LeanCTX-backed) for recent decisions and blockers.
 4. Validate stale assumptions before implementing (drift between memory and repo state).
 5. Build status snapshot (see template below).
 6. Execute next concrete step; record outcomes for future resume.
@@ -36,7 +36,7 @@ Resume work quickly from prior session state, then leave a crisp handoff for the
 ## Handoff workflow
 
 At session end or before transfer:
-1. Write a summary record: `session_memory action=store_context` with type `handoff`.
+1. Write a summary record: `session_memory action=store_context` (LeanCTX-backed) with type `handoff`. Where `ctx_handoff` is available, prefer it for structured handoff artifacts.
 2. Run autodream: `durable_memory action=autodream_apply` to promote session to durable artifacts.
 3. Leave a handoff file at `~/.agents/memory/handoffs/YYYY/MM/` with the template below.
 

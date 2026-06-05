@@ -79,7 +79,7 @@ Guidance:
 - If the first lookup fails, retry with city + country context.
 - Store non-US values as `postal_code` or country-qualified text.
 
-## Session-Memory Pattern
+## Session Memory (LeanCTX-backed)
 
 Reuse stored postal/ZIP preferences for future "near me" flows.
 

@@ -37,7 +37,7 @@ Progressive discovery: glob → grep → targeted read with limit. Don't dump en
 
 | Layer           | Store                            | Use for                                            | Lifetime        |
 | --------------- | -------------------------------- | -------------------------------------------------- | --------------- |
-| Live context    | session-memory (SQLite)          | Active blockers, task state, conventions           | Current session |
+| Live context    | session_memory (LeanCTX-backed)  | Active blockers, task state, conventions, preferences | Current session |
 | Durable curated | `~/llm-wiki/notes/`              | Project synthesis, decisions, workflow notes       | Long-term       |
 | Durable raw     | `~/llm-wiki/sources/`            | Immutable imports from session or external sources | Permanent       |
 | Preferences     | `~/.claude/projects/.../memory/` | User feedback, preferences (Claude only)           | Persistent      |
@@ -73,3 +73,4 @@ This user works across multiple coding harnesses: Claude Code, OpenCode, and Pi.
 
 Never read, search, or index these directories unless explicitly asked:
 `node_modules/`, `dist/`, `build/`, `.git/`, `coverage/`, `__pycache__/`, `.next/`, `.nuxt/`, `target/`, `vendor/`, `.terraform/`, `.venv/`, `venv/`
+nv/`, `venv/`

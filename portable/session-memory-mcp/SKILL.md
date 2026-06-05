@@ -2,14 +2,14 @@
 name: session-memory-mcp
 description: Use when preserving cross-session workflow context, tracking in-flight tasks, or promoting durable handoff artifacts across agent runs.
 metadata:
-  version: 0.3.2
+  version: 0.3.3
   portable: true
   tags: [mcp, memory, workflow, continuity]
 ---
 
-# Session Memory MCP
+# Session Memory MCP (LeanCTX-Backed)
 
-Use session-memory as a durable context layer so sessions resume quickly without noise or re-discovery.
+Use session-memory as a durable context layer so sessions resume quickly without noise or re-discovery. The `session_memory` and `workflow_tasks` tool names remain the Pi compatibility facade; their backend is LeanCTX (`ctx_knowledge`, `ctx_session`, `ctx_task`, `ctx_workflow`). Preferences, conventions, contexts, `task_board`, and `task_insights` are all LeanCTX-backed, not SQLite-backed. SQLite is the legacy/rollback storage layer only — LeanCTX MCP is the source of truth.
 
 ## Use when
 
@@ -62,8 +62,8 @@ Store separately from per-session updates:
 At session start (first turn):
 
 1. Durable context is auto-injected from `durable_memory` — read and apply it.
-2. Retrieve open blockers and in-progress tasks via `workflow_tasks`.
-3. Query session memory only if prior context has a specific lookup key.
+2. Retrieve open blockers and in-progress tasks via `workflow_tasks` (LeanCTX-backed `ctx_task`/`ctx_workflow`).
+3. Query session memory only if prior context has a specific lookup key (LeanCTX-backed `ctx_knowledge`/`ctx_session`).
 
 During execution:
 
@@ -77,7 +77,7 @@ At handoff:
 
 ## Token budget and cross-harness guidance
 
-The session-memory MCP exposes 60+ tools. Not all harnesses need the full surface — injecting 60 tool definitions into every session wastes context budget and slows inference.
+The `session_memory` compatibility facade exposes 60+ actions (all LeanCTX-backed). Not all harnesses need the full surface — injecting 60 tool definitions into every session wastes context budget and slows inference.
 
 **Use only these core tools in normal sessions:**
 
@@ -100,27 +100,33 @@ The session-memory MCP exposes 60+ tools. Not all harnesses need the full surfac
 **CLI-first for non-agent tasks:** For shell scripts, hooks, and inspection outside an agent session, prefer the built-in CLI over starting an MCP session:
 
 ```bash
-# The MCP package ships a CLI at mcp-cli.js
-node ~/.dotfiles/mcp/session-memory/mcp-cli.js stats
-node ~/.dotfiles/mcp/session-memory/mcp-cli.js recent 10
-node ~/.dotfiles/mcp/session-memory/mcp-cli.js search <term>
-node ~/.dotfiles/mcp/session-memory/mcp-cli.js health
+# LeanCTX CLI (source of truth)
+lean-ctx knowledge export --format json          # export all facts/preferences
+lean-ctx task list                                # list tasks (requires `lean-ctx serve`)
+lean-ctx session status                           # session status
+
+# Legacy smem.sh fallback (queries legacy SQLite; not source of truth)
+~/.dotfiles/hacks/smem.sh stats
+~/.dotfiles/hacks/smem.sh recent 10
+~/.dotfiles/hacks/smem.sh search <term>
+~/.dotfiles/hacks/smem.sh health
 ```
 
 Use the CLI for: startup hooks, post-session summaries, cron-based cleanup, shell aliases that query memory, and debugging data without consuming agent context.
 
-**Cross-harness note:** Claude Code and OpenCode load session-memory as a full MCP server. Cursor and Copilot should use the CLI or skip MCP entirely — the token overhead is not justified for those harnesses unless you restrict to the core 11 tools above.
+**Cross-harness note:** Claude Code and OpenCode load session_memory as a LeanCTX-backed MCP tool. Cursor and Copilot should use the CLI or skip MCP entirely — the token overhead is not justified for those harnesses unless you restrict to the core 11 tools above.
 
 ## Tool mapping (Pi and similar harnesses)
 
 In Pi, memory surfaces are split by role. Use this mapping and translate to equivalent tools in other harnesses:
 
-| Need                                          | Tool             |
-| --------------------------------------------- | ---------------- |
-| Active working context (live session)         | `session_memory` |
-| Task state and progress tracking              | `workflow_tasks` |
-| On-disk promoted summaries and handoffs       | `durable_memory` |
-| Durable work notes / runbooks in `~/llm-wiki` | `llm-wiki`       |
+| Need                                          | Tool             | Backend |
+| --------------------------------------------- | ---------------- | ------- |
+| Active working context (live session)         | `session_memory` | LeanCTX `ctx_session` |
+| Task board & task insights (`task_board`, `task_insights`) | `workflow_tasks` | LeanCTX `ctx_task`/`ctx_workflow` |
+| Task state and progress tracking              | `workflow_tasks` | LeanCTX `ctx_task`/`ctx_workflow` |
+| On-disk promoted summaries and handoffs       | `durable_memory` | filesystem |
+| Durable work notes / runbooks in `~/llm-wiki` | `llm-wiki`       | filesystem |
 
 Key `session_memory` actions:
 
@@ -151,7 +157,7 @@ Use `session_memory.store_context` when work should resume in the same project/s
 
 ### Example: retrieve + assemble before resuming work
 
-Use `workflow_tasks` for task status, then `session_memory` for targeted context:
+Use `workflow_tasks` (LeanCTX-backed) for task status, then `session_memory` (LeanCTX-backed) for targeted context:
 
 ```text
 1) workflow_tasks action=list status=in_progress -> find in_progress item IDs (or omit filters to list current session tasks)
@@ -161,19 +167,21 @@ Use `workflow_tasks` for task status, then `session_memory` for targeted context
 
 ### When to use which memory surface
 
-- `session_memory`: active decisions, blockers, conventions, preferences.
-- `workflow_tasks`: task lifecycle state (queued/in_progress/done/fail).
+- `session_memory` (LeanCTX-backed): active decisions, blockers, conventions, preferences.
+- `workflow_tasks` (LeanCTX-backed): task lifecycle state (queued/in_progress/done/fail).
 - `durable_memory`: promoted handoffs, compact summaries, cross-session artifacts.
 
 ## Path conventions
 
 ```text
-~/.agents/memory/session.db          # working layer (session_memory)
+~/.agents/memory/session.db          # legacy/rollback layer (SQLite; not source of truth)
 ~/.agents/memory/projects/<project>/ # project-scoped durable state
 ~/.agents/memory/handoffs/YYYY/MM/   # handoff packets
 ~/.agents/memory/promoted/           # promoted exports + compact summaries
 ~/.agents/memory/profile/            # identity and preferences
 ~/.agents/memory/people/             # local-only people context
+
+LeanCTX MCP is the active source of truth for preferences, conventions, contexts, and task state. SQLite is a legacy rollback path only.
 ```
 
 When reading durable artifacts, prefer:
@@ -192,7 +200,7 @@ Promote session memory to durable artifacts manually or via explicit tooling; Pi
 
 ## Fallback: MCP unavailable
 
-When the MCP server is unreachable (different harness, CLI context, or server not running), you can either use the repository-provided helper script (if present) or query the SQLite DB directly with local tools.
+When the LeanCTX MCP server is unreachable (different harness, CLI context, or server not running), you can either use the repository-provided helper script (if present) or query the legacy SQLite DB directly as a fallback. SQLite is not the source of truth — it is a legacy rollback path.
 
 If this dotfiles layout includes the convenience helper, it lives at `~/.dotfiles/hacks/smem.sh` and provides simple commands, for example:
 
@@ -209,10 +217,10 @@ If this dotfiles layout includes the convenience helper, it lives at `~/.dotfile
 ~/.dotfiles/hacks/smem.sh dump [session_id]               # all records for session
 ```
 
-If the helper is not available, inspect or query the SQLite DB directly with tools you already have (sqlite3, a DB browser, or other CLI utilities). For example:
+If the helper is not available, inspect or query the legacy SQLite DB directly as a fallback (not source of truth) with tools you already have (sqlite3, a DB browser, or other CLI utilities). For example:
 
 ```bash
-# Example direct SQLite queries (adjust path if your session DB is elsewhere)
+# Example direct SQLite queries (legacy fallback; LeanCTX MCP is preferred)
 sqlite3 ~/.agents/memory/session.db "SELECT key, contextType, value FROM records LIMIT 20;"
 # or open an interactive shell:
 sqlite3 ~/.agents/memory/session.db
@@ -229,7 +237,7 @@ Use the helper when the harness has no MCP tools configured (Cursor, Copilot, ra
 After writes, verify memory flow worked:
 
 1. Read back the same key with `retrieve_context` and confirm Situation/Decision/Next matches.
-2. Confirm related task state exists in `workflow_tasks` (if task-tracked).
+2. Confirm related task state exists in `workflow_tasks` (LeanCTX-backed; if task-tracked).
 3. For promoted artifacts, verify expected file exists under `~/.agents/memory/projects/<project>/` or `~/.agents/memory/handoffs/...`.
 4. If MCP path is unavailable, verify via `~/.dotfiles/hacks/smem.sh get <key>`.
 

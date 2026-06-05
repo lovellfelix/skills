@@ -25,7 +25,7 @@ This skill is personal-machine only.
 
 | Layer           | Store                        | Use for                                            | Lifetime        |
 | --------------- | ---------------------------- | -------------------------------------------------- | --------------- |
-| Live context    | session-memory (SQLite)      | Active blockers, decisions, task state             | Current session |
+| Live context    | session_memory (LeanCTX-backed) | Active blockers, decisions, task state             | Current session |
 | Durable curated | `~/llm-wiki/notes/`          | Project synthesis, decisions, workflow notes       | Long-term       |
 | Durable raw     | `~/llm-wiki/sources/`        | Immutable imports from session or external sources | Permanent       |
 | _(legacy)_      | `~/.agents/memory/projects/` | Old durable_memory artifacts — migrate to wiki     | Deprecated      |
@@ -228,3 +228,4 @@ One commit per logical batch. Do this immediately after the write step, not at s
 Promote from session-memory to wiki at session end or milestone. Query wiki at session start to restore project context without relying on session-memory being warm.
 
 See also: `session-memory-mcp` skill. The legacy `knowledgebase-workflow` skill is archived.
+ is archived.
