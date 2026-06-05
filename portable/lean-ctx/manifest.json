@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "name": "lean-ctx",
+  "description": "Use when reading files, running shell commands, searching code, or exploring directories — anywhere native equivalents waste context tokens.",
+  "license": "MIT",
+  "version": "0.1.0",
+  "portable": true,
+  "entrypoint": "SKILL.md",
+  "tags": [
+    "lean-ctx",
+    "compression",
+    "context-efficiency"
+  ],
+  "adapters": {
+    "opencode": {
+      "path": "SKILL.md",
+      "mode": "native"
+    },
+    "claude": {
+      "path": "SKILL.md",
+      "mode": "include"
+    },
+    "pi": {
+      "path": "SKILL.md",
+      "mode": "include"
+    }
+  },
+  "compatibility": {
+    "runtimes": {
+      "opencode": {
+        "min_version": "*"
+      },
+      "claude": {
+        "min_version": "*"
+      },
+      "pi": {
+        "min_version": "*"
+      }
+    }
+  }
+}
