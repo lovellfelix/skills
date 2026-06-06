@@ -31,6 +31,7 @@
       },
       "description": "Use when reviewing code changes, a PR, or a commit and need structured, severity-graded findings covering correctness, security, reliability, and maintainability.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/code-review/",
       "name": "code-review",
       "personal_machine_only": false,
@@ -42,8 +43,7 @@
         "security",
         "portable"
       ],
-      "version": "0.2.0",
-      "local_overlay_only": false
+      "version": "0.2.0"
     },
     {
       "adapters": {
@@ -75,6 +75,7 @@
       },
       "description": "Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, and technical communication to improve clarity, brevity, and reduce review friction.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/communication-style/",
       "name": "communication-style",
       "personal_machine_only": false,
@@ -87,8 +88,7 @@
         "slack",
         "clarity"
       ],
-      "version": "0.8.0",
-      "local_overlay_only": false
+      "version": "0.8.0"
     },
     {
       "adapters": {
@@ -120,6 +120,7 @@
       },
       "description": "Use when you need Jetpack Compose UI help (Android), Material 3 component patterns, Compose screen design review, or accessible Compose theming fixes.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/compose-material3/",
       "name": "compose-material3",
       "personal_machine_only": true,
@@ -132,8 +133,7 @@
         "material3",
         "ui"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -165,6 +165,7 @@
       },
       "description": "Use when exploring large codebases, summarizing lengthy tool output, or optimizing a session for token cost and context bloat.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/context-optimization/",
       "name": "context-optimization",
       "personal_machine_only": false,
@@ -177,8 +178,7 @@
         "tokens",
         "efficiency"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -210,6 +210,7 @@
       },
       "description": "Use when performing a comprehensive codebase health assessment before major refactoring, migration, production readiness review, or ownership transfer.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/deep-audit/",
       "name": "deep-audit",
       "personal_machine_only": false,
@@ -221,8 +222,7 @@
         "quality",
         "portable"
       ],
-      "version": "0.2.0",
-      "local_overlay_only": false
+      "version": "0.2.0"
     },
     {
       "adapters": {
@@ -254,6 +254,7 @@
       },
       "description": "Use when reviewing a technical design document or RFC as a senior/staff engineer before sharing. Invoke after drafting to catch structural, clarity, and completeness issues.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/design-doc-review/",
       "name": "design-doc-review",
       "personal_machine_only": false,
@@ -266,8 +267,7 @@
         "quality",
         "rubric"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -299,6 +299,7 @@
       },
       "description": "Use when debugging bugs or regressions with a disciplined loop: feedback signal, reproduce, hypothesize, instrument, fix, and lock with regression coverage.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/diagnose/",
       "name": "diagnose",
       "personal_machine_only": false,
@@ -311,8 +312,7 @@
         "reliability",
         "portable"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -344,6 +344,7 @@
       },
       "description": "Use when writing or updating engineering documentation and want it grounded in runtime behavior rather than aspirational prose.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/documentation/",
       "name": "documentation",
       "personal_machine_only": false,
@@ -357,8 +358,7 @@
         "architecture",
         "writing"
       ],
-      "version": "0.3.0",
-      "local_overlay_only": false
+      "version": "0.3.0"
     },
     {
       "adapters": {
@@ -390,6 +390,7 @@
       },
       "description": "Use when improving shell configs, dotfiles layout, or local automation with safe, validated changes.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/dotfiles-optimization/",
       "name": "dotfiles-optimization",
       "personal_machine_only": false,
@@ -403,8 +404,7 @@
         "stow",
         "automation"
       ],
-      "version": "0.1.1",
-      "local_overlay_only": false
+      "version": "0.1.1"
     },
     {
       "adapters": {
@@ -436,6 +436,7 @@
       },
       "description": "Use when building email features, emails going to spam, high bounce rates, setting up SPF/DKIM/DMARC authentication, implementing email capture, ensuring compliance (CAN-SPAM, GDPR, CASL), handling webhooks, retry logic, or deciding transactional vs marketing.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/email-best-practices/",
       "name": "email-best-practices",
       "personal_machine_only": false,
@@ -447,8 +448,7 @@
         "compliance",
         "portable"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -480,6 +480,7 @@
       },
       "description": "Use when setting up git worktrees, configuring hooks, automating multi-branch workflows, or handling complex merge/rebase scenarios beyond routine commit/push.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/git-workflow/",
       "name": "git-workflow",
       "personal_machine_only": false,
@@ -493,8 +494,7 @@
         "workflow",
         "version-control"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -526,6 +526,7 @@
       },
       "description": "Use when reviewing a GitHub PR end-to-end with SRE/infra-aware checklists, especially when reproducible findings are needed or the review will be posted back via the gh CLI.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/github-pr-review/",
       "name": "github-pr-review",
       "personal_machine_only": false,
@@ -538,8 +539,7 @@
         "sre",
         "portable"
       ],
-      "version": "0.2.0",
-      "local_overlay_only": false
+      "version": "0.2.0"
     },
     {
       "adapters": {
@@ -571,6 +571,7 @@
       },
       "description": "Use when interacting with GitHub issues, PRs, CI runs, or repository data via the gh CLI.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/github/",
       "name": "github",
       "personal_machine_only": false,
@@ -584,8 +585,7 @@
         "ci",
         "portable"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -617,6 +617,7 @@
       },
       "description": "Use when writing, reviewing, or refactoring Go code to apply idiomatic engineering standards. Triggers on .go files, go.mod references, or Go-related tasks.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/go-standards/",
       "name": "go-standards",
       "personal_machine_only": false,
@@ -629,8 +630,7 @@
         "error-handling",
         "concurrency"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -662,6 +662,7 @@
       },
       "description": "Use when writing content for Google Docs \u2014 internal docs, design summaries, proposals, updates, reviews \u2014 to produce clean, lightly formatted, professional output that looks natural when pasted into Google Docs.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/google-docs-style/",
       "name": "google-docs-style",
       "personal_machine_only": false,
@@ -674,8 +675,7 @@
         "style",
         "portable"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -707,6 +707,7 @@
       },
       "description": "Use when working on GrenadianBuzz features, architecture, or operational tasks across any surface (API, Android app, CLI, website, dashboard, docs).",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/grenadianbuzz/",
       "name": "grenadianbuzz",
       "personal_machine_only": true,
@@ -725,8 +726,7 @@
         "prd",
         "newsletter"
       ],
-      "version": "0.7.0",
-      "local_overlay_only": false
+      "version": "0.7.0"
     },
     {
       "adapters": {
@@ -758,6 +758,7 @@
       },
       "description": "Use when stress-testing a plan against existing domain language and decisions while capturing clarified terms and trade-offs in docs.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/grill-with-docs/",
       "name": "grill-with-docs",
       "personal_machine_only": false,
@@ -770,8 +771,7 @@
         "documentation",
         "portable"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -803,6 +803,7 @@
       },
       "description": "Use when resuming interrupted work across sessions, handing off to another agent or teammate, or creating a restart-ready status snapshot.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/handoff-resume/",
       "name": "handoff-resume",
       "personal_machine_only": false,
@@ -815,8 +816,7 @@
         "resume",
         "portable"
       ],
-      "version": "0.2.0",
-      "local_overlay_only": false
+      "version": "0.2.0"
     },
     {
       "adapters": {
@@ -848,6 +848,7 @@
       },
       "description": "Use when deploying, upgrading, reconciling, or debugging Flux-managed workloads on the personal homelab cluster, especially HelmRelease or Kustomization changes, Flux reconcile failures, app-template apps, CrashLoopBackOff or ImagePullBackOff pods, Home Assistant issues, kubectl exec troubleshooting, SOPS secret updates, or GitHub PR creation.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/homelab-gitops-flux-operations/",
       "name": "homelab-gitops-flux-operations",
       "personal_machine_only": true,
@@ -862,8 +863,7 @@
         "home-assistant",
         "sops"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -895,6 +895,7 @@
       },
       "description": "Use when operating the personal homelab Kubernetes cluster on Proxmox through Cluster API and CAPMOX, especially for workload cluster rebuilds, kubeadm upgrades, templateID changes, ProxmoxMachineTemplate edits, CAPMOX boot bug recovery, management-cluster checks, cluster-status validation, or control-plane local-zfs migration planning.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/homelab-proxmox-cluster-api/",
       "name": "homelab-proxmox-cluster-api",
       "personal_machine_only": true,
@@ -909,8 +910,7 @@
         "kubeadm",
         "infrastructure"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -942,6 +942,7 @@
       },
       "description": "Use when reviewing architecture for deep-module opportunities, better test seams, and stronger locality/leverage across modules.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/improve-codebase-architecture/",
       "name": "improve-codebase-architecture",
       "personal_machine_only": false,
@@ -954,8 +955,7 @@
         "modularity",
         "portable"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -987,6 +987,7 @@
       },
       "description": "Use when writing a postmortem after a production incident or operational failure to produce a concise, blameless analysis focused on decisions, causes, and concrete follow-ups.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/incident-postmortem/",
       "name": "incident-postmortem",
       "personal_machine_only": false,
@@ -999,8 +1000,7 @@
         "root-cause-analysis",
         "operations"
       ],
-      "version": "0.3.0",
-      "local_overlay_only": false
+      "version": "0.3.0"
     },
     {
       "adapters": {
@@ -1032,6 +1032,7 @@
       },
       "description": "Use when migrating Android projects from Java to Kotlin while maintaining behavior and test coverage.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/java-to-kotlin-migration/",
       "name": "java-to-kotlin-migration",
       "personal_machine_only": true,
@@ -1043,8 +1044,50 @@
         "java",
         "migration"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Use when reading files, running shell commands, searching code, or exploring directories \u2014 anywhere native equivalents waste context tokens.",
+      "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
+      "location": "portable/lean-ctx/",
+      "name": "lean-ctx",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "lean-ctx",
+        "compression",
+        "context-efficiency"
+      ],
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -1076,6 +1119,7 @@
       },
       "description": "Use when the user asks to review personal reminders, calendar events, Apple Notes context, family plans, or general life-admin tasks on a macOS machine.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/life-organizer/",
       "name": "life-organizer",
       "personal_machine_only": true,
@@ -1090,8 +1134,7 @@
         "planning",
         "macos"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -1121,8 +1164,9 @@
           }
         }
       },
-      "description": "Use when searching, reading, ingesting, or updating ~/llm-wiki. Wiki is the primary durable layer for curated project knowledge; session-memory is for live in-session context.",
+      "description": "Use when searching, reading, ingesting, or exporting ~/llm-wiki. Wiki is the export/archive layer for LeanCTX-backed project knowledge; session-memory is for live in-session context.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/llm-wiki-workflow/",
       "name": "llm-wiki-workflow",
       "personal_machine_only": true,
@@ -1135,8 +1179,7 @@
         "obsidian",
         "markdown"
       ],
-      "version": "0.3.0",
-      "local_overlay_only": false
+      "version": "0.3.0"
     },
     {
       "adapters": {
@@ -1168,6 +1211,7 @@
       },
       "description": "Use when planning trips, finding nearby places, or integrating location features with a no-API-key default flow, including ZIP or postal-code lookup.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/location-search/",
       "name": "location-search",
       "personal_machine_only": true,
@@ -1182,8 +1226,7 @@
         "navigation",
         "places"
       ],
-      "version": "0.3.0",
-      "local_overlay_only": false
+      "version": "0.3.0"
     },
     {
       "adapters": {
@@ -1215,6 +1258,7 @@
       },
       "description": "Use when applying psychological principles, mental models, or behavioral science to marketing decisions, messaging, or conversion strategy. Also triggers on 'cognitive bias,' 'persuasion,' 'why people buy,' or 'consumer behavior.'",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/marketing-psychology/",
       "name": "marketing-psychology",
       "personal_machine_only": true,
@@ -1226,8 +1270,7 @@
         "persuasion",
         "behavioral-science"
       ],
-      "version": "1.1.0",
-      "local_overlay_only": false
+      "version": "1.1.0"
     },
     {
       "adapters": {
@@ -1259,6 +1302,7 @@
       },
       "description": "Use when building or extending an MCP (Model Context Protocol) server to expose external APIs or services to LLMs, in Python (FastMCP) or Node/TypeScript (MCP SDK).",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/mcp-builder/",
       "name": "mcp-builder",
       "personal_machine_only": false,
@@ -1270,8 +1314,53 @@
         "integration",
         "server"
       ],
-      "version": "1.1.1",
-      "local_overlay_only": false
+      "version": "1.1.1"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Material Design 3 and Jetpack Compose patterns for native Android. Use when designing Android interfaces, implementing Compose UI, building adaptive layouts, or applying M3 theming. Deep-dives in references/: material3-theming.md, compose-components.md, android-navigation.md.",
+      "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
+      "location": "portable/mobile-android-design/",
+      "name": "mobile-android-design",
+      "personal_machine_only": true,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "android",
+        "kotlin",
+        "compose",
+        "material3",
+        "ui",
+        "grenadianbuzz"
+      ],
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -1303,6 +1392,7 @@
       },
       "description": "Use when working with Nuxt apps, server routes, useFetch, middleware, or hybrid rendering in a full-stack Vue application.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/nuxt/",
       "name": "nuxt",
       "personal_machine_only": true,
@@ -1316,8 +1406,7 @@
         "routing",
         "portable"
       ],
-      "version": "2026.1.28",
-      "local_overlay_only": false
+      "version": "2026.1.28"
     },
     {
       "adapters": {
@@ -1349,6 +1438,7 @@
       },
       "description": "Use when writing or reviewing Python code style, configuring ruff/mypy/pyright, writing docstrings, or establishing naming conventions and documentation standards for a Python project.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/python-code-style/",
       "name": "python-code-style",
       "personal_machine_only": false,
@@ -1360,8 +1450,7 @@
         "linting",
         "documentation"
       ],
-      "version": "1.0.0",
-      "local_overlay_only": false
+      "version": "1.0.0"
     },
     {
       "adapters": {
@@ -1393,6 +1482,7 @@
       },
       "description": "Use when writing, reviewing, or testing Python code \u2014 establishes project style, type-safety, testing defaults, and CI quality gates.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/python/",
       "name": "python",
       "personal_machine_only": false,
@@ -1405,8 +1495,7 @@
         "type-safety",
         "quality"
       ],
-      "version": "1.0.0",
-      "local_overlay_only": false
+      "version": "1.0.0"
     },
     {
       "adapters": {
@@ -1438,6 +1527,7 @@
       },
       "description": "Use when drafting or refining changelog entries and release notes from commits, PRs, or code changes.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/release-notes/",
       "name": "release-notes",
       "personal_machine_only": false,
@@ -1450,8 +1540,7 @@
         "notes",
         "documentation"
       ],
-      "version": "1.0.0",
-      "local_overlay_only": false
+      "version": "1.0.0"
     },
     {
       "adapters": {
@@ -1483,6 +1572,7 @@
       },
       "description": "Use when releasing a new version, bumping semver, generating changelogs, or publishing to npm/PyPI/Cargo/GitHub. Supports Node.js, Python, Rust, Claude Plugin, and generic projects.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/release-skills/",
       "name": "release-skills",
       "personal_machine_only": false,
@@ -1497,8 +1587,7 @@
         "sbom",
         "portable"
       ],
-      "version": "1.0.0",
-      "local_overlay_only": false
+      "version": "1.0.0"
     },
     {
       "adapters": {
@@ -1530,6 +1619,7 @@
       },
       "description": "Use when proposing a significant engineering change, writing a technical design doc, or architecture proposal and need a tight, reviewable RFC with optional Mermaid diagrams.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/rfc/",
       "name": "rfc",
       "personal_machine_only": false,
@@ -1542,8 +1632,7 @@
         "tradeoffs",
         "rollout"
       ],
-      "version": "1.0.0",
-      "local_overlay_only": false
+      "version": "1.0.0"
     },
     {
       "adapters": {
@@ -1575,6 +1664,7 @@
       },
       "description": "Use when preserving cross-session workflow context, tracking in-flight tasks, or promoting durable handoff artifacts across agent runs.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/session-memory-mcp/",
       "name": "session-memory-mcp",
       "personal_machine_only": false,
@@ -1586,8 +1676,7 @@
         "workflow",
         "continuity"
       ],
-      "version": "0.3.2",
-      "local_overlay_only": false
+      "version": "0.3.3"
     },
     {
       "adapters": {
@@ -1619,6 +1708,7 @@
       },
       "description": "Use when setting up shadcn/ui, installing components, building forms with React Hook Form and Zod, customizing themes with Tailwind CSS, or implementing accessible UI patterns (buttons, dialogs, dropdowns, tables, complex layouts).",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/shadcn-ui/",
       "name": "shadcn-ui",
       "personal_machine_only": false,
@@ -1630,8 +1720,7 @@
         "ui",
         "portable"
       ],
-      "version": "0.2.0",
-      "local_overlay_only": false
+      "version": "0.2.0"
     },
     {
       "adapters": {
@@ -1663,6 +1752,7 @@
       },
       "description": "Use when authoring or maintaining portable skills and custom commands to ensure correctness, discoverability, and long-term maintainability across tools and machines.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/skills-and-commands-checklist/",
       "name": "skills-and-commands-checklist",
       "personal_machine_only": false,
@@ -1677,8 +1767,7 @@
         "validation",
         "maintenance"
       ],
-      "version": "1.3.0",
-      "local_overlay_only": false
+      "version": "1.3.0"
     },
     {
       "adapters": {
@@ -1710,6 +1799,7 @@
       },
       "description": "Use when fetching a URL or converting a local file (PDF, DOCX, HTML, etc.) to Markdown for reading or summarization via uvx markitdown.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/summarize/",
       "name": "summarize",
       "personal_machine_only": false,
@@ -1722,8 +1812,7 @@
         "urls",
         "portable"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -1755,6 +1844,7 @@
       },
       "description": "Use when the user asks for current weather, today's conditions, or a short forecast without relying on paid weather APIs.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/weather-forecast/",
       "name": "weather-forecast",
       "personal_machine_only": true,
@@ -1766,8 +1856,7 @@
         "portable",
         "personal-assistant"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -1799,6 +1888,7 @@
       },
       "description": "Use when you have a spec or requirements for a multi-step task, before touching code",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/writing-plans/",
       "name": "writing-plans",
       "personal_machine_only": false,
@@ -1809,8 +1899,7 @@
         "workflow",
         "portable"
       ],
-      "version": "0.1.0",
-      "local_overlay_only": false
+      "version": "0.1.0"
     },
     {
       "adapters": {
@@ -1842,6 +1931,7 @@
       },
       "description": "Use when creating new skills, editing existing skills, or verifying skills work before deployment.",
       "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
       "location": "portable/writing-skills/",
       "name": "writing-skills",
       "personal_machine_only": false,
@@ -1854,8 +1944,7 @@
         "documentation",
         "portable"
       ],
-      "version": "0.2.1",
-      "local_overlay_only": false
+      "version": "0.2.1"
     }
   ]
 }

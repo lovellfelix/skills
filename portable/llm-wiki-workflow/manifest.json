@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "name": "llm-wiki-workflow",
-  "description": "Use when searching, reading, ingesting, or updating ~/llm-wiki via the llm-wiki CLI. Wiki is the primary durable layer for curated project knowledge; session-memory is for live in-session context.",
+  "description": "Use when searching, reading, ingesting, or exporting ~/llm-wiki. Wiki is the export/archive layer for LeanCTX-backed project knowledge; session-memory is for live in-session context.",
   "version": "0.3.0",
   "portable": true,
   "entrypoint": "SKILL.md",

@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "name": "session-memory-mcp",
   "description": "Use when preserving cross-session workflow context, tracking in-flight tasks, or promoting durable handoff artifacts across agent runs.",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [

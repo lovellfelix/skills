@@ -7,155 +7,110 @@ metadata:
   tags: [lean-ctx, compression, context-efficiency, portable]
 ---
 
-# lean-ctx — Context Runtime for AI Agents
+# lean-ctx
 
 ## Overview
 
-lean-ctx is a context runtime that compresses tool output by 60–90%, saving tokens on every read, shell command, grep, and directory listing. It provides `ctx_*` tools alongside or replacing native equivalents across Pi, Claude Code, and OpenCode.
+LeanCTX is the canonical runtime guidance for token-efficient reads, search, session context, and workflow state across Pi, Claude Code, and OpenCode.
 
-## Setup
+**Source of truth:** LeanCTX (`ctx_knowledge`, `ctx_session`, `ctx_task`, `ctx_workflow`) is the primary runtime memory layer. `llm-wiki` and `durable_memory` are export/archive or fallback surfaces, not the canonical write path.
 
-```bash
-which lean-ctx || bash scripts/install.sh
-lean-ctx setup
-```
+## Use this skill for
 
-Or install directly: `curl -fsSL https://raw.githubusercontent.com/yvgude/lean-ctx/main/skills/lean-ctx/scripts/install.sh | bash`
+- Reading files without dumping large buffers into context
+- Searching code or directories efficiently
+- Running shell commands with compressed output by default
+- Resuming work with LeanCTX-backed context before broad rediscovery
+- Shared cross-harness guidance where Pi, Claude Code, and OpenCode should behave the same way
 
-Verify: run `/mcp` (Pi) or check `ctx_read` is available in your tool list.
+## Core tool mapping
 
-## Core Tool Mapping
+Use `ctx_*` tools instead of native equivalents.
 
-Use `ctx_*` tools instead of native equivalents. Choose the column that matches your harness:
+**Cross-harness canonical names:** prefer `ctx_search` for search and `ctx_tree` for directory listing in portable skills and shared docs.
 
-| Action | Pi | Claude Code / OpenCode |
-|--------|----|------------------------|
-| Read file | `ctx_read(path, mode)` | `ctx_read(path, mode)` |
-| Shell command | `ctx_shell(command)` | `ctx_shell(command)` |
-| Search code | `ctx_grep(pattern, path)` | `ctx_search(pattern, path)` |
-| List directory | `ctx_ls(path)` | `ctx_tree(path, depth)` |
-| Find files | `ctx_find(glob, path)` | `ctx_search` + glob |
-| Edit (fallback) | `ctx_edit(path, old, new)` | `ctx_edit(path, old, new)` |
+| Action | Canonical | Pi aliases / notes |
+| --- | --- | --- |
+| Read file | `ctx_read(path, mode)` | same |
+| Shell cmd | `ctx_shell(command)` | same |
+| Search code | `ctx_search(pattern, path)` | Pi also provides `ctx_grep(pattern, path)` |
+| List dir | `ctx_tree(path, depth)` | Pi also provides `ctx_ls(path)` |
+| Find files | `ctx_search` + glob/filter | Pi also provides `ctx_find(glob, path)` |
+| Edit fallback | `ctx_edit(path, old, new)` | native edit tools preferred when available |
 
-> **Portability:** Pi also has `ctx_search`/`ctx_tree` via `directTools`. For cross-harness skills, prefer `ctx_search`/`ctx_tree` so the same instructions work on Claude Code and OpenCode.
+**Pi-only aliases:** `ctx_grep`, `ctx_ls`, and `ctx_find` are convenient in Pi but should not be presented as the canonical cross-harness names.
 
-Native Edit/StrReplace work on all harnesses. Only use `ctx_edit` when those are unavailable.
-
-## ctx_read Mode Selection
+## Mode selection for `ctx_read`
 
 | Goal | Mode | When |
-|------|------|------|
+| --- | --- | --- |
 | Edit this file | `full` | Before any edit |
-| Understand API | `signatures` | Context-only, won't edit |
-| Re-read after edit | `diff` | Post-edit verification |
-| Large file overview | `map` | >500 lines, won't edit |
-| Specific region | `lines:N-M` | Know exact line range |
-| Unsure | `auto` | System selects optimal mode |
+| Understand API only | `signatures` | Context-only, no edit planned |
+| Large file overview | `map` | Large files where full read would be wasteful |
+| Specific region | `lines:N-M` | Exact location is known |
+| Re-read after edit | `diff` | Verify recent changes |
+| Unsure | `auto` | Let LeanCTX choose |
 
-Re-reads cost ~13 tokens. Add `fresh=true` to bypass cache.
+Use `fresh=true` when cached output is stale.
 
-## Workflow
+## Default workflow
 
-1. **Orient:** `ctx_overview(task)` or session status for unfamiliar tasks
-2. **Locate:** `ctx_search`/`ctx_grep` for exact text; `ctx_knowledge(action="recall")` for prior findings
-3. **Read:** `ctx_read(path, mode)` with appropriate mode
-4. **Edit:** native Edit/StrReplace, or `ctx_edit` as fallback
-5. **Verify:** `ctx_read(path, "diff")` + `ctx_shell("test command")`
-6. **Record:** `ctx_knowledge(action="remember", ...)` for non-obvious findings
+1. **Orient:** `ctx_overview(task)` or session status for unfamiliar work.
+2. **Locate:** `ctx_search` for text/paths; use `ctx_knowledge(action="recall")` for prior findings.
+3. **Read:** `ctx_read(path, mode)` with the smallest useful mode.
+4. **Edit:** use native edit tools first; use `ctx_edit` only when needed.
+5. **Verify:** `ctx_read(path, "diff")` plus `ctx_shell("test-or-check")`.
+6. **Record:** store non-obvious findings in LeanCTX-backed memory.
 
-## Proactive (use without being asked)
+## Session guidance
 
-- `ctx_overview(task)` — at session start for orientation
-- `ctx_knowledge(action="wakeup")` — at session start to surface prior findings
-- `ctx_compress` — when context grows large (at phase boundaries)
+- **Start:** check LeanCTX-backed context first.
+- **Resume:** use project facts / session context before falling back to exported wiki notes or raw durable artifacts.
+- **End:** record durable decisions in LeanCTX first; export to `llm-wiki` only when a human-readable archive is useful.
 
-## Compression Bypass
+## Compression bypass
 
 When compressed output hides needed detail:
-`ctx_read(path, "lines:N-M")` → `ctx_read(path, "full")` → `ctx_shell(cmd, raw=true)`
 
-Return to compressed defaults after one expanded retrieval.
+1. `ctx_read(path, "lines:N-M")`
+2. `ctx_read(path, "full")`
+3. `ctx_shell(command, raw=true)`
 
-## Risk Gate
+Return to compressed defaults after the expanded read.
 
-Before editing exported symbols, auth, DB schemas, or 3+ files: run `ctx_impact(action="analyze")` to confirm blast radius.
+## Risk gate
 
-## Session
+Before editing exported symbols, auth, DB schemas, or 3+ files, run impact-oriented discovery first:
 
-- **Start:** `ctx_session(action="status")` + `ctx_knowledge(action="wakeup")`
-- **End:** `ctx_session(action="decision", content="what was done + next steps")`
+- `ctx_impact(action="analyze")`
+- `ctx_callgraph(action="callers")` when caller/callee context matters
 
-## Advanced Tools
+## Advanced tools
 
-Available via `ctx_call(name, args)` or direct tool call:
+Use directly when the harness exposes them:
 
 - `ctx_overview(task)` — task-relevant project map
-- `ctx_knowledge(action)` — project knowledge across sessions
+- `ctx_knowledge(action)` — cross-session facts and corrections
 - `ctx_session(action)` — session state and persistence
-- `ctx_graph(action)` — code relationships and impact
-- `ctx_impact(action)` — blast radius analysis
+- `ctx_graph(action)` — relationships and impact
+- `ctx_impact(action)` — blast-radius analysis
 - `ctx_callgraph(action)` — caller/callee analysis
-- `lean_ctx` — direct CLI access (e.g. `lean_ctx overview`, `lean_ctx gain`)
+- `lean_ctx` — direct CLI access for setup, overview, knowledge, session, graph, and pack commands
 
-## Task Integration
+## Common mistakes
 
-Pi's `workflow_tasks` tool uses `ctx_knowledge` facts for task state tracking. Each task is stored as a pipe-delimited fact in the `task` category with a compound key.
+- Using native read/search/list tools when `ctx_*` equivalents are available
+- Using Pi-only aliases in cross-harness docs instead of `ctx_search` / `ctx_tree`
+- Reading full large files when `map`, `signatures`, or `lines:N-M` is enough
+- Forgetting to verify with `diff` or a command-level check after edits
+- Treating `llm-wiki` or `durable_memory` as the runtime source of truth
 
-### Fact Format
+## Harness notes
 
-```
-[task/wf:{workflowId}:{taskId}]: {title}|{state}|{priority}|{description}|{agent}
-```
-
-- **workflowId** — session-scoped identifier (derived from Pi session UUID)
-- **taskId** — unique task key (format: `{workflowId}-{timestamp36}`)
-- **state** — one of: `queued`, `in_progress`, `done`, `failed`, `blocked`
-- **priority** — integer (lower = higher priority)
-- **description** — optional task detail
-- **agent** — delegated agent name (if any)
-
-### Retrieval
-
-Tasks are recalled via `lean-ctx knowledge recall "" --category task --mode exact` and parsed by the `parseFactLine` helper in `shared/leanctx.ts`. The `workflow_tasks` Pi tool (extension at `pi/.pi/agent/extensions/workflow-task-state/index.ts`) provides create/start/complete/block/fail/clear_done/list actions.
-
-### State Mapping
-
-| Pi workflow_tasks state | LeanCTX fact state |
-|-------------------------|-------------------|
-| `queued` | `queued` |
-| `in_progress` | `in_progress` |
-| `done` | `done` |
-| `failed` | `failed` |
-| `blocked` | `blocked` |
-
-### Advanced: ctx_task / ctx_workflow (HTTP API)
-
-The `session_memory` tool's `task_board` and `task_insights` actions bridge to LeanCTX's `ctx_task` and `ctx_workflow` HTTP tools (via `lean-ctx serve`). These are available for advanced multi-agent workflows and carry a stricter state enum (`working`, `input-required`, `completed`, `failed`, `canceled`). The shared `leanctx.ts` module provides `mapPiStateToLeanCtx` / `mapLeanCtxStateToPi` helpers for state translation.
-
-### Practical Example
-
-```bash
-# List task facts via lean-ctx CLI
-lean-ctx knowledge recall "" --category task --mode exact
-
-# Example fact (stored by workflow_tasks):
-# [task/wf:sess-abc123:abc123-m0a1b2]: Fix login timeout|in_progress|0|Set 10s deadline|worker
-
-# Check knowledge health
-lean-ctx knowledge status
-```
-
-## Common Mistakes
-
-- **Not using compression bypass** — when a full file or raw command output is needed, expand with `full`/`raw=true` then return to compressed defaults
-- **Skipping orient step** — `ctx_overview` before editing unfamiliar code saves multiple round-trips
-- **Forgetting session end** — `ctx_session(action="decision")` preserves context for the next session
-- **Using harness-specific tools in cross-harness skills** — prefer `ctx_search`/`ctx_tree` for portability
-
-## Harness Notes
-
-| Harness | Tool provider | Init command |
-|---------|---------------|-------------|
-| Pi | `pi-lean-ctx` npm package + MCP | `lean-ctx init --agent pi` |
-| Claude Code | MCP server + shell hooks | `lean-ctx init --agent claude` |
+| Harness | Provider | Init command |
+| --- | --- | --- |
+| Pi | `pi-lean-ctx` package + MCP | `lean-ctx init --agent pi` |
+| Claude Code | MCP server + hooks | `lean-ctx init --agent claude` |
 | OpenCode | MCP server + plugin | `lean-ctx init --agent opencode` |
+
+For harness/bootstrap setup, symlink materialization, and re-init behavior, see `LEAN-CTX.md`.

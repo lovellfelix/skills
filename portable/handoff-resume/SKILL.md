@@ -26,7 +26,7 @@ Resume work quickly from prior session state, then leave a crisp handoff for the
 
 ## Resume workflow
 
-1. Pull durable context — auto-injected on first turn from `durable_memory`; read and apply it.
+1. Pull LeanCTX-backed context first; use `durable_memory` only as a fallback for raw handoff artifacts not yet indexed into LeanCTX.
 2. Check task state: `workflow_tasks action=list` (LeanCTX-backed) for current session tasks.
 3. Check session memory: `session_memory action=retrieve_context` (LeanCTX-backed) for recent decisions and blockers.
 4. Validate stale assumptions before implementing (drift between memory and repo state).

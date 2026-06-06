@@ -33,12 +33,13 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **improve-codebase-architecture** | `portable/improve-codebase-architecture/` | Use when reviewing architecture for deep-module opportunities, better test seams, and stronger locality/leverage across modules. |
 | **incident-postmortem** | `portable/incident-postmortem/` | Use when writing a postmortem after a production incident or operational failure to produce a concise, blameless analysis focused on decisions, causes, and concrete follow-ups. |
 | **java-to-kotlin-migration** | `portable/java-to-kotlin-migration/` | Use when migrating Android projects from Java to Kotlin while maintaining behavior and test coverage. |
+| **lean-ctx** | `portable/lean-ctx/` | Use when reading files, running shell commands, searching code, or exploring directories — anywhere native equivalents waste context tokens. |
 | **life-organizer** | `portable/life-organizer/` | Use when the user asks to review personal reminders, calendar events, Apple Notes context, family plans, or general life-admin tasks on a macOS machine. |
-| **llm-wiki-workflow** | `portable/llm-wiki-workflow/` | Use when searching, reading, ingesting, or updating ~/llm-wiki. Wiki is the primary durable layer for curated project knowledge; session-memory is for live in-session context. |
+| **llm-wiki-workflow** | `portable/llm-wiki-workflow/` | Use when searching, reading, ingesting, or exporting ~/llm-wiki. Wiki is the export/archive layer for LeanCTX-backed project knowledge; session-memory is for live in-session context. |
 | **location-search** | `portable/location-search/` | Use when planning trips, finding nearby places, or integrating location features with a no-API-key default flow, including ZIP or postal-code lookup. |
 | **marketing-psychology** | `portable/marketing-psychology/` | Use when applying psychological principles, mental models, or behavioral science to marketing decisions, messaging, or conversion strategy. Also triggers on 'cognitive bias,' 'persuasion,' 'why people buy,' or 'consumer behavior.' |
-| **mobile-android-design** | `portable/mobile-android-design/` | Material Design 3 and Jetpack Compose patterns for native Android. Use when designing Android interfaces, implementing Compose UI, building adaptive layouts, or applying M3 theming. Deep-dives in references/: material3-theming.md, compose-components.md, android-navigation.md. |
 | **mcp-builder** | `portable/mcp-builder/` | Use when building or extending an MCP (Model Context Protocol) server to expose external APIs or services to LLMs, in Python (FastMCP) or Node/TypeScript (MCP SDK). |
+| **mobile-android-design** | `portable/mobile-android-design/` | Material Design 3 and Jetpack Compose patterns for native Android. Use when designing Android interfaces, implementing Compose UI, building adaptive layouts, or applying M3 theming. Deep-dives in references/: material3-theming.md, compose-components.md, android-navigation.md. |
 | **nuxt** | `portable/nuxt/` | Use when working with Nuxt apps, server routes, useFetch, middleware, or hybrid rendering in a full-stack Vue application. |
 | **python** | `portable/python/` | Use when writing, reviewing, or testing Python code — establishes project style, type-safety, testing defaults, and CI quality gates. |
 | **python-code-style** | `portable/python-code-style/` | Use when writing or reviewing Python code style, configuring ruff/mypy/pyright, writing docstrings, or establishing naming conventions and documentation standards for a Python project. |
@@ -57,12 +58,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 
 Deprecated or superseded skills kept for historical traceability.
 
-- `kb-maintenance/`
-- `opencode-google-docs/`
-- `opencode-jarvis-search/`
-- `opencode-jira-workflow/`
-- `opencode-phased-rollout/`
-- `ucm-test/`
+(No archived skills yet)
 
 ## Discovery & Convention
 

@@ -35,18 +35,19 @@ Progressive discovery: glob → grep → targeted read with limit. Don't dump en
 
 ## Memory hierarchy
 
-| Layer           | Store                            | Use for                                            | Lifetime        |
-| --------------- | -------------------------------- | -------------------------------------------------- | --------------- |
-| Live context    | session_memory (LeanCTX-backed)  | Active blockers, task state, conventions, preferences | Current session |
-| Durable curated | `~/llm-wiki/notes/`              | Project synthesis, decisions, workflow notes       | Long-term       |
-| Durable raw     | `~/llm-wiki/sources/`            | Immutable imports from session or external sources | Permanent       |
-| Preferences     | `~/.claude/projects/.../memory/` | User feedback, preferences (Claude only)           | Persistent      |
-| _(deprecated)_  | `~/.agents/memory/projects/`     | Old durable_memory — migrate to wiki               | Deprecated      |
+| Layer | Store | Use for | Lifetime |
+| --- | --- | --- | --- |
+| Live context | `session_memory` (LeanCTX-backed) | Active blockers, task state, conventions, preferences | Current session |
+| Durable runtime truth | LeanCTX `ctx_knowledge` | Project facts, decisions, reusable knowledge | Long-term |
+| Exported curated notes | `~/llm-wiki/notes/` | Human-readable project synthesis exported from LeanCTX | Long-term |
+| Exported raw sources | `~/llm-wiki/sources/` | Immutable imports from session or external sources | Permanent |
+| Preferences | `~/.claude/projects/.../memory/` | Claude-local preference sync/cache only | Persistent |
+| _(deprecated)_ | `~/.agents/memory/projects/` | Old durable_memory artifacts — archive/fallback only | Deprecated |
 
-- For project knowledge: write to `~/llm-wiki` using `llm-wiki` CLI, not `durable_memory`.
+- For project knowledge: write to LeanCTX first. Export/promote to `~/llm-wiki` when you want a human-readable archive.
 - `llm-wiki` defaults to `~/llm-wiki`; set `LLM_WIKI_PATH` only when you intentionally need a different vault.
-- At session start for a known project: `llm-wiki read notes/projects/<project>.md`.
-- At session end / milestone: promote curated insights with `llm-wiki append` + `llm-wiki commit`.
+- At session start for a known project: prefer LeanCTX-backed context first; read `llm-wiki` project notes when you need the exported summary.
+- At session end / milestone: promote curated insights with `llm-wiki append` + `llm-wiki commit` after the durable knowledge exists in LeanCTX.
 
 ## Reliability Bias
 
@@ -73,4 +74,3 @@ This user works across multiple coding harnesses: Claude Code, OpenCode, and Pi.
 
 Never read, search, or index these directories unless explicitly asked:
 `node_modules/`, `dist/`, `build/`, `.git/`, `coverage/`, `__pycache__/`, `.next/`, `.nuxt/`, `target/`, `vendor/`, `.terraform/`, `.venv/`, `venv/`
-nv/`, `venv/`

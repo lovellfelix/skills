@@ -9,7 +9,7 @@ metadata:
 
 # Session Memory MCP (LeanCTX-Backed)
 
-Use session-memory as a durable context layer so sessions resume quickly without noise or re-discovery. The `session_memory` and `workflow_tasks` tool names remain the Pi compatibility facade; their backend is LeanCTX (`ctx_knowledge`, `ctx_session`, `ctx_task`, `ctx_workflow`). Preferences, conventions, contexts, `task_board`, and `task_insights` are all LeanCTX-backed, not SQLite-backed. SQLite is the legacy/rollback storage layer only — LeanCTX MCP is the source of truth.
+Use session-memory as a durable context layer so sessions resume quickly without noise or re-discovery. The `session_memory` and `workflow_tasks` tool names remain the Pi compatibility facade; their backend is LeanCTX (`ctx_knowledge`, `ctx_session`, `ctx_task`, `ctx_workflow`). Preferences, conventions, contexts, `task_board`, and `task_insights` are all LeanCTX-backed, not SQLite-backed. SQLite is the legacy/rollback storage layer only — LeanCTX MCP is the canonical runtime source of truth (LeanCTX).
 
 ## Use when
 
@@ -61,9 +61,10 @@ Store separately from per-session updates:
 
 At session start (first turn):
 
-1. Durable context is auto-injected from `durable_memory` — read and apply it.
-2. Retrieve open blockers and in-progress tasks via `workflow_tasks` (LeanCTX-backed `ctx_task`/`ctx_workflow`).
-3. Query session memory only if prior context has a specific lookup key (LeanCTX-backed `ctx_knowledge`/`ctx_session`).
+1. Read LeanCTX project facts and active context first.
+2. Use `durable_memory` only as a fallback when the relevant project facts or handoff details are not yet available in LeanCTX.
+3. Retrieve open blockers and in-progress tasks via `workflow_tasks` (LeanCTX-backed `ctx_task`/`ctx_workflow`).
+4. Query session memory only if prior context has a specific lookup key (LeanCTX-backed `ctx_knowledge`/`ctx_session`).
 
 During execution:
 
@@ -125,8 +126,8 @@ In Pi, memory surfaces are split by role. Use this mapping and translate to equi
 | Active working context (live session)         | `session_memory` | LeanCTX `ctx_session` |
 | Task board & task insights (`task_board`, `task_insights`) | `workflow_tasks` | LeanCTX `ctx_task`/`ctx_workflow` |
 | Task state and progress tracking              | `workflow_tasks` | LeanCTX `ctx_task`/`ctx_workflow` |
-| On-disk promoted summaries and handoffs       | `durable_memory` | filesystem |
-| Durable work notes / runbooks in `~/llm-wiki` | `llm-wiki`       | filesystem |
+| On-disk promoted summaries and handoffs       | `durable_memory` (fallback only) | filesystem |
+| Durable work notes / runbooks in `~/llm-wiki` | `llm-wiki` (export/archive) | filesystem |
 
 Key `session_memory` actions:
 
@@ -169,7 +170,8 @@ Use `workflow_tasks` (LeanCTX-backed) for task status, then `session_memory` (Le
 
 - `session_memory` (LeanCTX-backed): active decisions, blockers, conventions, preferences.
 - `workflow_tasks` (LeanCTX-backed): task lifecycle state (queued/in_progress/done/fail).
-- `durable_memory`: promoted handoffs, compact summaries, cross-session artifacts.
+- `durable_memory` — fallback reader for raw handoff artifacts not yet in LeanCTX.
+- `llm-wiki` — export/archive surface for human-readable project notes, not the canonical runtime store.
 
 ## Path conventions
 
@@ -181,7 +183,7 @@ Use `workflow_tasks` (LeanCTX-backed) for task status, then `session_memory` (Le
 ~/.agents/memory/profile/            # identity and preferences
 ~/.agents/memory/people/             # local-only people context
 
-LeanCTX MCP is the active source of truth for preferences, conventions, contexts, and task state. SQLite is a legacy rollback path only.
+LeanCTX MCP is the active canonical source of truth for preferences, conventions, contexts, and task state. SQLite is a legacy rollback path only.
 ```
 
 When reading durable artifacts, prefer:
@@ -195,7 +197,7 @@ When reading durable artifacts, prefer:
 Promote session memory to durable artifacts manually or via explicit tooling; Pi does not automatically trigger promotions.
 
 - Manual (recommended): `./hacks/promote-session-memory.sh --session-id <session-id>`
-- Via MCP helper: use the `durable_memory` tool or the repo-provided promotion scripts with explicit `--apply` to write artifacts.
+- Via MCP helper: use the `LeanCTX` tool or the repo-provided promotion scripts with explicit `--apply` to write artifacts.
 - Use `--dry-run` to preview actions before writing promoted files under `~/.agents/memory/promoted/`.
 
 ## Fallback: MCP unavailable
