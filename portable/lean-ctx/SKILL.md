@@ -97,6 +97,54 @@ Available via `ctx_call(name, args)` or direct tool call:
 - `ctx_callgraph(action)` — caller/callee analysis
 - `lean_ctx` — direct CLI access (e.g. `lean_ctx overview`, `lean_ctx gain`)
 
+## Task Integration
+
+Pi's `workflow_tasks` tool uses `ctx_knowledge` facts for task state tracking. Each task is stored as a pipe-delimited fact in the `task` category with a compound key.
+
+### Fact Format
+
+```
+[task/wf:{workflowId}:{taskId}]: {title}|{state}|{priority}|{description}|{agent}
+```
+
+- **workflowId** — session-scoped identifier (derived from Pi session UUID)
+- **taskId** — unique task key (format: `{workflowId}-{timestamp36}`)
+- **state** — one of: `queued`, `in_progress`, `done`, `failed`, `blocked`
+- **priority** — integer (lower = higher priority)
+- **description** — optional task detail
+- **agent** — delegated agent name (if any)
+
+### Retrieval
+
+Tasks are recalled via `lean-ctx knowledge recall "" --category task --mode exact` and parsed by the `parseFactLine` helper in `shared/leanctx.ts`. The `workflow_tasks` Pi tool (extension at `pi/.pi/agent/extensions/workflow-task-state/index.ts`) provides create/start/complete/block/fail/clear_done/list actions.
+
+### State Mapping
+
+| Pi workflow_tasks state | LeanCTX fact state |
+|-------------------------|-------------------|
+| `queued` | `queued` |
+| `in_progress` | `in_progress` |
+| `done` | `done` |
+| `failed` | `failed` |
+| `blocked` | `blocked` |
+
+### Advanced: ctx_task / ctx_workflow (HTTP API)
+
+The `session_memory` tool's `task_board` and `task_insights` actions bridge to LeanCTX's `ctx_task` and `ctx_workflow` HTTP tools (via `lean-ctx serve`). These are available for advanced multi-agent workflows and carry a stricter state enum (`working`, `input-required`, `completed`, `failed`, `canceled`). The shared `leanctx.ts` module provides `mapPiStateToLeanCtx` / `mapLeanCtxStateToPi` helpers for state translation.
+
+### Practical Example
+
+```bash
+# List task facts via lean-ctx CLI
+lean-ctx knowledge recall "" --category task --mode exact
+
+# Example fact (stored by workflow_tasks):
+# [task/wf:sess-abc123:abc123-m0a1b2]: Fix login timeout|in_progress|0|Set 10s deadline|worker
+
+# Check knowledge health
+lean-ctx knowledge status
+```
+
 ## Common Mistakes
 
 - **Not using compression bypass** — when a full file or raw command output is needed, expand with `full`/`raw=true` then return to compressed defaults
