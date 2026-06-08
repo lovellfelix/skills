@@ -116,7 +116,7 @@ Referenced from the `skills-and-commands-checklist` skill.
 - [ ] **Alternative: Local-overlay-only skills:**
   - [ ] **In manifest.json:** Add `"local_overlay_only": true`.
   - [ ] **In SKILL.md:** Include a `## Work Machine Activation` section:
-    - Reference `~/.dotfiles.local/overlays/local/.enabled` flag file
+    - Reference `~/.overlay/local/.enabled` flag file
     - Explain how to create the flag file if needed
     - Document behavior when flag is missing
 

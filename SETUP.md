@@ -49,7 +49,7 @@ Community skills install to `~/.agents/skills/` (primary) then symlink to `~/.cl
 
 ## Key Files
 
-- `~/.dotfiles.local/overlays/local/.enabled` — Local overlay flag (triggers machine-specific skill gating)
+- `~/.overlay/local/.enabled` — Local overlay flag (triggers machine-specific skill gating)
 - `~/.personal-machine-skills.txt` — Personal-only allowlist
 - `skills/community-{work,personal}.json` — Community skill lists
 

@@ -131,7 +131,7 @@ grenadianbuzz-api
 Local-overlay-only opt-in:
 
 - Skills with `"local_overlay_only": true` in `manifest.json` are skipped unless a local local-overlay flag exists.
-- Default flag path: `~/.dotfiles.local/overlays/local/.enabled`
+- Default flag path: `~/.overlay/local/.enabled`
 - Override flag path with `SKILL_WORK_MACHINE_FLAG_FILE=/path/to/flag`.
 
 Target a runtime explicitly:
