@@ -64,9 +64,16 @@ Use `fresh=true` when cached output is stale.
 
 ## Session guidance
 
-- **Start:** check LeanCTX-backed context first.
+- **Start:** `ctx_session(action="status")` → `ctx_knowledge(action="wakeup")` → `ctx_compress` → begin work.
 - **Resume:** use project facts / session context before falling back to exported wiki notes or raw durable artifacts.
 - **End:** record durable decisions in LeanCTX first; export to `llm-wiki` only when a human-readable archive is useful.
+
+## Proactive compression
+
+- **After wakeup:** always call `ctx_compress` before beginning work
+- **Phase boundaries** (orient → implement, implement → verify): call `ctx_compress`
+- **After 5+ ctx_read/ctx_search calls** in a phase: call `ctx_compress`
+- **Wakeup scope:** cap at 20 items if `--limit` is supported; prefer category-scoped recalls over full dumps
 
 ## Compression bypass
 
