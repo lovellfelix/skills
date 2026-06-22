@@ -50,7 +50,7 @@ if [[ -n "$ASSETS" ]]; then
       echo "Warning: asset not found: $a" >&2
     fi
   done
-done
+fi
 
 # Execute
 "${CMD[@]}"
