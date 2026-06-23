@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "name": "jarvis-workflows",
+  "description": "Use when operating or coordinating the Jarvis fleet across the Mac orchestrator, remote Jarvis hosts, managed agents, or the jarvis-claude worker and you need the correct transport, queue, or scheduler path.",
+  "version": "0.1.0",
+  "portable": true,
+  "entrypoint": "SKILL.md",
+  "tags": [
+    "jarvis",
+    "fleet",
+    "managed-agents",
+    "claude-worker",
+    "delegation",
+    "queue",
+    "workflow",
+    "portable"
+  ],
+  "adapters": {
+    "opencode": {
+      "path": "SKILL.md",
+      "mode": "native"
+    },
+    "claude": {
+      "path": "SKILL.md",
+      "mode": "include"
+    },
+    "pi": {
+      "path": "SKILL.md",
+      "mode": "include"
+    }
+  },
+  "compatibility": {
+    "runtimes": {
+      "opencode": {
+        "min_version": "*"
+      },
+      "claude": {
+        "min_version": "*"
+      },
+      "pi": {
+        "min_version": "*"
+      }
+    }
+  }
+}

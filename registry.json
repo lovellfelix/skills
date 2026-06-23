@@ -1030,6 +1030,54 @@
           }
         }
       },
+      "description": "Use when operating or coordinating the Jarvis fleet across the Mac orchestrator, remote Jarvis hosts, managed agents, or the jarvis-claude worker and you need the correct transport, queue, or scheduler path.",
+      "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
+      "location": "portable/jarvis-workflows/",
+      "name": "jarvis-workflows",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "jarvis",
+        "fleet",
+        "managed-agents",
+        "claude-worker",
+        "delegation",
+        "queue",
+        "workflow",
+        "portable"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Use when migrating Android projects from Java to Kotlin while maintaining behavior and test coverage.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
