@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "name": "pass-secrets-management",
+  "description": "Use when agents need to retrieve, store, or manage secrets/passwords/credentials using the pass CLI, including one-off secret storage for isolated leakage prevention in autonomous workflows.",
+  "version": "0.2.0",
+  "portable": true,
+  "entrypoint": "SKILL.md",
+  "tags": [
+    "pass",
+    "secrets",
+    "passwords",
+    "credentials",
+    "security",
+    "gpg",
+    "password-store",
+    "agent-automation",
+    "anti-leak",
+    "permission-escalation",
+    "version-control"
+  ],
+  "adapters": {
+    "opencode": {
+      "path": "SKILL.md",
+      "mode": "native"
+    },
+    "claude": {
+      "path": "SKILL.md",
+      "mode": "include"
+    },
+    "pi": {
+      "path": "SKILL.md",
+      "mode": "include"
+    }
+  },
+  "compatibility": {
+    "runtimes": {
+      "opencode": {
+        "min_version": "*"
+      },
+      "claude": {
+        "min_version": "*"
+      },
+      "pi": {
+        "min_version": "*"
+      }
+    }
+  }
+}
