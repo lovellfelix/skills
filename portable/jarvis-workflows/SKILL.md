@@ -1,20 +1,21 @@
 ---
 name: jarvis-workflows
-description: Use when operating or coordinating the Jarvis fleet across the Mac orchestrator, remote Jarvis hosts, managed agents, or the jarvis-claude worker and you need the correct transport, queue, or scheduler path.
+description: Use when operating or coordinating the Jarvis fleet across the Mac orchestrator, remote Jarvis hosts, managed agents, or the jarvis-claude worker and you need the correct transport, queue, scheduler, or off-LAN access path.
 metadata:
   version: 0.1.0
   portable: true
-  tags: [jarvis, fleet, managed-agents, claude-worker, delegation, workflow]
+  tags: [jarvis, fleet, managed-agents, claude-worker, delegation, workflow, tailscale]
 ---
 
 # Jarvis Workflows
 
-Use one operating model for Jarvis work regardless of harness. The goal is to choose the right Jarvis execution surface first, then use the deterministic transport for that surface.
+Use one operating model for Jarvis work regardless of harness. The goal is to choose the right Jarvis execution surface first, then use the deterministic transport or access path for that surface.
 
 ## Use when
 
 - Work involves the Jarvis fleet rather than only the current machine.
 - You need to decide between local execution, A2A, managed agents, or the Claude worker.
+- You need off-LAN operator access to the fleet.
 - The task should survive the current harness or session.
 - You need deterministic enqueue, replay, scheduling, or result lookup.
 
@@ -28,8 +29,11 @@ Use one operating model for Jarvis work regardless of harness. The goal is to ch
 - Fleet registry: `jarvis/schedules.json`
 - Claude worker helper: `jarvis/scripts/claude-task.sh`
 - Fleet board: `jarvis/scripts/fleet-status.sh`
+- Fleet bootstrap entrypoint: `jarvis/scripts/bootstrap-fleet.sh`
+- Tailscale rollout helper: `jarvis/scripts/fleet-tailscale.sh`
 - Managed-agent seed: `jarvis/managed-agents.template.json`
 - Managed-agent reconciler: `jarvis/scripts/sync-managed-agents.py`
+- Tailscale runbook: `docs/ops/tailscale-runbook.md`
 
 Read `jarvis/schedules.json` first when the question is about what exists, what runs where, or what should own recurring work.
 
@@ -41,6 +45,7 @@ Read `jarvis/schedules.json` first when the question is about what exists, what 
 | One-off remote Jarvis question or action on `jarvis-infra` / `jarvis-synth` | A2A request | remote `:8010/a2a/tasks` |
 | Recurring remote operational job | Managed agent | `managed-agents.template.json` + `sync-managed-agents.py` |
 | Long-running planning, analysis, or detached Claude reasoning | `jarvis-claude` worker | `claude-task.sh` / `claude-tasks` queue |
+| Off-LAN SSH or service reachability to the fleet | Tailscale access plane | `bootstrap-fleet.sh tailscale` + `tailscale-runbook.md` |
 
 ## Routing decision table
 
@@ -52,6 +57,7 @@ Use this table before choosing a Jarvis path.
 | Quick one-off check on `jarvis-infra` or `jarvis-synth` | A2A | direct remote execution without creating durable scheduler state |
 | Repeating remote maintenance or monitoring | managed agent | gives schedule, drift control, and fleet visibility |
 | Detached repo planning, bounded analysis, or long-running reasoning | `jarvis-claude` queue | durable queue plus asynchronous result pickup |
+| Off-LAN operator access to `jarvis-hub`, `jarvis-infra`, `jarvis-synth`, or `jarvis-claude` | Tailscale | preserves LAN defaults while adding a second management plane |
 | “What is scheduled, live, or already running?” | `fleet-status.sh` + `schedules.json` | avoids guessing |
 
 ## Core rules
@@ -60,6 +66,29 @@ Use this table before choosing a Jarvis path.
 2. Do not create recurring work ad hoc; put it in `jarvis/schedules.json` and reconcile the managed-agent seed.
 3. For Claude worker delegation, do not invent harness-specific transports when the queue helper is available.
 4. Check the fleet board before claiming what is scheduled or live.
+5. Treat Tailscale as an operator access path, not as a replacement for the current LAN hostnames or in-fleet routing.
+
+## Bootstrap quick start
+
+Use this sequence when standing up a new Mac or refreshing fleet access:
+
+1. Local bootstrap: `bash ~/.dotfiles/hacks/bootstrap.sh`
+2. Register Mac-to-fleet connectivity if needed: `bash ~/.dotfiles/jarvis/scripts/bootstrap-fleet.sh mac --register`
+3. For off-LAN remote access, enroll the fleet in Tailscale:
+
+```bash
+TAILSCALE_AUTH_KEY=tskey-... \
+  bash ~/.dotfiles/jarvis/scripts/bootstrap-fleet.sh tailscale --apply 245 246 247 248
+```
+
+4. Verify access:
+
+```bash
+tailscale status
+tailscale ssh dev@jarvis-infra 'hostname && systemctl is-active tailscaled'
+```
+
+`hacks/bootstrap.sh` can run step 3 automatically only when `BOOTSTRAP_JARVIS_TAILSCALE=true` and `TAILSCALE_AUTH_KEY` are set in the environment.
 
 ## Drift reconciliation policy
 
@@ -237,6 +266,12 @@ Done when:
 2. Confirm the live host inventory matches the seed with `sync-managed-agents.py` dry-run.
 3. Confirm health with `check-proxmox-agents.sh`.
 
+### For Tailscale access
+
+1. Confirm the node is visible in `tailscale status`.
+2. Confirm remote shell access with `tailscale ssh`.
+3. Fall back to the LAN or Proxmox `pct exec` path if Tailscale is degraded.
+
 ### For Claude worker tasks
 
 After enqueue:
@@ -259,6 +294,7 @@ Use this first-pass table before deeper debugging.
 | Dry-run sync shows EXTRA | stale live managed agent | rerun with `--apply --prune` after confirming template intent |
 | Fleet board disagrees with expected jobs | registry/template/live mismatch | reconcile in the order defined in Drift reconciliation policy |
 | Managed agents sit in `error` | stale model or broken remote command path | inspect live config, model name, and recent summary/error fields |
+| Off-LAN SSH fails but LAN access still works | Tailscale enrollment or policy issue | check `tailscale status`, `tailscale ip -4`, and `systemctl status tailscaled` |
 
 ## Red flags
 
