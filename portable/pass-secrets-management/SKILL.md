@@ -2,9 +2,9 @@
 name: pass-secrets-management
 description: Use when agents need to retrieve, store, or manage secrets/passwords/credentials using the pass CLI, including one-off secret storage for isolated leakage prevention in autonomous workflows.
 metadata:
-  version: 0.2.0
+  version: 0.3.0
   portable: true
-  tags: [pass, secrets, passwords, credentials, security, gpg, password-store, agent-automation]
+  tags: [pass, secrets, passwords, credentials, security, gpg, password-store, agent-automation, ssh, key-rotation, rotate-agent-key]
 ---
 
 # Pass Secrets Management
@@ -29,26 +29,6 @@ Use the `pass` CLI (standard Unix password manager) for all secrets management i
 - GPG key initialized (`pass init <gpg-id>`)
 - Store location: typically `~/.password-store/`
 
-## Migration from Legacy Structure
-
-If your pass store uses a flat `homelab/` catch-all structure, migrate to the agent-friendly namespace convention first.
-
-```bash
-# Preview changes (safe — no modifications)
-./pass-migrate.sh --dry-run
-
-# Execute migration (creates backup automatically)
-./pass-migrate.sh --execute
-
-# Rollback if needed
-./pass-migrate.sh --rollback
-```
-
-**Files:**
-- `MIGRATION-PLAN.md` — Full migration mapping and rationale
-- `POST-MIGRATION-REFERENCE.md` — Quick reference for finding secrets after migration
-- `pass-migrate.sh` — Migration script with dry-run/execute/rollback modes
-
 ## Agent Namespace Convention
 
 Organize secrets by agent category and purpose. This keeps secrets scoped, avoids cross-contamination, and makes auditing easier.
@@ -57,41 +37,35 @@ Organize secrets by agent category and purpose. This keeps secrets scoped, avoid
 
 ```
 ~/.password-store/
-├── agents/                          # Agent-specific secrets
-│   ├── orchestrator/                # Orchestrator agent
-│   │   ├── github/
-│   │   │   └── token
-│   │   └── slack/
-│   │       └── webhook-url
-│   ├── language-coder/              # Language coder agent
-│   │   ├── npm/
-│   │   │   └── auth-token
-│   │   └── pypi/
-│   │       └── api-key
-│   └── sre-debugger/                # SRE debugger agent
-│       ├── kubernetes/
-│       │   └── kubeconfig-token
-│       └── ssh/
-│           └── deploy-key
+├── infrastructure/                  # Infrastructure machine credentials
+│   ├── age/
+│   │   └── key                      # Age encryption key
+│   ├── apps/                        # App-specific creds (botkube, infisical, kured, paperless, pocketid, prometheus)
+│   ├── database/mysql/              # MySQL creds (backup, phpmyadmin, root)
+│   ├── dns/cloudflare/              # Cloudflare (api-key, ddns, email, tunnel)
+│   ├── kubernetes/                  # Kubeconfigs (homelab-cluster, mgmt-cluster)
+│   ├── network/omada/               # Omada SDN
+│   ├── proxmox/                     # PVE (api, cluster-api-users)
+│   ├── ssh/                         # SSH keys for machine access
+│   │   └── <host>/<user>/           # Key for <user>@<host>
+│   │       └── id_ed25519           # Private key (public at id_ed25519.pub)
+│   ├── sso/auth0/                   # Auth0 (k3s)
+│   └── vpn/                         # VPN creds (blvtx-vpn, privado, tailscale)
 ├── services/                        # Shared service credentials
-│   ├── aws/
-│   │   ├── production/
-│   │   │   ├── access-key
-│   │   │   └── secret-key
-│   │   └── staging/
-│   │       ├── access-key
-│   │       └── secret-key
-│   ├── github/
-│   │   └── personal-access-token
-│   └── homelab/
-│       ├── age/
-│       │   └── key
-│       └── ai/
-│           └── chatgpt/
-│               └── api-key
-├── personal/                        # Personal/user-scoped secrets
-│   └── ssh/
-│       └── github-personal
+│   ├── ai/                          # AI service tokens (chatgpt, claude, gemini, nvidia, openclaw, openrouter)
+│   ├── billing/stripe/              # Payment processor
+│   ├── cloud/                       # Cloud providers (backblaze, oracle)
+│   ├── communication/               # Email/slack (mailgun, slack)
+│   ├── containers/                  # Container registries (docker, quay)
+│   ├── developers/                  # Dev tools (github, insomnia, netlify)
+│   ├── home-automation/             # HA/iot (atuin, home-assistant, mqtt)
+│   ├── media/                       # Media stack (lidarr, obsidian, prowlarr, radarr, sonarr, whisparr)
+│   ├── projects/                    # Project-specific (gbuzz, etc.)
+│   └── storage/                     # Object/block storage (ceph, minio, synology)
+├── personal/                        # User's personal secrets
+│   ├── atuin
+│   ├── email/                       # Email account credentials
+│   └── usenet/                      # Usenet provider creds
 └── _agent-sessions/                 # Ephemeral session stores (gitignored)
     └── <session-id>/
 ```
@@ -100,32 +74,40 @@ Organize secrets by agent category and purpose. This keeps secrets scoped, avoid
 
 | Namespace | Purpose | Access |
 |-----------|---------|--------|
-| `agents/<agent-name>/` | Agent-specific credentials | Only that agent |
+| `infrastructure/<category>/` | Infra machine/service credentials | All authorized agents |
 | `services/<service>/` | Shared service credentials | All authorized agents |
 | `personal/` | User's personal secrets | Requires user permission |
 | `_agent-sessions/` | Ephemeral session-scoped stores | Creating agent only |
 
-### Adding a New Agent Namespace
+### SSH Key Convention
 
-```bash
-# Create namespace for a new agent
-pass mkdir agents/my-new-agent
+SSH keys for machine access follow `infrastructure/ssh/<host>/<user>/id_<type>`:
 
-# Store agent-specific credentials
-echo "$TOKEN" | pass insert --force agents/my-new-agent/service/token
-
-# Verify
-pass ls agents/my-new-agent/
+```
+infrastructure/ssh/
+└── jarvis-claude/
+    └── claude/
+        ├── id_ed25519       # Private key (multi-line PEM)
+        └── id_ed25519.pub   # Public key (single line)
 ```
 
-### Removing an Agent Namespace
+On-disk mirror at `~/.ssh/agents/<host>/<user>/` for direct SSH use.
+
+### Adding a New Secret
 
 ```bash
-# Remove entire agent namespace (requires confirmation)
-pass rm -r -f agents/old-agent
+# Create namespace
+pass mkdir infrastructure/ssh/my-host/my-user
 
-# Or remove specific secret only
-pass rm agents/old-agent/service/token
+# Store credential
+echo "$VALUE" | pass insert --force infrastructure/ssh/my-host/my-user/id_ed25519
+```
+
+### Removing a Secret
+
+```bash
+pass rm infrastructure/ssh/my-host/my-user/id_ed25519
+pass rm -r infrastructure/ssh/my-host/my-user  # entire user namespace
 ```
 
 ## Core Operations
@@ -157,11 +139,16 @@ pass insert <path>
 echo "$SECRET_VALUE" | pass insert --force <path>
 
 # Multi-line secrets (API key + secret on separate lines)
-pass insert --force <path> <<EOF
-$API_KEY
-$API_SECRET
+# MUST use --multiline when piping multi-line content (pass v1.7.4+)
+pass insert --force --multiline infrastructure/ssh/host/user/id_ed25519 <<EOF
+$PRIVATE_KEY_CONTENT
 EOF
+
+# One-liner (public keys, tokens — --multiline also works):
+cat key.pub | pass insert --force --multiline infrastructure/ssh/host/user/id_ed25519.pub
 ```
+
+> **Gotcha:** Without `--multiline`, `pass insert --force` may silently exit 1 on piped multi-line input. Always use `--multiline` when writing SSH keys, PEM blocks, or any content with line breaks.
 
 ### Update an Existing Secret
 
@@ -514,18 +501,51 @@ EOF
 }
 ```
 
-### Pattern 3: Secret Rotation
+### Pattern 3: SSH Key Rotation
+
+For SSH keys use the generic rotation script at `~/.dotfiles/scripts/rotate-agent-key.sh`:
+
+```bash
+# Create first-time key for deploy@10.0.10.100
+~/.dotfiles/scripts/rotate-agent-key.sh 10.0.10.100 deploy --create
+
+# Rotate existing claude@jarvis-claude key (auto-backup, pass update, remote deploy)
+~/.dotfiles/scripts/rotate-agent-key.sh jarvis-claude claude
+
+# Dry-run to preview
+~/.dotfiles/scripts/rotate-agent-key.sh jarvis-claude claude --dry-run
+
+# Custom key type
+~/.dotfiles/scripts/rotate-agent-key.sh jarvis-hub cicd --key-type ecdsa
+
+# Custom root user for remote push
+~/.dotfiles/scripts/rotate-agent-key.sh 10.0.10.100 ansible --root-user ubuntu
+```
+
+What the script does:
+1. Backs up the old key to `~/.ssh/agents/<host>/<user>/backup/`
+2. Generates a new Ed25519 key
+3. Pushes the public key to remote via `root@<host>`
+4. Stores the private key in `pass` at `infrastructure/ssh/<host>/<user>/id_ed25519`
+5. Stores the public key in `pass` at `...id_ed25519.pub`
+6. Verifies the new key works via SSH
+7. Auto-restores the backup on verification failure
+
+Wrapper scripts for specific hosts live alongside the keys:
+```bash
+# ~/.ssh/agents/jarvis-claude/claude/rotate.sh
+#!/usr/bin/env bash
+exec ~/.dotfiles/scripts/rotate-agent-key.sh jarvis-claude claude "$@"
+```
+
+### Pattern 4: Simple Secret Rotation
+
+For non-SSH secrets (API keys, tokens):
 
 ```bash
 rotate_and_store() {
     local path=$1
     local new_value=$2
-    
-    # Verify this agent can modify this path
-    if ! check_write_authorization "$path"; then
-        echo "PERMISSION REQUIRED: Rotate $path" >&2
-        return 1
-    fi
     
     # Store new value
     echo "$new_value" | pass insert --force "$path"
@@ -540,7 +560,7 @@ rotate_and_store() {
 }
 ```
 
-### Pattern 4: Multi-Line Secret Handling
+### Pattern 5: Multi-Line Secret Handling
 
 ```bash
 # Some services need key=value pairs or JSON
@@ -587,6 +607,16 @@ pass insert secret/path
 
 # GOOD: Non-interactive for automation
 echo "$VALUE" | pass insert --force secret/path
+```
+
+### Forgetting `--multiline` for Multi-Line Secrets
+
+```bash
+# BAD: exits 1 on piped multi-line input
+cat ~/.ssh/id_ed25519 | pass insert --force host/key
+
+# GOOD: --multiline handles PEM blocks correctly
+cat ~/.ssh/id_ed25519 | pass insert --force --multiline host/key
 ```
 
 ### Accessing Personal Secrets Without Permission
