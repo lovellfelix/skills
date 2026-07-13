@@ -73,7 +73,7 @@
           }
         }
       },
-      "description": "Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, and technical communication to improve clarity, brevity, and reduce review friction.",
+      "description": "Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, blog posts/field notes, and technical communication to improve clarity, brevity, and reduce review friction.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/communication-style/",
@@ -86,9 +86,10 @@
         "engineering-writing",
         "pr-review",
         "slack",
-        "clarity"
+        "clarity",
+        "blog"
       ],
-      "version": "0.8.0"
+      "version": "0.13.1"
     },
     {
       "adapters": {
@@ -1030,7 +1031,7 @@
           }
         }
       },
-      "description": "Use when operating or coordinating the Jarvis fleet across the Mac orchestrator, remote Jarvis hosts, managed agents, or the jarvis-claude worker and you need the correct transport, queue, or scheduler path.",
+      "description": "Use when operating or coordinating the Jarvis fleet across the Mac orchestrator, remote Jarvis hosts, managed agents, or the jarvis-claude worker and you need the correct transport, queue, scheduler, or off-LAN access path.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/jarvis-workflows/",
@@ -1455,6 +1456,59 @@
         "portable"
       ],
       "version": "2026.1.28"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Use when agents need to retrieve, store, or manage secrets/passwords/credentials using the pass CLI, including one-off secret storage for isolated leakage prevention in autonomous workflows.",
+      "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
+      "location": "portable/pass-secrets-management/",
+      "name": "pass-secrets-management",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "pass",
+        "secrets",
+        "passwords",
+        "credentials",
+        "security",
+        "gpg",
+        "password-store",
+        "agent-automation",
+        "anti-leak",
+        "permission-escalation",
+        "version-control",
+        "ssh",
+        "key-rotation"
+      ],
+      "version": "0.3.0"
     },
     {
       "adapters": {

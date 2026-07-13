@@ -1,10 +1,10 @@
 ---
 name: communication-style
-description: Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, and technical communication to improve clarity, brevity, and reduce review friction.
+description: Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, blog posts/field notes, and technical communication to improve clarity, brevity, and reduce review friction.
 metadata:
-  version: 0.8.0
+  version: 0.13.1
   portable: true
-  tags: [communication, engineering-writing, pr-review, slack, clarity]
+  tags: [communication, engineering-writing, pr-review, slack, clarity, blog]
 ---
 
 # Communication Style
@@ -21,12 +21,12 @@ Output must be copy-paste ready.
 
 - Rewriting technical updates for clarity and brevity.
 - Drafting PR notes, RFC comments, review feedback, or incident updates.
+- Writing or editing blog posts and field notes (personal or team).
 - Tightening wording so asks, risks, and decisions are obvious.
 
 ## When not to use
 
 - You need domain-specific technical analysis rather than wording help.
-- You are generating long-form tutorial content by design.
 - The user asks for a distinct voice that conflicts with these defaults.
 
 ## Related Skills
@@ -34,6 +34,14 @@ Output must be copy-paste ready.
 - `documentation` for structured engineering docs.
 - `incident-postmortem` for blameless incident writeups.
 - `design-doc-review` for design/RFC quality checks.
+
+## Detailed Reference
+
+`writing-guide.md` (in this skill directory) covers what this checklist doesn't: per-format structures (email, RFC, implementation prompt, incident, blog), the evidence/ownership/metrics/tradeoff model, causality, and the revision-pass workflow. Read it before drafting long-form or high-stakes material (RFCs, postmortems, blog posts); for quick edits (PR notes, Slack messages), this file is usually enough. Its rules and this file's don't overlap, apply both, in either order.
+
+## Flag Inconsistencies
+
+Determinism, not just brevity, is the goal. If the source material or the request is internally inconsistent, or asks for something that conflicts with a rule here or in `writing-guide.md`, name the specific rule and the specific conflict, then ask or flag it rather than silently resolving it one way. Examples: a draft hedges a fact it also states as confirmed (`writing-guide.md` evidence-tiers rule); a request wants both terse bullets and exhaustive detail; a request wants leadership/impact framing where the input describes an individual contribution (`writing-guide.md` ownership rule). "This sounds off" is not a flag; name the rule.
 
 ## Core Rules
 
@@ -47,6 +55,7 @@ Output must be copy-paste ready.
 - Move the main point to line 1 whenever possible
 
 For debugging or production issues:
+
 - Start with one line identifying the likely failure domain or system layer
 
 ## Avoid
@@ -67,6 +76,7 @@ For debugging or production issues:
 ## Anti-Slop Rules
 
 Remove:
+
 - throat-clearing intros
 - generic filler transitions
 - repeated restatements
@@ -75,6 +85,7 @@ Remove:
 - empty qualifiers without measurable meaning
 
 Prefer:
+
 - outcome before explanation
 - concrete nouns and verbs
 - one idea per sentence or bullet
@@ -82,6 +93,7 @@ Prefer:
 - direct wording over abstract phrasing
 
 Delete any sentence that does not:
+
 - change a decision
 - clarify a risk
 - explain an action
@@ -104,7 +116,7 @@ Before responding, check:
 3. Does this sound like an experienced engineer wrote it?
 4. Is formatting helping or distracting?
 5. Can this be shorter without losing meaning?
-6. Can em dashes be removed?
+6. Does this contain zero em dashes (—)?
 7. Is the ask obvious?
 8. Is every sentence contributing signal?
 
@@ -118,21 +130,32 @@ Before responding, check:
 - Avoid excessive nesting
 - Do not repeat points
 
+### Prose vs. Bullets by Genre
+
+This determines whether a piece opens with a bulleted list or stays in prose. Pick by genre, not by preference in the moment:
+
+- **Narrative/explanatory** (incident notes, postmortems, root-cause explanations, blog/field-note passages): prose only. State the causal chain in full sentences; do not break it into bullets even when it has multiple steps.
+- **Change/action content** (PR descriptions, changelists, task summaries): one-line statement of what the change does, then a bulleted list of the changes, then a one-line verification/test statement. Do not expand the change list into prose.
+
+If a piece mixes both (e.g., an RFC with a rationale section and a rollout checklist), apply prose to the rationale and bullets to the checklist within the same document.
+
 ### Em Dash Rule
 
-Avoid em dashes by default.
+Do not use em dashes (—). This is a hard rule, not a preference. There is no readability exception. If a draft contains one, rewrite the sentence; do not keep it and justify it.
 
-Prefer:
-- periods
-- commas
-- colons
-- parentheses
+Deterministic replacements, in order of fit:
 
-Only use em dashes when removing them hurts readability.
+- Two independent clauses -> split into two sentences with a period.
+- A list or appositive aside -> use a comma.
+- A clause that explains or expands the one before it -> use a colon.
+- A parenthetical aside -> use parentheses.
+
+Before finishing any draft, scan the text for `—` and `--` and replace every instance. Zero em dashes is the only passing state.
 
 ## Operational Framing
 
 When relevant, include:
+
 - affected system or layer
 - operational risk
 - rollout or rollback impact
@@ -144,6 +167,7 @@ Prefer operationally actionable wording over conceptual discussion.
 ## Review Friction Reduction
 
 Optimize for fast review:
+
 - put the main point first
 - reduce reviewer interpretation work
 - surface risks early
@@ -176,3 +200,12 @@ Secondary:
 - Context: [short supporting detail]
 ```
 
+## Blog Posts & Field Notes
+
+All rules above apply. See `writing-guide.md` §19 for the full structure model (problem, context, what was tried, what changed, lesson). This adds:
+
+- Prose over bullet-heavy scaffolding. Flowing paragraphs are the default; use a bulleted list only for a genuine enumeration (steps, options), not as a substitute for a sentence.
+- No formulaic AI-tell structure: no "Final thought" / "Key takeaway" closing section, no "It's not X, it's Y" framing, no restating the title as the closing line.
+- No generic outcome lists ("Faster X. Better Y. Less Z."): if the result matters, say what specifically changed, with enough detail that it couldn't apply to any other project.
+- The em dash rule applies without exception. Long-form is where em dashes accumulate fastest, so check this last, after every other pass.
+- Preserve the author's actual voice and specific details (names, numbers, dates, tools) exactly as given. Tighten grammar and structure; do not smooth away the specifics that make it a field note instead of a generic explainer.
