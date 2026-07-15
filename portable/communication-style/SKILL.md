@@ -2,7 +2,7 @@
 name: communication-style
 description: Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, blog posts/field notes, and technical communication to improve clarity, brevity, and reduce review friction.
 metadata:
-  version: 0.13.1
+  version: 0.13.2
   portable: true
   tags: [communication, engineering-writing, pr-review, slack, clarity, blog]
 ---
@@ -86,7 +86,7 @@ Remove:
 
 Prefer:
 
-- outcome before explanation
+- make the outcome clear early, but vary sentence structure naturally
 - concrete nouns and verbs
 - one idea per sentence or bullet
 - facts, decisions, risks, and actions
@@ -119,6 +119,7 @@ Before responding, check:
 6. Does this contain zero em dashes (—)?
 7. Is the ask obvious?
 8. Is every sentence contributing signal?
+9. Does the prose rely on repeated colon-led sentence patterns?
 
 ## Formatting Rules
 
@@ -139,6 +140,20 @@ This determines whether a piece opens with a bulleted list or stays in prose. Pi
 
 If a piece mixes both (e.g., an RFC with a rationale section and a rollout checklist), apply prose to the rationale and bullets to the checklist within the same document.
 
+### Colon Rule
+
+Use colons sparingly.
+
+Do not repeatedly use patterns such as:
+
+- short conclusion followed by a colon and explanation
+- label followed by a colon and full sentence
+- claim followed by a colon and instruction
+
+Prefer a period, comma, or natural conjunction when the second clause can stand on its own. Use a colon when it genuinely introduces an explanation, example, list, or consequence and is the clearest punctuation.
+
+Before finishing, scan for repeated colons. In normal prose, avoid more than one colon in a paragraph unless the content genuinely requires it. This is a rhythm check, not a hard quota.
+
 ### Em Dash Rule
 
 Do not use em dashes (—). This is a hard rule, not a preference. There is no readability exception. If a draft contains one, rewrite the sentence; do not keep it and justify it.
@@ -147,7 +162,7 @@ Deterministic replacements, in order of fit:
 
 - Two independent clauses -> split into two sentences with a period.
 - A list or appositive aside -> use a comma.
-- A clause that explains or expands the one before it -> use a colon.
+- A clause that explains or expands the one before it -> usually split it into a new sentence or connect it naturally with a conjunction. Use a colon only when it clearly introduces a genuine explanation, example, list, or consequence.
 - A parenthetical aside -> use parentheses.
 
 Before finishing any draft, scan the text for `—` and `--` and replace every instance. Zero em dashes is the only passing state.
