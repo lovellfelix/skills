@@ -2,7 +2,7 @@
 name: communication-style
 description: Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, blog posts/field notes, and technical communication to improve clarity, brevity, and reduce review friction.
 metadata:
-  version: 0.13.2
+  version: 0.14.0
   portable: true
   tags: [communication, engineering-writing, pr-review, slack, clarity, blog]
 ---
@@ -64,11 +64,7 @@ For debugging or production issues:
 - Consultant-speak
 - Academic over-explaining unless requested
 - Hidden politeness
-- Generic filler transitions
 - Inflated language
-- Repeated restatements
-- Long setup before the main point
-- Empty qualifiers without measurable meaning
 - Overly casual slang
 - Passive-aggressive phrasing
 - Hype or exaggerated enthusiasm
@@ -117,9 +113,9 @@ Before responding, check:
 4. Is formatting helping or distracting?
 5. Can this be shorter without losing meaning?
 6. Does this contain zero em dashes (—)?
-7. Is the ask obvious?
-8. Is every sentence contributing signal?
-9. Does the prose rely on repeated colon-led sentence patterns?
+7. Is there at most one clause-level colon per paragraph?
+8. Is the ask obvious?
+9. Is every sentence contributing signal?
 
 ## Formatting Rules
 
@@ -140,32 +136,27 @@ This determines whether a piece opens with a bulleted list or stays in prose. Pi
 
 If a piece mixes both (e.g., an RFC with a rationale section and a rollout checklist), apply prose to the rationale and bullets to the checklist within the same document.
 
-### Colon Rule
-
-Use colons sparingly.
-
-Do not repeatedly use patterns such as:
-
-- short conclusion followed by a colon and explanation
-- label followed by a colon and full sentence
-- claim followed by a colon and instruction
-
-Prefer a period, comma, or natural conjunction when the second clause can stand on its own. Use a colon when it genuinely introduces an explanation, example, list, or consequence and is the clearest punctuation.
-
-Before finishing, scan for repeated colons. In normal prose, avoid more than one colon in a paragraph unless the content genuinely requires it. This is a rhythm check, not a hard quota.
-
 ### Em Dash Rule
 
 Do not use em dashes (—). This is a hard rule, not a preference. There is no readability exception. If a draft contains one, rewrite the sentence; do not keep it and justify it.
 
 Deterministic replacements, in order of fit:
 
-- Two independent clauses -> split into two sentences with a period.
-- A list or appositive aside -> use a comma.
-- A clause that explains or expands the one before it -> usually split it into a new sentence or connect it naturally with a conjunction. Use a colon only when it clearly introduces a genuine explanation, example, list, or consequence.
-- A parenthetical aside -> use parentheses.
+1. Two independent clauses -> split into two sentences with a period.
+2. A list or appositive aside -> use a comma.
+3. A parenthetical aside -> use parentheses.
+4. A clause that explains or expands the one before it -> new sentence. Use a colon only if it introduces a genuine list or definition and the paragraph has no clause-level colon yet (see Colon Rule).
 
 Before finishing any draft, scan the text for `—` and `--` and replace every instance. Zero em dashes is the only passing state.
+
+### Colon Rule
+
+A colon is not a default em-dash substitute. Overusing it moves the crutch punctuation one character to the left and produces the same skimmable-fragment problem the em-dash rule exists to fix.
+
+- Default to a period (two sentences) or a comma (apposition, list lead-in) when the second clause can stand on its own.
+- Reserve the colon for a genuine list or definition introduction: a short label followed by an enumerated series (`Three things: X, Y, Z`), or a term followed by its definition. Not for connecting two clauses that could just as easily be two sentences.
+- Hard limit: at most one clause-level colon per paragraph. Timestamps, ratios, URLs, and code do not count. If a paragraph already has one, rewrite every further instance as a period or comma.
+- After the em-dash pass, scan every draft for `:` and enforce the limit.
 
 ## Operational Framing
 

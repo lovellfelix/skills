@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "name": "communication-style",
   "description": "Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, blog posts/field notes, and technical communication to improve clarity, brevity, and reduce review friction.",
-  "version": "0.13.1",
+  "version": "0.14.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": ["communication", "engineering-writing", "pr-review", "slack", "clarity", "blog"],
