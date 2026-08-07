@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "name": "adversary-review",
+  "description": "Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different model, not another self-review pass. Runs the content through hacks/adversary-review.sh (OpenCode Go, gpt-5.6-luna) from a chosen adversarial perspective. Not for code generation or implementation.",
+  "version": "0.1.0",
+  "portable": true,
+  "entrypoint": "SKILL.md",
+  "tags": ["review", "adversarial", "critique", "second-opinion", "plan", "rfc"],
+  "adapters": {
+    "opencode": {
+      "path": "SKILL.md",
+      "mode": "native"
+    },
+    "claude": {
+      "path": "SKILL.md",
+      "mode": "include"
+    },
+    "pi": {
+      "path": "SKILL.md",
+      "mode": "include"
+    }
+  },
+  "compatibility": {
+    "runtimes": {
+      "opencode": {
+        "min_version": "*"
+      },
+      "claude": {
+        "min_version": "*"
+      },
+      "pi": {
+        "min_version": "*"
+      }
+    }
+  }
+}

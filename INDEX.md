@@ -10,6 +10,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 
 | Name | Location | Purpose |
 |------|----------|---------|
+| **adversary-review** | `portable/adversary-review/` | Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different model, not another self-review pass. Runs the content through hacks/adversary-review.sh (OpenCode Go, gpt-5.6-luna) from a chosen adversarial perspective. Not for code generation or implementation. |
 | **code-review** | `portable/code-review/` | Use when reviewing code changes, a PR, or a commit and need structured, severity-graded findings covering correctness, security, reliability, and maintainability. |
 | **communication-style** | `portable/communication-style/` | Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, blog posts/field notes, and technical communication to improve clarity, brevity, and reduce review friction. |
 | **compose-material3** | `portable/compose-material3/` | Use when you need Jetpack Compose UI help (Android), Material 3 component patterns, Compose screen design review, or accessible Compose theming fixes. |
@@ -53,6 +54,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 | **skills-and-commands-checklist** | `portable/skills-and-commands-checklist/` | Use when authoring or maintaining portable skills and custom commands to ensure correctness, discoverability, and long-term maintainability across tools and machines. |
 | **summarize** | `portable/summarize/` | Use when fetching a URL or converting a local file (PDF, DOCX, HTML, etc.) to Markdown for reading or summarization via uvx markitdown. |
 | **weather-forecast** | `portable/weather-forecast/` | Use when the user asks for current weather, today's conditions, or a short forecast without relying on paid weather APIs. |
+| **writing-modern-python** | `portable/writing-modern-python/` | Use when implementing or modifying Python code and pytest tests and need concise, typed, production-ready changes with modern syntax, walrus-operator patterns, fixtures, annotated mocks, @patch usage, and Ruff/pytest quality gates. |
 | **writing-plans** | `portable/writing-plans/` | Use when you have a spec or requirements for a multi-step task, before touching code |
 | **writing-skills** | `portable/writing-skills/` | Use when creating new skills, editing existing skills, or verifying skills work before deployment. |
 

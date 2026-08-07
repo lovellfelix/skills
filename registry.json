@@ -29,6 +29,52 @@
           }
         }
       },
+      "description": "Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different model, not another self-review pass. Runs the content through hacks/adversary-review.sh (OpenCode Go, gpt-5.6-luna) from a chosen adversarial perspective. Not for code generation or implementation.",
+      "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
+      "location": "portable/adversary-review/",
+      "name": "adversary-review",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "review",
+        "adversarial",
+        "critique",
+        "second-opinion",
+        "plan",
+        "rfc"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        },
+        "pi": {
+          "mode": "include",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          },
+          "pi": {
+            "min_version": "*"
+          }
+        }
+      },
       "description": "Use when reviewing code changes, a PR, or a commit and need structured, severity-graded findings covering correctness, security, reliability, and maintainability.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
@@ -1957,6 +2003,58 @@
         "forecast",
         "portable",
         "personal-assistant"
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "adapters": {
+        "claude": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "copilot": {
+          "mode": "include",
+          "path": "SKILL.md"
+        },
+        "cursor": {
+          "mode": "import",
+          "path": "SKILL.md"
+        },
+        "opencode": {
+          "mode": "native",
+          "path": "SKILL.md"
+        }
+      },
+      "compatibility": {
+        "runtimes": {
+          "claude": {
+            "min_version": "*"
+          },
+          "copilot": {
+            "min_version": "*"
+          },
+          "cursor": {
+            "min_version": "*"
+          },
+          "opencode": {
+            "min_version": "*"
+          }
+        }
+      },
+      "description": "Use when implementing or modifying Python code and pytest tests and need concise, typed, production-ready changes with modern syntax, walrus-operator patterns, fixtures, annotated mocks, @patch usage, and Ruff/pytest quality gates.",
+      "entrypoint": "SKILL.md",
+      "local_overlay_only": false,
+      "location": "portable/writing-modern-python/",
+      "name": "writing-modern-python",
+      "personal_machine_only": false,
+      "portable": true,
+      "runtime": null,
+      "tags": [
+        "python",
+        "pytest",
+        "quality",
+        "testing",
+        "portable"
       ],
       "version": "0.1.0"
     },
