@@ -117,16 +117,10 @@ When two skills overlap heavily:
 
 Personal-machine-only opt-in:
 
-- Skills with `"personal_machine_only": true` in `manifest.json` are skipped by default.
-- To enable locally, add the skill name to `~/.personal-machine-skills.txt`.
-- Personal-only skills must document activation in `SKILL.md` under a `## Personal Machine Activation` section, including allowlist setup and the `~/.personal-machine-skills.txt` path.
-- Example:
-
-```txt
-grenadianbuzz-api
-```
-
-- Override allowlist path with `SKILL_PERSONAL_ALLOWLIST_FILE=/path/to/file`.
+- Skills with `"personal_machine_only": true` in `manifest.json` are linked only when the local-overlay flag is absent — no separate allowlist or per-skill opt-in.
+- Default flag path: `~/.overlay/local/.enabled`
+- Override flag path with `SKILL_LOCAL_OVERLAY_FLAG_FILE=/path/to/flag`.
+- Personal-only skills must document activation in `SKILL.md` under a `## Personal Machine Activation` section referencing the flag path.
 
 Local-overlay-only opt-in:
 

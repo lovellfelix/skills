@@ -58,5 +58,4 @@ Run the smallest existing checks that provide confidence:
 
 This skill is personal-machine only.
 
-- Add `java-to-kotlin-migration` to `~/.personal-machine-skills.txt`.
-- Keep it off shared/shared machines unless you explicitly allowlist it there.
+- Linked automatically when `~/.overlay/local/.enabled` is absent (no allowlist to maintain).

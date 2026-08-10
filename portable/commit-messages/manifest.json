@@ -1,18 +1,11 @@
 {
   "schema_version": "1.0",
-  "name": "nuxt",
-  "description": "Use when working with Nuxt apps, server routes, useFetch, middleware, or hybrid rendering in a full-stack Vue application.",
-  "version": "2026.1.28",
+  "name": "commit-messages",
+  "description": "Use when writing a git commit message, to keep it terse and human instead of reading like AI output — no restated diffs, no filler trailers, no essay-length bodies.",
+  "version": "0.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",
-  "tags": [
-    "nuxt",
-    "vue",
-    "nitro",
-    "ssr",
-    "routing",
-    "portable"
-  ],
+  "tags": ["git", "commits", "style", "workflow", "portable"],
   "adapters": {
     "opencode": {
       "path": "SKILL.md",
@@ -39,6 +32,5 @@
         "min_version": "*"
       }
     }
-  },
-  "personal_machine_only": true
+  }
 }

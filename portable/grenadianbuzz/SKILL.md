@@ -219,8 +219,7 @@ Before shipping work across surfaces, validate:
 
 This skill is personal-machine only.
 
-- Add `grenadianbuzz` to the personal allowlist file: `~/.personal-machine-skills.txt`.
-- Keep one skill name per line and rerun your environment's link-sync/bootstrap command so the skill is surfaced.
+- Linked automatically when `~/.overlay/local/.enabled` is absent (no allowlist to maintain).
 
 ---
 

@@ -149,10 +149,9 @@ bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh list-tags 10
 
 ## Personal Machine Activation
 
-This skill is personal-machine-only and stays disabled unless explicitly allowlisted.
+This skill is personal-machine-only.
 
-- Add `life-organizer` to `~/.personal-machine-skills.txt` (one skill name per line).
-- Re-run your runtime link sync after updating the allowlist.
+- Linked automatically when `~/.overlay/local/.enabled` is absent (no allowlist to maintain).
 
 ---
 

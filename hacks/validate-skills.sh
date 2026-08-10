@@ -147,23 +147,19 @@ has_personal_activation_guidance() {
   awk '
     BEGIN {
       has_heading = 0
-      has_allowlist = 0
-      has_path = 0
+      has_flag_path = 0
     }
     {
       line = tolower($0)
       if (line ~ /^##[[:space:]]+personal[ -]machine[ -]activation([[:space:]]|$)/) {
         has_heading = 1
       }
-      if (line ~ /allowlist/) {
-        has_allowlist = 1
-      }
-      if (index($0, "~/.personal-machine-skills.txt") > 0) {
-        has_path = 1
+      if (index($0, "~/.overlay/local/.enabled") > 0) {
+        has_flag_path = 1
       }
     }
     END {
-      if (has_heading && has_allowlist && has_path) {
+      if (has_heading && has_flag_path) {
         print "yes"
       } else {
         print "no"
@@ -383,7 +379,7 @@ validate_skill_dir() {
 
   if [[ "$manifest_personal_machine_only" == "true" ]]; then
     if [[ "$(has_personal_activation_guidance "$skill_file")" != "yes" ]]; then
-      fail "$rel_dir personal-machine-only skill must document activation in SKILL.md (section '## Personal Machine Activation' with allowlist instructions and ~/.personal-machine-skills.txt path)"
+      fail "$rel_dir personal-machine-only skill must document activation in SKILL.md (section '## Personal Machine Activation' referencing ~/.overlay/local/.enabled)"
     else
       pass "$rel_dir personal-machine-only activation guidance is documented"
     fi

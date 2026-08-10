@@ -110,8 +110,7 @@ Referenced from the `skills-and-commands-checklist` skill.
 - [ ] **In manifest.json:** Add `"personal_machine_only": true`.
 - [ ] **In SKILL.md:** Include a `## Personal Machine Activation` section explaining:
   - Why it's personal-only (e.g., contains private integrations, personal workflows, or irrelevant for shared machines)
-  - How to enable locally: Add skill name to `~/.personal-machine-skills.txt` (one per line)
-  - Reference the allowlist file explicitly
+  - That it links automatically when `~/.overlay/local/.enabled` is absent — no allowlist or per-skill opt-in needed
   
 - [ ] **Alternative: Local-overlay-only skills:**
   - [ ] **In manifest.json:** Add `"local_overlay_only": true`.

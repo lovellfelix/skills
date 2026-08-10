@@ -11,8 +11,7 @@ metadata:
 
 This skill is personal-machine only.
 
-- Add `mobile-android-design` to the allowlist in `~/.personal-machine-skills.txt`.
-- Bootstrap and runtime sync only expose it when that allowlist includes the skill.
+- Linked automatically when `~/.overlay/local/.enabled` is absent (no allowlist to maintain).
 
 # Android Mobile Design
 

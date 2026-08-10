@@ -17,9 +17,7 @@ CLI: `llm-wiki` — standalone bash script (no external dependencies beyond git 
 
 This skill is personal-machine only.
 
-- Add `llm-wiki-workflow` to `~/.personal-machine-skills.txt`.
-- Keep one skill name per line.
-- Rerun the runtime sync/bootstrap step after updating the allowlist.
+- Linked automatically when `~/.overlay/local/.enabled` is absent (no allowlist to maintain).
 
 ## Memory hierarchy
 
