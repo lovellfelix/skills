@@ -12,6 +12,7 @@ Portable skills are tool-agnostic and work across multiple runtimes (OpenCode, C
 |------|----------|---------|
 | **adversary-review** | `portable/adversary-review/` | Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different model, not another self-review pass. Runs the content through hacks/adversary-review.sh (OpenCode Go, gpt-5.6-luna) from a chosen adversarial perspective. Not for code generation or implementation. |
 | **code-review** | `portable/code-review/` | Use when reviewing code changes, a PR, or a commit and need structured, severity-graded findings covering correctness, security, reliability, and maintainability. |
+| **commit-messages** | `portable/commit-messages/` | Use when writing a git commit message, to keep it terse and human instead of reading like AI output — no restated diffs, no filler trailers, no essay-length bodies. |
 | **communication-style** | `portable/communication-style/` | Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, blog posts/field notes, and technical communication to improve clarity, brevity, and reduce review friction. |
 | **compose-material3** | `portable/compose-material3/` | Use when you need Jetpack Compose UI help (Android), Material 3 component patterns, Compose screen design review, or accessible Compose theming fixes. |
 | **context-optimization** | `portable/context-optimization/` | Use when exploring large codebases, summarizing lengthy tool output, or optimizing a session for token cost and context bloat. |
