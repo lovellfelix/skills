@@ -54,7 +54,7 @@ write_file() {
     return
   fi
 
-  printf '%s\n' "$content" >"$path"
+  printf '%b\n' "$content" >"$path"
 }
 
 create_dir() {
@@ -122,8 +122,8 @@ else
   portable_flag="true"
   runtime_field=""
   tags_json="    \"portable\""
-  adapters_json="  \"adapters\": {\n    \"opencode\": {\n      \"path\": \"SKILL.md\",\n      \"mode\": \"native\"\n    },\n    \"cursor\": {\n      \"path\": \"SKILL.md\",\n      \"mode\": \"import\"\n    },\n    \"claude\": {\n      \"path\": \"SKILL.md\",\n      \"mode\": \"include\"\n    }\n  }"
-  compatibility_json="  \"compatibility\": {\n    \"runtimes\": {\n      \"opencode\": {\n        \"min_version\": \"*\"\n      },\n      \"cursor\": {\n        \"min_version\": \"*\"\n      },\n      \"claude\": {\n        \"min_version\": \"*\"\n      }\n    }\n  }"
+  adapters_json="  \"adapters\": {\n    \"opencode\": {\n      \"path\": \"SKILL.md\",\n      \"mode\": \"native\"\n    },\n    \"claude\": {\n      \"path\": \"SKILL.md\",\n      \"mode\": \"include\"\n    },\n    \"pi\": {\n      \"path\": \"SKILL.md\",\n      \"mode\": \"include\"\n    }\n  }"
+  compatibility_json="  \"compatibility\": {\n    \"runtimes\": {\n      \"opencode\": {\n        \"min_version\": \"*\"\n      },\n      \"claude\": {\n        \"min_version\": \"*\"\n      },\n      \"pi\": {\n        \"min_version\": \"*\"\n      }\n    }\n  }"
   title_prefix="Portable Skill"
   description_mode="portable"
 fi
@@ -178,6 +178,7 @@ Describe the repeatable workflow this skill should provide.
 manifest_content="{
   \"schema_version\": \"1.0\",
   \"name\": \"$skill_name\",
+  \"description\": \"Starter $description_mode skill scaffold.\",
   \"version\": \"0.1.0\",
   \"portable\": $portable_flag$runtime_field,
   \"entrypoint\": \"SKILL.md\",
