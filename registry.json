@@ -1485,52 +1485,6 @@
           }
         }
       },
-      "description": "Use when working with Nuxt apps, server routes, useFetch, middleware, or hybrid rendering in a full-stack Vue application.",
-      "entrypoint": "SKILL.md",
-      "local_overlay_only": false,
-      "location": "portable/nuxt/",
-      "name": "nuxt",
-      "personal_machine_only": true,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "nuxt",
-        "vue",
-        "nitro",
-        "ssr",
-        "routing",
-        "portable"
-      ],
-      "version": "2026.1.28"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
       "description": "Use when agents need to retrieve, store, or manage secrets/passwords/credentials using the pass CLI, including one-off secret storage for isolated leakage prevention in autonomous workflows.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
