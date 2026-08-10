@@ -1,0 +1,40 @@
+name: Skills Validation
+
+on:
+  pull_request:
+    paths:
+      - "**"
+  push:
+    branches:
+      - main
+    paths:
+      - "**"
+
+jobs:
+  validate-skills:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Regenerate skills index
+        run: python3 ./hacks/generate-skills-index.py
+
+      - name: Ensure generated skills artifacts are current
+        run: git diff --exit-code -- INDEX.md registry.json
+
+      - name: Validate skills metadata
+        run: ./hacks/validate-skills.sh
+
+      - name: shellcheck (errors only)
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+          git ls-files '*.sh' | xargs -r shellcheck --severity=error
+
+      - name: python compile
+        run: git ls-files '*.py' | xargs -r -n1 python3 -m py_compile
