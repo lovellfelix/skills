@@ -61,5 +61,4 @@ Use this skill for Jetpack Compose UI implementation, Compose design polish, and
 
 This skill is personal-machine only.
 
-- Add `compose-material3` to the allowlist in `~/.personal-machine-skills.txt`.
-- Bootstrap and runtime sync only expose it when that allowlist includes the skill.
+- Linked automatically when `~/.overlay/local/.enabled` is absent (no allowlist to maintain).

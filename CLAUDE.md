@@ -26,7 +26,7 @@ CI (`.github/workflows/validate.yml`) runs all of the above on every PR and push
 
 ## Personal-machine-only skills
 
-Some skills (tagged `personal_machine_only: true` in `manifest.json`, e.g. `mobile-android-design`, `weather-forecast`, `location-search`) are deliberately excluded from work machines. The gate lives in the _consuming_ repo (`dotfiles`'s `~/.personal-machine-skills.txt` allowlist + `hacks/sync-skill-runtime-links.sh`'s `should_skip_skill()`), not here — this repo just carries the flag. Don't assume a skill missing from a given machine's runtime links means it's broken; check the allowlist first.
+Some skills (tagged `personal_machine_only: true` in `manifest.json`, e.g. `mobile-android-design`, `weather-forecast`, `location-search`) are deliberately excluded from work machines. The gate lives in the _consuming_ repo (`dotfiles`'s `~/.overlay/local/.enabled` flag file + `hacks/sync-skill-runtime-links.sh`'s `should_skip_skill()`), not here — this repo just carries the flag. Linking is automatic (absent flag = personal machine); there is no per-skill allowlist. Don't assume a skill missing from a given machine's runtime links means it's broken; check whether the flag file exists on that machine first.
 
 `portable` (manifest.json + SKILL.md frontmatter, must match) and `personal_machine_only` are orthogonal fields — a skill can be portable across harnesses _and_ gated to personal machines at the same time. Don't conflate them (this repo shipped with exactly that bug once, in `mobile-android-design`).
 

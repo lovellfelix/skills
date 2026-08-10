@@ -35,8 +35,7 @@ bash ~/.config/opencode/scripts/weather.sh
 
 This skill is personal-machine only.
 
-- Add `weather-forecast` to `~/.personal-machine-skills.txt`.
-- Bootstrap/runtime sync only exposes it when that allowlist includes the skill.
+- Linked automatically when `~/.overlay/local/.enabled` is absent (no allowlist to maintain).
 
 ## Default No-Key Workflow
 

@@ -122,9 +122,8 @@ See docs/preflight-checklist.md for the lightweight preflight steps and dependen
 
 ## Personal Machine Activation
 
-- This is a personal-machine-only skill and stays disabled unless explicitly allowlisted.
-- Add `homelab-proxmox-cluster-api` to `~/.personal-machine-skills.txt` (one skill name per line).
-- Re-run your runtime link sync after updating the allowlist.
+- This is a personal-machine-only skill.
+- Linked automatically when `~/.overlay/local/.enabled` is absent (no allowlist to maintain).
 
 ## Runbooks, Scripts, and CI
 

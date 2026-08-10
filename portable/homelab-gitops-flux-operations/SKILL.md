@@ -174,6 +174,5 @@ That means Home Assistant troubleshooting should check the mounted config volume
 
 ## Personal Machine Activation
 
-- This is a personal-machine-only skill and stays disabled unless explicitly allowlisted.
-- Add `homelab-gitops-flux-operations` to `~/.personal-machine-skills.txt` (one skill name per line).
-- Re-run your runtime link sync after updating the allowlist.
+- This is a personal-machine-only skill.
+- Linked automatically when `~/.overlay/local/.enabled` is absent (no allowlist to maintain).
