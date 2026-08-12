@@ -22,7 +22,7 @@ metadata:
 Use the shared helper when possible:
 
 ```bash
-bash ~/.dotfiles/hacks/personal-assistant/weather.sh
+bash scripts/weather.sh
 ```
 
 If a runtime restricts execution to OpenCode-managed paths, use the wrapper instead:
@@ -47,9 +47,9 @@ This skill is personal-machine only.
 Supported commands:
 
 ```bash
-bash ~/.dotfiles/hacks/personal-assistant/weather.sh today --zip 75077 --json
-bash ~/.dotfiles/hacks/personal-assistant/weather.sh forecast --zip 75077 --days 5 --json
-bash ~/.dotfiles/hacks/personal-assistant/weather.sh today --lat 32.9919 --lon -97.0700 --json
+bash scripts/weather.sh today --zip 75077 --json
+bash scripts/weather.sh forecast --zip 75077 --days 5 --json
+bash scripts/weather.sh today --lat 32.9919 --lon -97.0700 --json
 ```
 
 ## Session Memory (LeanCTX-backed)
@@ -75,19 +75,19 @@ Default behavior stays keyless.
 ### Today's weather from ZIP
 
 ```bash
-bash ~/.dotfiles/hacks/personal-assistant/weather.sh today --zip 75077 --json
+bash scripts/weather.sh today --zip 75077 --json
 ```
 
 ### Five-day forecast from ZIP
 
 ```bash
-bash ~/.dotfiles/hacks/personal-assistant/weather.sh forecast --zip 75077 --days 5 --json
+bash scripts/weather.sh forecast --zip 75077 --days 5 --json
 ```
 
 ### Forecast from known coordinates
 
 ```bash
-bash ~/.dotfiles/hacks/personal-assistant/weather.sh forecast --lat 32.9919 --lon -97.0700 --days 3 --json
+bash scripts/weather.sh forecast --lat 32.9919 --lon -97.0700 --days 3 --json
 ```
 
 ## Troubleshooting
@@ -100,7 +100,7 @@ bash ~/.dotfiles/hacks/personal-assistant/weather.sh forecast --lat 32.9919 --lo
 ## Validation
 
 ```bash
-bash ~/.dotfiles/hacks/personal-assistant/weather.sh today --zip 75077 --json
-bash ~/.dotfiles/hacks/personal-assistant/weather.sh forecast --zip 75077 --days 3 --json
+bash scripts/weather.sh today --zip 75077 --json
+bash scripts/weather.sh forecast --zip 75077 --days 3 --json
 bash ~/.config/opencode/scripts/weather.sh today --zip 75077 --json
 ```

@@ -21,7 +21,7 @@ metadata:
 Use the shared helper when possible:
 
 ```bash
-bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh
+bash scripts/location-helper.sh
 ```
 
 If a runtime restricts execution to OpenCode-managed script paths, use the wrapper instead:
@@ -48,10 +48,10 @@ This skill is personal-machine only.
 Supported commands:
 
 ```bash
-bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh current-location
-bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh location-from-zip 94102
-bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh find-nearby "coffee" 37.7749 -122.4194 2500
-bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh distance 37.7749 -122.4194 37.7849 -122.4094
+bash scripts/location-helper.sh current-location
+bash scripts/location-helper.sh location-from-zip 94102
+bash scripts/location-helper.sh find-nearby "coffee" 37.7749 -122.4194 2500
+bash scripts/location-helper.sh distance 37.7749 -122.4194 37.7849 -122.4094
 ```
 
 ## ZIP and Postal Code Model
@@ -102,25 +102,25 @@ Default workflow stays keyless unless the user explicitly wants a paid provider.
 ### Find coffee near a ZIP
 
 ```bash
-coords=$(bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh location-from-zip 94102)
+coords=$(bash scripts/location-helper.sh location-from-zip 94102)
 lat=${coords%%,*}
 lon=${coords##*,}
-bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh find-nearby "coffee" "$lat" "$lon" 2500
+bash scripts/location-helper.sh find-nearby "coffee" "$lat" "$lon" 2500
 ```
 
 ### Find parks near the current location
 
 ```bash
-coords=$(bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh current-location)
+coords=$(bash scripts/location-helper.sh current-location)
 lat=${coords%%,*}
 lon=${coords##*,}
-bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh find-nearby "park" "$lat" "$lon" 3000
+bash scripts/location-helper.sh find-nearby "park" "$lat" "$lon" 3000
 ```
 
 ### Measure distance between two points
 
 ```bash
-bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh distance 37.7749 -122.4194 37.7849 -122.4094
+bash scripts/location-helper.sh distance 37.7749 -122.4194 37.7849 -122.4094
 ```
 
 ## Troubleshooting
@@ -133,7 +133,7 @@ bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh distance 37.7749 -1
 ## Validation
 
 ```bash
-bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh help
-bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh location-from-zip 94102
-bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh find-nearby "coffee" 37.7749 -122.4194 2000
+bash scripts/location-helper.sh help
+bash scripts/location-helper.sh location-from-zip 94102
+bash scripts/location-helper.sh find-nearby "coffee" 37.7749 -122.4194 2000
 ```

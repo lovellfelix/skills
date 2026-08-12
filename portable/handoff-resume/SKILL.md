@@ -36,14 +36,15 @@ Resume work quickly from prior session state, then leave a crisp handoff for the
 ## Handoff workflow
 
 At session end or before transfer:
+
 1. Write a summary record: `session_memory action=store_context` (LeanCTX-backed) with type `handoff`. Where `ctx_handoff` is available, prefer it for structured handoff artifacts.
 2. Run autodream: `durable_memory action=autodream_apply` to promote session to durable artifacts.
 3. Leave a handoff file at `~/.agents/memory/handoffs/YYYY/MM/` with the template below.
 
 ```bash
-# Helper scripts (from ~/.dotfiles)
-./hacks/autodream-memory.sh --session-id <id> --apply
-./hacks/new-memory-handoff.sh --project <slug> --topic <topic>
+# Helper scripts (bundled with this skill)
+./scripts/autodream-memory.sh --session-id <id> --apply
+./scripts/new-memory-handoff.sh --project <slug> --topic <topic>
 ```
 
 ## Status snapshot template

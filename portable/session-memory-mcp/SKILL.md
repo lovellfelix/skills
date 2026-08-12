@@ -107,10 +107,10 @@ lean-ctx task list                                # list tasks (requires `lean-c
 lean-ctx session status                           # session status
 
 # Legacy smem.sh fallback (queries legacy SQLite; not source of truth)
-~/.dotfiles/hacks/smem.sh stats
-~/.dotfiles/hacks/smem.sh recent 10
-~/.dotfiles/hacks/smem.sh search <term>
-~/.dotfiles/hacks/smem.sh health
+scripts/smem.sh stats
+scripts/smem.sh recent 10
+scripts/smem.sh search <term>
+scripts/smem.sh health
 ```
 
 Use the CLI for: startup hooks, post-session summaries, cron-based cleanup, shell aliases that query memory, and debugging data without consuming agent context.
@@ -121,13 +121,13 @@ Use the CLI for: startup hooks, post-session summaries, cron-based cleanup, shel
 
 In Pi, memory surfaces are split by role. Use this mapping and translate to equivalent tools in other harnesses:
 
-| Need                                          | Tool             | Backend |
-| --------------------------------------------- | ---------------- | ------- |
-| Active working context (live session)         | `session_memory` | LeanCTX `ctx_session` |
-| Task board & task insights (`task_board`, `task_insights`) | `workflow_tasks` | LeanCTX `ctx_task`/`ctx_workflow` |
-| Task state and progress tracking              | `workflow_tasks` | LeanCTX `ctx_task`/`ctx_workflow` |
-| On-disk promoted summaries and handoffs       | `durable_memory` (fallback only) | filesystem |
-| Durable work notes / runbooks in `~/llm-wiki` | `llm-wiki` (export/archive) | filesystem |
+| Need                                                       | Tool                             | Backend                           |
+| ---------------------------------------------------------- | -------------------------------- | --------------------------------- |
+| Active working context (live session)                      | `session_memory`                 | LeanCTX `ctx_session`             |
+| Task board & task insights (`task_board`, `task_insights`) | `workflow_tasks`                 | LeanCTX `ctx_task`/`ctx_workflow` |
+| Task state and progress tracking                           | `workflow_tasks`                 | LeanCTX `ctx_task`/`ctx_workflow` |
+| On-disk promoted summaries and handoffs                    | `durable_memory` (fallback only) | filesystem                        |
+| Durable work notes / runbooks in `~/llm-wiki`              | `llm-wiki` (export/archive)      | filesystem                        |
 
 Key `session_memory` actions:
 
@@ -196,7 +196,7 @@ When reading durable artifacts, prefer:
 
 Promote session memory to durable artifacts manually or via explicit tooling; Pi does not automatically trigger promotions.
 
-- Manual (recommended): `./hacks/promote-session-memory.sh --session-id <session-id>`
+- Manual (recommended): `scripts/promote-session-memory.sh --session-id <session-id>`
 - Via MCP helper: use the `LeanCTX` tool or the repo-provided promotion scripts with explicit `--apply` to write artifacts.
 - Use `--dry-run` to preview actions before writing promoted files under `~/.agents/memory/promoted/`.
 
@@ -204,19 +204,19 @@ Promote session memory to durable artifacts manually or via explicit tooling; Pi
 
 When the LeanCTX MCP server is unreachable (different harness, CLI context, or server not running), you can either use the repository-provided helper script (if present) or query the legacy SQLite DB directly as a fallback. SQLite is not the source of truth — it is a legacy rollback path.
 
-If this dotfiles layout includes the convenience helper, it lives at `~/.dotfiles/hacks/smem.sh` and provides simple commands, for example:
+This skill bundles a convenience helper at `scripts/smem.sh`, which provides simple commands, for example:
 
 ```bash
-# Portable CLI — repo-provided helper (only present if your dotfiles include it)
-~/.dotfiles/hacks/smem.sh sessions                        # list known session IDs
-~/.dotfiles/hacks/smem.sh list [session_id]               # recent context records
-~/.dotfiles/hacks/smem.sh get <key> [session_id]          # read a value by key
-~/.dotfiles/hacks/smem.sh set <type> <key> <value> [sid]  # write / upsert a record
-~/.dotfiles/hacks/smem.sh tasks [workflow_id]             # workflow task state
-~/.dotfiles/hacks/smem.sh prefs                           # user preferences
-~/.dotfiles/hacks/smem.sh conventions [project_id]        # project conventions
-~/.dotfiles/hacks/smem.sh search <query> [session_id]     # full-text search
-~/.dotfiles/hacks/smem.sh dump [session_id]               # all records for session
+# Portable CLI — bundled with this skill
+scripts/smem.sh sessions                        # list known session IDs
+scripts/smem.sh list [session_id]               # recent context records
+scripts/smem.sh get <key> [session_id]          # read a value by key
+scripts/smem.sh set <type> <key> <value> [sid]  # write / upsert a record
+scripts/smem.sh tasks [workflow_id]             # workflow task state
+scripts/smem.sh prefs                           # user preferences
+scripts/smem.sh conventions [project_id]        # project conventions
+scripts/smem.sh search <query> [session_id]     # full-text search
+scripts/smem.sh dump [session_id]               # all records for session
 ```
 
 If the helper is not available, inspect or query the legacy SQLite DB directly as a fallback (not source of truth) with tools you already have (sqlite3, a DB browser, or other CLI utilities). For example:
@@ -241,7 +241,7 @@ After writes, verify memory flow worked:
 1. Read back the same key with `retrieve_context` and confirm Situation/Decision/Next matches.
 2. Confirm related task state exists in `workflow_tasks` (LeanCTX-backed; if task-tracked).
 3. For promoted artifacts, verify expected file exists under `~/.agents/memory/projects/<project>/` or `~/.agents/memory/handoffs/...`.
-4. If MCP path is unavailable, verify via `~/.dotfiles/hacks/smem.sh get <key>`.
+4. If MCP path is unavailable, verify via `scripts/smem.sh get <key>`.
 
 ## Noise control
 

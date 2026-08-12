@@ -25,12 +25,14 @@ This skill depends on macOS Apple app automation.
 Use these shared helpers only:
 
 ```bash
-bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh
-bash ~/.dotfiles/hacks/macos-automation/apple-calendar.sh
-bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh
-bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh
-bash ~/.dotfiles/hacks/personal-assistant/weather.sh
+bash scripts/apple-reminders.sh
+bash scripts/apple-calendar.sh
+bash scripts/apple-notes-safe.sh
+bash ../location-search/scripts/location-helper.sh
+bash ../weather-forecast/scripts/weather.sh
 ```
+
+The location/weather helpers are owned by the `location-search` and `weather-forecast` skills and referenced here by relative path — this skill assumes both are also linked (`sync-skill-runtime-links.sh` symlinks all portable skills as siblings, so this resolves without extra setup).
 
 Never call raw `osascript` directly when these wrappers exist.
 
@@ -39,20 +41,20 @@ Never call raw `osascript` directly when these wrappers exist.
 ### 1. Gather the current picture
 
 ```bash
-bash ~/.dotfiles/hacks/macos-automation/apple-calendar.sh today --json
-bash ~/.dotfiles/hacks/macos-automation/apple-calendar.sh week --json
-bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh overdue --json
-bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh today --json
-bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh all --json
-bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh read-context
+bash scripts/apple-calendar.sh today --json
+bash scripts/apple-calendar.sh week --json
+bash scripts/apple-reminders.sh overdue --json
+bash scripts/apple-reminders.sh today --json
+bash scripts/apple-reminders.sh all --json
+bash scripts/apple-notes-safe.sh read-context
 ```
 
 ### 2. Pull targeted note context when needed
 
 ```bash
-bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh list-tags 30
-bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh find-tagged "family,health" 20
-bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh link-personal-context "family,school" 10 --json
+bash scripts/apple-notes-safe.sh list-tags 30
+bash scripts/apple-notes-safe.sh find-tagged "family,health" 20
+bash scripts/apple-notes-safe.sh link-personal-context "family,school" 10 --json
 ```
 
 ### 3. Synthesize into a usable plan
@@ -79,11 +81,11 @@ Use this when planning birthdays, outings, appointments, school events, or trips
 Useful commands:
 
 ```bash
-bash ~/.dotfiles/hacks/macos-automation/apple-calendar.sh search "birthday" --json
-bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh search "party" --json
-bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh suggest-tags "Alice birthday" "guest list cake venue ideas"
-bash ~/.dotfiles/hacks/personal-assistant/location-helper.sh find-nearby "park" 33.0 -97.0 5000
-bash ~/.dotfiles/hacks/personal-assistant/weather.sh forecast --zip 75077 --days 5 --json
+bash scripts/apple-calendar.sh search "birthday" --json
+bash scripts/apple-reminders.sh search "party" --json
+bash scripts/apple-notes-safe.sh suggest-tags "Alice birthday" "guest list cake venue ideas"
+bash ../location-search/scripts/location-helper.sh find-nearby "park" 33.0 -97.0 5000
+bash ../weather-forecast/scripts/weather.sh forecast --zip 75077 --days 5 --json
 ```
 
 ## Reminder Cleanup Workflow
@@ -99,11 +101,11 @@ When the user wants to reorganize life admin:
 Useful commands:
 
 ```bash
-bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh overdue --json
-bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh today --json
-bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh lists
-bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh show "Family" --json
-bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh improve-tag-cluster "family,school" 20
+bash scripts/apple-reminders.sh overdue --json
+bash scripts/apple-reminders.sh today --json
+bash scripts/apple-reminders.sh lists
+bash scripts/apple-reminders.sh show "Family" --json
+bash scripts/apple-notes-safe.sh improve-tag-cluster "family,school" 20
 ```
 
 ## Output Patterns
@@ -142,9 +144,9 @@ bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh improve-tag-cluster 
 ## Validation
 
 ```bash
-bash ~/.dotfiles/hacks/macos-automation/apple-calendar.sh today --json
-bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh today --json
-bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh list-tags 10
+bash scripts/apple-calendar.sh today --json
+bash scripts/apple-reminders.sh today --json
+bash scripts/apple-notes-safe.sh list-tags 10
 ```
 
 ## Personal Machine Activation
@@ -161,13 +163,13 @@ The following planning guidance is merged from the previous `personal-planning` 
 
 ## Planning Categories
 
-| Category | Examples | Focus |
-|----------|----------|-------|
-| Day Trips | Beach, museum, hiking | Timing, packing, meals, parking |
-| Weekend Getaways | Nearby city, cabin, camping | Lodging, route, activity pacing |
-| Vacations | Flight + hotel trips | Booking, itinerary, budget, risks |
-| Events | Birthday, BBQ, reunion | Guests, food, setup, cleanup |
-| Milestones | Moving, wedding prep | Timeline, vendors, dependencies |
+| Category         | Examples                    | Focus                             |
+| ---------------- | --------------------------- | --------------------------------- |
+| Day Trips        | Beach, museum, hiking       | Timing, packing, meals, parking   |
+| Weekend Getaways | Nearby city, cabin, camping | Lodging, route, activity pacing   |
+| Vacations        | Flight + hotel trips        | Booking, itinerary, budget, risks |
+| Events           | Birthday, BBQ, reunion      | Guests, food, setup, cleanup      |
+| Milestones       | Moving, wedding prep        | Timeline, vendors, dependencies   |
 
 ## 5-Phase Framework
 
@@ -181,33 +183,40 @@ The following planning guidance is merged from the previous `personal-planning` 
 
 ```markdown
 # Plan: [Title]
+
 **Dates**: [Start] - [End]
 **Participants**: [Names]
 
 ## Goal
+
 [One clear sentence]
 
 ## Schedule
+
 | Time | Activity | Location | Notes |
-|------|----------|----------|-------|
+| ---- | -------- | -------- | ----- |
 | ...  | ...      | ...      | ...   |
 
 ## Pre-Plan Checklist
+
 | Task | Owner | Due | Status |
-|------|-------|-----|--------|
+| ---- | ----- | --- | ------ |
 | ...  | ...   | ... | [ ]    |
 
 ## Budget
+
 | Category | Estimate | Actual |
-|----------|----------|--------|
+| -------- | -------- | ------ |
 | ...      | $X       |        |
 
 ## Risks & Backup Plans
+
 | Risk | Backup |
-|------|--------|
+| ---- | ------ |
 | ...  | ...    |
 
 ## Emergency Info
+
 - Local emergency number
 - Nearest hospital/urgent care
 - Critical reservation numbers

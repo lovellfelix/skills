@@ -4,7 +4,16 @@ description: Use when operating or coordinating the Jarvis fleet across the Mac 
 metadata:
   version: 0.1.0
   portable: true
-  tags: [jarvis, fleet, managed-agents, claude-worker, delegation, workflow, tailscale]
+  tags:
+    [
+      jarvis,
+      fleet,
+      managed-agents,
+      claude-worker,
+      delegation,
+      workflow,
+      tailscale,
+    ]
 ---
 
 # Jarvis Workflows
@@ -39,26 +48,26 @@ Read `jarvis/schedules.json` first when the question is about what exists, what 
 
 ## Choose the execution surface
 
-| Need | Surface | Canonical path |
-|---|---|---|
-| Immediate work on this machine | Local Jarvis / current harness | execute inline |
-| One-off remote Jarvis question or action on `jarvis-infra` / `jarvis-synth` | A2A request | remote `:8010/a2a/tasks` |
-| Recurring remote operational job | Managed agent | `managed-agents.template.json` + `sync-managed-agents.py` |
-| Long-running planning, analysis, or detached Claude reasoning | `jarvis-claude` worker | `claude-task.sh` / `claude-tasks` queue |
-| Off-LAN SSH or service reachability to the fleet | Tailscale access plane | `bootstrap-fleet.sh tailscale` + `tailscale-runbook.md` |
+| Need                                                                        | Surface                        | Canonical path                                            |
+| --------------------------------------------------------------------------- | ------------------------------ | --------------------------------------------------------- |
+| Immediate work on this machine                                              | Local Jarvis / current harness | execute inline                                            |
+| One-off remote Jarvis question or action on `jarvis-infra` / `jarvis-synth` | A2A request                    | remote `:8010/a2a/tasks`                                  |
+| Recurring remote operational job                                            | Managed agent                  | `managed-agents.template.json` + `sync-managed-agents.py` |
+| Long-running planning, analysis, or detached Claude reasoning               | `jarvis-claude` worker         | `claude-task.sh` / `claude-tasks` queue                   |
+| Off-LAN SSH or service reachability to the fleet                            | Tailscale access plane         | `bootstrap-fleet.sh tailscale` + `tailscale-runbook.md`   |
 
 ## Routing decision table
 
 Use this table before choosing a Jarvis path.
 
-| Situation | Use | Why |
-|---|---|---|
-| Private/local-only data, current machine context, or immediate operator work | local Jarvis / current harness | avoids unnecessary fleet hops |
-| Quick one-off check on `jarvis-infra` or `jarvis-synth` | A2A | direct remote execution without creating durable scheduler state |
-| Repeating remote maintenance or monitoring | managed agent | gives schedule, drift control, and fleet visibility |
-| Detached repo planning, bounded analysis, or long-running reasoning | `jarvis-claude` queue | durable queue plus asynchronous result pickup |
-| Off-LAN operator access to `jarvis-hub`, `jarvis-infra`, `jarvis-synth`, or `jarvis-claude` | Tailscale | preserves LAN defaults while adding a second management plane |
-| “What is scheduled, live, or already running?” | `fleet-status.sh` + `schedules.json` | avoids guessing |
+| Situation                                                                                   | Use                                  | Why                                                              |
+| ------------------------------------------------------------------------------------------- | ------------------------------------ | ---------------------------------------------------------------- |
+| Private/local-only data, current machine context, or immediate operator work                | local Jarvis / current harness       | avoids unnecessary fleet hops                                    |
+| Quick one-off check on `jarvis-infra` or `jarvis-synth`                                     | A2A                                  | direct remote execution without creating durable scheduler state |
+| Repeating remote maintenance or monitoring                                                  | managed agent                        | gives schedule, drift control, and fleet visibility              |
+| Detached repo planning, bounded analysis, or long-running reasoning                         | `jarvis-claude` queue                | durable queue plus asynchronous result pickup                    |
+| Off-LAN operator access to `jarvis-hub`, `jarvis-infra`, `jarvis-synth`, or `jarvis-claude` | Tailscale                            | preserves LAN defaults while adding a second management plane    |
+| "What is scheduled, live, or already running?"                                              | `fleet-status.sh` + `schedules.json` | avoids guessing                                                  |
 
 ## Core rules
 
@@ -73,12 +82,12 @@ Use this table before choosing a Jarvis path.
 Use this sequence when standing up a new Mac or refreshing fleet access:
 
 1. Local bootstrap: `bash ~/.dotfiles/hacks/bootstrap.sh`
-2. Register Mac-to-fleet connectivity if needed: `bash ~/.dotfiles/jarvis/scripts/bootstrap-fleet.sh mac --register`
+2. Register Mac-to-fleet connectivity if needed: `bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/bootstrap-fleet.sh mac --register`
 3. For off-LAN remote access, enroll the fleet in Tailscale:
 
 ```bash
 TAILSCALE_AUTH_KEY=tskey-... \
-  bash ~/.dotfiles/jarvis/scripts/bootstrap-fleet.sh tailscale --apply 245 246 247 248
+  bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/bootstrap-fleet.sh tailscale --apply 245 246 247 248
 ```
 
 4. Verify access:
@@ -94,11 +103,11 @@ tailscale ssh dev@jarvis-infra 'hostname && systemctl is-active tailscaled'
 
 Treat the Jarvis control files and live state as distinct layers with clear roles:
 
-| Layer | Role | Rule |
-|---|---|---|
-| `jarvis/schedules.json` | intent and ownership registry | source of truth for which host should own recurring work |
-| `jarvis/managed-agents.template.json` | managed-agent projection | source of truth for the subset of recurring jobs implemented as remote managed agents |
-| live `/v1/managed-agents` state | runtime reality | must converge to the template after sync |
+| Layer                                 | Role                          | Rule                                                                                  |
+| ------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------- |
+| `jarvis/schedules.json`               | intent and ownership registry | source of truth for which host should own recurring work                              |
+| `jarvis/managed-agents.template.json` | managed-agent projection      | source of truth for the subset of recurring jobs implemented as remote managed agents |
+| live `/v1/managed-agents` state       | runtime reality               | must converge to the template after sync                                              |
 
 Apply this order when reconciling drift:
 
@@ -118,20 +127,20 @@ Use this for recurring remote work on `jarvis-infra` or `jarvis-synth`.
 3. Dry-run reconciliation:
 
 ```bash
-python3 ~/.dotfiles/jarvis/scripts/sync-managed-agents.py
+python3 ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/sync-managed-agents.py
 ```
 
 4. Apply when ready:
 
 ```bash
-python3 ~/.dotfiles/jarvis/scripts/sync-managed-agents.py --apply --prune
+python3 ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/sync-managed-agents.py --apply --prune
 ```
 
 5. Validate fleet health:
 
 ```bash
-bash ~/.dotfiles/jarvis/scripts/check-proxmox-agents.sh
-bash ~/.dotfiles/jarvis/scripts/fleet-status.sh
+bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/check-proxmox-agents.sh
+bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/fleet-status.sh
 ```
 
 ## Claude worker delegation
@@ -167,20 +176,20 @@ Good key patterns:
 From any harness with shell access, prefer the helper:
 
 ```bash
-bash ~/.dotfiles/jarvis/scripts/claude-task.sh add --key <task-id> "<prompt>"
+bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/claude-task.sh add --key <task-id> "<prompt>"
 ```
 
 Inspect state with:
 
 ```bash
-bash ~/.dotfiles/jarvis/scripts/claude-task.sh list
-bash ~/.dotfiles/jarvis/scripts/claude-task.sh results
+bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/claude-task.sh list
+bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/claude-task.sh results
 ```
 
 Remove a stuck queued item with:
 
 ```bash
-bash ~/.dotfiles/jarvis/scripts/claude-task.sh rm <task-id>
+bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/claude-task.sh rm <task-id>
 ```
 
 ## Fallback enqueue path
@@ -284,17 +293,17 @@ After enqueue:
 
 Use this first-pass table before deeper debugging.
 
-| Symptom | Most likely cause | First check |
-|---|---|---|
-| A2A request returns 401 or unauthorized | wrong A2A token | validate `JARVIS_A2A_AUTH_TOKEN` source and rerun `check-proxmox-agents.sh` |
-| `/v1/managed-agents` returns 401 or invalid API key | wrong `OPENJARVIS_API_KEY` | inspect remote `jarvis.service` env and rerun `check-proxmox-agents.sh` |
-| Claude task stays pending | worker disabled or cannot reach hub | check `CLAUDE_WORKER_ENABLED`, worker timer/service, and hub token |
-| Claude task retries and never completes | Claude auth/proxy path broken | inspect `jarvis-claude` worker logs and current Claude/proxy env |
-| Dry-run sync keeps showing UPDATE | live config drift (model, instruction, schedule) | compare template vs live `/v1/managed-agents` JSON |
-| Dry-run sync shows EXTRA | stale live managed agent | rerun with `--apply --prune` after confirming template intent |
-| Fleet board disagrees with expected jobs | registry/template/live mismatch | reconcile in the order defined in Drift reconciliation policy |
-| Managed agents sit in `error` | stale model or broken remote command path | inspect live config, model name, and recent summary/error fields |
-| Off-LAN SSH fails but LAN access still works | Tailscale enrollment or policy issue | check `tailscale status`, `tailscale ip -4`, and `systemctl status tailscaled` |
+| Symptom                                             | Most likely cause                                | First check                                                                    |
+| --------------------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------ |
+| A2A request returns 401 or unauthorized             | wrong A2A token                                  | validate `JARVIS_A2A_AUTH_TOKEN` source and rerun `check-proxmox-agents.sh`    |
+| `/v1/managed-agents` returns 401 or invalid API key | wrong `OPENJARVIS_API_KEY`                       | inspect remote `jarvis.service` env and rerun `check-proxmox-agents.sh`        |
+| Claude task stays pending                           | worker disabled or cannot reach hub              | check `CLAUDE_WORKER_ENABLED`, worker timer/service, and hub token             |
+| Claude task retries and never completes             | Claude auth/proxy path broken                    | inspect `jarvis-claude` worker logs and current Claude/proxy env               |
+| Dry-run sync keeps showing UPDATE                   | live config drift (model, instruction, schedule) | compare template vs live `/v1/managed-agents` JSON                             |
+| Dry-run sync shows EXTRA                            | stale live managed agent                         | rerun with `--apply --prune` after confirming template intent                  |
+| Fleet board disagrees with expected jobs            | registry/template/live mismatch                  | reconcile in the order defined in Drift reconciliation policy                  |
+| Managed agents sit in `error`                       | stale model or broken remote command path        | inspect live config, model name, and recent summary/error fields               |
+| Off-LAN SSH fails but LAN access still works        | Tailscale enrollment or policy issue             | check `tailscale status`, `tailscale ip -4`, and `systemctl status tailscaled` |
 
 ## Red flags
 
