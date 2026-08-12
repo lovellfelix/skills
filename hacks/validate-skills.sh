@@ -40,6 +40,23 @@ m = re.match(r"^---\n(.*?)\n---", text, re.DOTALL)
 if not m:
     sys.exit(0)
 block = m.group(1)
+
+# Collapse multi-line flow sequences (e.g. a `tags: [...]` list wrapped
+# across several lines by a formatter) onto one line before parsing,
+# since the line-by-line pass below only understands single-line values.
+block = re.sub(r":\s*\n\s*\[", ": [", block)
+collapsed = []
+depth = 0
+for ch in block:
+    if ch == "[":
+        depth += 1
+    elif ch == "]":
+        depth -= 1
+    if ch == "\n" and depth > 0:
+        continue
+    collapsed.append(ch)
+block = "".join(collapsed)
+
 top, meta = {}, {}
 in_meta = False
 for line in block.splitlines():

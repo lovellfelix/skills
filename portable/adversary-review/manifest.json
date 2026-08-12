@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "name": "adversary-review",
-  "description": "Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different model, not another self-review pass. Runs the content through hacks/adversary-review.sh (OpenCode Go, gpt-5.6-luna) from a chosen adversarial perspective. Not for code generation or implementation.",
+  "description": "Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different model, not another self-review pass. Runs the content through scripts/adversary-review.sh (OpenCode Go, gpt-5.6-luna) from a chosen adversarial perspective. Not for code generation or implementation.",
   "version": "0.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",

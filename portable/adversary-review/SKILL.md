@@ -1,6 +1,6 @@
 ---
 name: adversary-review
-description: "Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different model, not another self-review pass. Runs the content through hacks/adversary-review.sh (OpenCode Go, gpt-5.6-luna) from a chosen adversarial perspective. Not for code generation or implementation."
+description: "Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different model, not another self-review pass. Runs the content through scripts/adversary-review.sh (OpenCode Go, gpt-5.6-luna) from a chosen adversarial perspective. Not for code generation or implementation."
 metadata:
   version: 0.1.0
   portable: true
@@ -12,7 +12,7 @@ metadata:
 Get a critique from an independent model, not from re-reading your own output. Claude Code's
 native subagents (`Agent` tool) can only run on Claude models — there is no way to spawn a
 subagent on an opencode-go model directly. This skill shells out to
-`hacks/adversary-review.sh`, which calls the OpenCode Go subscription's `gpt-5.6-luna` over
+`scripts/adversary-review.sh`, which calls the OpenCode Go subscription's `gpt-5.6-luna` over
 its Anthropic-native Messages API and returns a structured critique.
 
 ## When to use
@@ -33,9 +33,9 @@ its Anthropic-native Messages API and returns a structured critique.
 2. Run the script, piping the content in or pointing at a file:
 
    ```bash
-   cat <path-to-plan.md> | hacks/adversary-review.sh --perspective "security engineer"
+   cat <path-to-plan.md> | scripts/adversary-review.sh --perspective "security engineer"
    # or
-   hacks/adversary-review.sh --file docs/adr/003-migration.md --perspective competitor
+   scripts/adversary-review.sh --file docs/adr/003-migration.md --perspective competitor
    ```
 
    If the content only exists in the current conversation (not yet written to a file), pass

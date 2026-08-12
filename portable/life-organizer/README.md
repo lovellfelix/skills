@@ -5,9 +5,9 @@ Portable guide for reviewing Apple reminders, calendar events, notes, and family
 ## Quick Start
 
 ```bash
-bash ~/.dotfiles/hacks/macos-automation/apple-calendar.sh today --json
-bash ~/.dotfiles/hacks/macos-automation/apple-reminders.sh overdue --json
-bash ~/.dotfiles/hacks/macos-automation/apple-notes-safe.sh read-context
+bash scripts/apple-calendar.sh today --json
+bash scripts/apple-reminders.sh overdue --json
+bash scripts/apple-notes-safe.sh read-context
 ```
 
 ## Best Uses
