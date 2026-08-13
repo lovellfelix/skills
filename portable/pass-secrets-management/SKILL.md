@@ -503,23 +503,23 @@ EOF
 
 ### Pattern 3: SSH Key Rotation
 
-For SSH keys use the generic rotation script at `~/.dotfiles/scripts/rotate-agent-key.sh`:
+For SSH keys use the generic rotation script at `scripts/rotate-agent-key.sh`:
 
 ```bash
 # Create first-time key for deploy@10.0.10.100
-~/.dotfiles/scripts/rotate-agent-key.sh 10.0.10.100 deploy --create
+scripts/rotate-agent-key.sh 10.0.10.100 deploy --create
 
 # Rotate existing claude@jarvis-claude key (auto-backup, pass update, remote deploy)
-~/.dotfiles/scripts/rotate-agent-key.sh jarvis-claude claude
+scripts/rotate-agent-key.sh jarvis-claude claude
 
 # Dry-run to preview
-~/.dotfiles/scripts/rotate-agent-key.sh jarvis-claude claude --dry-run
+scripts/rotate-agent-key.sh jarvis-claude claude --dry-run
 
 # Custom key type
-~/.dotfiles/scripts/rotate-agent-key.sh jarvis-hub cicd --key-type ecdsa
+scripts/rotate-agent-key.sh jarvis-hub cicd --key-type ecdsa
 
 # Custom root user for remote push
-~/.dotfiles/scripts/rotate-agent-key.sh 10.0.10.100 ansible --root-user ubuntu
+scripts/rotate-agent-key.sh 10.0.10.100 ansible --root-user ubuntu
 ```
 
 What the script does:
@@ -535,7 +535,8 @@ Wrapper scripts for specific hosts live alongside the keys:
 ```bash
 # ~/.ssh/agents/jarvis-claude/claude/rotate.sh
 #!/usr/bin/env bash
-exec ~/.dotfiles/scripts/rotate-agent-key.sh jarvis-claude claude "$@"
+SKILLS_ROOT="${SKILLS_ROOT:-$HOME/projects/skills}"
+exec "$SKILLS_ROOT/portable/pass-secrets-management/scripts/rotate-agent-key.sh" jarvis-claude claude "$@"
 ```
 
 ### Pattern 4: Simple Secret Rotation

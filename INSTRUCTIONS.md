@@ -35,14 +35,14 @@ Progressive discovery: glob → grep → targeted read with limit. Don't dump en
 
 ## Memory hierarchy
 
-| Layer | Store | Use for | Lifetime |
-| --- | --- | --- | --- |
-| Live context | `session_memory` (LeanCTX-backed) | Active blockers, task state, conventions, preferences | Current session |
-| Durable runtime truth | LeanCTX `ctx_knowledge` | Project facts, decisions, reusable knowledge | Long-term |
-| Exported curated notes | `~/llm-wiki/notes/` | Human-readable project synthesis exported from LeanCTX | Long-term |
-| Exported raw sources | `~/llm-wiki/sources/` | Immutable imports from session or external sources | Permanent |
-| Preferences | `~/.claude/projects/.../memory/` | Claude-local preference sync/cache only | Persistent |
-| _(deprecated)_ | `~/.agents/memory/projects/` | Old durable_memory artifacts — archive/fallback only | Deprecated |
+| Layer                  | Store                             | Use for                                                | Lifetime        |
+| ---------------------- | --------------------------------- | ------------------------------------------------------ | --------------- |
+| Live context           | `session_memory` (LeanCTX-backed) | Active blockers, task state, conventions, preferences  | Current session |
+| Durable runtime truth  | LeanCTX `ctx_knowledge`           | Project facts, decisions, reusable knowledge           | Long-term       |
+| Exported curated notes | `~/llm-wiki/notes/`               | Human-readable project synthesis exported from LeanCTX | Long-term       |
+| Exported raw sources   | `~/llm-wiki/sources/`             | Immutable imports from session or external sources     | Permanent       |
+| Preferences            | `~/.claude/projects/.../memory/`  | Claude-local preference sync/cache only                | Persistent      |
+| _(deprecated)_         | `~/.agents/memory/projects/`      | Old durable_memory artifacts — archive/fallback only   | Deprecated      |
 
 - For project knowledge: write to LeanCTX first. Export/promote to `~/llm-wiki` when you want a human-readable archive.
 - `llm-wiki` defaults to `~/llm-wiki`; set `LLM_WIKI_PATH` only when you intentionally need a different vault.
@@ -65,7 +65,7 @@ circuit breakers, health checks, canary validation, phased rollouts, blast radiu
 This user works across multiple coding harnesses: Claude Code, OpenCode, and Pi.
 
 - **Shared state**: Session-memory MCP is shared across harnesses. Preferences and conventions are available everywhere.
-- **Portable skills**: Skills in `~/.dotfiles/skills/portable/` work across all harnesses.
+- **Portable skills**: Skills in `lovellfelix/skills`' `portable/` (cloned at `SKILLS_ROOT`, default `~/projects/skills`) work across all harnesses.
 - **Session ID convention**: Use git repository basename as session/project ID.
 - **Conflict priority**: When shared skill guidance or agent overlays disagree between Pi and OpenCode, preserve Pi-safe behavior first and adapt OpenCode-specific examples second.
 - When making changes to agent configs or skills, consider impact on all harnesses.

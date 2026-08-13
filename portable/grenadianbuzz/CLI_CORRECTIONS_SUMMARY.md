@@ -8,7 +8,7 @@
 
 ## Files Changed
 
-### 1. `/Users/lovellfelix/.dotfiles/skills/portable/grenadianbuzz/quick-ref/CLI-QUICK-REFERENCE.md`
+### 1. `portable/grenadianbuzz/quick-ref/CLI-QUICK-REFERENCE.md`
 **Before**: 320 lines of fictional CRUD commands (gb articles, gb users, gb moderation, etc.)  
 **After**: 261 lines of accurate quick reference for actual commands
 - Removed: `gb articles`, `gb users`, `gb comments`, `gb moderation queue`, `gb analytics` CRUD commands
@@ -17,7 +17,7 @@
 - Corrected: Binary name from `gb` to `gbuzz`
 - Corrected: Config/auth from fictional `gb auth login` to YAML-based `~/.config/gbuzz/config.yaml` with env vars
 
-### 2. `/Users/lovellfelix/.dotfiles/skills/portable/grenadianbuzz/reference/grenadianbuzz-cli-guide.md`
+### 2. `portable/grenadianbuzz/reference/grenadianbuzz-cli-guide.md`
 **Before**: 762 lines of comprehensive but fictional admin CRUD guide (articles, obituaries, events, radio CRUD; users, moderation, comments management)  
 **After**: 739 lines of production-grounded actual CLI reference
 - Removed: All fictional CRUD sections (Content Management, User Management, Moderation Queue, Comments, Analytics Dashboard)
@@ -29,7 +29,7 @@
 - Added: Error handling section with actual error scenarios
 - Added: Design patterns section (idempotent operations, graceful degradation, dry-run pattern)
 
-### 3. `/Users/lovellfelix/.dotfiles/skills/portable/grenadianbuzz/INDEX.md`
+### 3. `portable/grenadianbuzz/INDEX.md`
 **Before**: CLI section described "70+ commands" in fictitious categories (content management, user & moderation, analytics & reporting)  
 **After**: CLI section accurately describes actual command structure
 - Rewrote CLI subsection (lines 119-141)
@@ -38,7 +38,7 @@
 - Updated example workflows to match real capabilities
 - Corrected config description from fictional auth to YAML + environment variables
 
-### 4. `/Users/lovellfelix/.dotfiles/skills/portable/grenadianbuzz/manifest.json`
+### 4. `portable/grenadianbuzz/manifest.json`
 **Before**: Version 0.2.0  
 **After**: Version 0.4.0
 - Bumped version to reflect corrections
