@@ -107,10 +107,10 @@ lean-ctx task list                                # list tasks (requires `lean-c
 lean-ctx session status                           # session status
 
 # Legacy smem.sh fallback (queries legacy SQLite; not source of truth)
-scripts/smem.sh stats
-scripts/smem.sh recent 10
+scripts/smem.sh sessions
+scripts/smem.sh list [session_id]
 scripts/smem.sh search <term>
-scripts/smem.sh health
+scripts/smem.sh prefs
 ```
 
 Use the CLI for: startup hooks, post-session summaries, cron-based cleanup, shell aliases that query memory, and debugging data without consuming agent context.

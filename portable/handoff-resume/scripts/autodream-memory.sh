@@ -43,7 +43,7 @@ usage() {
 autodream-memory.sh - memory compaction + promotion workflow
 
 Usage:
-  ./hacks/autodream-memory.sh [--session-id <id>] [options]
+  scripts/autodream-memory.sh [--session-id <id>] [options]
 
 Modes:
   Default mode is report-only (no writes)
@@ -81,15 +81,15 @@ Options:
   -h, --help             Show this help text
 
 Examples:
-  ./hacks/autodream-memory.sh --session-id opencode-2026-03-25
-  ./hacks/autodream-memory.sh
-  ./hacks/autodream-memory.sh --prefer-recent
-  ./hacks/autodream-memory.sh --list-sessions
-  ./hacks/autodream-memory.sh --batch --batch-max-seconds 170
-  ./hacks/autodream-memory.sh --batch --batch-reset --batch-order oldest
-  ./hacks/autodream-memory.sh --session-id opencode-2026-03-25 --summarizer-cmd 'python3 ~/bin/summarize.py'
-  ./hacks/autodream-memory.sh --session-id opencode-2026-03-25 --apply
-  ./hacks/autodream-memory.sh --session-id opencode-2026-03-25 --project dotfiles --topic memory --apply
+  scripts/autodream-memory.sh --session-id opencode-2026-03-25
+  scripts/autodream-memory.sh
+  scripts/autodream-memory.sh --prefer-recent
+  scripts/autodream-memory.sh --list-sessions
+  scripts/autodream-memory.sh --batch --batch-max-seconds 170
+  scripts/autodream-memory.sh --batch --batch-reset --batch-order oldest
+  scripts/autodream-memory.sh --session-id opencode-2026-03-25 --summarizer-cmd 'python3 ~/bin/summarize.py'
+  scripts/autodream-memory.sh --session-id opencode-2026-03-25 --apply
+  scripts/autodream-memory.sh --session-id opencode-2026-03-25 --project dotfiles --topic memory --apply
 EOF
 }
 
@@ -1703,7 +1703,7 @@ run_batch_mode() {
 
   local next_step_msg
   if (( remaining > 0 )); then
-    next_step_msg="Run again to continue next batch: ./hacks/autodream-memory.sh --batch"
+    next_step_msg="Run again to continue next batch: scripts/autodream-memory.sh --batch"
   else
     next_step_msg="Batch traversal complete for current queue"
   fi

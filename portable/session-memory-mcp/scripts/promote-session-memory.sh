@@ -14,12 +14,12 @@ usage() {
 promote-session-memory.sh - promote MCP session contexts to durable ~/.agents/memory artifacts
 
 Usage:
-  ./hacks/promote-session-memory.sh --session-id <id> [--label <name>] [--db <path>] [--agents-home <path>] [--dry-run]
+  scripts/promote-session-memory.sh --session-id <id> [--label <name>] [--db <path>] [--agents-home <path>] [--dry-run]
 
 Examples:
-  ./hacks/promote-session-memory.sh --session-id opencode-2026-03-20
-  ./hacks/promote-session-memory.sh --session-id sprint-42 --label auth-refactor
-  ./hacks/promote-session-memory.sh --session-id hotfix --db "$HOME/.agents/memory/session.db"
+  scripts/promote-session-memory.sh --session-id opencode-2026-03-20
+  scripts/promote-session-memory.sh --session-id sprint-42 --label auth-refactor
+  scripts/promote-session-memory.sh --session-id hotfix --db "$HOME/.agents/memory/session.db"
 
 Output:
   ~/.agents/memory/promoted/<timestamp>-<session>.json

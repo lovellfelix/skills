@@ -11,11 +11,11 @@ usage() {
 new-memory-handoff.sh - create timestamped handoff in ~/.agents/memory/handoffs
 
 Usage:
-  ./hacks/new-memory-handoff.sh [--project <project-slug>] [--topic <topic>] [--agents-home <path>] [--dry-run]
+  scripts/new-memory-handoff.sh [--project <project-slug>] [--topic <topic>] [--agents-home <path>] [--dry-run]
 
 Examples:
-  ./hacks/new-memory-handoff.sh --project dotfiles --topic memory-conventions
-  ./hacks/new-memory-handoff.sh --topic ad-hoc-debug
+  scripts/new-memory-handoff.sh --project dotfiles --topic memory-conventions
+  scripts/new-memory-handoff.sh --topic ad-hoc-debug
 EOF
 }
 
