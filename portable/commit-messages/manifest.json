@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "name": "commit-messages",
   "description": "Use when writing a git commit message, to keep it terse and human instead of reading like AI output — no restated diffs, no filler trailers, no essay-length bodies.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": ["git", "commits", "style", "workflow", "portable"],
