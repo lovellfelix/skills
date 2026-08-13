@@ -18,34 +18,37 @@ This repo (`lovellfelix/skills`) — all custom skills are authored and versione
 
 ## Runtime Skill Locations
 
-OpenCode scans these locations (default, no config needed):
+Two separate mechanisms materialize skills at runtime — there is no single shared directory all three harnesses read from:
 
-| Path                         | Used By                                 |
-| ---------------------------- | --------------------------------------- |
-| `~/.agents/skills/`          | **Primary** - OpenCode, Claude Code, Pi |
-| `~/.config/opencode/skills/` | Legacy fallback                         |
-| `~/.claude/skills/`          | Claude Code fallback                    |
+| Runtime         | Portable skills (`portable/`)                                                          | Community/marketplace skills                |
+| --------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
+| **OpenCode**    | `~/.config/opencode/skills/portable/` (+ `.../runtime/` for adapters)                  | mirrored into the same `portable/` dir      |
+| **Claude Code** | `~/.claude/skills/` (flat — Claude only discovers skills there, no `portable/` subdir) | mirrored into `~/.claude/skills/`           |
+| **Pi**          | `~/.agents/skills/` (flat, shared — Pi's `settings.json` scans this directly)          | installed directly into `~/.agents/skills/` |
+
+`~/.agents/skills/` is Pi's own discovery path and the community-skill installer's canonical shared install location — it is **not** a shared intermediate that OpenCode or Claude Code read from; they get their own harness-specific directories from `sync-skill-runtime-links.sh` directly.
 
 ## Bootstrap Flow
 
 The sync/bootstrap tooling lives in `dotfiles`, not here — it reads this repo via `SKILLS_ROOT`:
 
 ```
-Step 8:  hacks/sync-skill-runtime-links.sh → links local skills → ~/.agents/skills/
+Step 8:  hacks/sync-skill-runtime-links.sh → links portable skills into each harness's own directory
+           (opencode → ~/.config/opencode/skills/portable/, claude → ~/.claude/skills/, pi → ~/.agents/skills/)
 Step 8b: hacks/sync-command-runtime-links.sh → portable commands
 Step 8c: install_community_skills() → npx skills add --yes --agent opencode from community-{env}.json
 ```
 
-Community skills install to `~/.agents/skills/` (primary) then symlink to `~/.claude/skills/` (Claude-specific).
+Community skills install to `~/.agents/skills/` (shared, and Pi's native scan path) then symlink into `~/.claude/skills/` and `~/.config/opencode/skills/portable/`.
 
 ## Skills by Location
 
-| Skill Type             | SOT Location (this repo)           | Runtime Location                                             | Access           |
-| ---------------------- | ---------------------------------- | ------------------------------------------------------------ | ---------------- |
-| **Local portable**     | `portable/`                        | `~/.agents/skills/portable/`                                 | All harnesses    |
-| **Local runtime**      | `runtime-specific/<runtime>/`      | `~/.config/opencode/skills/` (or the equivalent runtime dir) | Harness-specific |
-| **Community work**     | Installed via `dotfiles` bootstrap | `~/.agents/skills/`                                          | All harnesses    |
-| **Community personal** | Installed via `dotfiles` bootstrap | `~/.agents/skills/`                                          | All harnesses    |
+| Skill Type             | SOT Location (this repo)           | Runtime Location                                                                                       | Access           |
+| ---------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------ | ---------------- |
+| **Local portable**     | `portable/`                        | `~/.config/opencode/skills/portable/`, `~/.claude/skills/`, `~/.agents/skills/` (Pi) — one per harness | All harnesses    |
+| **Local runtime**      | `runtime-specific/<runtime>/`      | `~/.config/opencode/skills/runtime/` (or the equivalent runtime dir)                                   | Harness-specific |
+| **Community work**     | Installed via `dotfiles` bootstrap | `~/.agents/skills/`                                                                                    | All harnesses    |
+| **Community personal** | Installed via `dotfiles` bootstrap | `~/.agents/skills/`                                                                                    | All harnesses    |
 
 ## Key Files
 
@@ -57,8 +60,8 @@ Community skills install to `~/.agents/skills/` (primary) then symlink to `~/.cl
 Run from a `dotfiles` checkout, pointed at this repo via `SKILLS_ROOT`:
 
 ```bash
-# Manual skill sync to agents (shared)
-SKILLS_ROOT=~/projects/skills ~/.dotfiles/hacks/sync-skill-runtime-links.sh --runtime agents
+# Manual skill sync — omit --runtime to sync all three (opencode, claude, pi)
+SKILLS_ROOT=~/projects/skills ~/.dotfiles/hacks/sync-skill-runtime-links.sh --runtime pi
 
 # Bootstrap with community skills
 ~/.dotfiles/hacks/bootstrap.sh opencode
