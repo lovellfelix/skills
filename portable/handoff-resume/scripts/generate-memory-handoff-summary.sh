@@ -18,7 +18,7 @@ usage() {
 generate-memory-handoff-summary.sh - write handoff summary to disk and MCP session memory
 
 Usage:
-  ./hacks/generate-memory-handoff-summary.sh --project <project-slug> --session-id <id> [options]
+  scripts/generate-memory-handoff-summary.sh --project <project-slug> --session-id <id> [options]
 
 Options:
   --project <slug>       Project slug for durable handoff path
@@ -31,8 +31,8 @@ Options:
   --dry-run              Show actions without writing
 
 Examples:
-  ./hacks/generate-memory-handoff-summary.sh --project dotfiles --session-id opencode-2026-03-20 --summary-file /tmp/handoff.md
-  ./hacks/generate-memory-handoff-summary.sh --project dotfiles --session-id opencode-2026-03-20 --topic memory --summary "Updated memory model"
+  scripts/generate-memory-handoff-summary.sh --project dotfiles --session-id opencode-2026-03-20 --summary-file /tmp/handoff.md
+  scripts/generate-memory-handoff-summary.sh --project dotfiles --session-id opencode-2026-03-20 --topic memory --summary "Updated memory model"
 EOF
 }
 

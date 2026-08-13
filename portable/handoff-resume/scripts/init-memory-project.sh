@@ -10,10 +10,10 @@ usage() {
 init-memory-project.sh - scaffold ~/.agents/memory/projects/<project>
 
 Usage:
-  ./hacks/init-memory-project.sh --project <project-slug> [--agents-home <path>] [--dry-run]
+  scripts/init-memory-project.sh --project <project-slug> [--agents-home <path>] [--dry-run]
 
 Example:
-  ./hacks/init-memory-project.sh --project dotfiles
+  scripts/init-memory-project.sh --project dotfiles
 EOF
 }
 
