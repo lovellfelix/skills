@@ -2,6 +2,16 @@
 
 This directory is the canonical home for skills-first guidance in this repository.
 
+## Install
+
+Clone or update this repo to `${SKILLS_ROOT:-$HOME/.skills}`:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/lovellfelix/skills/main/install.sh | bash
+```
+
+This repo is private, so the one-liner needs git credentials already configured (SSH key or `gh auth login`) — it won't work anonymously. `install.sh` only clones/updates the repo; it doesn't materialize runtime skill links into any harness. For that, run `dotfiles`' `hacks/sync-skill-runtime-links.sh` (see [Runtime Materialization](#runtime-materialization) below).
+
 ## Purpose
 
 - Keep reusable skill content in one root-level location.
@@ -93,7 +103,7 @@ Runtime-facing paths can be generated as symlinks using:
 By default it syncs links for OpenCode, Claude, and Pi:
 
 - OpenCode: `~/.config/opencode/skills/portable` and `~/.config/opencode/skills/runtime`
-- Claude: `~/.claude/skills/portable`
+- Claude: `~/.claude/skills/` (flat — Claude Code only discovers skills there, no `portable/` subdir)
 - Pi: consumes shared portable skills from `~/.agents/skills/`; `~/.pi/agent/skills/` available for Pi-local overlays
 
 The sync script focuses on runtimes that need explicit materialized links. Pi normally reads the shared skill directory directly.
