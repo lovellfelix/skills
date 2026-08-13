@@ -171,7 +171,7 @@ None identified. The actual GrenadianBuzz API implementation is clear:
 ## Files Modified Summary
 
 ```
-/Users/lovellfelix/.dotfiles/skills/portable/grenadianbuzz/
+portable/grenadianbuzz/
 ├── reference/
 │   └── grenadianbuzz-api-patterns.md    ✓ Pagination + engagement endpoints
 ├── SKILL.md                              ✓ Pagination + engagement refs
