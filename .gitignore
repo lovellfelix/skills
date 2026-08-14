@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# Runtime lock files (pipeline state)
+*.lock

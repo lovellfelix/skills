@@ -1,0 +1,35 @@
+product: skills
+prd: .pipeline/skills/prd.md
+prd_hash: dd7fb6afb296191b6ccc331fadbb4faa042118f87f20cd919960ebee7d9c79bf
+generated: 2026-08-14T20:10:00Z
+agent: claude -p
+epics:
+  - id: epic-1
+    title: Fork-drift detection
+    description: Detect when a git-tracked skill fork elsewhere on disk has diverged from its portable source, instead of relying on manual discovery.
+    depends_on: []
+    features:
+      - id: feature-1
+        title: Fork frontmatter drift-check script
+        surface: portable
+        repo: lovellfelix/skills
+        lane: L4
+        acceptance_criteria:
+          - Script accepts a skill name and a path to a non-symlinked fork on disk.
+          - Script compares the fork's metadata.version and metadata.tags frontmatter fields against the portable source's SKILL.md.
+          - Script exits non-zero when the fork's metadata.version differs from its portable source.
+          - Script output names the specific fields that differ.
+  - id: epic-2
+    title: Known-forks registry
+    description: Document every skill known to have a git-tracked fork outside this repo, with the manual sync command to run after a portable update.
+    depends_on: []
+    features:
+      - id: feature-2
+        title: Known-forks registry doc
+        surface: portable
+        repo: lovellfelix/skills
+        lane: L4
+        acceptance_criteria:
+          - Doc lists each known fork's repo, path, and last-synced state, starting from OpenCode's lean-ctx copy in dotfiles.
+          - Doc includes the manual sync command to run after updating the corresponding portable skill.
+          - Doc is discoverable from this repo's top-level docs, not buried in a single skill's own directory.
