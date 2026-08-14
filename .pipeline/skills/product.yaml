@@ -1,0 +1,6 @@
+product: skills
+surfaces:
+  - id: portable
+    repo: lovellfelix/skills
+    lane: L4
+    description: Cross-harness portable skill library shared by Claude Code, OpenCode, and Pi.
