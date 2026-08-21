@@ -1530,7 +1530,7 @@
           }
         }
       },
-      "description": "Use when agents need to retrieve, store, or manage secrets/passwords/credentials using the pass CLI, including one-off secret storage for isolated leakage prevention in autonomous workflows.",
+      "description": "Use when agents need to retrieve or store secrets/passwords/credentials backed by the pass CLI, or when a human operator is provisioning/rotating credentials via pass-run.sh/pass-store.sh.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/pass-secrets-management/",
@@ -1551,9 +1551,11 @@
         "permission-escalation",
         "version-control",
         "ssh",
-        "key-rotation"
+        "key-rotation",
+        "pass-run",
+        "pass-store"
       ],
-      "version": "0.3.0"
+      "version": "0.5.0"
     },
     {
       "adapters": {
