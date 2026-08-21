@@ -1,19 +1,43 @@
 ---
 name: pass-secrets-management
-description: Use when agents need to retrieve, store, or manage secrets/passwords/credentials using the pass CLI, including one-off secret storage for isolated leakage prevention in autonomous workflows.
+description: Use when agents need to retrieve or store secrets/passwords/credentials backed by the pass CLI, or when a human operator is provisioning/rotating credentials via pass-run.sh/pass-store.sh.
 metadata:
-  version: 0.3.0
+  version: 0.5.0
   portable: true
-  tags: [pass, secrets, passwords, credentials, security, gpg, password-store, agent-automation, ssh, key-rotation, rotate-agent-key]
+  tags:
+    [
+      pass,
+      secrets,
+      passwords,
+      credentials,
+      security,
+      gpg,
+      password-store,
+      agent-automation,
+      ssh,
+      key-rotation,
+      rotate-agent-key,
+      pass-run,
+      pass-store,
+    ]
 ---
 
 # Pass Secrets Management
 
 ## Overview
 
-Use the `pass` CLI (standard Unix password manager) for all secrets management in agent workflows. Pass provides GPG-encrypted storage with deterministic paths, enabling agents to autonomously retrieve and store credentials without leaking secrets to logs, context, or other processes.
+Use the `pass` CLI (standard Unix password manager) as the backing store for all secrets. Pass provides GPG-encrypted storage with deterministic paths.
 
-**Core principle:** Every secret goes through `pass`. No exceptions. No hardcoded values, no env vars with raw secrets, no temporary files.
+**Agents do not call `pass` or `gpg` directly** — both are blocked by the shell allowlist (lean-ctx, shared across Claude Code/OpenCode/Pi) and by `sensitive-file-guard.sh`. This is intentional, not a gap to work around: it replaces the discipline-based rules below with structural enforcement. Two wrappers, both scoped to the `agent/` subtree only, are the sanctioned paths:
+
+- `scripts/pass-run.sh` — **read** a secret and use it in a command. Injects the value into a child process's environment (never argv, never printed), censors it out of captured output. This needs the passphrase-protected private key, so it always prompts pinentry on the physical desktop — an agent cannot silently read a value back out.
+- `scripts/pass-store.sh` — **write** a secret (from stdin, or `--generate` a random one the agent never sees). Writing only needs the `agent/` subtree's _public_ key, so unlike reading it needs no pinentry approval — storing a value the agent already has doesn't weaken the read-side guarantee above.
+
+See `scripts/pass-run.sh --help` / `scripts/pass-store.sh --help`.
+
+Direct `pass`/`gpg` commands in this document (namespace management, rotation, provisioning into `agent/`) are **human-operator actions**, run by you in your own terminal — not something to hand to an agent's Bash tool.
+
+**Core principle:** Every secret an agent uses goes through `pass-run.sh` (read) or `pass-store.sh` (write) — never a raw `pass`/`gpg` call. No hardcoded values, no env vars with raw secrets pasted into a prompt, no temporary files.
 
 ## When to Use
 
@@ -72,12 +96,12 @@ Organize secrets by agent category and purpose. This keeps secrets scoped, avoid
 
 ### Namespace Rules
 
-| Namespace | Purpose | Access |
-|-----------|---------|--------|
-| `infrastructure/<category>/` | Infra machine/service credentials | All authorized agents |
-| `services/<service>/` | Shared service credentials | All authorized agents |
-| `personal/` | User's personal secrets | Requires user permission |
-| `_agent-sessions/` | Ephemeral session-scoped stores | Creating agent only |
+| Namespace                    | Purpose                           | Access                   |
+| ---------------------------- | --------------------------------- | ------------------------ |
+| `infrastructure/<category>/` | Infra machine/service credentials | All authorized agents    |
+| `services/<service>/`        | Shared service credentials        | All authorized agents    |
+| `personal/`                  | User's personal secrets           | Requires user permission |
+| `_agent-sessions/`           | Ephemeral session-scoped stores   | Creating agent only      |
 
 ### SSH Key Convention
 
@@ -112,30 +136,58 @@ pass rm -r infrastructure/ssh/my-host/my-user  # entire user namespace
 
 ## Core Operations
 
-### Retrieve a Secret
+The raw commands below (`pass show`, `pass insert`, `pass generate`, `pass rm`) are
+**human-operator commands** — run them yourself, in your own terminal, to manage
+`infrastructure/`, `services/`, and `personal/`. An agent's Bash tool cannot run them
+(blocked by allowlist). Within `agent/` specifically, agents use the two wrappers
+instead: `pass-run.sh` to read, `pass-store.sh` to write.
+
+### Retrieve a Secret (agent-facing)
+
+Agents never run `pass show`. They call `scripts/pass-run.sh`, which resolves only
+`agent/`-prefixed entries and hands the value to a child process's environment —
+the agent's own context never contains it:
 
 ```bash
-# First line is the password/secret
-pass show <path>
+scripts/pass-run.sh --secret agent/github-token -- gh pr list
 
-# Examples:
-pass show agents/orchestrator/github/token
-pass show services/aws/production/access-key
+# Custom env var name:
+scripts/pass-run.sh --secret agent/openai-api-key --as OPENAI_API_KEY -- curl -H "Authorization: Bearer $OPENAI_API_KEY" https://api.openai.com/v1/models
 
-# Extract just the password (first line only)
-pass show agents/orchestrator/github/token | head -1
-
-# Store in variable (never echo or log)
-SECRET=$(pass show agents/orchestrator/github/token | head -1)
+# Multiple secrets in one call:
+scripts/pass-run.sh --secret agent/db-user --as DB_USER --secret agent/db-pass --as DB_PASS -- ./migrate.sh
 ```
 
-### Store a New Secret
+If the agent needs a credential that only exists outside `agent/` (`infrastructure/`,
+`services/`, `personal/`), it must ask you to provision a copy into `agent/` — see
+"Provisioning a secret for agent use" below. It should not ask for direct access to
+those namespaces.
+
+### Store a Secret (agent-facing)
+
+Writing is an encryption-only operation — it needs the `agent/` subtree's public key,
+not the passphrase, so `pass-store.sh` needs no pinentry approval. Agents use it
+directly, for a value they already have (from the user, or one they just
+generated/discovered) or to generate a fresh one they never need to see:
+
+```bash
+echo "$NEW_API_KEY" | scripts/pass-store.sh --secret agent/openai-api-key
+
+# Generate a random secret the agent never sees the value of:
+scripts/pass-store.sh --secret agent/internal-db-password --generate 40
+```
+
+Same `agent/`-only prefix restriction as `pass-run.sh`. This does not weaken the
+read-side guarantee: a value stored this way still can't come back out of the store
+without a human approving a `pass-run.sh` decrypt.
+
+### Store a New Secret (human operator, outside agent/)
 
 ```bash
 # Interactive entry (avoids history/context leakage)
 pass insert <path>
 
-# Non-interactive (use for agent automation — pipe via stdin)
+# Non-interactive — pipe via stdin
 echo "$SECRET_VALUE" | pass insert --force <path>
 
 # Multi-line secrets (API key + secret on separate lines)
@@ -149,6 +201,47 @@ cat key.pub | pass insert --force --multiline infrastructure/ssh/host/user/id_ed
 ```
 
 > **Gotcha:** Without `--multiline`, `pass insert --force` may silently exit 1 on piped multi-line input. Always use `--multiline` when writing SSH keys, PEM blocks, or any content with line breaks.
+
+### Zero-cache agent subtree
+
+Unlike the rest of the store (default 600s/7200s GPG cache), `agent/` is decrypted
+under a separate `GNUPGHOME` (`~/.gnupg-agent`) with `default-cache-ttl 0` /
+`max-cache-ttl 0`, using a GPG key dedicated to that subtree. Every `pass-run.sh` call
+therefore prompts pinentry on the physical desktop — an agent that bypassed the wrapper
+entirely (e.g. wrote and ran a script calling `pass`/`gpg` directly, which is possible
+since the allowlist only blocks inline commands, not script files) still cannot get a
+secret without a human clicking the prompt. This is what makes the design a boundary
+rather than a convenience.
+
+**One-shot setup (human-operator only):**
+
+```bash
+scripts/bootstrap-agent-key.sh
+```
+
+Creates `~/.gnupg-agent` with the zero-cache config, generates a dedicated
+passphrase-protected key (you'll be prompted by pinentry to set the passphrase — a
+blank one would make the zero-cache setting pointless, since there'd be nothing to
+prompt for), backs the key up into the main store at
+`infrastructure/gpg/agent-secrets-key` (encrypted to your regular key), and runs
+`pass init -p agent <key-id>`. Idempotent — safe to re-run.
+
+**Portability:** because the agent key is backed up in the main store, bootstrapping a
+new machine is the same one command: once `~/.password-store` is synced (it's a git
+repo) and your regular GPG key is available, `bootstrap-agent-key.sh` finds the backup
+and imports it instead of generating a new key, so the _same_ agent key — and the same
+`agent/` secrets — work on every machine.
+
+### Provisioning a secret for agent use
+
+Once the subtree exists (via the bootstrap script above), add credentials to it. If the
+agent already has the value (you pasted it in chat, or it just generated/discovered it),
+it can store it directly — see "Store a Secret (agent-facing)" below. As a human
+operator you can also do it manually:
+
+```bash
+echo "$VALUE" | PASSWORD_STORE_DIR=~/.password-store GNUPGHOME=~/.gnupg-agent pass insert --force agent/openai-api-key
+```
 
 ### Update an Existing Secret
 
@@ -190,18 +283,24 @@ pass rm -r <directory>     # Remove directory
 
 ## Permission Escalation Rules (MANDATORY)
 
+**Note:** agents can no longer reach `personal/`, `services/`, or other agents'
+namespaces at all — `pass`/`gpg` are blocked outright, and `pass-run.sh` refuses
+anything outside `agent/`. The rules below now describe when you, the human operator,
+should copy a credential into `agent/` (see "Provisioning a secret for agent use"),
+not something an agent enforces on itself.
+
 Agents MUST request permission before accessing secrets outside their namespace.
 
 ### What Requires Permission
 
-| Action | Required |
-|--------|----------|
-| Accessing `personal/` namespace | User permission |
-| Accessing `agents/<other-agent>/` | User permission |
+| Action                                               | Required        |
+| ---------------------------------------------------- | --------------- |
+| Accessing `personal/` namespace                      | User permission |
+| Accessing `agents/<other-agent>/`                    | User permission |
 | Accessing `services/` not in agent's authorized list | User permission |
-| Adding new secrets to `services/` | User permission |
-| Removing any secret | User permission |
-| Listing contents of `personal/` | User permission |
+| Adding new secrets to `services/`                    | User permission |
+| Removing any secret                                  | User permission |
+| Listing contents of `personal/`                      | User permission |
 
 ### Permission Request Pattern
 
@@ -247,7 +346,12 @@ services/homelab/ai/chatgpt/api-key
 
 ## Anti-Leak Guarantees (MANDATORY)
 
-These rules are NON-NEGOTIABLE. Violating them leaks secrets.
+**Superseded for agents by structural enforcement.** These rules assume an agent can
+run `pass show` and must be trusted not to leak the result — that's no longer true:
+`pass`/`gpg` are allowlist-blocked, and `scripts/pass-run.sh` injects into env and
+censors output regardless of what the invoked command does with it. The rules below
+still apply to **you**, the human operator, when running `pass` directly to provision
+or manage the store — keep following them there.
 
 ### Rule 1: Never Log Secret Values
 
@@ -349,6 +453,10 @@ echo "$TOKEN" | pass insert --force agents/orchestrator/github/token
 
 ## One-Off Secret Storage (Isolated Leakage Prevention)
 
+**Human-operator only.** `pass-isolated.sh` calls `pass`/`gpg` directly, so an agent's
+Bash tool cannot run it — use this yourself for debugging or one-time setup, not as
+something to hand to an agent.
+
 Use this pattern when you need to temporarily store a secret that should NOT persist in the main password store — for example, during debugging, testing, or one-time setup flows.
 
 ### The Isolation Pattern
@@ -376,13 +484,13 @@ setup_isolated_pass() {
     local orig_store="$PASSWORD_STORE_DIR"
     local temp_store
     temp_store=$(mktemp -d)
-    
+
     export PASSWORD_STORE_DIR="$temp_store"
     pass init "$(gpg --list-keys --keyid-format long | grep pub | head -1 | awk '{print $2}')"
-    
+
     # Register cleanup
     trap "export PASSWORD_STORE_DIR='$orig_store'; rm -rf '$temp_store'" EXIT
-    
+
     echo "$temp_store"
 }
 
@@ -418,13 +526,13 @@ While `pass` stores secrets in a git repo by default, follow these practices for
 
 ### What to Track
 
-| Item | Track? | Reason |
-|------|--------|--------|
-| Secret paths/directories | Yes | Documents what exists |
-| Secret values | NEVER | Permanent leakage |
-| Agent namespace structure | Yes | Documents agent organization |
-| `_agent-sessions/` | NO | Ephemeral, should be gitignored |
-| `.gpg-id` | Yes | Required for pass to function |
+| Item                      | Track? | Reason                          |
+| ------------------------- | ------ | ------------------------------- |
+| Secret paths/directories  | Yes    | Documents what exists           |
+| Secret values             | NEVER  | Permanent leakage               |
+| Agent namespace structure | Yes    | Documents agent organization    |
+| `_agent-sessions/`        | NO     | Ephemeral, should be gitignored |
+| `.gpg-id`                 | Yes    | Required for pass to function   |
 
 ### Safe Commit Messages
 
@@ -462,13 +570,17 @@ git bundle verify ~/pass-backup-$(date +%m%d).bundle
 
 ## Agent Autonomous Flow Patterns
 
+Patterns 2, 4, and 5 below predate the `pass`/`gpg` block and call `pass show`/`pass
+insert` directly — an agent's Bash tool cannot run them today. They're accurate for a
+human operator scripting service setup or rotation by hand; for anything an agent
+should do autonomously, use Pattern 1's `pass-run.sh` form instead.
+
 ### Pattern 1: Secret Injection into Commands
 
 ```bash
-# Safe: Secret never appears in process list or logs
-TOKEN=$(pass show agents/orchestrator/github/token | head -1)
-curl -H "Authorization: Bearer $TOKEN" https://api.example.com/data
-unset TOKEN
+# Safe: value goes straight into the child process's env, censored from output,
+# and never appears in the agent's own context.
+scripts/pass-run.sh --secret agent/github-token --as TOKEN -- curl -H "Authorization: Bearer $TOKEN" https://api.example.com/data
 ```
 
 ### Pattern 2: Service Setup with Secret Retrieval
@@ -477,25 +589,25 @@ unset TOKEN
 configure_service() {
     local service=$1
     local key_path=$2
-    
+
     # Verify authorization first
     if ! check_authorization "$key_path"; then
         echo "PERMISSION REQUIRED: $key_path" >&2
         return 1
     fi
-    
+
     # Retrieve from pass
     local secret
     secret=$(pass show "$key_path" | head -1)
-    
+
     # Write to service config file (not env, not inline)
     cat > "$HOME/.config/$service/config.env" <<EOF
 API_KEY=$secret
 EOF
-    
+
     # Set restrictive permissions
     chmod 600 "$HOME/.config/$service/config.env"
-    
+
     # Clear secret from memory
     unset secret
 }
@@ -523,6 +635,7 @@ scripts/rotate-agent-key.sh 10.0.10.100 ansible --root-user ubuntu
 ```
 
 What the script does:
+
 1. Backs up the old key to `~/.ssh/agents/<host>/<user>/backup/`
 2. Generates a new Ed25519 key
 3. Pushes the public key to remote via `root@<host>`
@@ -532,6 +645,7 @@ What the script does:
 7. Auto-restores the backup on verification failure
 
 Wrapper scripts for specific hosts live alongside the keys:
+
 ```bash
 # ~/.ssh/agents/jarvis-claude/claude/rotate.sh
 #!/usr/bin/env bash
@@ -547,15 +661,15 @@ For non-SSH secrets (API keys, tokens):
 rotate_and_store() {
     local path=$1
     local new_value=$2
-    
+
     # Store new value
     echo "$new_value" | pass insert --force "$path"
-    
+
     # Verify
     local stored
     stored=$(pass show "$path" | head -1)
     [[ "$stored" == "$new_value" ]] && echo "Rotation verified" || echo "Rotation failed"
-    
+
     # Clear from memory
     unset new_value stored
 }
@@ -579,7 +693,17 @@ unset API_KEY API_SECRET
 
 ## Common Mistakes
 
-### Leaking via Process Arguments
+### Asking an agent to run `pass` or `gpg`
+
+```bash
+# BAD: blocked by the shell allowlist; will not run
+pass show agent/api-token
+
+# GOOD: the sanctioned agent-facing path
+scripts/pass-run.sh --secret agent/api-token -- some-command
+```
+
+### Leaking via Process Arguments (human-operator scripts)
 
 ```bash
 # BAD: Secret visible in ps
@@ -634,8 +758,20 @@ echo "Reason: Need SSH key for repository access"
 
 ## Cross-Harness Notes
 
-- Pass store is shared across all agents/harnesses via `~/.password-store/`
-- GPG key must be available to the running agent
-- For headless agents, ensure `GPG_AGENT_INFO` or `gpg-agent` is running
-- One-off isolated stores are per-session and don't affect the shared store
+- `scripts/pass-run.sh` and `scripts/pass-store.sh` ship inside this skill, so they're
+  available wherever the skill is (Claude Code, OpenCode, Pi each symlink to
+  `~/projects/skills/portable/pass-secrets-management/`) — no per-machine dotfiles
+  install needed. Both need to be on the shell allowlist by basename (lean-ctx config);
+  `pass`/`gpg` themselves never should be.
+- `pass`/`gpg` are blocked for agents by the lean-ctx shell allowlist, which is shared
+  across all three harnesses; `claude/.claude/hooks/sensitive-file-guard.sh` additionally
+  blocks reading `.password-store`/`.gpg`/`.gnupg-agent` paths directly. Pi has no hook
+  layer, so its enforcement is the allowlist plus its own `secrets.md` rule.
+- Pass store is shared across all agents/harnesses via `~/.password-store/`; the
+  `agent/` subtree specifically uses a separate `GNUPGHOME` (`~/.gnupg-agent`) with
+  zero cache — see "Zero-cache agent subtree" above.
+- One-off isolated stores (human-operator only, see above) are per-session and don't
+  affect the shared store.
 - Agent authorization files live in `~/.config/pass/agents/<agent-name>/authorized.conf`
+  — still relevant for tracking which `agent/` entries exist for which purpose, even
+  though enforcement no longer depends on an agent reading this file itself.
