@@ -1214,7 +1214,7 @@
           }
         }
       },
-      "description": "Context Engineering for AI Agents \u2014 83 MCP tools, 10 read modes, 95+ shell patterns, tree-sitter AST for 27 languages. Compresses LLM context by up to 99%. Use when reading files, running shell commands, searching code, or exploring directories. Auto-installs if not present.",
+      "description": "Local context tooling for AI agents. Use it to select, shape, reuse, recover, and inspect context before inference when reading files, running shell commands, searching code, or exploring directories.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/lean-ctx/",
