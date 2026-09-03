@@ -2,14 +2,14 @@
 name: session-memory-mcp
 description: Use when preserving cross-session workflow context, tracking in-flight tasks, or promoting durable handoff artifacts across agent runs.
 metadata:
-  version: 0.3.3
+  version: 0.3.4
   portable: true
   tags: [mcp, memory, workflow, continuity]
 ---
 
 # Session Memory MCP (LeanCTX-Backed)
 
-Use session-memory as a durable context layer so sessions resume quickly without noise or re-discovery. The `session_memory` and `workflow_tasks` tool names remain the Pi compatibility facade; their backend is LeanCTX (`ctx_knowledge`, `ctx_session`, `ctx_task`, `ctx_workflow`). Preferences, conventions, contexts, `task_board`, and `task_insights` are all LeanCTX-backed, not SQLite-backed. SQLite is the legacy/rollback storage layer only — LeanCTX MCP is the canonical runtime source of truth (LeanCTX).
+Use session-memory as a durable context layer so sessions resume quickly without noise or re-discovery. **Backend varies by harness — confirm before assuming.** On Claude Code, `session_memory` is the real standalone MCP server running directly against its own SQLite database (`~/.agents/memory/session.db`); this is the primary store there, not a facade over LeanCTX (per the 2026-07-09 status update in `docs/plans/2026-06-04-session-memory-leanctx-migration.md` — Claude Code deliberately kept it wired directly). Pi instead routes `workflow_tasks` and related state through LeanCTX (`ctx_knowledge`, `ctx_session`, `ctx_task`, `ctx_workflow`) rather than a live session-memory server.
 
 ## Use when
 
@@ -183,7 +183,7 @@ Use `workflow_tasks` (LeanCTX-backed) for task status, then `session_memory` (Le
 ~/.agents/memory/profile/            # identity and preferences
 ~/.agents/memory/people/             # local-only people context
 
-LeanCTX MCP is the active canonical source of truth for preferences, conventions, contexts, and task state. SQLite is a legacy rollback path only.
+On Claude Code, this SQLite database is the active runtime store for preferences, conventions, contexts, and task state — not a legacy rollback path. On Pi, most of this instead routes through LeanCTX (`ctx_knowledge`/`ctx_task`/`ctx_workflow`). Confirm which mode applies for the current harness before treating either as authoritative.
 ```
 
 When reading durable artifacts, prefer:
