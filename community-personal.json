@@ -18,5 +18,9 @@
   {
     "repo": "anthropics/claude-code",
     "skill_name": "write"
+  },
+  {
+    "repo": "jakeasmith/omada-controller-skill",
+    "skill_name": "omada-controller"
   }
 ]
