@@ -6,7 +6,7 @@ Skills in this repo sometimes have git-tracked forks outside of it — copies th
 
 | Skill | Fork Repo | Fork Path | Fork Type | Last Synced | Notes |
 |-------|-----------|-----------|-----------|-------------|-------|
-| **lean-ctx** | `lovellfelix/dotfiles` | `opencode/skills/lean-ctx/` | Native copy (OpenCode adapter) | 2026-08-09 (repo split) | OpenCode's `lean-ctx` adapter mode is `native`, so dotfiles carries its own copy under the OpenCode skills directory rather than a symlink to the portable source. |
+| **lean-ctx** | `lovellfelix/dotfiles` | `opencode/.config/opencode/skills/lean-ctx/` | Native copy (OpenCode adapter) | 2026-08-09 (repo split) | OpenCode's `lean-ctx` adapter mode is `native`, so dotfiles carries its own copy under the OpenCode skills directory rather than a symlink to the portable source. |
 
 ## Sync Commands
 
@@ -16,6 +16,7 @@ After updating a portable skill that has a known fork, run the corresponding man
 
 ```bash
 # From the dotfiles repo, re-sync the OpenCode native skill copy from the portable source:
+SKILLS_ROOT=~/projects/skills
 cp "$SKILLS_ROOT/portable/lean-ctx/SKILL.md" ~/.config/opencode/skills/lean-ctx/SKILL.md
 cp "$SKILLS_ROOT/portable/lean-ctx/manifest.json" ~/.config/opencode/skills/lean-ctx/manifest.json
 ```
