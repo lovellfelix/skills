@@ -1,8 +1,8 @@
 ---
 name: adversary-review
-description: "Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different model, not another self-review pass. Runs the content through scripts/adversary-review.sh (OpenCode Go, gpt-5.6-luna) from a chosen adversarial perspective. Not for code generation or implementation."
+description: "Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different model, not another self-review pass. Runs the content through scripts/adversary-review.sh (Codex, gpt-5.6-luna) from a chosen adversarial perspective. Not for code generation or implementation."
 metadata:
-  version: 0.1.0
+  version: 0.1.1
   portable: true
   tags: [review, adversarial, critique, second-opinion, plan, rfc]
 ---
@@ -11,9 +11,11 @@ metadata:
 
 Get a critique from an independent model, not from re-reading your own output. Claude Code's
 native subagents (`Agent` tool) can only run on Claude models — there is no way to spawn a
-subagent on an opencode-go model directly. This skill shells out to
-`scripts/adversary-review.sh`, which calls the OpenCode Go subscription's `gpt-5.6-luna` over
-its Anthropic-native Messages API and returns a structured critique.
+subagent on a non-Claude model directly. This skill shells out to
+`scripts/adversary-review.sh`, which calls `gpt-5.6-luna` on the local Codex
+CLIProxyAPI (ChatGPT subscription) over its OpenAI-compatible API and returns a
+structured critique. Requires CLIProxyAPI running locally with `gpt-5.6-luna`
+available (check `curl $CODEX_PROXY_BASE_URL/models`).
 
 ## When to use
 
@@ -44,9 +46,9 @@ its Anthropic-native Messages API and returns a structured critique.
 3. Present the critique verbatim to the user — do not summarize away the Critical/Major
    findings or soften the Probing Questions. This is meant to be a real second opinion, not
    Claude's paraphrase of one.
-4. If the script errors (missing `OPENCODE_GO_API_KEY`, curl failure, empty response), report
-   the actual error — do not silently fall back to reviewing the content yourself and
-   presenting that as the adversary's opinion.
+4. If the script errors (missing `CODEX_PROXY_API_KEY`, CLIProxyAPI unreachable,
+   HTTP 401, empty response), report the actual error — do not silently fall back
+   to reviewing the content yourself and presenting that as the adversary's opinion.
 
 ## Constraints
 
