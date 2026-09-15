@@ -273,14 +273,22 @@ free-form prompt.
 
 - Fastest path: the `/research` slash command (any harness) — pass the topic
   as arguments, e.g. `/research how does the ledger dashboard cache reads`.
-- Manual path: `ssh root@10.0.10.48 "researcher --topic '<topic>' [--mode research|document] [--sources repo,wiki,web] [--publish owner/repo:path]"`
-  — default `--enqueue` hands it to the same worker as everything else in
-  this skill; `--direct` runs it inline instead (blocks, costs a live
-  model+search run — reserve for testing).
+- Manual path — no SSH required, enqueueing is one HTTP call to the hub:
+  - Already on jarvis-coder/jarvis-hub: `researcher --topic '<topic>' [--mode research|document] [--sources repo,wiki,web] [--publish owner/repo:path]`
+  - From any other machine (e.g. a Mac): the same command via a local
+    `agentic-fleet` checkout, with `RESEARCHER_SH`, `HUB_URL`, and
+    `TOKEN_FILE` overrides — see the `/research` command's own file
+    (`agents/commands/portable/research.md`) for the exact invocation and
+    why those three overrides are required (the script's own auto-detected
+    defaults are jarvis-coder-shaped and silently wrong off-fleet).
+  - Either way, default `--enqueue` hands it to the same worker as
+    everything else in this skill; `--direct` runs it inline instead
+    (blocks, costs a live model+search run — reserve for testing).
 - Sources: `repo` (read-only checkout), `wiki` (llm-wiki grep), `web`
-  (SearXNG at `10.0.10.240:8080`, deployed and verified live 2026-09-15).
-  Default in the script itself is conservative (`repo,wiki`); the `/research`
-  command defaults to all three since web is live.
+  (SearXNG, routed via `https://search.lab.${SECRET_DOMAIN}` behind an
+  nginx-internal ingress — deployed and verified live). Default in the
+  script itself is conservative (`repo,wiki`); the `/research` command
+  defaults to all three since web is live.
 - Same safety rule as any `claude-tasks` item: the topic text becomes part of
   a prompt another agent executes — no secrets or private raw data in it.
 
