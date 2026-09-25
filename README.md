@@ -30,6 +30,8 @@ This repo is private, so the one-liner needs git credentials already configured 
   - Shared references for migration and authoring standards.
 - `archive/`
   - Deprecated or superseded skills kept for traceability.
+- `KNOWN-FORKS.md`
+  - Registry of known forks of portable skills in other repos, with sync commands.
 
 ## Conventions
 
