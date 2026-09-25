@@ -88,7 +88,14 @@ for line in block.splitlines():
         continue
     in_meta = False
     top[k] = v
-val = top.get(key, meta.get(key, ""))
+if "." in key:
+    prefix, rest = key.split(".", 1)
+    if prefix == "metadata":
+        val = meta.get(rest, "")
+    else:
+        val = top.get(key, "")
+else:
+    val = top.get(key, meta.get(key, ""))
 if val.startswith('"') and val.endswith('"'):
     val = val[1:-1]
 print(val)
@@ -97,8 +104,8 @@ PY
 
 # Parse arguments
 if [[ $# -eq 0 ]]; then
-  usage
-  exit 1
+  usage >&2
+  exit 2
 fi
 
 if [[ "$1" == "--help" || "$1" == "-h" ]]; then
@@ -151,8 +158,12 @@ ERRORS=0
 DIFFS_FOUND=0
 
 for field in "${FIELDS[@]}"; do
-  portable_value="$(extract_frontmatter_value "$PORTABLE_SKILL_MD" "$field" 2>/dev/null || true)"
-  fork_value="$(extract_frontmatter_value "$FORK_SKILL_MD" "$field" 2>/dev/null || true)"
+  if ! portable_value="$(extract_frontmatter_value "$PORTABLE_SKILL_MD" "$field")"; then
+    die "Failed to extract '$field' from $PORTABLE_SKILL_MD"
+  fi
+  if ! fork_value="$(extract_frontmatter_value "$FORK_SKILL_MD" "$field")"; then
+    die "Failed to extract '$field' from $FORK_SKILL_MD"
+  fi
 
   if [[ "$portable_value" != "$fork_value" ]]; then
     DIFFS_FOUND=$((DIFFS_FOUND + 1))
