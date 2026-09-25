@@ -6,7 +6,7 @@ Skills in this repo sometimes have git-tracked forks outside of it — copies th
 
 | Skill | Fork Repo | Fork Path | Fork Type | Last Synced | Notes |
 |-------|-----------|-----------|-----------|-------------|-------|
-| **lean-ctx** | `lovellfelix/dotfiles` | `opencode/.config/opencode/skills/lean-ctx/` | Native copy (OpenCode adapter) | 2026-08-09 (repo split) | OpenCode's `lean-ctx` adapter mode is `native`, so dotfiles carries its own copy under the OpenCode skills directory rather than a symlink to the portable source. |
+| **lean-ctx** | `lovellfelix/dotfiles` | `opencode/.config/opencode/skills/lean-ctx/` | `native copy` (OpenCode adapter) | 2026-08-09 (repo split) | OpenCode's `lean-ctx` adapter mode is `native`, so dotfiles carries its own copy under the OpenCode skills directory rather than a symlink to the portable source. |
 
 ## Sync Commands
 
@@ -34,6 +34,6 @@ When a consuming repo vendors or copies a skill rather than symlinking it, add a
 - **Skill** — the portable skill name from this repo
 - **Fork Repo** — the GitHub repo (`owner/repo`) holding the fork
 - **Fork Path** — path within that repo to the forked files
-- **Fork Type** — `native copy`, `vendored`, or `symlink` (if symlink, prefer fixing the symlink instead)
+- **Fork Type** — the base value `native copy`, `vendored`, or `symlink`; a short parenthetical qualifier is allowed after the base value (e.g. `native copy` (OpenCode adapter)), and if symlink, prefer fixing the symlink instead
 - **Last Synced** — date or commit the fork was last synced from this repo
 - **Notes** — any context about why the fork exists or sync caveats
