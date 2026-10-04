@@ -2,7 +2,7 @@
 name: go-standards
 description: "Use when writing, reviewing, testing, or refactoring Go code (.go files, go.mod, goroutines, error wrapping, interfaces, table-driven tests, golangci-lint)."
 metadata:
-  version: 0.2.0
+  version: 0.2.1
   portable: true
   tags: [go, golang, standards, idioms, error-handling, concurrency, testing]
 ---
@@ -42,7 +42,7 @@ Idiomatic, boring Go. Follow the repo's existing conventions (logger, assertion 
 
 - Table-driven tests with `t.Run` subtests; `t.Parallel()` where tests are independent.
 - `t.Helper()` in test helpers, `t.Cleanup()` for teardown, `t.TempDir()` for files.
-- Use `testify` only if the project already does; otherwise stdlib `testing` with `cmp.Diff` for comparisons.
+- No test helper libraries unless the project already uses them: `testify` only if present, `cmp.Diff` only if `github.com/google/go-cmp` is already a dependency; otherwise stdlib `testing` and `reflect.DeepEqual`.
 - Benchmarks (`func BenchmarkX(b *testing.B)`) for hot paths you change.
 
 ```go
@@ -88,6 +88,6 @@ go test -race ./...
 ## Avoid
 
 - `init()` with side effects. Global mutable state.
-- Naked returns in anything longer than a few lines.
+- Naked returns in anything longer than a few lines. Named results are fine in exported functions when they document what's returned; still return explicitly.
 - Goroutines without an exit path; `time.Sleep` for synchronization.
 - Premature interfaces and generic helpers for a single call site.

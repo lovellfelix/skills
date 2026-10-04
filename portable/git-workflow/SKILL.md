@@ -2,7 +2,7 @@
 name: git-workflow
 description: Use when setting up git worktrees, writing or installing git hooks, recovering from a bad merge/rebase/reset, untangling history, or automating multi-branch workflows beyond routine commit/push. Not for commit message wording (see commit-messages).
 metadata:
-  version: 0.2.0
+  version: 0.2.1
   portable: true
   tags: [git, automation, worktrees, hooks, rebase, recovery, version-control, workflow]
   applies_to: [all, shell, bash, zsh]
@@ -39,28 +39,33 @@ mkdir -p .githooks && git config core.hooksPath .githooks
 
 If the repo already uses a hook manager (`pre-commit`, `lefthook`, `husky`), add hooks there instead.
 
-**pre-commit**: lint only what's staged, NUL-safe:
+**pre-commit**: lint only what's staged, NUL-safe, bash 3.2 compatible (macOS):
 
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
 
-mapfile -d '' files < <(git diff --cached --name-only -z --diff-filter=ACM -- '*.sh' '*.bash')
+files=()
+while IFS= read -r -d '' f; do files+=("$f"); done \
+  < <(git diff --cached --name-only -z --diff-filter=ACM -- '*.sh' '*.bash')
 if ((${#files[@]})); then
   shellcheck "${files[@]}"
 fi
 
-if git diff --cached -U0 | grep -qiE '^\+.*(api[_-]?key|password|secret|token)["'"'"' ]*[:=]'; then
+# Capture first: `git diff | grep -q` under pipefail fails open on large diffs (SIGPIPE).
+staged=$(git diff --cached -U0)
+if grep -iE '^\+.*(api[_-]?key|password|secret|token)["'"'"' ]*[:=]' <<<"$staged" >/dev/null; then
   echo "Possible secret in staged changes. Review, or bypass once with --no-verify." >&2
   exit 1
 fi
 ```
 
-**pre-push**: git passes `<local-ref> <local-sha> <remote-ref> <remote-sha>` lines on stdin. Use them; don't re-run `git push` inside the hook.
+**pre-push**: git passes the remote name as `$1` and `<local-ref> <local-sha> <remote-ref> <remote-sha>` lines on stdin. Use them; don't re-run `git push` inside the hook.
 
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
+remote=$1
 zero=0000000000000000000000000000000000000000
 
 while read -r _local_ref local_sha remote_ref remote_sha; do
@@ -70,8 +75,8 @@ while read -r _local_ref local_sha remote_ref remote_sha; do
     echo "Refusing non-fast-forward push to main." >&2
     exit 1
   fi
-  range=$([[ "$remote_sha" == "$zero" ]] && echo "$local_sha" || echo "$remote_sha..$local_sha")
-  git rev-list --objects "$range" | git cat-file --batch-check='%(objecttype) %(objectsize) %(rest)' |
+  # Only objects not already on the remote (a new branch would otherwise re-check all history)
+  git rev-list --objects "$local_sha" --not --remotes="$remote" | git cat-file --batch-check='%(objecttype) %(objectsize) %(rest)' |
     awk '$1=="blob" && $2>1048576 {print "Large file (>1MB): " $3; bad=1} END {exit bad}' || exit 1
 done
 ```
@@ -84,7 +89,7 @@ Hooks are local guardrails, not enforcement. Server-side rules (branch protectio
 - Update a feature branch: `git fetch origin && git rebase origin/main`. Conflicts: fix, `git add`, `git rebase --continue`; bail with `git rebase --abort`.
 - Enable `git config rerere.enabled true` when repeatedly rebasing long-lived branches.
 - After rewriting your own pushed branch: `git push --force-with-lease`, never bare `--force`.
-- Squash fixups before review: `git commit --fixup <sha>` then `git rebase --autosquash origin/main` (add `-i` when interactive editing is available).
+- Squash fixups before review: `git commit --fixup <sha>`, then `GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash origin/main` (non-interactive; plain `--autosquash` without `-i` only works on git ≥2.44).
 
 ## Recovery
 
@@ -96,7 +101,7 @@ Almost nothing committed is lost. Check the reflog before panicking.
 | Undo last commit, keep changes    | `git reset --soft HEAD~1`                                                |
 | Undo a pushed commit              | `git revert <sha>` (never rewrite shared history)                        |
 | Revert a merge commit             | `git revert -m 1 <merge-sha>`                                            |
-| Committed to the wrong branch     | `git branch fix-branch && git reset --hard origin/<branch>` (unpushed)   |
+| Committed to the wrong branch     | Stash first, `git fetch`, then `git branch fix-branch && git reset --hard origin/<branch>` (unpushed commits only) |
 | Deleted branch                    | `git reflog` / `git branch <name> <sha>`                                 |
 | Lost stash                        | `git fsck --unreachable \| grep commit`, then `git stash apply <sha>`    |
 | Find the commit that broke it     | `git bisect start <bad> <good>`; `git bisect run <test-cmd>`             |

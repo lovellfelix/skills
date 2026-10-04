@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "name": "writing-skills",
   "description": "Use when creating a new skill or custom command, editing, consolidating, or retiring an existing one, reviewing a skill library for quality, or verifying a skill actually changes agent behavior before relying on it.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [

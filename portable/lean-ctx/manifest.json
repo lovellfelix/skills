@@ -1,12 +1,16 @@
 {
   "schema_version": "1.0",
   "name": "lean-ctx",
-  "description": "Use when reading files, running shell commands, searching code, or exploring directories — anywhere native equivalents waste context tokens.",
+  "description": "Local context tooling for AI agents. Use it to select, shape, reuse, recover, and inspect context before inference when reading files, running shell commands, searching code, or exploring directories.",
   "license": "MIT",
   "version": "0.2.0",
   "portable": true,
   "entrypoint": "SKILL.md",
-  "tags": ["lean-ctx", "compression", "context-efficiency"],
+  "tags": [
+    "lean-ctx",
+    "compression",
+    "context-efficiency"
+  ],
   "adapters": {
     "opencode": {
       "path": "SKILL.md",

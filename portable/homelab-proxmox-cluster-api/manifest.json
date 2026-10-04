@@ -12,6 +12,7 @@
     "capmox",
     "kubernetes",
     "kubeadm",
+    "ceph",
     "infrastructure"
   ],
   "adapters": {

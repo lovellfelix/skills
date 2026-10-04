@@ -2,7 +2,7 @@
 name: release
 description: "Use when cutting a release, bumping a semver version, tagging, writing changelog entries or user-facing release notes from commits/PRs, or publishing to npm, PyPI, crates.io, GitHub Releases, or a Claude plugin marketplace."
 metadata:
-  version: 2.0.0
+  version: 2.0.1
   portable: true
   tags: [release, versioning, semver, changelog, release-notes, publishing, sbom]
 ---
@@ -77,7 +77,7 @@ Two audiences, two artifacts.
 
 - Registry tokens live in CI secrets only: `NPM_TOKEN`, `TWINE_PASSWORD` (PyPI API token, username `__token__`), `CARGO_REGISTRY_TOKEN`, `GITHUB_TOKEN`. Never in scripts or prompts.
 - Supply chain, where the project ships artifacts: SBOM (`generate-sbom.sh`), vulnerability scan (`run-scans.sh`, fails on HIGH/CRITICAL), checksums and signatures (`checksum-sign.sh`; prefer sigstore/KMS over long-lived GPG keys).
-- GitHub release with notes and assets: `github-release.sh`. Per-registry: `publish-npm.sh`, `publish-pypi.sh`, `publish-cargo.sh`, `publish-claude.sh`; monorepos: `monorepo-publish.sh`. All accept `--dry-run`.
+- GitHub release with notes and assets: `github-release.sh`. Per-registry: `publish-npm.sh`, `publish-pypi.sh`, `publish-cargo.sh`, `publish-claude.sh`; monorepos: `monorepo-publish.sh`. The publish scripts, `monorepo-publish.sh`, `rollback-deploy.sh`, and `create-translation-pr.sh` accept `--dry-run`; `github-release.sh` (use `--draft` instead), `create-pr.sh`, and the SBOM/scan/sign scripts do not.
 
 ## 6. Rollback
 

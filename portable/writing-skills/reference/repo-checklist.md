@@ -202,12 +202,12 @@ python3 ./hacks/generate-skills-index.py
 This updates:
 
 - [ ] `INDEX.md` — Human-readable skill catalog
-- [ ] `skills/registry.json` — Machine-readable manifest registry
+- [ ] `registry.json` — Machine-readable manifest registry
 
 **Verification:**
 
 - [ ] [ ] Your skill appears in `INDEX.md` with correct summary
-- [ ] [ ] Your skill is in `skills/registry.json` with matching metadata
+- [ ] [ ] Your skill is in `registry.json` with matching metadata
 - [ ] [ ] No duplicate entries in registry
 
 ### 4.2 Registry Freshness
@@ -360,7 +360,7 @@ git symbolic-ref --list               # Check symlink targets
 5. Test examples; verify all links
 6. Run validation: `./hacks/validate-skills.sh`
 7. Run generation: `python3 ./hacks/generate-skills-index.py`
-8. Verify skill in `INDEX.md` and `skills/registry.json`
+8. Verify skill in `INDEX.md` and `registry.json`
 9. Commit with message: `feat(skills): add my-skill-name`
 
 ### Creating a New Command

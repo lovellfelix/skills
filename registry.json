@@ -164,7 +164,7 @@
           }
         }
       },
-      "description": "Use when writing or rewriting PR descriptions, Slack messages, review comments, incident updates, RFC prose, blog posts/field notes, Google Docs content, or any technical communication that needs to be clearer, shorter, and lower-friction to review.",
+      "description": "Use when writing or rewriting PR descriptions, Slack messages, review comments, incident updates, RFC prose, documentation, blog posts/field notes, Google Docs content (internal docs, design summaries, proposals, status updates), or any technical communication that needs to be clearer, shorter, and lower-friction to review.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/communication-style/",
@@ -181,7 +181,7 @@
         "blog",
         "google-docs"
       ],
-      "version": "0.15.0"
+      "version": "0.15.1"
     },
     {
       "adapters": {
@@ -405,7 +405,8 @@
         "zsh",
         "nvim",
         "stow",
-        "automation"
+        "automation",
+        "portable"
       ],
       "version": "0.1.1"
     },
@@ -499,7 +500,7 @@
         "version-control",
         "workflow"
       ],
-      "version": "0.2.0"
+      "version": "0.2.1"
     },
     {
       "adapters": {
@@ -544,7 +545,7 @@
         "sre",
         "portable"
       ],
-      "version": "0.2.1"
+      "version": "0.2.2"
     },
     {
       "adapters": {
@@ -585,9 +586,11 @@
       "tags": [
         "github",
         "gh",
+        "cli",
+        "pr",
+        "ci",
         "issues",
         "pull-requests",
-        "ci",
         "portable"
       ],
       "version": "0.1.0"
@@ -637,7 +640,7 @@
         "concurrency",
         "testing"
       ],
-      "version": "0.2.0"
+      "version": "0.2.1"
     },
     {
       "adapters": {
@@ -688,7 +691,7 @@
         "prd",
         "newsletter"
       ],
-      "version": "0.8.0"
+      "version": "0.8.1"
     },
     {
       "adapters": {
@@ -823,7 +826,8 @@
         "kubernetes",
         "helmrelease",
         "home-assistant",
-        "sops"
+        "sops",
+        "troubleshooting"
       ],
       "version": "0.1.0"
     },
@@ -870,6 +874,7 @@
         "capmox",
         "kubernetes",
         "kubeadm",
+        "ceph",
         "infrastructure"
       ],
       "version": "0.1.0"
@@ -1006,10 +1011,11 @@
         "managed-agents",
         "claude-worker",
         "delegation",
-        "queue",
         "workflow",
-        "portable",
-        "researcher"
+        "tailscale",
+        "researcher",
+        "queue",
+        "portable"
       ],
       "version": "0.2.0"
     },
@@ -1454,7 +1460,7 @@
           }
         }
       },
-      "description": "Use when writing, reviewing, refactoring, or testing Python code, writing pytest tests or mocks, configuring ruff/mypy/pyright, or setting up a Python project's style, typing, and CI quality gates.",
+      "description": "Use when writing, reviewing, refactoring, or testing Python code, writing pytest tests or mocks, writing docstrings, choosing naming conventions, configuring ruff/mypy/pyright, or setting up a Python project's style, typing, and CI quality gates.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/python/",
@@ -1471,7 +1477,7 @@
         "testing",
         "quality"
       ],
-      "version": "2.0.0"
+      "version": "2.0.1"
     },
     {
       "adapters": {
@@ -1518,7 +1524,7 @@
         "publishing",
         "sbom"
       ],
-      "version": "2.0.0"
+      "version": "2.0.1"
     },
     {
       "adapters": {
@@ -1566,7 +1572,7 @@
         "tradeoffs",
         "rollout"
       ],
-      "version": "1.1.0"
+      "version": "1.1.1"
     },
     {
       "adapters": {
@@ -1611,7 +1617,7 @@
         "continuity",
         "leanctx"
       ],
-      "version": "0.4.0"
+      "version": "0.4.1"
     },
     {
       "adapters": {
@@ -1658,7 +1664,7 @@
         "forms",
         "portable"
       ],
-      "version": "0.3.0"
+      "version": "0.3.1"
     },
     {
       "adapters": {
@@ -1791,7 +1797,7 @@
         "tdd",
         "portable"
       ],
-      "version": "0.2.0"
+      "version": "0.2.1"
     },
     {
       "adapters": {
@@ -1838,7 +1844,7 @@
         "documentation",
         "portable"
       ],
-      "version": "0.3.0"
+      "version": "0.3.1"
     }
   ]
 }

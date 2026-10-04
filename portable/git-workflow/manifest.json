@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "name": "git-workflow",
   "description": "Use when setting up git worktrees, writing or installing git hooks, recovering from a bad merge/rebase/reset, untangling history, or automating multi-branch workflows beyond routine commit/push. Not for commit message wording (see commit-messages).",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [

@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "name": "session-memory-mcp",
   "description": "Use when preserving cross-session workflow context, tracking in-flight tasks, recording decisions/blockers/conventions/preferences, or promoting durable handoff artifacts across agent runs via the session_memory MCP or its CLI fallback.",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [

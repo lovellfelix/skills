@@ -4,7 +4,7 @@ description: Use when writing or updating engineering documentation and want it 
 metadata:
   version: 0.3.0
   portable: true
-  tags: [documentation, engineering, runbook, operations, architecture]
+  tags: [documentation, engineering, runbook, operations, architecture, writing]
 ---
 
 # Documentation

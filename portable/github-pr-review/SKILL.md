@@ -2,7 +2,7 @@
 name: github-pr-review
 description: Use when reviewing a GitHub PR end-to-end with SRE/infra-aware checklists, especially when reproducible findings are needed or the review will be posted back via the gh CLI.
 metadata:
-  version: 0.2.1
+  version: 0.2.2
   portable: true
   tags: [review, github, pr, sre, portable]
 ---
@@ -41,7 +41,7 @@ gh pr diff <PR> > pr.diff
 wc -l pr.diff   # record total line count for completion markers
 
 # CI status — enumerate all check runs; never hardcode workflow name
-gh pr checks <PR> --json name,status,conclusion,startedAt,completedAt
+gh pr checks <PR> --json name,state,bucket,workflow,link,startedAt,completedAt
 ```
 
 `pr.diff` line count (`wc -l` output) is the canonical value for `{line_count}` in the completion markers. Record it now.
