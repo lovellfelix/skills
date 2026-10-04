@@ -2,7 +2,7 @@
 name: incident-postmortem
 description: "Use when writing a postmortem after a production incident or operational failure to produce a concise, blameless analysis focused on decisions, causes, and concrete follow-ups."
 metadata:
-  version: 0.3.0
+  version: 0.3.1
   portable: true
   tags: [incident, postmortem, reliability, root-cause-analysis, operations]
 ---
@@ -68,6 +68,6 @@ Each follow-up must include:
 
 1. Gather incident data (ask user for timeline, impact, resolution if not in context).
 2. Identify trigger, contributing factors, and root cause separately.
-3. Draft each section in order: Summary → Root Cause → Follow-Ups.
+3. Draft Root Cause and Follow-Ups first (they drive everything else), then fill the remaining sections and write the Summary last, in the Output Structure order.
 4. Apply Follow-Up Rules to every follow-up item.
 5. Validate: no blame language, timeline fits one screen, all follow-ups owned.

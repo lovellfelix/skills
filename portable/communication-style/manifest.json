@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "name": "communication-style",
-  "description": "Use when writing or rewriting PR descriptions, Slack messages, review comments, incident updates, RFC prose, blog posts/field notes, Google Docs content, or any technical communication that needs to be clearer, shorter, and lower-friction to review.",
-  "version": "0.15.0",
+  "description": "Use when writing or rewriting PR descriptions, Slack messages, review comments, incident updates, RFC prose, documentation, blog posts/field notes, Google Docs content (internal docs, design summaries, proposals, status updates), or any technical communication that needs to be clearer, shorter, and lower-friction to review.",
+  "version": "0.15.1",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [

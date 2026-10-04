@@ -97,6 +97,8 @@ data class Article(
     val updated_at: String
 )
 
+// NOTE: the live API paginates with FeathersJS $skip/$limit and returns { total, limit, skip, data }.
+// Verify this model against the actual client before reusing it; next_cursor is not sent by the API.
 // Server list response: { "data": [...], "metadata": { "has_more": true, "next_cursor": "..." } }
 data class ArticlesListResponse(
     @SerializedName("data")

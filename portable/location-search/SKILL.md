@@ -2,7 +2,7 @@
 name: location-search
 description: Use when planning trips, finding nearby places, or integrating location features with a no-API-key default flow, including ZIP or postal-code lookup.
 metadata:
-  version: 0.3.0
+  version: 0.3.1
   portable: true
   tags: [maps, geocode, location, search, routing, navigation, places]
   applies_to: [personal-assistant, workflow, automation]
@@ -78,7 +78,7 @@ Guidance:
 - If the first lookup fails, retry with city + country context.
 - Store non-US values as `postal_code` or country-qualified text.
 
-## Session Memory (LeanCTX-backed)
+## Session Memory
 
 Reuse stored postal/ZIP preferences for future "near me" flows.
 

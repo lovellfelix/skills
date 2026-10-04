@@ -2,7 +2,7 @@
 name: rfc
 description: "Use when writing an RFC, technical design doc, or architecture proposal for a significant engineering change, or when reviewing one (yours or someone else's) for structural, clarity, and completeness gaps before it is shared."
 metadata:
-  version: 1.1.0
+  version: 1.1.1
   portable: true
   tags: [rfc, architecture, design, design-review, mermaid, rubric, tradeoffs, rollout]
 ---
@@ -24,7 +24,7 @@ For prose tightening use `communication-style`. For an independent second opinio
 2. **Motivation**: 2–4 sentences. Problem, impact, why now.
 3. **Non-Negotiables**: hard constraints as bullets (SLO, scale, latency, security, compatibility). Not preferences.
 4. **Architecture**: Mermaid `flowchart LR` first if >3 components, then prose on data flow, responsibilities, boundaries.
-5. **Key Decisions / Tradeoffs**: each decision with rationale and rejected alternatives.
+5. **Key Decisions / Tradeoffs**: each decision with rationale and at least one rejected alternative (required).
 6. **Risks**: failure mode, mitigation, owner. Table if >2 risks.
 7. **Rollout / Validation**: steps, observability, blast radius, rollback.
 8. **Appendix** (optional): alternatives considered (≥2, each with rejection rationale), state models, algorithms, open questions with owner and due date.
@@ -55,8 +55,8 @@ Locate the doc (ask if it is not in context). Evaluate P0 first; if any P0 fails
 
 - Motivation absent, vague, or longer than 4 sentences.
 - Non-Negotiables missing, or stated as preferences.
-- Architecture diagram absent, or shows implementation detail instead of component boundaries.
-- Fewer than two alternatives considered.
+- Architecture diagram absent when the design has >3 components, or the diagram shows implementation detail instead of component boundaries.
+- Key Decisions name no rejected alternative, and the appendix doesn't list ≥2 alternatives considered.
 
 **P1: fix before review**
 

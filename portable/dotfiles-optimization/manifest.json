@@ -11,7 +11,8 @@
     "zsh",
     "nvim",
     "stow",
-    "automation"
+    "automation",
+    "portable"
   ],
   "adapters": {
     "opencode": {

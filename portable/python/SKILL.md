@@ -1,8 +1,8 @@
 ---
 name: python
-description: "Use when writing, reviewing, refactoring, or testing Python code, writing pytest tests or mocks, configuring ruff/mypy/pyright, or setting up a Python project's style, typing, and CI quality gates."
+description: "Use when writing, reviewing, refactoring, or testing Python code, writing pytest tests or mocks, writing docstrings, choosing naming conventions, configuring ruff/mypy/pyright, or setting up a Python project's style, typing, and CI quality gates."
 metadata:
-  version: 2.0.0
+  version: 2.0.1
   portable: true
   tags: [python, pytest, style, linting, type-safety, testing, quality]
 ---
@@ -18,7 +18,8 @@ Write the smallest reviewable change that preserves behavior, adds regression co
 - Start from the changed behavior: write or update the failing pytest first for bug fixes and risky logic.
 - Prefer plain functions, small `@dataclass(slots=True)` types, and stdlib features over new layers.
 - Extract helpers only for reuse or clearer intent; keep them local.
-- Raise specific exceptions and chain context: `raise X(...) from e`. Never bare `except:` or swallow errors silently.
+- Raise specific exceptions and chain context: `raise X(...) from e`. Use custom domain exceptions to separate recoverable from fatal errors. Never bare `except:` or swallow errors silently.
+- Emit structured logs (and metrics where the project has them) at error boundaries and key I/O sites.
 - Document public APIs and non-obvious invariants; skip comments that narrate obvious code.
 
 ## Types
@@ -105,6 +106,9 @@ target-version = "py312"
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "B", "C4", "UP", "SIM"]
 ignore = ["E501"]  # formatter owns line length
+
+[tool.ruff.format]
+quote-style = "double"
 
 [tool.mypy]
 python_version = "3.12"

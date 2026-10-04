@@ -5,16 +5,7 @@ metadata:
   version: 0.2.0
   portable: true
   tags:
-    [
-      jarvis,
-      fleet,
-      managed-agents,
-      claude-worker,
-      delegation,
-      workflow,
-      tailscale,
-      researcher,
-    ]
+    [jarvis, fleet, managed-agents, claude-worker, delegation, workflow, tailscale, researcher, queue, portable]
 ---
 
 # Jarvis Workflows

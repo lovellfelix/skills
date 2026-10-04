@@ -91,11 +91,7 @@ FeathersJS wraps responses in a data envelope by default:
   ],
   "total": 1250,
   "limit": 20,
-  "skip": 0,
-  "metadata": {
-    "has_more": true,
-    "next_cursor": "eyJwb3NpdGlvbiI6IDIwfQ=="
-  }
+  "skip": 0
 }
 ```
 
@@ -778,22 +774,20 @@ curl https://api.grenadianbuzz.com/moderation/article-550e8400/audit \
 ### Example 4: Feed with Filters and Pagination
 
 ```bash
-# Get articles from News category, limit 20, default sorting (newest first)
-curl "https://api.grenadianbuzz.com/v2/articles?category=news&limit=20" \
+# Get articles from News category, 20 per page, default sorting (newest first)
+curl "https://api.grenadianbuzz.com/v2/articles?category=news&\$limit=20&\$skip=0" \
   -H "Authorization: Bearer user-token"
 
 # Response
 {
-  "data": [...],
-  "metadata": {
-    "limit": 20,
-    "has_more": true,
-    "next_cursor": "eyJwb3NpdGlvbiI6IDIwfQ=="
-  }
+  "total": 1250,
+  "limit": 20,
+  "skip": 0,
+  "data": [...]
 }
 
-# Get next page using cursor
-curl "https://api.grenadianbuzz.com/v2/articles?category=news&limit=20&cursor=eyJwb3NpdGlvbiI6IDIwfQ==" \
+# Next page: advance $skip by $limit
+curl "https://api.grenadianbuzz.com/v2/articles?category=news&\$limit=20&\$skip=20" \
   -H "Authorization: Bearer user-token"
 
 # Get trending articles (sort by engagement, not recency)
@@ -824,7 +818,7 @@ When sunset planning:
 | Aspect | v1 | v2 | Change |
 |--------|----|----|--------|
 | Endpoint | `/v1/news/feeds` | `/v2/articles` | Path renamed |
-| Pagination | `?skip=0&limit=20` | `?cursor=&limit=20` | Cursor-based |
+| Pagination | `?skip=0&limit=20` | `?$skip=0&$limit=20` | FeathersJS offset params |
 | Field | `feed_id` | `source_id` | Renamed |
 | Field | `published` | `published_at` | ISO 8601 format |
 | Response | Single object | Array in `.data` | Envelope structure |

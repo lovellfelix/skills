@@ -2,7 +2,7 @@
 name: writing-plans
 description: Use when you have a spec, requirements, or an agreed design for a multi-step task and need an implementation or action plan before touching code, or when a plan needs owners, estimates, dependencies, and success criteria.
 metadata:
-  version: 0.2.0
+  version: 0.2.1
   portable: true
   tags: [planning, workflow, tdd, portable]
 ---
@@ -22,7 +22,7 @@ Every plan starts with:
 ```markdown
 # <Feature Name> Implementation Plan
 
-> **For the implementer:** work task by task; run the review step between tasks.
+> **For the implementer:** work task by task, with a fresh subagent per task where available, and a code review between tasks.
 
 **Goal:** <one sentence>
 **Architecture:** <2–3 sentences on the approach>
@@ -54,7 +54,7 @@ def test_specific_behavior():
 **Step 2: Run it and confirm it fails**
 
 Run: `pytest tests/exact/path/to/test_file.py::test_specific_behavior -v`
-Expected: FAIL with `NameError: function`
+Expected: FAIL with `ImportError: cannot import name 'function'` (or the specific assertion failure if it already exists)
 
 **Step 3: Minimal implementation**
 

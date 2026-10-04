@@ -2,7 +2,7 @@
 name: shadcn-ui
 description: Use when setting up shadcn/ui, adding or customizing its components, building forms with React Hook Form and Zod, theming with Tailwind CSS variables and dark mode, using the shadcn CLI or registries, or building accessible React UI (dialogs, dropdowns, tables, sidebars) in Next.js, Vite, Remix, or TanStack Start.
 metadata:
-  version: 0.3.0
+  version: 0.3.1
   portable: true
   tags: [shadcn, react, tailwind, radix, ui, forms, portable]
 ---
@@ -26,7 +26,7 @@ New Next.js app: `npx create-next-app@latest my-app` (TypeScript, Tailwind, App 
 Check after `init`:
 
 - `components.json`: style, Tailwind CSS path, aliases (`@/components`, `@/lib/utils`), registries.
-- Tailwind **v4** (current default): theme tokens are CSS variables in the global CSS file under `@theme inline`; no `tailwind.config` needed; animations via `tw-animate-css`.
+- Tailwind **v4** (current default): color values live as CSS variables in `:root` and `.dark` in the global CSS file; `@theme inline` only maps them to Tailwind names (`--color-background: var(--background)`). Putting literal values under `@theme inline` breaks dark mode. No `tailwind.config` needed; animations via `tw-animate-css`.
 - Tailwind **v3** (older projects): `tailwind.config.ts` with `darkMode: ["class"]`, content paths including components; `tailwindcss-animate`.
 - `tsconfig.json` path alias `@/*`.
 

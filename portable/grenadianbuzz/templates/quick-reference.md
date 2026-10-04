@@ -49,7 +49,7 @@ When designing a new API for GrenadianBuzz, use this checklist to ensure complet
 ### Response Structure
 
 - [ ] Single item: `{ "data": { ... } }`
-- [ ] List: `{ "data": [...], "metadata": { "has_more", "next_cursor" } }`
+- [ ] List: `{ "total", "limit", "skip", "data": [...] }` (FeathersJS `$skip`/`$limit` pagination)
 - [ ] Error: `{ "name", "code", "message", "data" }`
 
 ### Error Handling

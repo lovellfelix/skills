@@ -19,7 +19,12 @@
 #                    later lines that would corrupt a single-value credential.
 #
 # Example:
-#   pass-run.sh --secret agent/openai-api-key -- curl -H "Authorization: Bearer $OPENAI_API_KEY" ...
+#   pass-run.sh --secret agent/github-token -- gh pr list
+#   pass-run.sh --secret agent/openai-api-key -- \
+#     sh -c 'printf "Authorization: Bearer %s\n" "$OPENAI_API_KEY" | curl -H @- ...'
+#
+# Single-quote anything after -- that references the secret: the caller's
+# shell expands "$VAR" before this wrapper sets it, yielding an empty value.
 #
 # No output streaming: stdout/stderr are buffered until the command exits,
 # then censored and released. This is a deliberate tradeoff for censoring
@@ -113,7 +118,12 @@ chmod 600 "$tmp_out" "$tmp_err"
 trap 'rm -f "$tmp_out" "$tmp_err"' EXIT
 
 set +e
-env "${env_kv[@]}" "${cmd[@]}" >"$tmp_out" 2>"$tmp_err"
+# Export via the shell builtin in a subshell rather than `env NAME=value cmd`,
+# so secret values never appear in any process's argv (readable via ps).
+(
+  for kv in "${env_kv[@]}"; do export "${kv?}"; done
+  exec "${cmd[@]}"
+) >"$tmp_out" 2>"$tmp_err"
 exit_code=$?
 set -e
 

@@ -2,7 +2,7 @@
 name: writing-skills
 description: Use when creating a new skill or custom command, editing, consolidating, or retiring an existing one, reviewing a skill library for quality, or verifying a skill actually changes agent behavior before relying on it.
 metadata:
-  version: 0.3.0
+  version: 0.3.1
   portable: true
   tags: [skills, commands, authoring, validation, maintenance, documentation, portable]
 ---
@@ -35,10 +35,13 @@ Skill types: **technique** (steps to follow), **pattern** (way of thinking), **r
 
 ## SKILL.md structure
 
+- `name`: kebab-case, matches the directory, ≤64 chars.
+- `description`: triggers only, ≤1024 chars (aim <500).
+
 ```markdown
 ---
-name: skill-name            # kebab-case, matches directory, ≤64 chars
-description: Use when ...   # triggers only, third person, ≤1024 chars (aim <500)
+name: skill-name
+description: Use when ...
 metadata:
   version: 0.1.0
   portable: true
@@ -65,7 +68,7 @@ The agent reads only `description` when choosing which skill to load.
 
 - Start with "Use when…" and list concrete triggers: situations, symptoms, error text, tool and file names, synonyms.
 - **Never summarize the workflow.** When a description says what the skill does step by step, agents follow the description and skip the body. Tested: "code review between tasks" caused one review where the body required two.
-- Third person. Technology-specific only if the skill is.
+- Describe the situation, not yourself: "Use when tests are flaky", never "I can help with flaky tests". Technology-specific only if the skill is.
 
 ```yaml
 # Bad: workflow summary the agent will follow instead of reading the body
@@ -95,7 +98,16 @@ Only for non-obvious decisions, loops where the agent might stop early, or "A vs
 NO SKILL WITHOUT A FAILING TEST FIRST
 ```
 
-Applies to new skills and to behavior-changing edits. Typo, link, and metadata fixes are exempt.
+This applies to new skills **and to edits**: new sections, rewrites, merges, and consolidations included.
+
+**No exceptions:**
+
+- Not for "simple additions" or "just adding a section".
+- Not for "documentation updates" or "it's only a reference".
+- Don't keep untested changes as "reference"; don't adapt the skill while running tests.
+- Write the skill before testing it? Delete it and start over.
+
+**Violating the letter of the rule is violating the spirit of the rule.** The only changes that skip testing are ones that cannot change behavior: typo fixes, broken-link fixes, and version/metadata bumps.
 
 | Skill type           | Test with                                         | Passes when                            |
 | -------------------- | ------------------------------------------------- | -------------------------------------- |
@@ -111,7 +123,7 @@ For discipline skills, record the agent's exact rationalizations from RED, then 
 ## This repository's conventions
 
 1. **Layout**: `portable/<name>/` (cross-harness) or `runtime-specific/<runtime>/<name>/`. Each has `SKILL.md` + `manifest.json`; optional `reference/`, `scripts/`, `examples/`.
-2. **Metadata parity**: `name`, `description`, `version`, `portable`, `tags` must match between SKILL.md frontmatter and `manifest.json`. Bump both together (patch: fixes; minor: additions; major: breaking workflow change).
+2. **Metadata parity**: `name`, `description`, `version`, `portable`, `tags` must match between SKILL.md frontmatter and `manifest.json` (`validate-skills.sh` enforces all five). Bump both together (patch: fixes; minor: additions; major: breaking workflow change).
 3. **Pi-safe first**: portable bodies stay tool-agnostic. Label harness-specific calls clearly or move them to a runtime overlay.
 4. **Gating**: `personal_machine_only` / `local_overlay_only` live in `manifest.json` and are independent of `portable`. Personal-only skills need a `## Personal Machine Activation` section.
 5. **No orphans**: when merging or retiring a skill, delete its directory, update every cross-reference (`grep -rn <old-name>`), and note the replacement in the commit/PR so consumers can update.
@@ -132,9 +144,9 @@ git ls-files '*.sh' | xargs -r shellcheck --severity=error
 
 **GREEN**
 - [ ] No existing skill already covers this
-- [ ] Frontmatter valid; description is triggers-only, third person, keyword-rich
+- [ ] Frontmatter valid; description is triggers-only, situation-focused, keyword-rich
 - [ ] Body addresses the specific baseline failures, nothing speculative
-- [ ] One runnable example; heavy material split into files with load conditions
+- [ ] Every code snippet runs as written; one example per pattern; heavy material split into files with load conditions
 - [ ] Scenarios re-run with the skill; agent complies
 
 **REFACTOR**

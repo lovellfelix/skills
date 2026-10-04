@@ -12,7 +12,8 @@
     "kubernetes",
     "helmrelease",
     "home-assistant",
-    "sops"
+    "sops",
+    "troubleshooting"
   ],
   "adapters": {
     "opencode": {

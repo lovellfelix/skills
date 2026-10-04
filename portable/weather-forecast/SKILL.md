@@ -2,7 +2,7 @@
 name: weather-forecast
 description: Use when the user asks for current weather, today's conditions, or a short forecast without relying on paid weather APIs.
 metadata:
-  version: 0.1.0
+  version: 0.1.1
   portable: true
   tags: [weather, forecast, portable, personal-assistant]
   applies_to: [personal-assistant, workflow, automation]
@@ -52,7 +52,7 @@ bash scripts/weather.sh forecast --zip 75077 --days 5 --json
 bash scripts/weather.sh today --lat 32.9919 --lon -97.0700 --json
 ```
 
-## Session Memory (LeanCTX-backed)
+## Session Memory
 
 If the user often asks for local weather, reuse a saved ZIP value.
 

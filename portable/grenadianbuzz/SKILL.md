@@ -2,7 +2,7 @@
 name: grenadianbuzz
 description: Use when working on GrenadianBuzz features, architecture, or operational tasks across any surface (API, Android app, CLI, website, dashboard, docs).
 metadata:
-  version: 0.8.0
+  version: 0.8.1
   portable: true
   personal_machine_only: true
   tags: [grenadianbuzz, product, mobile, api, backend, frontend, architecture, android, openapi, prd, newsletter]
@@ -28,10 +28,18 @@ Point-in-time. `docs/ROADMAP.md` and the wiki note win where they disagree. For 
 
 - **Tier 1**: AI Newsletter pipeline (CLI #50–59, #48 metrics, API #307/#308, PR #302). The single product bet for 2026.
 - **Tier 2**: Android foundation (#254 → #282 → #287 → #255/#253). No UI redesign (#293) until done.
-- **Tier 3**: in-flight migrations (Compose #301, PocketBase #278, Mustache #277, Nuxt #71). No new migration starts until ≥2 of these merge.
+- **Tier 3**: in-flight migrations (Compose #301, PocketBase #278, Mustache #277, Nuxt #71). No new migration starts until ≥2 of these merge. Gates as of 2026-05-14: PocketBase #278 needs an explicit go/no-go before merge; Mustache #277 was cleared to merge; Compose #301 is canonical (#296/#298 closed, #300 awaiting author).
 - **Tier 4**: maintenance: website, dashboard post-Nuxt, Android `Backlog` label, KMM (#268, out of scope for 2026).
 - **Mustache is the email template standard** (decided 2026-05-09). Author new templates in Mustache, never Pug; PR #277 bridges existing Pug.
 - **Newsletter cron timezone**: `"0 8 * * 1"` in `gbuzz/task.py` fires at 03:00–04:00 Eastern. It must be `"0 13 * * 1"` (09:00 EST). Verify it is fixed before any production enable.
+
+### Known API facts (verified against `api/docs/` 2026-04-26)
+
+- Pagination is offset-based: FeathersJS `$skip`/`$limit` (default 50, max 100; `?page=&limit=` also maps to it). Responses are `{ total, limit, skip, data }`. Not cursors.
+- Reactions are `POST /v1/interactions` with `interactionType: "reaction"` and a string `reactionType` (`flower`, `candle`, `heart`, `prayer`, `rose`). Likes use `interactionType: "like"`. Not emoji. Fields are camelCase (`contentId`, `contentType`).
+- There is no `GET /v1/interactions/counts/{id}` endpoint.
+
+If a reference file disagrees with these, the reference file is wrong.
 
 ### Newsletter Live Prerequisites (no GitHub issues yet — file before CLI #59 closes)
 
@@ -213,7 +221,7 @@ This skill is personal-machine only.
 
 ---
 
-**Version**: 0.8.0  
+**Version**: 0.8.1  
 **Last Updated**: May 20, 2026  
 **Audience**: Engineers, product leads  
 **Wiki**: `~/llm-wiki/notes/projects/grenadianbuzz.md` — live project synthesis with tier state and key decisions

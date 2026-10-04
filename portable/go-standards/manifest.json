@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "name": "go-standards",
   "description": "Use when writing, reviewing, testing, or refactoring Go code (.go files, go.mod, goroutines, error wrapping, interfaces, table-driven tests, golangci-lint).",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
