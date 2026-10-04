@@ -1,150 +1,54 @@
 ---
 name: session-memory-mcp
-description: Use when preserving cross-session workflow context, tracking in-flight tasks, or promoting durable handoff artifacts across agent runs.
+description: Use when preserving cross-session workflow context, tracking in-flight tasks, recording decisions/blockers/conventions/preferences, or promoting durable handoff artifacts across agent runs via the session_memory MCP or its CLI fallback.
 metadata:
-  version: 0.3.4
+  version: 0.4.1
   portable: true
-  tags: [mcp, memory, workflow, continuity]
+  tags: [mcp, memory, workflow, continuity, leanctx]
 ---
 
-# Session Memory MCP (LeanCTX-Backed)
+# Session Memory MCP
 
-Use session-memory as a durable context layer so sessions resume quickly without noise or re-discovery. **Backend varies by harness — confirm before assuming.** On Claude Code, `session_memory` is the real standalone MCP server running directly against its own SQLite database (`~/.agents/memory/session.db`); this is the primary store there, not a facade over LeanCTX (per the 2026-07-09 status update in `docs/plans/2026-06-04-session-memory-leanctx-migration.md` — Claude Code deliberately kept it wired directly). Pi instead routes `workflow_tasks` and related state through LeanCTX (`ctx_knowledge`, `ctx_session`, `ctx_task`, `ctx_workflow`) rather than a live session-memory server.
+A small durable context layer so sessions resume without re-discovery. Store decisions, not transcripts.
 
-## Use when
+Related: `handoff-resume` (resume/handoff workflow built on this), `llm-wiki-workflow` (human-readable export layer), `lean-ctx` (LeanCTX tooling).
 
-- Cross-session continuity matters for active engineering work.
-- You need to persist decisions, blockers, or next actions.
-- A workflow has many steps and context can drift.
-- Coordinating multiple agents or handoffs.
+## Backend depends on the harness
 
-## Do not use when
+Confirm which applies before treating a store as authoritative:
 
-- Data is transient with no value past the current response.
-- Information is sensitive and must not be stored.
-- You would store duplicated low-signal output (raw logs, command spam).
+| Harness            | `session_memory` backend                                               | Tasks                                       |
+| ------------------ | ---------------------------------------------------------------------- | ------------------------------------------- |
+| Claude Code        | Standalone MCP server on SQLite `~/.agents/memory/session.db` (primary) | `create_task` / `get_tasks` / `update_task` |
+| Pi                 | LeanCTX (`ctx_session`, `ctx_knowledge`)                                | `workflow_tasks` → `ctx_task`/`ctx_workflow` |
+| OpenCode           | Check the active MCP config; treat like Pi if LeanCTX-backed            | same as backend                             |
+| Cursor, Copilot, shell | No MCP; use `scripts/smem.sh` (SQLite) or `lean-ctx` CLI            | CLI                                         |
 
-**Never store secrets/tokens/credentials/private personal data** in session, workflow, or durable memory records.
+Status as of the 2026-07-09 update in `dotfiles`' `docs/plans/2026-06-04-session-memory-leanctx-migration.md`: Claude Code deliberately kept the direct SQLite server. Re-check that doc if behavior looks different.
 
-## Store-or-skip filter
+Tool and argument names differ by harness. Claude Code exposes separate tools (`store_session_context`, `retrieve_session_context`, …). Pi and LeanCTX-backed harnesses expose one `session_memory` tool with an `action` (`store_context`, `retrieve_context`, `assemble_context`, …). Examples below use the action form; map to the tool name your harness lists, and check the live schema before calling.
 
-Store only when at least one is true:
+## Store or skip
 
-- Changes future decisions.
-- Captures a blocker, assumption, or dependency.
-- Records a non-obvious project convention.
-- Enables restart without repeating discovery.
+**Never store** secrets, tokens, credentials, or private personal data.
 
-Skip if it is pure command output, redundant status, or temporary reasoning.
+Store only when the record:
 
-## Core patterns
+- changes a future decision,
+- captures a blocker, assumption, or dependency,
+- records a non-obvious project convention, or
+- lets a later session restart without repeating discovery.
 
-### Session context records
+Skip raw command output, redundant status, and temporary reasoning.
 
-Prefer small records with predictable keys:
+## Record shape
 
-- `key`: stable lookup key (`task:auth-refactor`, `decision:path-layout`).
+- `key`: stable and specific: `task:auth-refactor`, `decision:path-layout`, `blocker:api-migration:missing-scope`.
 - `contextType`: `workflow` · `decision` · `blocker` · `convention` · `handoff` · `interaction`.
-- `value`: Situation + Decision + Next (3-line structure).
-- `metadataJson`: optional JSON string (owner, due date, links, confidence).
+- `value`: three lines: `Situation:` / `Decision:` / `Next:`.
+- `metadataJson` (optional): owner, due date, links, confidence.
 
-### Project conventions
-
-Store separately from per-session updates:
-
-- Stable patterns (naming, commit style, test commands) → convention records.
-- Current execution state → session context records.
-
-### Retrieval strategy
-
-**IDs:** `project_id` = git repo basename (e.g. `"dotfiles"`); `session_id` = `"personal-assistant"` for conversational sessions. `assemble_active_context` searches across all harnesses regardless of `session_id`.
-
-At session start (first turn):
-
-1. Read LeanCTX project facts and active context first.
-2. Use `durable_memory` only as a fallback when the relevant project facts or handoff details are not yet available in LeanCTX.
-3. Retrieve open blockers and in-progress tasks via `workflow_tasks` (LeanCTX-backed `ctx_task`/`ctx_workflow`).
-4. Query session memory only if prior context has a specific lookup key (LeanCTX-backed `ctx_knowledge`/`ctx_session`).
-
-During execution:
-
-- Re-query only when context changed or uncertainty increased.
-- Prefer narrow queries over broad dumps.
-
-At handoff:
-
-- Write one summary record pointing to key context keys and durable file paths.
-- Keep `projects/<project>/current.md` and the latest handoff packet aligned.
-
-## Token budget and cross-harness guidance
-
-The `session_memory` compatibility facade exposes 60+ actions (all LeanCTX-backed). Not all harnesses need the full surface — injecting 60 tool definitions into every session wastes context budget and slows inference.
-
-**Use only these core tools in normal sessions:**
-
-| Tool                                        | Purpose                                         |
-| ------------------------------------------- | ----------------------------------------------- |
-| `store_session_context`                     | Write a workflow/decision/blocker record        |
-| `retrieve_session_context`                  | Read by key or type                             |
-| `update_session_context`                    | Append without overwriting                      |
-| `assemble_active_context`                   | Pull full active context for resume/continue    |
-| `track_user_preference`                     | Persist a style or workflow preference (silent) |
-| `get_user_preferences`                      | Read preferences before style decisions         |
-| `learn_project_convention`                  | Record a stable project pattern                 |
-| `get_project_conventions`                   | Read conventions before pattern-sensitive work  |
-| `create_task` / `get_tasks` / `update_task` | Task lifecycle                                  |
-| `search_memories`                           | FTS5 search across all records                  |
-| `server_health`                             | Check MCP availability                          |
-
-**Avoid in token-constrained contexts:** API spec tools (`store_api_spec`, `get_api_endpoints`, etc.), analytics (`analysis_memory_map`, `analysis_conflicts`), routing pattern tools, batch tools, and the web dashboard. These are maintenance surfaces, not runtime tools.
-
-**CLI-first for non-agent tasks:** For shell scripts, hooks, and inspection outside an agent session, prefer the built-in CLI over starting an MCP session:
-
-```bash
-# LeanCTX CLI (source of truth)
-lean-ctx knowledge export --format json          # export all facts/preferences
-lean-ctx task list                                # list tasks (requires `lean-ctx serve`)
-lean-ctx session status                           # session status
-
-# Legacy smem.sh fallback (queries legacy SQLite; not source of truth)
-scripts/smem.sh sessions
-scripts/smem.sh list [session_id]
-scripts/smem.sh search <term>
-scripts/smem.sh prefs
-```
-
-Use the CLI for: startup hooks, post-session summaries, cron-based cleanup, shell aliases that query memory, and debugging data without consuming agent context.
-
-**Cross-harness note:** Claude Code and OpenCode load session_memory as a LeanCTX-backed MCP tool. Cursor and Copilot should use the CLI or skip MCP entirely — the token overhead is not justified for those harnesses unless you restrict to the core 11 tools above.
-
-## Tool mapping (Pi and similar harnesses)
-
-In Pi, memory surfaces are split by role. Use this mapping and translate to equivalent tools in other harnesses:
-
-| Need                                                       | Tool                             | Backend                           |
-| ---------------------------------------------------------- | -------------------------------- | --------------------------------- |
-| Active working context (live session)                      | `session_memory`                 | LeanCTX `ctx_session`             |
-| Task board & task insights (`task_board`, `task_insights`) | `workflow_tasks`                 | LeanCTX `ctx_task`/`ctx_workflow` |
-| Task state and progress tracking                           | `workflow_tasks`                 | LeanCTX `ctx_task`/`ctx_workflow` |
-| On-disk promoted summaries and handoffs                    | `durable_memory` (fallback only) | filesystem                        |
-| Durable work notes / runbooks in `~/llm-wiki`              | `llm-wiki` (export/archive)      | filesystem                        |
-
-Key `session_memory` actions:
-
-- `store_context` — write a workflow/decision/blocker record.
-- `retrieve_context` — targeted read by key or type.
-- `track_user_preference` — persist a user style or workflow preference (silent).
-- `learn_project_convention` — record a stable project pattern.
-- `assemble_context` — pull active context for resume/continue signals.
-- `get_user_preferences` — read preferences before style decisions.
-
-## Practical examples
-
-Note: exact argument names are harness-specific; confirm the active tool schema before calling memory tools.
-
-### Example: store_context for an in-flight blocker
-
-Use `session_memory.store_context` when work should resume in the same project/session stream:
+Stable patterns (naming, commit style, test commands) go in **conventions**, not per-session context.
 
 ```json
 {
@@ -156,96 +60,83 @@ Use `session_memory.store_context` when work should resume in the same project/s
 }
 ```
 
-### Example: retrieve + assemble before resuming work
+## IDs
 
-Use `workflow_tasks` (LeanCTX-backed) for task status, then `session_memory` (LeanCTX-backed) for targeted context:
+- `project_id` = git repo basename (`dotfiles`).
+- `session_id` = repo basename for project work; `personal-assistant` for conversational sessions.
+- `assemble_active_context` searches across all harnesses regardless of `session_id`.
 
-```text
-1) workflow_tasks action=list status=in_progress -> find in_progress item IDs (or omit filters to list current session tasks)
-2) session_memory.retrieve_context(key=task:<id>)
-3) session_memory.assemble_context(query="resume auth refactor") if continuity is unclear — confirm the active MCP schema before calling
-```
+## Session flow
 
-### When to use which memory surface
+**Start** (silently, no announcements):
 
-- `session_memory` (LeanCTX-backed): active decisions, blockers, conventions, preferences.
-- `workflow_tasks` (LeanCTX-backed): task lifecycle state (queued/in_progress/done/fail).
-- `durable_memory` — fallback reader for raw handoff artifacts not yet in LeanCTX.
-- `llm-wiki` — export/archive surface for human-readable project notes, not the canonical runtime store.
+1. Load preferences and project conventions.
+2. List open tasks and blockers.
+3. Retrieve specific keys only when prior context points to them; use `assemble_active_context` when continuity is unclear.
+4. Fall back to `durable_memory` / `~/.agents/memory/` files only if the above has nothing for this project.
 
-## Path conventions
+**During**: re-query only when context changes or uncertainty rises. Narrow queries over broad dumps. Track user corrections and new conventions silently.
 
-```text
-~/.agents/memory/session.db          # legacy/rollback layer (SQLite; not source of truth)
-~/.agents/memory/projects/<project>/ # project-scoped durable state
-~/.agents/memory/handoffs/YYYY/MM/   # handoff packets
-~/.agents/memory/promoted/           # promoted exports + compact summaries
-~/.agents/memory/profile/            # identity and preferences
-~/.agents/memory/people/             # local-only people context
+**Handoff**: write one `handoff` record pointing at key context keys and file paths; keep `projects/<project>/current.md` aligned. Full workflow: `handoff-resume`.
 
-On Claude Code, this SQLite database is the active runtime store for preferences, conventions, contexts, and task state — not a legacy rollback path. On Pi, most of this instead routes through LeanCTX (`ctx_knowledge`/`ctx_task`/`ctx_workflow`). Confirm which mode applies for the current harness before treating either as authoritative.
-```
+## Core tools (keep the surface small)
 
-When reading durable artifacts, prefer:
+The server exposes 60+ actions. Normal sessions need only:
 
-1. `projects/<project>/artifacts/*-latest.md`
-2. `promoted/*-compact.md`
-3. `handoffs/YYYY/MM/*.md`
+| Tool                                                 | Purpose                                   |
+| ---------------------------------------------------- | ----------------------------------------- |
+| `store_session_context` / `update_session_context`   | Write or append a record                  |
+| `retrieve_session_context`                           | Read by key or type                       |
+| `assemble_active_context`                            | Pull active context to resume             |
+| `track_user_preference` / `get_user_preferences`     | Style and workflow preferences            |
+| `learn_project_convention` / `get_project_conventions` | Stable project patterns                 |
+| `create_task` / `get_tasks` / `update_task`          | Task lifecycle                            |
+| `search_memories`                                    | Full-text search                          |
+| `server_health`                                      | Availability check                        |
 
-## Durable promotion
+Skip API-spec, analytics, routing-pattern, batch, and dashboard tools at runtime; they are maintenance surfaces.
 
-Promote session memory to durable artifacts manually or via explicit tooling; Pi does not automatically trigger promotions.
-
-- Manual (recommended): `scripts/promote-session-memory.sh --session-id <session-id>`
-- Via MCP helper: use the `LeanCTX` tool or the repo-provided promotion scripts with explicit `--apply` to write artifacts.
-- Use `--dry-run` to preview actions before writing promoted files under `~/.agents/memory/promoted/`.
-
-## Fallback: MCP unavailable
-
-When the LeanCTX MCP server is unreachable (different harness, CLI context, or server not running), you can either use the repository-provided helper script (if present) or query the legacy SQLite DB directly as a fallback. SQLite is not the source of truth — it is a legacy rollback path.
-
-This skill bundles a convenience helper at `scripts/smem.sh`, which provides simple commands, for example:
+## CLI (hooks, scripts, debugging, no-MCP harnesses)
 
 ```bash
-# Portable CLI — bundled with this skill
-scripts/smem.sh sessions                        # list known session IDs
-scripts/smem.sh list [session_id]               # recent context records
-scripts/smem.sh get <key> [session_id]          # read a value by key
-scripts/smem.sh set <type> <key> <value> [sid]  # write / upsert a record
-scripts/smem.sh tasks [workflow_id]             # workflow task state
-scripts/smem.sh prefs                           # user preferences
-scripts/smem.sh conventions [project_id]        # project conventions
-scripts/smem.sh search <query> [session_id]     # full-text search
-scripts/smem.sh dump [session_id]               # all records for session
+# SQLite store (Claude Code's primary; bundled helper)
+scripts/smem.sh sessions | list [sid] | get <key> [sid] | search <q> [sid]
+scripts/smem.sh set <type> <key> <value> [sid]
+scripts/smem.sh tasks [workflow_id] | prefs | conventions [project_id] | dump [sid]
+SESSION_DB=/path/to/session.db scripts/smem.sh list   # override DB path
+# Without [sid], smem.sh uses $SMEM_SESSION or "default", not the repo basename.
+# Pass the sid explicitly, or: export SMEM_SESSION="$(basename "$(git rev-parse --show-toplevel)")"
+
+# LeanCTX store (Pi's primary)
+lean-ctx knowledge export --format json
+lean-ctx task list          # requires `lean-ctx serve`
+lean-ctx session status
 ```
 
-If the helper is not available, inspect or query the legacy SQLite DB directly as a fallback (not source of truth) with tools you already have (sqlite3, a DB browser, or other CLI utilities). For example:
+Last resort: `sqlite3 ~/.agents/memory/session.db` (read-only queries).
 
-```bash
-# Example direct SQLite queries (legacy fallback; LeanCTX MCP is preferred)
-sqlite3 ~/.agents/memory/session.db "SELECT key, contextType, value FROM records LIMIT 20;"
-# or open an interactive shell:
-sqlite3 ~/.agents/memory/session.db
-sqlite> .tables
-sqlite> SELECT * FROM records WHERE key LIKE '%auth%';
+## Durable files
+
+```text
+~/.agents/memory/projects/<project>/  # project state; artifacts/*-latest.md read first
+~/.agents/memory/promoted/            # promoted exports, *-compact.md
+~/.agents/memory/handoffs/YYYY/MM/    # handoff packets
+~/.agents/memory/profile/             # identity and preferences
+~/.agents/memory/people/              # local-only people context
 ```
 
-Override DB path when needed: `SESSION_DB=/path/to/session.db smem.sh list`
+Promotion is explicit, never automatic: `scripts/promote-session-memory.sh --session-id <id> --dry-run` to preview, then rerun without `--dry-run`.
 
-Use the helper when the harness has no MCP tools configured (Cursor, Copilot, raw shell), for debugging session memory content outside of an agent session, or when scripting batch reads/writes from shell automation.
+## Verify after writing
 
-## Validation checks
+1. Read the key back; confirm Situation/Decision/Next.
+2. If task-tracked, confirm the task exists with the right state.
+3. For promotions, confirm the file landed under `~/.agents/memory/`.
 
-After writes, verify memory flow worked:
+## Hygiene
 
-1. Read back the same key with `retrieve_context` and confirm Situation/Decision/Next matches.
-2. Confirm related task state exists in `workflow_tasks` (LeanCTX-backed; if task-tracked).
-3. For promoted artifacts, verify expected file exists under `~/.agents/memory/projects/<project>/` or `~/.agents/memory/handoffs/...`.
-4. If MCP path is unavailable, verify via `scripts/smem.sh get <key>`.
+- Merge overlapping records instead of adding near-duplicate keys.
+- Prune records that no longer inform decisions.
+- Each record should be scannable in five seconds.
 
-## Noise control
-
-- Merge overlapping notes into one updated record.
-- Avoid near-duplicate keys.
-- Archive or prune stale records that no longer inform decisions.
-- Keep records short enough to scan in 5 seconds.
+More: `examples/memory-record-patterns.md`, `reference/storage-decision-matrix.md`.

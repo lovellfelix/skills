@@ -1,15 +1,17 @@
 {
   "schema_version": "1.0",
   "name": "python",
-  "description": "Use when writing, reviewing, or testing Python code \u2014 establishes project style, type-safety, testing defaults, and CI quality gates.",
-  "version": "1.0.0",
+  "description": "Use when writing, reviewing, refactoring, or testing Python code, writing pytest tests or mocks, writing docstrings, choosing naming conventions, configuring ruff/mypy/pyright, or setting up a Python project's style, typing, and CI quality gates.",
+  "version": "2.0.1",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
     "python",
+    "pytest",
     "style",
-    "testing",
+    "linting",
     "type-safety",
+    "testing",
     "quality"
   ],
   "adapters": {

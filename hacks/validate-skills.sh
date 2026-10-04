@@ -380,7 +380,29 @@ validate_skill_dir() {
     fail "$rel_dir portable mismatch (SKILL.md=$fm_portable, manifest.json=$manifest_portable)"
   fi
 
-  if [[ -n "$fm_name" && -n "$manifest_name" && "$fm_name" == "$manifest_name" ]] \
+  local fm_manifest_drift=""
+  fm_manifest_drift="$(python3 - "$skill_file" "$manifest_file" "$fm_description" "$fm_tags" <<'PY'
+import json, sys
+_, manifest_path, fm_desc, fm_tags = sys.argv[1:5]
+try:
+    with open(manifest_path, encoding="utf-8") as f:
+        data = json.load(f)
+except Exception:
+    sys.exit(0)  # JSON validity is reported elsewhere
+if fm_desc and data.get("description") not in (None, fm_desc):
+    print("description")
+tags = [t.strip().strip("\"'") for t in fm_tags.strip().strip("[]").split(",") if t.strip()]
+if tags and isinstance(data.get("tags"), list) and data["tags"] != tags:
+    print("tags")
+PY
+)"
+  local drift_field
+  for drift_field in $fm_manifest_drift; do
+    fail "$rel_dir $drift_field mismatch between SKILL.md and manifest.json"
+  done
+
+  if [[ -z "$fm_manifest_drift" ]] \
+    && [[ -n "$fm_name" && -n "$manifest_name" && "$fm_name" == "$manifest_name" ]] \
     && [[ -n "$fm_version" && -n "$manifest_version" && "$fm_version" == "$manifest_version" ]] \
     && [[ -n "$fm_portable" && -n "$manifest_portable" && "$(lowercase "$fm_portable")" == "$(lowercase "$manifest_portable")" ]]; then
     pass "$rel_dir shared fields match between SKILL.md and manifest.json"

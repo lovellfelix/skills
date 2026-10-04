@@ -1,5 +1,118 @@
 # Jetpack Compose Component Library
 
+## Layout, Buttons, and Cards
+
+### Column / Row
+
+```kotlin
+Column(
+    modifier = Modifier.padding(16.dp),
+    verticalArrangement = Arrangement.spacedBy(12.dp),
+    horizontalAlignment = Alignment.Start
+) {
+    Text("Title", style = MaterialTheme.typography.headlineSmall)
+    Text(
+        "Subtitle",
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant
+    )
+}
+
+Row(
+    modifier = Modifier.fillMaxWidth(),
+    horizontalArrangement = Arrangement.SpaceBetween,
+    verticalAlignment = Alignment.CenterVertically
+) {
+    Icon(Icons.Default.Star, contentDescription = null)
+    Text("Featured")
+    Spacer(modifier = Modifier.weight(1f))
+    TextButton(onClick = {}) { Text("View All") }
+}
+```
+
+### Lazy Lists
+
+```kotlin
+LazyColumn(
+    modifier = modifier.fillMaxSize(),
+    contentPadding = PaddingValues(16.dp),
+    verticalArrangement = Arrangement.spacedBy(8.dp)
+) {
+    items(items, key = { it.id }) { item ->
+        ItemRow(item = item, onClick = { onItemClick(item) })
+    }
+}
+
+// Adaptive grid
+LazyVerticalGrid(
+    columns = GridCells.Adaptive(minSize = 150.dp),
+    contentPadding = PaddingValues(16.dp),
+    horizontalArrangement = Arrangement.spacedBy(12.dp),
+    verticalArrangement = Arrangement.spacedBy(12.dp)
+) {
+    items(items) { item -> ItemCard(item = item) }
+}
+```
+
+### Buttons
+
+```kotlin
+// Primary action
+Button(onClick = { }) { Text("Continue") }
+
+// Secondary action
+FilledTonalButton(onClick = { }) {
+    Icon(Icons.Default.Add, null)
+    Spacer(Modifier.width(8.dp))
+    Text("Add Item")
+}
+
+// Outlined
+OutlinedButton(onClick = { }) { Text("Cancel") }
+
+// Text
+TextButton(onClick = { }) { Text("Learn More") }
+
+// FAB
+FloatingActionButton(
+    onClick = { },
+    containerColor = MaterialTheme.colorScheme.primaryContainer,
+    contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+) {
+    Icon(Icons.Default.Add, contentDescription = "Add")
+}
+```
+
+### Cards
+
+```kotlin
+// Standard M3 card (projects with flat design override shape and elevation)
+Card(
+    onClick = onClick,
+    modifier = Modifier.fillMaxWidth(),
+    shape = CardDefaults.shape,
+    elevation = CardDefaults.cardElevation()
+) {
+    Column {
+        AsyncImage(
+            model = imageUrl,
+            contentDescription = null,
+            modifier = Modifier.fillMaxWidth().height(180.dp),
+            contentScale = ContentScale.Crop
+        )
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(title, style = MaterialTheme.typography.titleMedium)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                description,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+```
+
 ## Lists and Collections
 
 ### Basic LazyColumn

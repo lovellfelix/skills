@@ -1,8 +1,8 @@
 ---
 name: diagnose
-description: "Use when debugging bugs or regressions with a disciplined loop: feedback signal, reproduce, hypothesize, instrument, fix, and lock with regression coverage."
+description: "Use when debugging a bug, regression, crash, flaky test, or unexplained behavior, especially when the cause is not obvious or a first fix attempt already failed."
 metadata:
-  version: 0.1.0
+  version: 0.1.1
   portable: true
   tags: [debugging, diagnosis, regression, reliability, portable]
 ---
@@ -30,7 +30,7 @@ Confirm the loop reproduces the user-reported symptom (not a nearby failure).
 
 ## 3) Hypothesize
 
-Create 3–5 ranked, falsifiable hypotheses before testing.
+Create 3–5 ranked, falsifiable hypotheses before testing. For a regression with a known-good version, `git bisect run <repro>` often beats hypothesizing.
 
 ## 4) Instrument
 

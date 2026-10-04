@@ -1,13 +1,14 @@
 {
   "schema_version": "1.0",
   "name": "writing-plans",
-  "description": "Use when you have a spec or requirements for a multi-step task, before touching code.",
-  "version": "0.1.0",
+  "description": "Use when you have a spec, requirements, or an agreed design for a multi-step task and need an implementation or action plan before touching code, or when a plan needs owners, estimates, dependencies, and success criteria.",
+  "version": "0.2.1",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
     "planning",
     "workflow",
+    "tdd",
     "portable"
   ],
   "adapters": {

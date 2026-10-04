@@ -28,7 +28,7 @@ Identify entities and relationships:
 | Entity | Purpose | Key fields | Owner | Lifecycle |
 |--------|---------|------------|-------|-----------|
 | Obituary | Memorial content | name, dob, dod, bio, image_url, source | admin | published |
-| Condolence | User tribute | user_id, text, reaction (🕯️/🙏) | user | active/removed |
+| Condolence | User tribute | user_id, text, reactionType (`candle`/`prayer`) | user | active/removed |
 
 ## 4. API Contract Matrix
 
@@ -53,7 +53,7 @@ Identify entities and relationships:
 **Example (News Articles)**:
 | Endpoint | Method | Auth | Request | Response | Errors | Notes |
 |----------|--------|------|---------|----------|--------|-------|
-| `/v2/news/articles` | GET | No | `?category=&source_id=&limit=20&cursor=` | `{ articles: [...], next_cursor: "..." }` | 400, 429 | Public feed, cursor pagination |
+| `/v2/news/articles` | GET | No | `?category=&source_id=&$limit=50&$skip=0` | `{ total, limit, skip, data: [...] }` | 400, 429 | Public feed, offset pagination (`$skip`/`$limit`) |
 | `/v2/news/articles/:id` | GET | No | - | `{ id, title, content, image_url, status, comments_count, ... }` | 404 | Include moderation status |
 | `/v2/news/articles` | POST | admin | `{ title, content, image_url, category_id, source_id }` | `{ id, created_at, ... }` | 400, 401, 403 | Requires admin role |
 | `/v2/news/articles/:id` | PATCH | admin | `{ title?, content?, status? }` | `{ id, updated_at, ... }` | 400, 403, 404 | Audit trail logged |
@@ -68,19 +68,17 @@ For feed endpoints, support standard filters:
 | `source_id` | UUID | `550e8400-e29b-41d4-a716-446655440000` | Filter by news source |
 | `date_from` | ISO 8601 | `2026-01-01` | Published date range |
 | `date_to` | ISO 8601 | `2026-02-28` | Published date range |
-| `limit` | int | `20` | Page size (default: 20, max: 100) |
-| `cursor` | string | (opaque) | Cursor from previous response |
+| `$limit` | int | `50` | Page size (default: 50, max: 100) |
+| `$skip` | int | `0` | Offset. Page-based `?page=3&limit=25` also works and maps to `$skip`/`$limit` |
 | `sort` | string | `published_at`, `trending`, `top_users` | Default: `published_at` DESC |
 
-**Cursor Pagination Response**:
+**Paginated Response** (FeathersJS):
 ```json
 {
-  "articles": [...],
-  "metadata": {
-    "limit": 20,
-    "has_more": true,
-    "next_cursor": "eyJwb3NpdGlvbiI6IDEwMDB9"
-  }
+  "total": 1250,
+  "limit": 50,
+  "skip": 0,
+  "data": [...]
 }
 ```
 
@@ -88,7 +86,7 @@ For feed endpoints, support standard filters:
 
 For content with user interactions, include:
 
-- **Reactions**: 👍 ❤️ 🕯️ 💖 🌹 🙏
+- **Reactions**: `interactionType: "reaction"` with string `reactionType`: `flower`, `candle`, `heart`, `prayer`, `rose` (likes use `interactionType: "like"`)
 - **Comments**: Threaded, moderated
 - **Saves**: User bookmarks
 - **Shares**: Track social amplification
@@ -96,7 +94,6 @@ For content with user interactions, include:
 **Standard Engagement Paths**:
 - `POST /v1/interactions` - Add reaction/like
 - `DELETE /v1/interactions/:id` - Remove reaction
-- `GET /v1/interactions/counts/:contentId` - Lightweight counts
 - `POST /v1/comments` - Add comment
 - `GET /v1/comments?parent_id=:contentId` - List comments
 
@@ -136,7 +133,6 @@ Protected Endpoints:
   - POST /v1/interactions (requires: user)
 Public Endpoints:
   - GET /v2/articles
-  - GET /v1/interactions/counts/:contentId
 ```
 
 ## 9. Non-Functional Requirements

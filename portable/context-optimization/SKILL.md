@@ -1,8 +1,8 @@
 ---
 name: context-optimization
-description: Use when exploring large codebases, summarizing lengthy tool output, or optimizing a session for token cost and context bloat.
+description: Use when exploring a large or unfamiliar codebase, handling long tool or log output, approaching context limits, or optimizing a session for token cost and context bloat.
 metadata:
-  version: 0.1.0
+  version: 0.2.0
   portable: true
   tags: [performance, optimization, context, tokens, efficiency]
   applies_to: [all]
@@ -33,20 +33,25 @@ read("src/user-service.ts", { offset: 42, limit: 40 })
 - Files over ~500 lines: locate the section first, then read a window.
 - Prefer several small targeted reads over one full-file read.
 
-## MCP Caching
+## Cache Reusable Findings
+
+Store small, reusable discoveries so later turns or sessions don't re-explore (see `session-memory-mcp`; argument names vary by harness):
 
 ```text
-// LeanCTX-backed (via session_memory compatibility facade)
-// LeanCTX-backed (via session_memory compatibility facade)
 session_memory action=learn_project_convention project_id=dotfiles language=shell convention_type=style
-session_memory action=store_context key=explored:auth-flow contextType=exploration value="entry: src/auth/index.ts:15"
+session_memory action=store_context key=explored:auth-flow contextType=workflow value="entry: src/auth/index.ts:15"
 ```
 
 ## Shell Guidance
 
 - Prefer dedicated tools over shell for file discovery and file reading.
-- If shell is necessary, keep output narrow and machine-friendly.
+- If shell is necessary, keep output narrow and machine-friendly (`| head`, `--json --jq`, `-q`).
 - Avoid `find`, `cat`, and broad `ls` for routine exploration.
+- Where `lean-ctx` is installed, route reads and shell output through it (see `lean-ctx`).
+
+## Delegate Wide Searches
+
+When answering requires sweeping many files and you only need the conclusion, hand the search to a subagent (if the harness has them) and keep only its summary in your context.
 
 ## Reporting
 

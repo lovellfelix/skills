@@ -5,7 +5,7 @@ Use this checklist when designing product APIs for GrenadianBuzz. Covers 39+ pro
 ## Content and Feed
 
 - [ ] Define ordering semantics: published_at (default), trending, top_users
-- [ ] Clarify pagination strategy: cursor-based for feed stability (not offset)
+- [ ] Pagination: offset-based FeathersJS `$skip`/`$limit` (default 50, max 100), matching the live API
 - [ ] Capture media metadata: image_url, content type, reading_time_minutes
 - [ ] Support multi-version endpoints: /v1/, /v2/, /v3/ with deprecation path
 - [ ] Define article status: published, draft, archived, featured
@@ -15,13 +15,12 @@ Use this checklist when designing product APIs for GrenadianBuzz. Covers 39+ pro
 
 ## Engagement and Reactions
 
-- [ ] Define reactions: 👍 (like), ❤️ (love), 🕯️ (remembrance), 💖 (support), 🌹 (tribute), 🙏 (condolence)
+- [ ] Reactions: `interactionType: "reaction"` + string `reactionType` (`flower`, `candle`, `heart`, `prayer`, `rose`); likes are `interactionType: "like"`. Clients map these to icons
 - [ ] Specify idempotent behavior: POST same reaction = toggle (not duplicate)
 - [ ] Include anti-abuse and rate-limit responses (429 Too Many Requests)
 - [ ] Support comment threads on articles, obituaries, and events
 - [ ] Include comment moderation status in responses
 - [ ] Track engagement counts in content payloads: comment_count, like_count, share_count
-- [ ] Provide /interactions/counts/{contentId} for lightweight read
 - [ ] Support interaction filtering: by type, date range, user
 
 ## Trust and Safety (First-Class)
@@ -100,12 +99,12 @@ Use this checklist when designing product APIs for GrenadianBuzz. Covers 39+ pro
 
 Obituary API illustrates domain convergence:
 - Content model: burial notice, biographical data, tributes
-- Engagement: save, share, condolence reactions (🕯️ 🙏)
+- Engagement: save, share, condolence reactions (`candle`, `prayer`)
 - Audience: genealogy research, diaspora remembrance
 - Moderation: auto-flag sensitive content, manual review
 - Search: full-text name/date range, geographic filter
 - Analytics: views per obituary, trending deceased
-- Endpoint: /v2/obituaries/listing with cursor pagination
+- Endpoint: /v2/obituaries/listing with `$skip`/`$limit` pagination
 
 ## Example Application (Events)
 

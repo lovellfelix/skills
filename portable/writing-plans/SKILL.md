@@ -1,175 +1,114 @@
 ---
 name: writing-plans
-description: Use when you have a spec or requirements for a multi-step task, before touching code
+description: Use when you have a spec, requirements, or an agreed design for a multi-step task and need an implementation or action plan before touching code, or when a plan needs owners, estimates, dependencies, and success criteria.
 metadata:
-  version: 0.1.0
+  version: 0.2.1
   portable: true
-  tags: [planning, workflow, portable]
+  tags: [planning, workflow, tdd, portable]
 ---
 
 # Writing Plans
 
-## Overview
+Write the plan for an engineer (or agent) who is skilled but has zero context on this codebase, its tools, or its domain, and weak test-design instincts. Give them everything: which files to touch, the code, the tests, the commands, the expected output. Bite-sized tasks. DRY, YAGNI, TDD, frequent commits.
 
-Write comprehensive implementation plans assuming the engineer has zero context for our codebase and questionable taste. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, how to test it. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
+If the design itself is still open, settle it first (`grill-with-docs`, or `rfc` for larger changes). A plan executes decisions; it doesn't make them.
 
-Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.
+**Save to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`, or the project's existing plans directory.
 
-**Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
+## Header
 
-Adjust the path to match the project's conventions if `docs/plans/` does not already exist.
-
-## Bite-Sized Task Granularity
-
-**Each step is one action (2-5 minutes):**
-
-- "Write the failing test" - step
-- "Run it to make sure it fails" - step
-- "Implement the minimal code to make the test pass" - step
-- "Run the tests and make sure they pass" - step
-- "Commit" - step
-
-## Plan Document Header
-
-**Every plan MUST start with this header:**
+Every plan starts with:
 
 ```markdown
-# [Feature Name] Implementation Plan
+# <Feature Name> Implementation Plan
 
-> **For Claude:** When implementing this plan, work task-by-task with a fresh subagent per task and code review between tasks.
+> **For the implementer:** work task by task, with a fresh subagent per task where available, and a code review between tasks.
 
-**Goal:** [One sentence describing what this builds]
-
-**Architecture:** [2-3 sentences about approach]
-
-**Tech Stack:** [Key technologies/libraries]
-
----
+**Goal:** <one sentence>
+**Architecture:** <2–3 sentences on the approach>
+**Tech stack:** <key technologies and libraries>
+**Done when:** <observable success criteria for the whole plan>
 ```
 
-## Task Structure
+## Tasks
+
+Each step is one 2–5 minute action. Write failing test, run it, implement, run again, and commit are five separate steps.
 
 ````markdown
-### Task N: [Component Name]
+### Task N: <component>
 
 **Files:**
-
 - Create: `exact/path/to/file.py`
 - Modify: `exact/path/to/existing.py:123-145`
-- Test: `tests/exact/path/to/test.py`
+- Test: `tests/exact/path/to/test_file.py`
+
+**Depends on:** Task M (or "none")
 
 **Step 1: Write the failing test**
 
 ```python
 def test_specific_behavior():
-    result = function(input)
-    assert result == expected
+    assert function(input) == expected
 ```
-````
 
-**Step 2: Run test to verify it fails**
+**Step 2: Run it and confirm it fails**
 
-Run: `pytest tests/path/test.py::test_name -v`
-Expected: FAIL with "function not defined"
+Run: `pytest tests/exact/path/to/test_file.py::test_specific_behavior -v`
+Expected: FAIL with `ImportError: cannot import name 'function'` (or the specific assertion failure if it already exists)
 
-**Step 3: Write minimal implementation**
+**Step 3: Minimal implementation**
 
 ```python
 def function(input):
     return expected
 ```
 
-**Step 4: Run test to verify it passes**
+**Step 4: Run it and confirm it passes**
 
-Run: `pytest tests/path/test.py::test_name -v`
-Expected: PASS
+Run: same command. Expected: PASS
 
 **Step 5: Commit**
 
-```bash
-git add tests/path/test.py src/path/file.py
-git commit -m "feat: add specific feature"
+`git add <files> && git commit -m "Add specific behavior"`
+````
+
+## Rules
+
+- Exact file paths, always.
+- Complete code in the plan, never "add validation here".
+- Exact commands with expected output.
+- Name relevant skills by name (e.g. "use `python` for test conventions"), don't paste them.
+- Front-load risk: unknowns and proofs of concept go first.
+- Mark independent tasks so they can run in parallel.
+
+## Non-code and team plans (CLEAR)
+
+When tasks have human owners or span days (migrations, launches, multi-team work), every action item must be:
+
+- **Concrete**: measurable ("cut p95 API latency from 800ms to 200ms", not "improve performance").
+- **Linked**: `depends_on` / `blocks` explicit; dependencies form a DAG.
+- **Estimated**: ≤4h per task (8h hard max). Can't estimate it? Break it down.
+- **Assigned**: one owner.
+- **Resulted**: "done when…" stated.
+
+```markdown
+| # | Task | Owner | Est. | Depends on | Done when |
+|---|------|-------|------|------------|-----------|
+| 1 | Snapshot prod DB and verify restore | @ops | 2h | none | Restore tested on staging |
+| 2 | Run migration on staging | @dev | 1h | 1 | Smoke tests green |
 ```
 
-```text
+## Before handing off
 
-## Remember
-- Exact file paths always
-- Complete code in plan (not "add validation")
-- Exact commands with expected output
-- Reference relevant skills with @ syntax
-- DRY, YAGNI, TDD, frequent commits
+- [ ] Every task has files, steps, and a verification command (or owner, estimate, and "done when" for CLEAR tasks)
+- [ ] Dependencies explicit; critical path identified
+- [ ] Risks have mitigations; risky tasks scheduled first
+- [ ] First three steps are immediately executable
+- [ ] Total estimate fits the timeline with buffer
 
-## Execution Handoff
+## Execution handoff
 
-After saving the plan, offer execution choice:
+After saving, offer:
 
-**"Plan complete and saved to `docs/plans/<filename>.md`. Two execution options:"**
-
-**1. Subagent-Driven (this session)** - I dispatch fresh subagent per task, review between tasks, fast iteration
-
-**2. Parallel Session (separate)** - Open a new session to execute the saved plan with batch execution and checkpoints
-
-**If Subagent-Driven chosen:**
-- Stay in this session
-- Fresh subagent per task + code review
-
-**If Parallel Session chosen:**
-- Guide them to open new session in worktree
-- New session: implement tasks sequentially with validation checkpoints
-```
-
----
-
-# Actionable Planning (CLEAR framework)
-
-This skillset from `actionable-planning` is merged here. Use when you need concrete, executable plans with clear ownership and success criteria.
-
-## The CLEAR Framework
-
-Every action item should be:
-
-- C: Concrete — specific and measurable (bad: "Improve performance"; good: "Reduce API latency from 800ms to 200ms")
-- L: Linked — dependencies explicit (e.g., "Depends on: Task A")
-- E: Estimated — time/cost quantified (e.g., "4 hours, $50 API credits")
-- A: Assigned — clear owner (e.g., "Owner: @john")
-- R: Resulted — success criteria defined (e.g., "Done when: Tests pass, PR merged")
-
-## Planning Best Practices
-
-1. Start with the End in Mind
-- Define success criteria FIRST
-- Work backwards from deadline
-- Identify the critical path
-
-2. Break Down Ruthlessly
-- Maximum 4-hour tasks (8 hours absolute max)
-- If you can't estimate, break it down more
-- Each task produces a tangible output
-
-3. Make Dependencies Explicit
-- Express dependencies (depends_on / blocked_by / blocks) in task metadata
-
-4. Front-Load Risk
-- Tackle unknowns early
-- Build proofs-of-concept before committing
-
-5. Create Parallel Batches
-- Identify independent work streams to maximize parallelization
-
-## Action Item & Plan Templates
-
-Use the included Action Item Template and Plan Structure from the original `actionable-planning` skill. Keep tasks small, owned, and measurable.
-
-## Output Checklist
-
-Before finalizing a plan, verify:
-
-- [ ] Every task has an owner
-- [ ] Every task has an estimate
-- [ ] Every task has success criteria (done when...)
-- [ ] Dependencies are explicit and form a valid DAG (no cycles)
-- [ ] Critical path is identified
-- [ ] Risks have mitigations
-- [ ] First 3 actions are immediately executable
-- [ ] Total estimate fits within timeline (with buffer)
+1. **This session:** execute task by task, with a fresh subagent per task if the harness supports subagents, reviewing between tasks.
+2. **Separate session:** open a new session (ideally in a git worktree) that executes the saved plan with checkpoints.

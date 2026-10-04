@@ -4,7 +4,7 @@ description: "Use when interacting with GitHub issues, PRs, CI runs, or reposito
 metadata:
   version: 0.1.0
   portable: true
-  tags: [github, gh, cli, pr, ci, issues]
+  tags: [github, gh, cli, pr, ci, issues, pull-requests, portable]
 ---
 
 # GitHub Skill

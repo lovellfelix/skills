@@ -1,7 +1,7 @@
 # Skills & Commands — Full Authoring Checklist
 
 Complete 10-section checklist for authoring, validating, and maintaining portable skills and custom commands.
-Referenced from the `skills-and-commands-checklist` skill.
+Referenced from the `writing-skills` skill (repo conventions section).
 
 ---
 
@@ -23,7 +23,7 @@ Referenced from the `skills-and-commands-checklist` skill.
 
 **For portable skills only:**
 
-- [ ] **Name in kebab-case:** Globally unique, no spaces, no underscores. Examples: `python-code-style`, `security-audit`, `frontend-design`.
+- [ ] **Name in kebab-case:** Globally unique, no spaces, no underscores. Examples: `go-standards`, `security-audit`, `frontend-design`.
 - [ ] **Frontmatter completeness:**
   - [ ] `name:` (kebab-case)
   - [ ] `description:` (150–500 chars, starts with "Use when...")
@@ -184,7 +184,7 @@ Checks include:
 
 - [ ] **Description is specific:** "Use when..." tells a clear story (not "Helpful utility for...").
 - [ ] **Tags are descriptive:** 3–5 tags enable category search (e.g., `python`, `testing`, `ci-cd`).
-- [ ] **README or INDEX entry:** Listed in `skills/INDEX.md` or equivalent with brief summary.
+- [ ] **README or INDEX entry:** Listed in `INDEX.md` or equivalent with brief summary.
 - [ ] **Related skills linked:** Document how this skill complements or depends on others.
 
 ---
@@ -201,13 +201,13 @@ python3 ./hacks/generate-skills-index.py
 
 This updates:
 
-- [ ] `skills/INDEX.md` — Human-readable skill catalog
-- [ ] `skills/registry.json` — Machine-readable manifest registry
+- [ ] `INDEX.md` — Human-readable skill catalog
+- [ ] `registry.json` — Machine-readable manifest registry
 
 **Verification:**
 
-- [ ] [ ] Your skill appears in `skills/INDEX.md` with correct summary
-- [ ] [ ] Your skill is in `skills/registry.json` with matching metadata
+- [ ] [ ] Your skill appears in `INDEX.md` with correct summary
+- [ ] [ ] Your skill is in `registry.json` with matching metadata
 - [ ] [ ] No duplicate entries in registry
 
 ### 4.2 Registry Freshness
@@ -224,7 +224,7 @@ This updates:
 
 ### 5.1 For Skills
 
-- [ ] **Repository index updated:** Skill listed in `/skills/INDEX.md` with correct category and summary.
+- [ ] **Repository index updated:** Skill listed in `/INDEX.md` with correct category and summary.
 - [ ] **Description triggers AI discovery:** "Use when..." phrases enable LLM context matching (test with `opencode ask ...`).
 - [ ] **Tags enable search:** Skill findable via `opencode search <tag>` or equivalent.
 - [ ] **Related skills documented:** Comments in SKILL.md note complementary skills ("See also: ...").
@@ -258,7 +258,7 @@ This updates:
 - [ ] **Tool versions noted:** If skill/command requires a specific tool version, document minimum version.
 - [ ] **Deprecation warnings added:** If workflow changes, add a "Deprecated" banner with migration path.
 - [ ] **Broken symlinks detected:** Run `git ls-files -d` and `git symbolic-ref` to find dead links.
-- [ ] **Symlink targets resolved:** All symlinks in `.agents/`, `.claude/`, `opencode/` point to canonical files in `skills/portable/` or `skills/runtime-specific/`.
+- [ ] **Symlink targets resolved:** All symlinks in `.agents/`, `.claude/`, `opencode/` point to canonical files in `portable/` or `runtime-specific/`.
 
 ### 6.3 Cross-Reference Health
 
@@ -338,11 +338,11 @@ git symbolic-ref --list               # Check symlink targets
 **Validation:**
 - [ ] `./hacks/validate-skills.sh` passes (metadata consistency)
 - [ ] `./hacks/generate-skills-index.py` updates registry without errors
-- [ ] Skill appears in updated `skills/INDEX.md`
+- [ ] Skill appears in updated `INDEX.md`
 - [ ] Manual spot-check: Can you find the skill via search/tags?
 
 **Documentation:**
-- [ ] Skill listed in appropriate section of `skills/INDEX.md`
+- [ ] Skill listed in appropriate section of `INDEX.md`
 - [ ] "See also" and "Prerequisites" links reference real skills
 - [ ] Description triggers AI discovery ("Use when...")
 - [ ] Tags enable category filtering
@@ -360,7 +360,7 @@ git symbolic-ref --list               # Check symlink targets
 5. Test examples; verify all links
 6. Run validation: `./hacks/validate-skills.sh`
 7. Run generation: `python3 ./hacks/generate-skills-index.py`
-8. Verify skill in `skills/INDEX.md` and `skills/registry.json`
+8. Verify skill in `INDEX.md` and `registry.json`
 9. Commit with message: `feat(skills): add my-skill-name`
 
 ### Creating a New Command
@@ -399,7 +399,7 @@ git symbolic-ref --list               # Check symlink targets
 ### Portable Skill (Complete Example)
 
 ```
-skills/portable/my-skill/
+portable/my-skill/
 ├── SKILL.md                          # Required: Main content
 ├── manifest.json                     # Required: Metadata & adapters
 ├── examples/                         # Optional: Walkthroughs & code samples

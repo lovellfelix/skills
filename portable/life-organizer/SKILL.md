@@ -1,8 +1,8 @@
 ---
 name: life-organizer
-description: Use when the user asks to review personal reminders, calendar events, Apple Notes context, family plans, or general life-admin tasks on a macOS machine.
+description: Use when the user asks to review personal reminders, calendar events, or Apple Notes context, plan a trip, family outing, party, or life milestone, or sort out general life-admin tasks on a macOS machine.
 metadata:
-  version: 0.1.0
+  version: 0.1.1
   portable: true
   personal_machine_only: true
   tags: [personal, reminders, calendar, notes, family, planning, macos]
@@ -149,19 +149,11 @@ bash scripts/apple-reminders.sh today --json
 bash scripts/apple-notes-safe.sh list-tags 10
 ```
 
-## Personal Machine Activation
+## Trip and Event Planning
 
-This skill is personal-machine-only.
+Use when planning trips, family outings, personal events, or life milestones with concrete actions and contingencies.
 
-- Linked automatically when `~/.overlay/local/.enabled` is absent (no allowlist to maintain).
-
----
-
-# Personal Planning (merged)
-
-The following planning guidance is merged from the previous `personal-planning` skill. Use when planning trips, family outings, personal events, or life milestones with concrete actions and contingencies.
-
-## Planning Categories
+### Planning Categories
 
 | Category         | Examples                    | Focus                             |
 | ---------------- | --------------------------- | --------------------------------- |
@@ -171,7 +163,7 @@ The following planning guidance is merged from the previous `personal-planning` 
 | Events           | Birthday, BBQ, reunion      | Guests, food, setup, cleanup      |
 | Milestones       | Moving, wedding prep        | Timeline, vendors, dependencies   |
 
-## 5-Phase Framework
+### 5-Phase Framework
 
 1. Dream: define outcome, people, and rough dates.
 2. Research: compare options, costs, and constraints.
@@ -179,7 +171,7 @@ The following planning guidance is merged from the previous `personal-planning` 
 4. Prepare: complete checklists and confirmations.
 5. Enjoy: execute with backup plans and safety info.
 
-## Output Template
+### Plan Template
 
 ```markdown
 # Plan: [Title]
@@ -222,14 +214,14 @@ The following planning guidance is merged from the previous `personal-planning` 
 - Critical reservation numbers
 ```
 
-## Planning Rules
+### Planning Rules
 
 - Prefer concrete actions over generic advice.
 - Add owners, due dates, and success criteria to each key task.
 - Include at least one weather/logistics fallback for major activities.
 - Keep plans scannable with tables and short bullets.
 
-## Preference Learning (silent)
+### Preference Learning (silent)
 
 Capture recurring preferences in session memory when users reveal them.
 
@@ -238,3 +230,9 @@ session_memory action=track_user_preference category=lifestyle key=travel_style 
 session_memory action=track_user_preference category=lifestyle key=accommodation_preference value="Airbnb over hotels" confidence=1.0
 session_memory action=track_user_preference category=health key=dietary_restrictions value="nut allergy" confidence=1.0
 ```
+
+## Personal Machine Activation
+
+This skill is personal-machine-only.
+
+- Linked automatically when `~/.overlay/local/.enabled` is absent (no allowlist to maintain).
