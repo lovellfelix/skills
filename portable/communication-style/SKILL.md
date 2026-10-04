@@ -1,10 +1,10 @@
 ---
 name: communication-style
-description: Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, blog posts/field notes, and technical communication to improve clarity, brevity, and reduce review friction.
+description: Use when writing or rewriting PR descriptions, Slack messages, review comments, incident updates, RFC prose, blog posts/field notes, Google Docs content, or any technical communication that needs to be clearer, shorter, and lower-friction to review.
 metadata:
-  version: 0.14.0
+  version: 0.15.0
   portable: true
-  tags: [communication, engineering-writing, pr-review, slack, clarity, blog]
+  tags: [communication, engineering-writing, pr-review, slack, clarity, blog, google-docs]
 ---
 
 # Communication Style
@@ -22,6 +22,7 @@ Output must be copy-paste ready.
 - Rewriting technical updates for clarity and brevity.
 - Drafting PR notes, RFC comments, review feedback, or incident updates.
 - Writing or editing blog posts and field notes (personal or team).
+- Drafting content that will be pasted into or published to Google Docs (also read `google-docs.md`).
 - Tightening wording so asks, risks, and decisions are obvious.
 
 ## When not to use
@@ -33,11 +34,13 @@ Output must be copy-paste ready.
 
 - `documentation` for structured engineering docs.
 - `incident-postmortem` for blameless incident writeups.
-- `design-doc-review` for design/RFC quality checks.
+- `rfc` for RFC/design-doc structure and review.
+- `commit-messages` for git commit messages.
 
-## Detailed Reference
+## Detailed References
 
-`writing-guide.md` (in this skill directory) covers what this checklist doesn't: per-format structures (email, RFC, implementation prompt, incident, blog), the evidence/ownership/metrics/tradeoff model, causality, and the revision-pass workflow. Read it before drafting long-form or high-stakes material (RFCs, postmortems, blog posts); for quick edits (PR notes, Slack messages), this file is usually enough. Its rules and this file's don't overlap, apply both, in either order.
+- `google-docs.md`: read when the output is going into Google Docs (reader-first shape, light formatting, Markdown-to-Docs conversion pitfalls).
+- `writing-guide.md` (in this skill directory) covers what this checklist doesn't: per-format structures (email, RFC, implementation prompt, incident, blog), the evidence/ownership/metrics/tradeoff model, causality, and the revision-pass workflow. Read it before drafting long-form or high-stakes material (RFCs, postmortems, blog posts); for quick edits (PR notes, Slack messages), this file is usually enough. Its rules and this file's don't overlap; apply both, in either order.
 
 ## Flag Inconsistencies
 

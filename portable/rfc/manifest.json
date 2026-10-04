@@ -1,14 +1,17 @@
 {
   "schema_version": "1.0",
   "name": "rfc",
-  "description": "Use when proposing a significant engineering change, writing a technical design doc, or architecture proposal and need a tight, reviewable RFC with optional Mermaid diagrams.",
-  "version": "1.0.0",
+  "description": "Use when writing an RFC, technical design doc, or architecture proposal for a significant engineering change, or when reviewing one (yours or someone else's) for structural, clarity, and completeness gaps before it is shared.",
+  "version": "1.1.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
     "rfc",
     "architecture",
     "design",
+    "design-review",
+    "mermaid",
+    "rubric",
     "tradeoffs",
     "rollout"
   ],

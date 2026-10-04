@@ -14,7 +14,7 @@ Guidelines for naming, structuring, and discovering skill packages across runtim
 
 - Use lowercase with hyphens: `my-skill-name`
 - Keep it short (1-3 words)
-- Use nouns or verb-noun pairs: `python-code-style`, `release-skills`, `ask`
+- Use nouns or verb-noun pairs: `python`, `release`, `ask`
 - Avoid generic names like `utilities` or `helpers`
 
 ## Directory Structure

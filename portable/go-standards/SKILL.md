@@ -1,62 +1,93 @@
 ---
 name: go-standards
-description: "Use when writing, reviewing, or refactoring Go code to apply idiomatic engineering standards. Triggers on .go files, go.mod references, or Go-related tasks."
+description: "Use when writing, reviewing, testing, or refactoring Go code (.go files, go.mod, goroutines, error wrapping, interfaces, table-driven tests, golangci-lint)."
 metadata:
-  version: 0.1.0
+  version: 0.2.0
   portable: true
-  tags: [go, standards, idioms, error-handling, concurrency]
+  tags: [go, golang, standards, idioms, error-handling, concurrency, testing]
 ---
 
 # Go Standards
 
-## Error Handling
+Idiomatic, boring Go. Follow the repo's existing conventions (logger, assertion library, linters) before these defaults.
 
-- Prefer explicit error returns over panic. Always handle errors at the call site.
-- Use `errors.Is` / `errors.As` for error inspection. Never string matching.
-- Wrap errors with `fmt.Errorf("context: %w", err)` to preserve the chain.
-- Never silently discard errors. If an error is intentionally ignored, add a comment explaining why.
+## Errors
 
-## Interfaces
+- Return errors; don't `panic` outside truly unrecoverable init failures.
+- Wrap with context: `fmt.Errorf("load config %s: %w", path, err)`. Lowercase, no trailing punctuation, no "failed to" stacking.
+- Inspect with `errors.Is` / `errors.As`, never string matching. Export sentinel errors (`var ErrNotFound = errors.New(...)`) only when callers need to branch on them.
+- Handle each error once: either log it or return it, not both.
+- Discarding an error (`_ = f.Close()`) needs a comment saying why it's safe.
 
-- Interfaces belong in the consumer package, not the implementer's.
-- Accept interfaces, return concrete types.
-- Prefer small, single-method interfaces. Avoid large interface definitions.
+## Interfaces and types
 
-## Structure
+- Define interfaces in the consuming package. Accept interfaces, return concrete types.
+- Small interfaces (often one method). Don't create one until a second implementation or a test seam needs it.
+- Make the zero value useful where practical.
 
-- One package per directory. Package name matches directory name. No `_util` or `_helper` suffixes.
-- Keep `main.go` thin — only wiring and entry point. Business logic in separate packages.
-- Use `internal/` for packages not intended as public API.
-- Table-driven tests using `t.Run` subtests. No test helper libraries unless already in the project.
+## Packages and layout
+
+- Package name = directory name: short, lowercase, no `util`/`common`/`helpers`.
+- `main.go` only wires dependencies and starts things; logic lives in packages.
+- `internal/` for anything not meant as public API.
 
 ## Concurrency
 
-- Document goroutine ownership and lifetime at the declaration site.
-- Channels for coordination, mutexes for shared state protection. Do not mix.
-- Always define goroutine exit conditions. No goroutine leaks.
-- Use `context.Context` as the first parameter for any function that may block or call I/O.
-
-## Observability
-
-- Emit structured logs using the project's established logger. Check existing usage before introducing a new one.
-- Instrument error paths — errors returned to callers should have corresponding log or metric emission at the boundary.
-- Prefer named return values in exported functions for documentation clarity, not for naked returns.
+- `ctx context.Context` is the first parameter of anything that blocks, does I/O, or spawns work. Never store contexts in structs.
+- Every goroutine has a documented owner and exit condition. Use `errgroup.Group` (with `WithContext`) to run and cancel groups of goroutines.
+- Channels to pass ownership and coordinate; mutexes to guard shared state. Keep a given piece of state under one mechanism.
+- Run tests with `-race` in CI.
 
 ## Testing
 
-- Table-driven tests using `t.Run` subtests.
-- Use `testify/assert` for assertions if the project uses it; otherwise stdlib `testing`.
-- Include benchmarks for hot paths.
+- Table-driven tests with `t.Run` subtests; `t.Parallel()` where tests are independent.
+- `t.Helper()` in test helpers, `t.Cleanup()` for teardown, `t.TempDir()` for files.
+- Use `testify` only if the project already does; otherwise stdlib `testing` with `cmp.Diff` for comparisons.
+- Benchmarks (`func BenchmarkX(b *testing.B)`) for hot paths you change.
 
-## Tooling
+```go
+func TestParseLimit(t *testing.T) {
+	tests := []struct {
+		name    string
+		in      string
+		want    int
+		wantErr bool
+	}{
+		{name: "empty uses default", in: "", want: 10},
+		{name: "valid", in: "25", want: 25},
+		{name: "negative", in: "-1", wantErr: true},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := ParseLimit(tt.in)
+			if (err != nil) != tt.wantErr {
+				t.Fatalf("ParseLimit(%q) error = %v, wantErr %v", tt.in, err, tt.wantErr)
+			}
+			if got != tt.want {
+				t.Errorf("ParseLimit(%q) = %d, want %d", tt.in, got, tt.want)
+			}
+		})
+	}
+}
+```
 
-- `gofmt` — run always before committing.
-- `go vet` — enables by default in Go 1.14+.
-- `golangci-lint` — comprehensive linter aggregation. Run in CI.
-- `staticcheck` — static analysis for bugs and performance.
+## Observability
 
-## Anti-patterns
+- Use the project's logger; for new code default to `log/slog` with structured key/value pairs.
+- Log or emit a metric for errors at the boundary where they're handled, not at every layer they pass through.
 
-- No `init()` unless strictly necessary and documented.
-- No global mutable state.
-- No naked `_` in error position unless the error is provably safe to ignore. Comment required.
+## Quality gates before done
+
+```bash
+gofmt -l .          # must print nothing (or goimports)
+go vet ./...
+golangci-lint run   # if configured; includes staticcheck
+go test -race ./...
+```
+
+## Avoid
+
+- `init()` with side effects. Global mutable state.
+- Naked returns in anything longer than a few lines.
+- Goroutines without an exit path; `time.Sleep` for synchronization.
+- Premature interfaces and generic helpers for a single call site.

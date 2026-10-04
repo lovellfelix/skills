@@ -1,16 +1,18 @@
 {
   "schema_version": "1.0",
   "name": "go-standards",
-  "description": "Use when writing, reviewing, or refactoring Go code to apply idiomatic engineering standards.",
-  "version": "0.1.0",
+  "description": "Use when writing, reviewing, testing, or refactoring Go code (.go files, go.mod, goroutines, error wrapping, interfaces, table-driven tests, golangci-lint).",
+  "version": "0.2.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
     "go",
+    "golang",
     "standards",
     "idioms",
     "error-handling",
-    "concurrency"
+    "concurrency",
+    "testing"
   ],
   "adapters": {
     "opencode": {

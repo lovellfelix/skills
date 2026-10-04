@@ -322,7 +322,7 @@ All guides are grounded in real GrenadianBuzz architecture:
 ## File Structure
 
 ```
-skills/portable/grenadianbuzz/
+portable/grenadianbuzz/
 ├── SKILL.md                              # Main skill entry point
 ├── INDEX.md                              # This file — start here
 │
@@ -418,7 +418,7 @@ A: Depends on your task. See "Start Here" section above.
 A: Yes! Templates in `templates/` are fully reusable. Reference guides have GrenadianBuzz-specific patterns but principles apply broadly.
 
 **Q: How often are these guides updated?**
-A: Updated when GrenadianBuzz architecture changes. Check UPDATE_SUMMARY.md for latest changes.
+A: Updated when GrenadianBuzz architecture changes. Check `git log -- portable/grenadianbuzz` for recent changes.
 
 **Q: What if I need something not covered?**
 A: Check the domain checklist for validation patterns. If still missing, file a feature request with your use case.
@@ -472,5 +472,4 @@ All guides maintain:
 ## See Also
 
 - **SKILL.md**: Main skill entry point with workflow and examples
-- **UPDATE_SUMMARY.md**: Recent changes and additions
 - **Domain Checklist**: Design validation and rules

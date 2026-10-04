@@ -2,9 +2,9 @@
 name: handoff-resume
 description: Use when resuming interrupted work across sessions, handing off to another agent or teammate, or creating a restart-ready status snapshot.
 metadata:
-  version: 0.2.0
+  version: 0.2.1
   portable: true
-  tags: [workflow, continuity, handoff, resume]
+  tags: [workflow, continuity, handoff, resume, portable]
 ---
 
 # Handoff Resume
@@ -26,9 +26,9 @@ Resume work quickly from prior session state, then leave a crisp handoff for the
 
 ## Resume workflow
 
-1. Pull LeanCTX-backed context first; use `durable_memory` only as a fallback for raw handoff artifacts not yet indexed into LeanCTX.
-2. Check task state: `workflow_tasks action=list` (LeanCTX-backed) for current session tasks.
-3. Check session memory: `session_memory action=retrieve_context` (LeanCTX-backed) for recent decisions and blockers.
+1. Pull session memory first (backend depends on the harness; see `session-memory-mcp`). Use `durable_memory` / `~/.agents/memory/` files only as a fallback for handoffs not yet in the store.
+2. Check task state: `get_tasks` (Claude Code) or `workflow_tasks action=list` (Pi/LeanCTX).
+3. Retrieve recent decisions and blockers: `assemble_active_context`, or `retrieve_context` for known keys.
 4. Validate stale assumptions before implementing (drift between memory and repo state).
 5. Build status snapshot (see template below).
 6. Execute next concrete step; record outcomes for future resume.
@@ -37,9 +37,9 @@ Resume work quickly from prior session state, then leave a crisp handoff for the
 
 At session end or before transfer:
 
-1. Write a summary record: `session_memory action=store_context` (LeanCTX-backed) with type `handoff`. Where `ctx_handoff` is available, prefer it for structured handoff artifacts.
-2. Run autodream: `durable_memory action=autodream_apply` to promote session to durable artifacts.
-3. Leave a handoff file at `~/.agents/memory/handoffs/YYYY/MM/` with the template below.
+1. Write a summary record with type `handoff` via session memory. Where LeanCTX `ctx_handoff` is available, prefer it for structured handoff artifacts.
+2. Promote the session to durable artifacts: `./scripts/autodream-memory.sh --session-id <id>` to preview, then add `--apply`.
+3. Leave a handoff file at `~/.agents/memory/handoffs/YYYY/MM/` using the template below (`./scripts/new-memory-handoff.sh` scaffolds it).
 
 ```bash
 # Helper scripts (bundled with this skill)

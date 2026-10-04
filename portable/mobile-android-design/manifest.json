@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "name": "mobile-android-design",
-  "description": "Material Design 3 and Jetpack Compose patterns for native Android. Use when designing Android interfaces, implementing Compose UI, building adaptive layouts, or applying M3 theming.",
-  "version": "0.1.0",
+  "description": "Use when building, refactoring, or reviewing native Android UI with Jetpack Compose and Material 3: screen layout, components, theming, dark mode, adaptive/tablet layouts, navigation, or accessibility (TalkBack, touch targets, contrast).",
+  "version": "0.2.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
@@ -11,7 +11,7 @@
     "compose",
     "material3",
     "ui",
-    "grenadianbuzz"
+    "accessibility"
   ],
   "adapters": {
     "opencode": {

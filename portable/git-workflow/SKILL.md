@@ -1,195 +1,109 @@
 ---
 name: git-workflow
-description: Use when setting up git worktrees, configuring hooks, automating multi-branch workflows, or handling complex merge/rebase scenarios beyond routine commit/push.
+description: Use when setting up git worktrees, writing or installing git hooks, recovering from a bad merge/rebase/reset, untangling history, or automating multi-branch workflows beyond routine commit/push. Not for commit message wording (see commit-messages).
 metadata:
-  version: 0.1.0
+  version: 0.2.0
   portable: true
-  tags: [git, automation, worktrees, hooks, workflow, version-control]
+  tags: [git, automation, worktrees, hooks, rebase, recovery, version-control, workflow]
   applies_to: [all, shell, bash, zsh]
 ---
 
-# Git Workflow Skill
+# Git Workflow
 
-## Scope
+Related: `commit-messages` (message wording), `github` (PRs, CI via `gh`).
 
-Git automation, worktrees, hooks, commit conventions, branch strategies, dotfiles-specific patterns.
+## Worktrees
 
-## Git Worktree Patterns
-
-### What are Worktrees?
-
-Multiple working directories from same repo, each checked out to different branch.
-
-### Common Use Cases
+Parallel checkouts of one repo, each on its own branch. Use them to review a PR, hotfix, or let an agent work without disturbing your main checkout.
 
 ```bash
-# Feature development while main stays clean
-git worktree add .worktree/feature-new-zsh-plugin feature/new-zsh-plugin
-
-# Hotfix while working on feature
-git worktree add .worktree/hotfix-fix-broken-path hotfix/fix-broken-path
-
-# Review PR without stashing current work
-git worktree add .worktree/pr-123 pr/123
-
-# Testing different configurations
-git worktree add .worktree/test-macos-sonoma test/macos-sonoma
-```
-
-### Worktree Best Practices
-
-**Create worktree**:
-
-```bash
-# Good: Repo-local path, branch slug (`/` -> `-`)
-git worktree add .worktree/feature-new-plugin feature/new-plugin
-
-# Bad: Nested in main worktree (confusing)
-git worktree add ./feature-dir feature/new-plugin
-```
-
-**List worktrees**:
-
-```bash
+# Repo-local, gitignored dir; branch slug with / -> -
+git worktree add .worktree/feature-new-plugin -b feature/new-plugin main
+git fetch origin pull/123/head:pr-123 && git worktree add .worktree/pr-123 pr-123  # GitHub PR
 git worktree list
-# /Users/user/dotfiles        abc123 [main]
-# /Users/user/dotfiles/.worktree/feature-new-plugin def456 [feature/new-plugin]
+git worktree remove .worktree/feature-new-plugin   # not rm -rf: that leaves metadata
+git worktree prune --dry-run                        # find stale registrations
 ```
 
-**Remove worktree**:
+- Add `.worktree/` to `.gitignore` (or use a sibling dir like `../repo-wt/<slug>`) so worktrees never get committed.
+- A branch can only be checked out in one worktree. Need `main` twice? `git worktree add .worktree/main-test -b main-test main`.
+- Each worktree needs its own dependency install / build dir; don't share `node_modules` or virtualenvs across them.
+
+## Hooks
+
+Track hooks in the repo and point git at them, instead of hand-copying into `.git/hooks/`:
 
 ```bash
-# Good: Remove worktree then delete directory
-git worktree remove .worktree/feature-new-plugin
-# OR: Delete directory first, then prune
-rm -rf .worktree/feature-new-plugin && git worktree prune
-
-# Bad: Just deleting directory (leaves git metadata)
-rm -rf .worktree/feature-new-plugin  # Worktree still registered!
+mkdir -p .githooks && git config core.hooksPath .githooks
 ```
 
-**Worktree for parallel testing**:
+If the repo already uses a hook manager (`pre-commit`, `lefthook`, `husky`), add hooks there instead.
 
-```bash
-# Test nvim config change without breaking current setup
-git worktree add .worktree/experiment-new-lsp experiment/new-lsp
-cd .worktree/experiment-new-lsp
-./bootstrap.sh --dry-run
-# Test changes, iterate
-cd -
-git worktree remove .worktree/experiment-new-lsp
-```
-
-### Worktree Anti-Patterns
-
-❌ **Don't**: Create worktree in same directory
-
-```bash
-git worktree add ./feature feature/test  # Confusing structure
-```
-
-❌ **Don't**: Forget to remove worktrees
-
-```bash
-# Check for orphaned worktrees
-git worktree prune --dry-run
-```
-
-❌ **Don't**: Try to check out same branch in multiple worktrees
-
-```bash
-# This fails (branch already checked out)
-git worktree add .worktree/main main  # ERROR!
-
-# Instead: Create new branch
-git worktree add .worktree/test-main -b test-main main
-```
-
----
-
-## Git Hooks
-
-### Hook Locations
-
-```bash
-# Repository-specific (not tracked)
-.git/hooks/pre-commit
-
-# Tracked hooks (dotfiles pattern)
-scripts/hooks/pre-commit
-# Then symlink: ln -sf ../../scripts/hooks/pre-commit .git/hooks/
-```
-
-### Common Hooks for Dotfiles
-
-**pre-commit** - Validation before commit:
+**pre-commit**: lint only what's staged, NUL-safe:
 
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Validate shell scripts
-for file in $(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(sh|bash|zsh)$'); do
-  if ! shellcheck "$file"; then
-    echo "❌ ShellCheck failed for $file"
-    exit 1
-  fi
-done
+mapfile -d '' files < <(git diff --cached --name-only -z --diff-filter=ACM -- '*.sh' '*.bash')
+if ((${#files[@]})); then
+  shellcheck "${files[@]}"
+fi
 
-# Validate Lua configs
-for file in $(git diff --cached --name-only --diff-filter=ACM | grep -E '\.lua$'); do
-  if ! luacheck "$file"; then
-    echo "❌ Luacheck failed for $file"
-    exit 1
-  fi
-done
-
-# Check for secrets
-if git diff --cached | grep -iE '(api[_-]?key|password|secret|token)["\s]*[:=]'; then
-  echo "⚠️  WARNING: Possible secret detected in staged changes"
-  echo "Review carefully before committing"
+if git diff --cached -U0 | grep -qiE '^\+.*(api[_-]?key|password|secret|token)["'"'"' ]*[:=]'; then
+  echo "Possible secret in staged changes. Review, or bypass once with --no-verify." >&2
   exit 1
 fi
-
-echo "✅ Pre-commit checks passed"
 ```
 
-**post-commit** - Automation after commit:
-
-```bash
-#!/usr/bin/env bash
-
-# Auto-sync to backup remote (optional)
-if git remote | grep -q backup; then
-  git push backup main --quiet &
-fi
-
-# Log commit for analytics
-echo "$(date +%Y-%m-%d) $(git log -1 --format='%h %s')" >> .git/commit-log
-```
-
-**pre-push** - Safety checks before push:
+**pre-push**: git passes `<local-ref> <local-sha> <remote-ref> <remote-sha>` lines on stdin. Use them; don't re-run `git push` inside the hook.
 
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
+zero=0000000000000000000000000000000000000000
 
-# Prevent force push to main
-current_branch=$(git rev-parse --abbrev-ref HEAD)
-if [[ "$current_branch" == "main" ]] && git push --dry-run 2>&1 | grep -q "force"; then
-  echo "❌ Force push to main is not allowed"
-  exit 1
-fi
-
-# Check for large files
-large_files=$(git diff --cached --name-only | xargs -I{} du -k {} 2>/dev/null | awk '$1 > 1024 {print $2}')
-if [[ -n "$large_files" ]]; then
-  echo "⚠️  WARNING: Large files detected (>1MB):"
-  echo "$large_files"
-  read -p "Continue? (y/N) " -n 1 -r
-  echo
-  [[ ! $REPLY =~ ^[Yy]$ ]] && exit 1
-fi
+while read -r _local_ref local_sha remote_ref remote_sha; do
+  [[ "$local_sha" == "$zero" ]] && continue                  # branch deletion
+  if [[ "$remote_ref" == refs/heads/main && "$remote_sha" != "$zero" ]] &&
+     ! git merge-base --is-ancestor "$remote_sha" "$local_sha"; then
+    echo "Refusing non-fast-forward push to main." >&2
+    exit 1
+  fi
+  range=$([[ "$remote_sha" == "$zero" ]] && echo "$local_sha" || echo "$remote_sha..$local_sha")
+  git rev-list --objects "$range" | git cat-file --batch-check='%(objecttype) %(objectsize) %(rest)' |
+    awk '$1=="blob" && $2>1048576 {print "Large file (>1MB): " $3; bad=1} END {exit bad}' || exit 1
+done
 ```
 
-... (rest copied from original runtime-specific doc)
+Hooks are local guardrails, not enforcement. Server-side rules (branch protection, CI) are the real gate.
+
+## Rebase and merge
+
+- Rebase only branches nobody else has pulled. On shared branches, merge.
+- Update a feature branch: `git fetch origin && git rebase origin/main`. Conflicts: fix, `git add`, `git rebase --continue`; bail with `git rebase --abort`.
+- Enable `git config rerere.enabled true` when repeatedly rebasing long-lived branches.
+- After rewriting your own pushed branch: `git push --force-with-lease`, never bare `--force`.
+- Squash fixups before review: `git commit --fixup <sha>` then `git rebase --autosquash origin/main` (add `-i` when interactive editing is available).
+
+## Recovery
+
+Almost nothing committed is lost. Check the reflog before panicking.
+
+| Situation                         | Fix                                                                      |
+| --------------------------------- | ------------------------------------------------------------------------ |
+| Bad reset / rebase / amend        | `git reflog`, then `git reset --hard <sha-before>` (stash work first)    |
+| Undo last commit, keep changes    | `git reset --soft HEAD~1`                                                |
+| Undo a pushed commit              | `git revert <sha>` (never rewrite shared history)                        |
+| Revert a merge commit             | `git revert -m 1 <merge-sha>`                                            |
+| Committed to the wrong branch     | `git branch fix-branch && git reset --hard origin/<branch>` (unpushed)   |
+| Deleted branch                    | `git reflog` / `git branch <name> <sha>`                                 |
+| Lost stash                        | `git fsck --unreachable \| grep commit`, then `git stash apply <sha>`    |
+| Find the commit that broke it     | `git bisect start <bad> <good>`; `git bisect run <test-cmd>`             |
+
+Before any `reset --hard`, `clean -fd`, or force push: `git status` and `git stash` (or a backup branch) first.
+
+## Validate
+
+- `bash -n` and `shellcheck` every hook.
+- Test hooks on a throwaway branch before relying on them.

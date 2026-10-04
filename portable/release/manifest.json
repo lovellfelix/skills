@@ -1,16 +1,18 @@
 {
   "schema_version": "1.0",
-  "name": "google-docs-style",
-  "description": "Use when writing content for Google Docs \u2014 internal docs, design summaries, proposals, updates, reviews \u2014 to produce clean, lightly formatted, professional output that looks natural when pasted into Google Docs.",
-  "version": "0.1.0",
+  "name": "release",
+  "description": "Use when cutting a release, bumping a semver version, tagging, writing changelog entries or user-facing release notes from commits/PRs, or publishing to npm, PyPI, crates.io, GitHub Releases, or a Claude plugin marketplace.",
+  "version": "2.0.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
-    "writing",
-    "google-docs",
-    "formatting",
-    "style",
-    "portable"
+    "release",
+    "versioning",
+    "semver",
+    "changelog",
+    "release-notes",
+    "publishing",
+    "sbom"
   ],
   "adapters": {
     "opencode": {

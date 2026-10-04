@@ -1,8 +1,8 @@
 ---
 name: adversary-review
-description: "Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different model, not another self-review pass. Runs the content through scripts/adversary-review.sh (Codex, gpt-5.6-luna) from a chosen adversarial perspective. Not for code generation or implementation."
+description: "Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different (non-Claude) model rather than another self-review pass, or when the user asks for an adversarial, red-team, or skeptical critique. Not for code generation or implementation."
 metadata:
-  version: 0.1.1
+  version: 0.1.2
   portable: true
   tags: [review, adversarial, critique, second-opinion, plan, rfc]
 ---
@@ -23,8 +23,8 @@ available (check `curl $CODEX_PROXY_BASE_URL/models`).
 - Before sharing a proposal, RFC, or incident postmortem externally.
 - When you (Claude) have just written or endorsed a plan and want a check that isn't
   correlated with your own reasoning — a different model, not a second read-through.
-- Not for code generation, implementation, or line-by-line code review (use `code-review` or
-  `design-doc-review` for those).
+- Not for code generation, implementation, or line-by-line code review. Use `code-review` for
+  code, or `rfc` (review mode) for a structural rubric check of a design doc.
 
 ## Steps
 

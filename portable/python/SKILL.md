@@ -1,103 +1,38 @@
 ---
 name: python
-description: "Use when writing, reviewing, or testing Python code — establishes project style, type-safety, testing defaults, and CI quality gates."
+description: "Use when writing, reviewing, refactoring, or testing Python code, writing pytest tests or mocks, configuring ruff/mypy/pyright, or setting up a Python project's style, typing, and CI quality gates."
 metadata:
-  version: 1.0.0
+  version: 2.0.0
   portable: true
-  tags: [python, style, testing, type-safety, quality]
+  tags: [python, pytest, style, linting, type-safety, testing, quality]
 ---
 
-# Python (Style, Safety, Testing)
+# Python
 
-Overview
+Write the smallest reviewable change that preserves behavior, adds regression coverage, and passes the project's quality gates. Prefer direct control flow, explicit types, and tests that prove behavior over framework-shaped ceremony.
 
-This consolidated skill captures the pragmatic, modern conventions we use for Python projects: a single fast linter/formatter, strict static typing on public APIs, readable docstrings, small focused tests, and CI quality gates. It prioritizes reviewability and safety over cleverness.
+**Repo conventions win.** If the project already standardizes on a tool or style (black, flake8, unittest, `pytest-mock`, NumPy docstrings, relative imports), follow it instead of mixing in these defaults.
 
-When to use
+## Default posture
 
-- Bootstrapping or hardening a Python project (linting, types, tests).
-- Writing or reviewing public APIs, docstrings, and error-handling.
-- Adding or updating pytest tests and CI quality gates.
-- Choosing idiomatic modern syntax for readability and maintainability.
+- Start from the changed behavior: write or update the failing pytest first for bug fixes and risky logic.
+- Prefer plain functions, small `@dataclass(slots=True)` types, and stdlib features over new layers.
+- Extract helpers only for reuse or clearer intent; keep them local.
+- Raise specific exceptions and chain context: `raise X(...) from e`. Never bare `except:` or swallow errors silently.
+- Document public APIs and non-obvious invariants; skip comments that narrate obvious code.
 
-Core patterns
+## Types
 
-Tooling & configuration
+- Annotate all public signatures and meaningful locals: `list[str]`, `T | None`, `collections.abc.Iterable`, `pathlib.Path`.
+- Structured data: `dataclass(slots=True)` for internal objects, Pydantic for validated external input, `TypedDict` for unvalidated mapping shapes.
+- `Any` needs a reason in a comment. Prefer `object` or a `Protocol`.
 
-- Use pyproject.toml as the single source of configuration.
-- Prefer ruff as the primary linter/formatter (fast, pluggable). Use mypy or pyright for strict type checks.
+## Modern syntax
 
-```toml
-# pyproject.toml (minimal)
-[tool.ruff]
-line-length = 120
-target-version = "py312"
-
-[tool.mypy]
-python_version = "3.12"
-strict = true
-warn_return_any = true
-```
-
-Type safety
-
-- Annotate all public function signatures. Use `from __future__ import annotations` for forward refs.
-- Prefer dataclasses (slots=True) or Pydantic models for structured domain objects; use TypedDict for unvalidated mapping shapes.
-- Avoid casual use of Any; justify and document any exception to strict typing.
-
-```python
-from __future__ import annotations
-from dataclasses import dataclass
-
-@dataclass(slots=True)
-class User:
-    id: str
-    email: str
-
-def find_user(email: str) -> User | None:
-    ...
-```
-
-Naming & imports
-
-- Follow PEP 8: snake_case for functions/variables, PascalCase for classes, SCREAMING_SNAKE_CASE for constants.
-- Group imports: standard library, third-party, local. Prefer absolute imports for clarity.
-
-Docstrings & small-API contracts
-
-- Use concise Google-style docstrings for public APIs. Document args, returns, raises and give a short example when behavior is non-obvious.
-
-```python
-def process_batch(items: list[Item], max_workers: int = 4) -> BatchResult:
-    """Process items using a worker pool.
-
-    Args:
-        items: Items to process (must not be empty).
-        max_workers: Max parallel workers.
-
-    Raises:
-        ValueError: If items is empty.
-    """
-    ...
-```
-
-Error handling & observability
-
-- Catch specific exceptions and re-raise with context: `raise X(...) from e`.
-- Use custom domain exceptions to represent recoverable vs fatal errors.
-- Emit structured logs and metrics at error boundaries and key I/O sites.
-
-```python
-try:
-    payload = json.loads(raw)
-except json.JSONDecodeError as e:
-    raise ValueError("invalid json payload") from e
-```
-
-Modern idioms
-
-- Prefer f-strings, comprehensions, enumerate/zip, and small dataclasses.
-- Use the walrus operator (`:=`) sparingly — when it reduces duplication without harming readability.
+- f-strings, comprehensions, `enumerate`, `zip`, `any`/`all`.
+- Walrus (`:=`) only when it removes duplicate work inside a readable condition.
+- `match` only for real shape/enum dispatch, not as a replacement for a clear `if/elif`.
+- Keep truthiness explicit when `None`, `0`, and `""` mean different things.
 
 ```python
 def parse_limit(raw: str | None) -> int:
@@ -109,51 +44,95 @@ def parse_limit(raw: str | None) -> int:
     return limit
 ```
 
-Testing
+## Naming, imports, docstrings
 
-- Use pytest. Place tests in `tests/` mirroring the source tree.
-- Start from a failing test when fixing bugs. Add regression coverage for every behavior change.
-- Prefer fixtures for shared setup; keep them narrow. Use `@pytest.mark.parametrize` for matrices.
-- Mock at the boundary (I/O/third-party). Use `create_autospec` or `Mock(spec_set=...)` to keep mocks typed and explicit.
+- PEP 8: `snake_case` functions/variables/modules, `PascalCase` classes (acronyms stay uppercase: `HTTPClient`), `SCREAMING_SNAKE_CASE` constants. Spell words out (`user_repository.py`, not `usr_repo.py`).
+- Imports grouped stdlib / third-party / local (ruff `I` enforces this). Prefer absolute imports.
+- Google-style docstrings on public APIs: one-line summary, then `Args`/`Returns`/`Raises` only when they add information.
 
 ```python
-from unittest.mock import create_autospec
+def process_batch(items: list[Item], max_workers: int = 4) -> BatchResult:
+    """Process items concurrently using a worker pool.
 
-class DirectoryClient:
-    def fetch(self, user_id: str) -> dict[str, str]:
-        ...
+    Args:
+        items: Items to process. Must not be empty.
+        max_workers: Maximum concurrent workers.
 
-
-def test_sync_user_uses_profile_lookup(client: DirectoryClient):
-    mock_client = create_autospec(DirectoryClient, instance=True)
-    mock_client.fetch.return_value = {"id": "42"}
-    assert sync_user(mock_client, "42") == {"id": "42"}
+    Raises:
+        ValueError: If items is empty.
+    """
 ```
 
-Quality gates
+## Testing
 
-Run these locally and in CI before marking work done:
+- `pytest` function tests in `tests/` mirroring the source tree.
+- Narrow fixtures; move to `conftest.py` only once reused. `@pytest.mark.parametrize` for behavior matrices.
+- Prefer dependency injection. When patching is necessary: patch where the symbol is **looked up**, use `autospec=True`, and annotate the injected mock.
+- Use `create_autospec(...)` or `Mock(spec_set=...)`, never a loose `Mock()`.
+- Test public behavior; don't test private helpers directly when the public path covers them.
+
+```python
+from typing import cast
+from unittest.mock import MagicMock, create_autospec, patch
+
+import pytest
+
+from app.sync import DirectoryClient, sync_user
+
+
+@pytest.fixture
+def client() -> DirectoryClient:
+    return cast(DirectoryClient, create_autospec(DirectoryClient, instance=True))
+
+
+@patch("app.sync.fetch_profile", autospec=True)  # patched where sync_user looks it up
+def test_sync_user_uses_profile_lookup(mock_fetch: MagicMock, client: DirectoryClient) -> None:
+    mock_fetch.return_value = {"id": "42"}
+
+    assert sync_user(client, "42") == {"id": "42"}
+    mock_fetch.assert_called_once_with(client, "42")
+```
+
+## Project configuration
+
+`pyproject.toml` is the single config source. Starting point for new projects:
+
+```toml
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "C4", "UP", "SIM"]
+ignore = ["E501"]  # formatter owns line length
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+```
+
+Pyright alternative: `[tool.pyright]` with `typeCheckingMode = "strict"`.
+
+## Quality gates before done
 
 ```bash
-# autofix and format
-ruff check --fix .
-ruff format .
-
-# checks
-ruff check .
-ruff format --check .
-pytest -q
-pytest --cov
-mypy .  # or pyright, if configured
+ruff check --fix . && ruff format .   # local cleanup
+ruff check . && ruff format --check . # CI-equivalent
+pytest -q                             # plus --cov if coverage gates exist
+mypy .                                # or the repo's configured type checker
 ```
 
-- Require a test for every behavior change and ensure linters, type checks, and coverage gates pass in CI.
-- Keep changes small and reviewable; prefer incremental commits that each pass the quality gates.
+Every behavior change gets regression coverage. Do not report completion while lint, format, types, or tests fail.
 
-Avoid
+## Avoid
 
-- Bare `except:` or swallowing exceptions without logging/metrics.
+- ABCs, factories, or wrappers for a single call site.
 - Global mutable state and mutable default arguments.
-- Untyped mocks or broad, deep patching that ties tests to implementation details.
-- Over-engineering: no abstract factories, single-use ABCs, or mega-fixtures for single-test needs.
-- Abusing `match`/`:=` when a clear `if`/`elif` is more readable.
+- Untyped mocks, deep patching, or asserting on implementation noise.
+- Mega-fixtures that hide the inputs that matter.
+- Clever walrus/`match` that makes code harder to scan.

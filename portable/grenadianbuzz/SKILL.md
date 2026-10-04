@@ -2,15 +2,15 @@
 name: grenadianbuzz
 description: Use when working on GrenadianBuzz features, architecture, or operational tasks across any surface (API, Android app, CLI, website, dashboard, docs).
 metadata:
-  version: 0.7.0
+  version: 0.8.0
   portable: true
   personal_machine_only: true
-  tags: [grenadianbuzz, product, mobile, api, backend, frontend, architecture]
+  tags: [grenadianbuzz, product, mobile, api, backend, frontend, architecture, android, openapi, prd, newsletter]
 ---
 
 # GrenadianBuzz Product & Engineering Skill
 
----
+Integrated product and technical guidance across GrenadianBuzz surfaces. API-first specifications and multi-surface feature coordination.
 
 ## Authoritative Roadmap
 
@@ -22,23 +22,16 @@ Three PRDs were archived 2026-05-09 to `docs/prd/_archive/`: `PROJECT_PRD.md`, `
 
 ---
 
-## Live Repo Issue/PR Snapshot (base 2026-05-09; deltas to 2026-05-14)
+## Priorities & Standing Decisions (as of 2026-05-14)
 
-- **grenadianbuzz-android**: 40 open issues / ~15 open PRs — Compose pile-up triaged 2026-05-09: #296/#298 closed, #301 canonical, #300 awaiting author. _Deltas: Draft PR #302 (Android, #254 Google Sign-In) opened 2026-05-13; Draft PRs #305 (Room P1) + #308 (Room P2) opened 2026-05-13/14._
-- **grenadianbuzz.cli**: 18 open issues / ~1 open PRs — newsletter epic #50–59 authored as issues. _Delta 2026-05-10: Draft PR #62 (fetcher, #51) opened on `feat/newsletter-fetcher`. #52/#53 still need PRs._
-- **api.grenadianbuzz.com**: 4 open issues / 4 open PRs — critical inflight: PR #278 PocketBase adapter (draft, needs explicit go/no-go), PR #277 Pug→Mustache migration (proceed to merge), PR #302 FCM newsletter notifications.
-- **dashboard.grenadianbuzz.com**: 1 open issue / 4 open PRs — Nuxt rewrite inflight (PR #71/#75). Otherwise maintenance.
-- **grenadianbuzz.com**: 1 open issue / 5 open PRs — Renovate / Jekyll bumps only.
+Point-in-time. `docs/ROADMAP.md` and the wiki note win where they disagree. For current issue/PR state, query it live (`gh issue list` / `gh pr list` per repo) instead of trusting counts here.
 
-### Routing Guidance & Critical Decisions
-
-- **Tier 1**: AI Newsletter pipeline (CLI #50–59 + **#48 metrics, promoted to Tier 1** + API #307/#308 + PR #302). The single product bet for 2026.
+- **Tier 1**: AI Newsletter pipeline (CLI #50–59, #48 metrics, API #307/#308, PR #302). The single product bet for 2026.
 - **Tier 2**: Android foundation (#254 → #282 → #287 → #255/#253). No UI redesign (#293) until done.
-- **Tier 3**: inflight migrations (Compose #301, PocketBase #278, Mustache #277, Nuxt #71). Rule: no new migration starts until ≥2 of these merge.
-- **Tier 4**: maintenance — website, dashboard post-Nuxt, Android `Backlog` label, KMM (#268 — out of scope for 2026).
-- **Mustache is the email standard** (decided 2026-05-09): all new templates in Mustache; PR #277 bridges existing Pug. Issue #308 template name is `email-ai-newsletter.mustache`, not `.pug`. Do not author in Pug.
-- **Cron timezone bug** (critical): `"0 8 * * 1"` in `gbuzz/task.py` = 03:00–04:00 EST — unusable. Must be **`"0 13 * * 1"`** (09:00 EST). Fix before any production enable.
-- Re-verify live counts every 2 weeks via `gh issue/pr list`; if any count changes >20%, revisit tier ordering.
+- **Tier 3**: in-flight migrations (Compose #301, PocketBase #278, Mustache #277, Nuxt #71). No new migration starts until ≥2 of these merge.
+- **Tier 4**: maintenance: website, dashboard post-Nuxt, Android `Backlog` label, KMM (#268, out of scope for 2026).
+- **Mustache is the email template standard** (decided 2026-05-09). Author new templates in Mustache, never Pug; PR #277 bridges existing Pug.
+- **Newsletter cron timezone**: `"0 8 * * 1"` in `gbuzz/task.py` fires at 03:00–04:00 Eastern. It must be `"0 13 * * 1"` (09:00 EST). Verify it is fixed before any production enable.
 
 ### Newsletter Live Prerequisites (no GitHub issues yet — file before CLI #59 closes)
 
@@ -46,10 +39,6 @@ Three PRDs were archived 2026-05-09 to `docs/prd/_archive/`: `PROJECT_PRD.md`, `
 2. **Email auth** — SPF, DKIM, DMARC on `grenadianbuzz.com`; without this, Gmail/Outlook deliverability is broken.
 3. **Staging dry run** — full pipeline against ≥10 real addresses; verify render in Gmail/Apple Mail/Outlook web.
 4. **Cron timezone fix** — change to `"0 13 * * 1"` and confirm in staging before production enable.
-
----
-
-Integrated product and technical guidance across GrenadianBuzz surfaces. API-first specifications and multi-surface feature coordination.
 
 ## Use when
 
@@ -210,6 +199,7 @@ Before shipping work across surfaces, validate:
 | `templates/postman-collection.json`          | Manual API exploration                          |
 | `reference/grenadianbuzz-api-patterns.md`    | Production patterns, versioning, moderation     |
 | `reference/grenadianbuzz-android-context.md` | Kotlin, Compose, API integration, offline-first |
+| `reference/grenadianbuzz-android-design.md`  | Flat-design tokens overriding Material 3 defaults |
 | `reference/grenadianbuzz-cli-guide.md`       | Command patterns, admin workflows, scripts      |
 | `reference/grenadianbuzz-dashboard-guide.md` | Moderation, analytics, creator tools            |
 | `reference/release-rollout-playbook.md`      | Step-by-step release and rollback               |
@@ -223,7 +213,7 @@ This skill is personal-machine only.
 
 ---
 
-**Version**: 0.7.0  
+**Version**: 0.8.0  
 **Last Updated**: May 20, 2026  
 **Audience**: Engineers, product leads  
 **Wiki**: `~/llm-wiki/notes/projects/grenadianbuzz.md` — live project synthesis with tier state and key decisions

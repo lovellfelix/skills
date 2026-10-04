@@ -1,60 +1,45 @@
 ---
 name: shadcn-ui
-description: Use when setting up shadcn/ui, installing components, building forms with React Hook Form and Zod, customizing themes with Tailwind CSS, or implementing accessible UI patterns (buttons, dialogs, dropdowns, tables, complex layouts).
+description: Use when setting up shadcn/ui, adding or customizing its components, building forms with React Hook Form and Zod, theming with Tailwind CSS variables and dark mode, using the shadcn CLI or registries, or building accessible React UI (dialogs, dropdowns, tables, sidebars) in Next.js, Vite, Remix, or TanStack Start.
 metadata:
-  version: 0.2.0
+  version: 0.3.0
   portable: true
-  tags: [shadcn, react, ui, portable]
+  tags: [shadcn, react, tailwind, radix, ui, forms, portable]
 ---
 
-# shadcn/ui Component Patterns
+# shadcn/ui
 
-Expert guide for building accessible, customizable UI components with shadcn/ui, Radix UI, and Tailwind CSS.
+Not a package: the CLI **copies component source into your project** (`components/ui/`), so you own and edit it. Built on Radix UI primitives (accessibility) and Tailwind CSS (styling).
 
-## What is shadcn/ui?
+APIs and setup change often. When unsure, check https://ui.shadcn.com/docs (or the reference files below) instead of trusting memory, and check the repo's `components.json` and Tailwind version before generating code.
 
-Not a traditional npm package — a **collection of reusable components you copy into your project**. You own the code. Built with Radix UI primitives for accessibility, styled with Tailwind CSS.
-
-## Use when
-
-- Setting up a new project with shadcn/ui.
-- Installing or configuring individual components.
-- Building forms with React Hook Form and Zod validation.
-- Creating accessible UI components (buttons, dialogs, dropdowns, sheets, tables).
-- Customizing component styling with Tailwind CSS or CSS variables.
-- Building Next.js applications with TypeScript and shadcn/ui.
-
-## Quick Start
+## Setup
 
 ```bash
-# New project
-npx create-next-app@latest my-app --typescript --tailwind --eslint --app
-cd my-app
-npx shadcn@latest init
-
-# Existing project — install deps then init
-npm install tailwindcss-animate class-variance-authority clsx tailwind-merge lucide-react
-npx shadcn@latest init
-
-# Install components
-npx shadcn@latest add button input form card dialog select table toast
+npx shadcn@latest init                 # existing app: detects framework + Tailwind, writes components.json
+npx shadcn@latest add button dialog form input select table sonner
+npx shadcn@latest add --all            # everything
 ```
 
-## Key configuration files
+New Next.js app: `npx create-next-app@latest my-app` (TypeScript, Tailwind, App Router), then `npx shadcn@latest init`. Other frameworks (Vite, Remix, TanStack Start, Astro, Laravel) have their own install page.
 
-After `init`, verify these are set:
+Check after `init`:
 
-**`components.json`** — registry path, style, Tailwind config, import aliases  
-**`tailwind.config.ts`** — `darkMode: ["class"]`, content paths include `./components/**`  
-**`globals.css`** — CSS variables for `--background`, `--foreground`, `--primary`, `--radius`, etc.  
-**`tsconfig.json`** — path aliases: `@/*` → `./*`
+- `components.json`: style, Tailwind CSS path, aliases (`@/components`, `@/lib/utils`), registries.
+- Tailwind **v4** (current default): theme tokens are CSS variables in the global CSS file under `@theme inline`; no `tailwind.config` needed; animations via `tw-animate-css`.
+- Tailwind **v3** (older projects): `tailwind.config.ts` with `darkMode: ["class"]`, content paths including components; `tailwindcss-animate`.
+- `tsconfig.json` path alias `@/*`.
 
-## Core workflow
+## Working rules
 
-1. `npx shadcn@latest add <component>` — installs to `components/ui/`
-2. Import and compose: `import { Button } from "@/components/ui/button"`
-3. Extend with `cn()` utility for conditional Tailwind classes
-4. Theme via CSS variables in `globals.css` — no component code changes needed
+- Compose from installed components: `import { Button } from "@/components/ui/button"`.
+- Merge classes with `cn()` from `@/lib/utils`; never string-concatenate Tailwind classes.
+- Variants via `cva` (class-variance-authority) inside the component, not ad-hoc props.
+- Theme through CSS variables (`--background`, `--primary`, `--radius`, …), not hardcoded Tailwind colors. Dark mode via a `ThemeProvider` (e.g. `next-themes`) toggling the `dark` class.
+- Next.js App Router: components using state, effects, or event handlers need `"use client"`; keep wrappers small so pages stay server components.
+- Toasts: use `sonner` (`<Toaster />` once in the root layout, `toast()` to fire). The older `toast`/`useToast` component is deprecated.
+- Keep Radix accessibility intact: don't strip `DialogTitle`/`aria-*`; use `VisuallyHidden` if a title shouldn't show.
+- Editing `components/ui/*` is expected, but re-running `add` overwrites it. Prefer wrapping for app-specific behavior.
 
 ## Forms (React Hook Form + Zod)
 
@@ -63,28 +48,14 @@ npm install react-hook-form zod @hookform/resolvers
 npx shadcn@latest add form input label
 ```
 
-Pattern: `Form` → `FormField` → `FormItem` → `FormLabel` + `FormControl` + `FormMessage`
-
-## Best practices
-
-- Use `cn()` from `lib/utils` for all conditional class merging.
-- Wrap `ThemeProvider` at the root for dark mode support.
-- Prefer CSS variables for theming over hardcoded Tailwind colors.
-- Server components: mark interactive wrappers with `"use client"`.
-- Toast: use `useToast()` hook + `<Toaster />` in root layout.
+Structure: `Form` → `FormField` (`control`, `name`, `render`) → `FormItem` → `FormLabel` + `FormControl` + `FormDescription` + `FormMessage`. Schema with `zod`, resolver with `zodResolver(schema)`, and infer types with `z.infer<typeof schema>`.
 
 ## Reference files
 
-| File | Contents |
-|------|----------|
-| `reference.md` | Component API quick reference (Button, Input, Dialog, Select, Table, Toast, Sheet) |
-| `ui-reference.md` | Extended component patterns and composition examples |
-| `official-ui-reference.md` | Full official component documentation |
-| `learn.md` | Learning path and deeper guides |
+| File                       | Contents                                                                              |
+| -------------------------- | ------------------------------------------------------------------------------------- |
+| `learn.md`                 | Concepts and learning path                                                            |
+| `ui-reference.md`          | Snippets from ui.shadcn.com: framework installs, `components.json`, registry examples, sidebar |
+| `official-ui-reference.md` | Snippets from ui.shadcn.com: changelog, registry authoring/namespaces, component usage (button, chart, navigation-menu, …) |
 
-## Constraints
-
-- Requires Tailwind CSS v3 (v4 support is experimental as of shadcn 0.9+).
-- Interactive components need `"use client"` — cannot be used in RSC directly.
-- No built-in i18n or RTL support.
-- Toast/Sonner requires root layout placement.
+Both reference files are point-in-time scrapes. Search them with `grep -n "### <topic>"`; for anything version-sensitive, confirm against the live docs.

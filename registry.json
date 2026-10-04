@@ -29,7 +29,7 @@
           }
         }
       },
-      "description": "Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different model, not another self-review pass. Runs the content through scripts/adversary-review.sh (Codex, gpt-5.6-luna) from a chosen adversarial perspective. Not for code generation or implementation.",
+      "description": "Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different (non-Claude) model rather than another self-review pass, or when the user asks for an adversarial, red-team, or skeptical critique. Not for code generation or implementation.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/adversary-review/",
@@ -45,7 +45,7 @@
         "plan",
         "rfc"
       ],
-      "version": "0.1.1"
+      "version": "0.1.2"
     },
     {
       "adapters": {
@@ -89,7 +89,7 @@
         "security",
         "portable"
       ],
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     {
       "adapters": {
@@ -164,7 +164,7 @@
           }
         }
       },
-      "description": "Use when writing PRs, documentation, RFCs, Slack messages, reviews, incident updates, blog posts/field notes, and technical communication to improve clarity, brevity, and reduce review friction.",
+      "description": "Use when writing or rewriting PR descriptions, Slack messages, review comments, incident updates, RFC prose, blog posts/field notes, Google Docs content, or any technical communication that needs to be clearer, shorter, and lower-friction to review.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/communication-style/",
@@ -178,9 +178,10 @@
         "pr-review",
         "slack",
         "clarity",
-        "blog"
+        "blog",
+        "google-docs"
       ],
-      "version": "0.14.0"
+      "version": "0.15.0"
     },
     {
       "adapters": {
@@ -210,52 +211,7 @@
           }
         }
       },
-      "description": "Use when you need Jetpack Compose UI help (Android), Material 3 component patterns, Compose screen design review, or accessible Compose theming fixes.",
-      "entrypoint": "SKILL.md",
-      "local_overlay_only": false,
-      "location": "portable/compose-material3/",
-      "name": "compose-material3",
-      "personal_machine_only": true,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "android",
-        "kotlin",
-        "compose",
-        "material3",
-        "ui"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Use when exploring large codebases, summarizing lengthy tool output, or optimizing a session for token cost and context bloat.",
+      "description": "Use when exploring a large or unfamiliar codebase, handling long tool or log output, approaching context limits, or optimizing a session for token cost and context bloat.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/context-optimization/",
@@ -270,7 +226,7 @@
         "tokens",
         "efficiency"
       ],
-      "version": "0.1.0"
+      "version": "0.2.0"
     },
     {
       "adapters": {
@@ -344,52 +300,7 @@
           }
         }
       },
-      "description": "Use when reviewing a technical design document or RFC as a senior/staff engineer before sharing. Invoke after drafting to catch structural, clarity, and completeness issues.",
-      "entrypoint": "SKILL.md",
-      "local_overlay_only": false,
-      "location": "portable/design-doc-review/",
-      "name": "design-doc-review",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "review",
-        "design",
-        "rfc",
-        "quality",
-        "rubric"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Use when debugging bugs or regressions with a disciplined loop: feedback signal, reproduce, hypothesize, instrument, fix, and lock with regression coverage.",
+      "description": "Use when debugging a bug, regression, crash, flaky test, or unexplained behavior, especially when the cause is not obvious or a first fix attempt already failed.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/diagnose/",
@@ -404,7 +315,7 @@
         "reliability",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     {
       "adapters": {
@@ -540,7 +451,7 @@
         "compliance",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     {
       "adapters": {
@@ -570,7 +481,7 @@
           }
         }
       },
-      "description": "Use when setting up git worktrees, configuring hooks, automating multi-branch workflows, or handling complex merge/rebase scenarios beyond routine commit/push.",
+      "description": "Use when setting up git worktrees, writing or installing git hooks, recovering from a bad merge/rebase/reset, untangling history, or automating multi-branch workflows beyond routine commit/push. Not for commit message wording (see commit-messages).",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/git-workflow/",
@@ -583,10 +494,12 @@
         "automation",
         "worktrees",
         "hooks",
-        "workflow",
-        "version-control"
+        "rebase",
+        "recovery",
+        "version-control",
+        "workflow"
       ],
-      "version": "0.1.0"
+      "version": "0.2.0"
     },
     {
       "adapters": {
@@ -631,7 +544,7 @@
         "sre",
         "portable"
       ],
-      "version": "0.2.0"
+      "version": "0.2.1"
     },
     {
       "adapters": {
@@ -707,7 +620,7 @@
           }
         }
       },
-      "description": "Use when writing, reviewing, or refactoring Go code to apply idiomatic engineering standards. Triggers on .go files, go.mod references, or Go-related tasks.",
+      "description": "Use when writing, reviewing, testing, or refactoring Go code (.go files, go.mod, goroutines, error wrapping, interfaces, table-driven tests, golangci-lint).",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/go-standards/",
@@ -717,57 +630,14 @@
       "runtime": null,
       "tags": [
         "go",
+        "golang",
         "standards",
         "idioms",
         "error-handling",
-        "concurrency"
+        "concurrency",
+        "testing"
       ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Use when writing content for Google Docs \u2014 internal docs, design summaries, proposals, updates, reviews \u2014 to produce clean, lightly formatted, professional output that looks natural when pasted into Google Docs.",
-      "entrypoint": "SKILL.md",
-      "local_overlay_only": false,
-      "location": "portable/google-docs-style/",
-      "name": "google-docs-style",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "writing",
-        "google-docs",
-        "formatting",
-        "style",
-        "portable"
-      ],
-      "version": "0.1.0"
+      "version": "0.2.0"
     },
     {
       "adapters": {
@@ -809,16 +679,16 @@
         "grenadianbuzz",
         "product",
         "mobile",
-        "android",
         "api",
         "backend",
         "frontend",
         "architecture",
+        "android",
         "openapi",
         "prd",
         "newsletter"
       ],
-      "version": "0.7.0"
+      "version": "0.8.0"
     },
     {
       "adapters": {
@@ -908,7 +778,7 @@
         "resume",
         "portable"
       ],
-      "version": "0.2.0"
+      "version": "0.2.1"
     },
     {
       "adapters": {
@@ -1258,7 +1128,7 @@
           }
         }
       },
-      "description": "Use when the user asks to review personal reminders, calendar events, Apple Notes context, family plans, or general life-admin tasks on a macOS machine.",
+      "description": "Use when the user asks to review personal reminders, calendar events, or Apple Notes context, plan a trip, family outing, party, or life milestone, or sort out general life-admin tasks on a macOS machine.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/life-organizer/",
@@ -1275,7 +1145,7 @@
         "planning",
         "macos"
       ],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     {
       "adapters": {
@@ -1485,7 +1355,7 @@
           }
         }
       },
-      "description": "Material Design 3 and Jetpack Compose patterns for native Android. Use when designing Android interfaces, implementing Compose UI, building adaptive layouts, or applying M3 theming. Deep-dives in references/: material3-theming.md, compose-components.md, android-navigation.md.",
+      "description": "Use when building, refactoring, or reviewing native Android UI with Jetpack Compose and Material 3: screen layout, components, theming, dark mode, adaptive/tablet layouts, navigation, or accessibility (TalkBack, touch targets, contrast).",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/mobile-android-design/",
@@ -1499,9 +1369,9 @@
         "compose",
         "material3",
         "ui",
-        "grenadianbuzz"
+        "accessibility"
       ],
-      "version": "0.1.0"
+      "version": "0.2.0"
     },
     {
       "adapters": {
@@ -1586,51 +1456,7 @@
           }
         }
       },
-      "description": "Use when writing or reviewing Python code style, configuring ruff/mypy/pyright, writing docstrings, or establishing naming conventions and documentation standards for a Python project.",
-      "entrypoint": "SKILL.md",
-      "local_overlay_only": false,
-      "location": "portable/python-code-style/",
-      "name": "python-code-style",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "python",
-        "style",
-        "linting",
-        "documentation"
-      ],
-      "version": "1.0.0"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Use when writing, reviewing, or testing Python code \u2014 establishes project style, type-safety, testing defaults, and CI quality gates.",
+      "description": "Use when writing, reviewing, refactoring, or testing Python code, writing pytest tests or mocks, configuring ruff/mypy/pyright, or setting up a Python project's style, typing, and CI quality gates.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/python/",
@@ -1640,12 +1466,14 @@
       "runtime": null,
       "tags": [
         "python",
+        "pytest",
         "style",
-        "testing",
+        "linting",
         "type-safety",
+        "testing",
         "quality"
       ],
-      "version": "1.0.0"
+      "version": "2.0.0"
     },
     {
       "adapters": {
@@ -1675,69 +1503,24 @@
           }
         }
       },
-      "description": "Use when drafting or refining changelog entries and release notes from commits, PRs, or code changes.",
+      "description": "Use when cutting a release, bumping a semver version, tagging, writing changelog entries or user-facing release notes from commits/PRs, or publishing to npm, PyPI, crates.io, GitHub Releases, or a Claude plugin marketplace.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
-      "location": "portable/release-notes/",
-      "name": "release-notes",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "release",
-        "changelog",
-        "version",
-        "notes",
-        "documentation"
-      ],
-      "version": "1.0.0"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Use when releasing a new version, bumping semver, generating changelogs, or publishing to npm/PyPI/Cargo/GitHub. Supports Node.js, Python, Rust, Claude Plugin, and generic projects.",
-      "entrypoint": "SKILL.md",
-      "local_overlay_only": false,
-      "location": "portable/release-skills/",
-      "name": "release-skills",
+      "location": "portable/release/",
+      "name": "release",
       "personal_machine_only": false,
       "portable": true,
       "runtime": null,
       "tags": [
         "release",
         "versioning",
-        "changelog",
         "semver",
+        "changelog",
+        "release-notes",
         "publishing",
-        "sbom",
-        "portable"
+        "sbom"
       ],
-      "version": "1.0.0"
+      "version": "2.0.0"
     },
     {
       "adapters": {
@@ -1767,7 +1550,7 @@
           }
         }
       },
-      "description": "Use when proposing a significant engineering change, writing a technical design doc, or architecture proposal and need a tight, reviewable RFC with optional Mermaid diagrams.",
+      "description": "Use when writing an RFC, technical design doc, or architecture proposal for a significant engineering change, or when reviewing one (yours or someone else's) for structural, clarity, and completeness gaps before it is shared.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/rfc/",
@@ -1779,10 +1562,13 @@
         "rfc",
         "architecture",
         "design",
+        "design-review",
+        "mermaid",
+        "rubric",
         "tradeoffs",
         "rollout"
       ],
-      "version": "1.0.0"
+      "version": "1.1.0"
     },
     {
       "adapters": {
@@ -1812,7 +1598,7 @@
           }
         }
       },
-      "description": "Use when preserving cross-session workflow context, tracking in-flight tasks, or promoting durable handoff artifacts across agent runs.",
+      "description": "Use when preserving cross-session workflow context, tracking in-flight tasks, recording decisions/blockers/conventions/preferences, or promoting durable handoff artifacts across agent runs via the session_memory MCP or its CLI fallback.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/session-memory-mcp/",
@@ -1824,9 +1610,10 @@
         "mcp",
         "memory",
         "workflow",
-        "continuity"
+        "continuity",
+        "leanctx"
       ],
-      "version": "0.3.4"
+      "version": "0.4.0"
     },
     {
       "adapters": {
@@ -1856,7 +1643,7 @@
           }
         }
       },
-      "description": "Use when setting up shadcn/ui, installing components, building forms with React Hook Form and Zod, customizing themes with Tailwind CSS, or implementing accessible UI patterns (buttons, dialogs, dropdowns, tables, complex layouts).",
+      "description": "Use when setting up shadcn/ui, adding or customizing its components, building forms with React Hook Form and Zod, theming with Tailwind CSS variables and dark mode, using the shadcn CLI or registries, or building accessible React UI (dialogs, dropdowns, tables, sidebars) in Next.js, Vite, Remix, or TanStack Start.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/shadcn-ui/",
@@ -1867,57 +1654,13 @@
       "tags": [
         "shadcn",
         "react",
+        "tailwind",
+        "radix",
         "ui",
+        "forms",
         "portable"
       ],
-      "version": "0.2.0"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Use when authoring or maintaining portable skills and custom commands to ensure correctness, discoverability, and long-term maintainability across tools and machines.",
-      "entrypoint": "SKILL.md",
-      "local_overlay_only": false,
-      "location": "portable/skills-and-commands-checklist/",
-      "name": "skills-and-commands-checklist",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "authoring",
-        "skills",
-        "commands",
-        "quality",
-        "portability",
-        "validation",
-        "maintenance"
-      ],
-      "version": "1.3.0"
+      "version": "0.3.0"
     },
     {
       "adapters": {
@@ -2014,58 +1757,6 @@
           "mode": "include",
           "path": "SKILL.md"
         },
-        "copilot": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "cursor": {
-          "mode": "import",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "copilot": {
-            "min_version": "*"
-          },
-          "cursor": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Use when implementing or modifying Python code and pytest tests and need concise, typed, production-ready changes with modern syntax, walrus-operator patterns, fixtures, annotated mocks, @patch usage, and Ruff/pytest quality gates.",
-      "entrypoint": "SKILL.md",
-      "local_overlay_only": false,
-      "location": "portable/writing-modern-python/",
-      "name": "writing-modern-python",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "python",
-        "pytest",
-        "quality",
-        "testing",
-        "portable"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
         "opencode": {
           "mode": "native",
           "path": "SKILL.md"
@@ -2088,7 +1779,7 @@
           }
         }
       },
-      "description": "Use when you have a spec or requirements for a multi-step task, before touching code",
+      "description": "Use when you have a spec, requirements, or an agreed design for a multi-step task and need an implementation or action plan before touching code, or when a plan needs owners, estimates, dependencies, and success criteria.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/writing-plans/",
@@ -2099,9 +1790,10 @@
       "tags": [
         "planning",
         "workflow",
+        "tdd",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.2.0"
     },
     {
       "adapters": {
@@ -2131,7 +1823,7 @@
           }
         }
       },
-      "description": "Use when creating new skills, editing existing skills, or verifying skills work before deployment.",
+      "description": "Use when creating a new skill or custom command, editing, consolidating, or retiring an existing one, reviewing a skill library for quality, or verifying a skill actually changes agent behavior before relying on it.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/writing-skills/",
@@ -2141,12 +1833,14 @@
       "runtime": null,
       "tags": [
         "skills",
+        "commands",
         "authoring",
         "validation",
+        "maintenance",
         "documentation",
         "portable"
       ],
-      "version": "0.2.1"
+      "version": "0.3.0"
     }
   ]
 }

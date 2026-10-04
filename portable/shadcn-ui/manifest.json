@@ -1,14 +1,17 @@
 {
   "schema_version": "1.0",
   "name": "shadcn-ui",
-  "description": "Use when setting up shadcn/ui, installing components, building forms with React Hook Form and Zod, customizing themes with Tailwind CSS, or implementing accessible UI patterns (buttons, dialogs, dropdowns, tables, complex layouts).",
-  "version": "0.2.0",
+  "description": "Use when setting up shadcn/ui, adding or customizing its components, building forms with React Hook Form and Zod, theming with Tailwind CSS variables and dark mode, using the shadcn CLI or registries, or building accessible React UI (dialogs, dropdowns, tables, sidebars) in Next.js, Vite, Remix, or TanStack Start.",
+  "version": "0.3.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
     "shadcn",
     "react",
+    "tailwind",
+    "radix",
     "ui",
+    "forms",
     "portable"
   ],
   "adapters": {

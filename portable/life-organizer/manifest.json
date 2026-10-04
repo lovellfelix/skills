@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "name": "life-organizer",
-  "description": "Use when the user asks to review personal reminders, calendar events, Apple Notes context, family plans, or general life-admin tasks on a macOS machine.",
-  "version": "0.1.0",
+  "description": "Use when the user asks to review personal reminders, calendar events, or Apple Notes context, plan a trip, family outing, party, or life milestone, or sort out general life-admin tasks on a macOS machine.",
+  "version": "0.1.1",
   "portable": true,
   "personal_machine_only": true,
   "entrypoint": "SKILL.md",

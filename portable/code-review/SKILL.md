@@ -2,7 +2,7 @@
 name: code-review
 description: Use when reviewing code changes, a PR, or a commit and need structured, severity-graded findings covering correctness, security, reliability, and maintainability.
 metadata:
-  version: 0.2.0
+  version: 0.3.0
   portable: true
   tags: [review, quality, security, portable]
 ---
@@ -28,6 +28,8 @@ Structured review focused on bugs, risk, and actionable improvements — not sty
 - `github-pr-review` for end-to-end PR review workflows.
 - `github` for fetching PR context, checks, and CI data via `gh`.
 - `communication-style` for concise review writeups with low friction.
+- Language standards to apply alongside the checklist: `python`, `go-standards`, `mobile-android-design` (Compose UI).
+- `deep-audit` for whole-codebase health; `improve-codebase-architecture` for structural refactoring candidates.
 
 ## Review structure
 
@@ -51,18 +53,25 @@ Output sections:
 ## Steps
 
 1. Identify the target (diff, PR, file, or directory to review).
-2. Auto-detect language from file extensions (.py, .js, .ts, .go, .kt, .sh).
-3. Apply the checklist by category in order: Correctness → Security → Reliability → Performance → Maintainability.
-4. Format each finding as `[SEVERITY] File:line — Observation`.
-5. Present findings inline or write to a review file if requested.
-6. End with completion markers.
+2. Read the surrounding code, not just the diff: callers, tests, and config the change depends on.
+3. Detect languages from file extensions and load the matching language skill if one exists.
+4. Apply the checklist by category in order: Correctness → Security → Reliability → Performance → Maintainability.
+5. Verify each finding before reporting: trace the failing input or path. Drop anything you can't substantiate.
+6. Format each finding as `[SEVERITY] File:line — Observation`.
+7. Present findings inline, or write to a review file if requested.
+8. End with completion markers.
 
 ## Completion Markers
 
 Every review MUST end with:
+
+```text
 ✓ REVIEW_COMPLETE: {target} ({file_count} files, {line_count} lines)
-✓ SECURITY: {High/Medium/Low/None}
+✓ SECURITY: {Critical/High/Medium/Low/None}
 ✓ QUALITY: {critical_count} critical, {improvements_count} improvements
+```
+
+## Checklist
 
 ### Correctness
 - Off-by-one errors, null/undefined dereferences, wrong operator precedence.

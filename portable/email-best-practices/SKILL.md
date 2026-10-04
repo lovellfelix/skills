@@ -2,7 +2,7 @@
 name: email-best-practices
 description: Use when building email features, emails going to spam, high bounce rates, setting up SPF/DKIM/DMARC authentication, implementing email capture, ensuring compliance (CAN-SPAM, GDPR, CASL), handling webhooks, retry logic, or deciding transactional vs marketing.
 metadata:
-  version: 0.1.0
+  version: 0.1.1
   portable: true
   tags: [email, deliverability, compliance, portable]
 ---
@@ -47,6 +47,7 @@ Guidance for building deliverable, compliant, user-friendly emails.
 | Handle retries, idempotency, errors | [Sending Reliability](./resources/sending-reliability.md) |
 | Process delivery events, set up webhooks | [Webhooks & Events](./resources/webhooks-events.md) |
 | Manage bounces, complaints, suppression | [List Management](./resources/list-management.md) |
+| Show brand logo in inboxes (BIMI) | [Branding](./resources/branding.md) |
 
 ## Start Here
 

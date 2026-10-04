@@ -2,7 +2,7 @@
 name: github-pr-review
 description: Use when reviewing a GitHub PR end-to-end with SRE/infra-aware checklists, especially when reproducible findings are needed or the review will be posted back via the gh CLI.
 metadata:
-  version: 0.2.0
+  version: 0.2.1
   portable: true
   tags: [review, github, pr, sre, portable]
 ---
@@ -68,7 +68,7 @@ Note: For generic code correctness/security/reliability checks reference the por
 - Drift potential: does this restore or override cluster-wide defaults? How will it interact with existing operator state?
 - Required-field correctness: required keys present; parse-don't-validate pattern (use explicit types, not permissive parsing)
 - Env-specific correctness: secrets vs configmap separation, no production creds in non-prod files
-- Confetti / linter compliance: run confetti-validate or repo linter and include results
+- Linter / schema compliance: run the repo's config validator or linter (e.g. `yamllint`, `kubeconform`, a project-specific validator) and include results
 - Impact scope: which environments/namespaces are targeted?
 
 #### Infrastructure / Kubernetes
@@ -163,14 +163,15 @@ Approve with comments:
 gh pr review <PR> --approve -b "LGTM with minor nits: {short-list}"
 ```
 
-Post an inline file/line comment using the GitHub API (use when diff position is exact):
+Post an inline comment on a specific line of the PR head (use `side=LEFT` for a deleted line; add `-F start_line=<M>` for a multi-line range):
 
 ```bash
-gh api repos/:owner/:repo/pulls/<PR>/comments \
+gh api repos/{owner}/{repo}/pulls/<PR>/comments \
   -f body='...' \
-  -f commit_id='<COMMIT_SHA>' \
+  -f commit_id="$(gh pr view <PR> --json headRefOid -q .headRefOid)" \
   -f path='path/to/file.yaml' \
-  -f position=<N>
+  -F line=<N> \
+  -f side=RIGHT
 ```
 
 Use the API form only when a finding maps to a specific diff line; otherwise use `gh pr review --comment` for the full review body.
@@ -183,7 +184,7 @@ Use the API form only when a finding maps to a specific diff line; otherwise use
 
 ```
 ✓ REVIEW_COMPLETE: {pr-url} ({file_count} files, {line_count} lines)
-✓ SECURITY: {High/Medium/Low/None}
+✓ SECURITY: {Critical/High/Medium/Low/None}
 ✓ QUALITY: {critical_count} critical, {improvements_count} improvements
 ```
 

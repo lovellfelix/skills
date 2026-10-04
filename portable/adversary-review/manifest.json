@@ -1,11 +1,18 @@
 {
   "schema_version": "1.0",
   "name": "adversary-review",
-  "description": "Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different model, not another self-review pass. Runs the content through scripts/adversary-review.sh (Codex, gpt-5.6-luna) from a chosen adversarial perspective. Not for code generation or implementation.",
-  "version": "0.1.1",
+  "description": "Use when a plan, design doc, RFC, proposal, or incident analysis needs a genuine second opinion from a different (non-Claude) model rather than another self-review pass, or when the user asks for an adversarial, red-team, or skeptical critique. Not for code generation or implementation.",
+  "version": "0.1.2",
   "portable": true,
   "entrypoint": "SKILL.md",
-  "tags": ["review", "adversarial", "critique", "second-opinion", "plan", "rfc"],
+  "tags": [
+    "review",
+    "adversarial",
+    "critique",
+    "second-opinion",
+    "plan",
+    "rfc"
+  ],
   "adapters": {
     "opencode": {
       "path": "SKILL.md",
