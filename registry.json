@@ -962,7 +962,7 @@
         "root-cause-analysis",
         "operations"
       ],
-      "version": "0.3.0"
+      "version": "0.3.1"
     },
     {
       "adapters": {
@@ -1237,7 +1237,7 @@
         "navigation",
         "places"
       ],
-      "version": "0.3.0"
+      "version": "0.3.1"
     },
     {
       "adapters": {
@@ -1401,7 +1401,7 @@
           }
         }
       },
-      "description": "Use when agents need to retrieve or store secrets/passwords/credentials backed by the pass CLI, or when a human operator is provisioning/rotating credentials via pass-run.sh/pass-store.sh.",
+      "description": "Use when an agent needs to use or store an API key, token, password, or other credential backed by the pass CLI (pass-run.sh / pass-store.sh), or when a human operator is provisioning, rotating, or backing up credentials in ~/.password-store.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/pass-secrets-management/",
@@ -1418,15 +1418,13 @@
         "gpg",
         "password-store",
         "agent-automation",
-        "anti-leak",
-        "permission-escalation",
-        "version-control",
         "ssh",
         "key-rotation",
+        "rotate-agent-key",
         "pass-run",
         "pass-store"
       ],
-      "version": "0.5.0"
+      "version": "0.6.0"
     },
     {
       "adapters": {
@@ -1749,7 +1747,7 @@
         "portable",
         "personal-assistant"
       ],
-      "version": "0.1.0"
+      "version": "0.1.1"
     },
     {
       "adapters": {

@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "name": "pass-secrets-management",
-  "description": "Use when agents need to retrieve or store secrets/passwords/credentials backed by the pass CLI, or when a human operator is provisioning/rotating credentials via pass-run.sh/pass-store.sh.",
-  "version": "0.5.0",
+  "description": "Use when an agent needs to use or store an API key, token, password, or other credential backed by the pass CLI (pass-run.sh / pass-store.sh), or when a human operator is provisioning, rotating, or backing up credentials in ~/.password-store.",
+  "version": "0.6.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
@@ -14,11 +14,9 @@
     "gpg",
     "password-store",
     "agent-automation",
-    "anti-leak",
-    "permission-escalation",
-    "version-control",
     "ssh",
     "key-rotation",
+    "rotate-agent-key",
     "pass-run",
     "pass-store"
   ],
