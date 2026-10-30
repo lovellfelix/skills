@@ -14,7 +14,7 @@ Integrated product and technical guidance across GrenadianBuzz surfaces. API-fir
 
 ## Authoritative Roadmap
 
-The single source of truth for current planning is **`docs/ROADMAP.md`** in the workspace (`~/projects/grenadianbuzz/docs/ROADMAP.md`). When in doubt about priority, sequence, or what's superseded, read it first. This skill provides background context; ROADMAP.md provides the active plan.
+Planning moved on 2026-10-14 to the **`lovellfelix/grenadianbuzz-platform`** repo, cloned at `~/projects/grenadianbuzz/grenadianbuzz-platform`. Its `roadmap/README.md` is the active cross-repo plan, and the open planning PRs there hold proposed Q4 changes that have not been accepted yet. When in doubt about priority, sequence, or what's superseded, read it first. `docs/WORKSPACE.md` in that repo covers the local workspace layout and setup. The old `docs/ROADMAP.md` workspace path no longer exists. This skill provides background context; the platform repo provides the active plan.
 
 Five docs are explicitly superseded and bannered (do not use for current planning): `IMPLEMENTATION_ROADMAP.md`, `IMPLEMENTATION_CHECKLIST.md`, `ASSESSMENT_AND_PLAN.md`, `INTEGRATION_COMPLETE.md`, `CROSS_REPO_INTEGRATION.md`.
 
@@ -24,7 +24,7 @@ Three PRDs were archived 2026-05-09 to `docs/prd/_archive/`: `PROJECT_PRD.md`, `
 
 ## Priorities & Standing Decisions (as of 2026-05-14)
 
-Point-in-time. `docs/ROADMAP.md` and the wiki note win where they disagree. For current issue/PR state, query it live (`gh issue list` / `gh pr list` per repo) instead of trusting counts here.
+Point-in-time. The platform repo's roadmap and the wiki note win where they disagree. For current issue/PR state, query it live (`gh issue list` / `gh pr list` per repo) instead of trusting counts here.
 
 - **Tier 1**: AI Newsletter pipeline (CLI #50–59, #48 metrics, API #307/#308, PR #302). The single product bet for 2026.
 - **Tier 2**: Android foundation (#254 → #282 → #287 → #255/#253). No UI redesign (#293) until done.
