@@ -135,5 +135,77 @@ printf -- '---\nname: demo\ndescription: Demo.\n---\n' >"$TMPDIR_ROOT/fork-nokey
 run_check 2 "missing metadata key exits 2" demo "$TMPDIR_ROOT/fork-nokey" >/dev/null \
   && pass "missing metadata key exits 2"
 
+# 11b. A `metadata:` block that omits version must be reported as missing,
+# not silently treated as absent frontmatter.
+mkdir -p "$TMPDIR_ROOT/fork-meta-noversion"
+{
+  printf -- '---\n'
+  printf 'name: demo\n'
+  printf 'metadata:\n'
+  printf '  tags: [alpha, beta]\n'
+  printf '  portable: true\n'
+  printf -- '---\n'
+} >"$TMPDIR_ROOT/fork-meta-noversion/SKILL.md"
+out="$(run_check 2 "metadata without version exits 2" demo "$TMPDIR_ROOT/fork-meta-noversion" || true)"
+[[ "$out" == *"metadata.version"* ]] \
+  && pass "metadata without version names the missing key" \
+  || fail "metadata without version output: $out"
+
+# 11c. A `metadata:` block that omits tags must be reported as missing.
+mkdir -p "$TMPDIR_ROOT/fork-meta-notags"
+{
+  printf -- '---\n'
+  printf 'name: demo\n'
+  printf 'metadata:\n'
+  printf '  version: 0.2.0\n'
+  printf -- '---\n'
+} >"$TMPDIR_ROOT/fork-meta-notags/SKILL.md"
+out="$(run_check 2 "metadata without tags exits 2" demo "$TMPDIR_ROOT/fork-meta-notags" || true)"
+[[ "$out" == *"metadata.tags"* ]] \
+  && pass "metadata without tags names the missing key" \
+  || fail "metadata without tags output: $out"
+
+# 12. Block-style YAML sequence for tags is parsed and compares equally to the
+# same tags in flow style (no false drift).
+mkdir -p "$TMPDIR_ROOT/fork-blocktags"
+{
+  printf -- '---\n'
+  printf 'name: demo\n'
+  printf 'metadata:\n'
+  printf '  version: 0.2.0\n'
+  printf '  tags:\n'
+  printf '    - beta\n'
+  printf '    - alpha\n'
+  printf -- '---\n'
+} >"$TMPDIR_ROOT/fork-blocktags/SKILL.md"
+run_check 0 "block-sequence tags parse" demo "$TMPDIR_ROOT/fork-blocktags" >/dev/null \
+  && pass "block-sequence tags compare without drift"
+
+# 13. Flow mapping on the metadata key is parsed.
+mkdir -p "$TMPDIR_ROOT/fork-flowmap"
+{
+  printf -- '---\n'
+  printf 'name: demo\n'
+  printf 'metadata: {version: 0.2.0, tags: [alpha, beta]}\n'
+  printf -- '---\n'
+} >"$TMPDIR_ROOT/fork-flowmap/SKILL.md"
+run_check 0 "flow-mapping metadata parses" demo "$TMPDIR_ROOT/fork-flowmap" >/dev/null \
+  && pass "flow-mapping metadata parses"
+
+# 14. A symlinked SKILL.md (including a broken one) is reported as a symlink
+# error, not as a missing file.
+mkdir -p "$TMPDIR_ROOT/fork-skillsymlink"
+ln -s "$TMPDIR_ROOT/nonexistent-target.md" "$TMPDIR_ROOT/fork-skillsymlink/SKILL.md"
+out="$(run_check 2 "broken SKILL.md symlink rejected" demo "$TMPDIR_ROOT/fork-skillsymlink" || true)"
+[[ "$out" == *"SKILL.md is a symlink"* ]] \
+  && pass "broken SKILL.md symlink reports symlink error" \
+  || fail "broken SKILL.md symlink output: $out"
+
+# 15. Missing-key errors preserve the underlying parser message.
+out="$(run_check 2 "missing key detail preserved" demo "$TMPDIR_ROOT/fork-meta-noversion" || true)"
+[[ "$out" == *"missing frontmatter key"* ]] \
+  && pass "missing key detail is preserved in error output" \
+  || fail "missing key detail output: $out"
+
 printf '\n%d passed, %d failed\n' "$PASSED" "$FAILED"
 [[ "$FAILED" -eq 0 ]]
