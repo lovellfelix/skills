@@ -32,7 +32,12 @@ from datetime import date
 from html.parser import HTMLParser
 
 BROWSER_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) location-search-skill/0.4"
-ADULT_ONLY = {"adults", "adult", "teens", "teen", "seniors", "senior", "18+", "21+"}
+# An event is dropped when every age group it lists matches this.
+ADULT_ONLY = re.compile(r"adult|teen|senior|18\+|21\+", re.IGNORECASE)
+# LibNet age groups carry no numbers; a model given only "Tweens" often leaves
+# the age range empty, so the usual span goes next to the group.
+AGE_HINTS = ((re.compile(r"tween", re.IGNORECASE), "about 9-12 years"),
+             (re.compile(r"elementary|school age", re.IGNORECASE), "about 5-11 years"))
 
 
 def http_get(url: str, timeout: float = 20) -> bytes:
@@ -111,8 +116,9 @@ def libnet_text(events: list) -> str:
         if not isinstance(ev, dict):
             continue
         ages = [a.strip() for a in str(ev.get("ages") or "").split(",") if a.strip()]
-        if ages and all(a.lower() in ADULT_ONLY for a in ages):
+        if ages and all(ADULT_ONLY.search(a) for a in ages):
             continue
+        ages = [next((f"{a} ({hint})" for pat, hint in AGE_HINTS if pat.search(a)), a) for a in ages]
         start, end = str(ev.get("event_start") or ""), str(ev.get("event_end") or "")
         fields = [f"{start[:16]}-{end[11:16]}" if start else "", str(ev.get("title") or "").strip(),
                   f"ages: {', '.join(ages)}" if ages else "", str(ev.get("sub_title") or "").strip(),

@@ -113,6 +113,8 @@ LIBNET = [
      "allow_reg": "0", "url": "https://branch.libnet.info/event/1"},
     {"title": "Book Club", "event_start": "2026-11-16 18:00:00", "event_end": "2026-11-16 19:00:00",
      "ages": "Adults", "location": "Branch Library"},
+    {"title": "Armchair Travel", "event_start": "2026-11-16 19:00:00", "event_end": "2026-11-16 20:00:00",
+     "ages": "Teens, Teen and Adult, Adult", "location": "Branch Library"},
     {"title": "Family LEGO", "event_start": "2026-11-17 16:00:00", "event_end": "2026-11-17 17:00:00",
      "ages": "Adults, Elementary School", "allow_reg": "1", "url": "https://branch.libnet.info/event/2"},
 ]
@@ -129,7 +131,7 @@ class EventPagesTest(unittest.TestCase):
         self.assertEqual(text.splitlines(), [
             "2026-11-16 11:00-11:30 | Preschool Storytime | ages: Preschool | ages 3-5 | Branch Library"
             " | https://branch.libnet.info/event/1",
-            "2026-11-17 16:00-17:00 | Family LEGO | ages: Adults, Elementary School"
+            "2026-11-17 16:00-17:00 | Family LEGO | ages: Adults, Elementary School (about 5-11 years)"
             " | registration required | https://branch.libnet.info/event/2",
         ])
 
