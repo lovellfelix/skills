@@ -5,6 +5,8 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Overpass answers HTTP 406 to curl's default User-Agent; every call sends this.
+UA="location-search-skill/0.4 (personal assistant)"
 if [[ -f "$SCRIPT_DIR/error-handling.sh" ]]; then
   # shellcheck source=/dev/null
   source "$SCRIPT_DIR/error-handling.sh"
@@ -35,7 +37,7 @@ get_current_location() {
 
 get_ip_location() {
     local output
-    if ! output=$(curl -fsSL --connect-timeout 10 --max-time 20 "https://ipapi.co/json/" 2>&1); then
+    if ! output=$(curl -fsSL -A "$UA" --connect-timeout 10 --max-time 20 "https://ipapi.co/json/" 2>&1); then
         log_error "IP geolocation failed"
         log_info "Check network connectivity"
         return 1
@@ -52,7 +54,7 @@ get_location_from_zip() {
     local zip="$1"
     local output
     
-    if ! output=$(curl -fsSL --connect-timeout 10 --max-time 20 "https://api.zippopotam.us/us/${zip}" 2>&1); then
+    if ! output=$(curl -fsSL -A "$UA" --connect-timeout 10 --max-time 20 "https://api.zippopotam.us/us/${zip}" 2>&1); then
         log_error "ZIP code lookup failed: $zip"
         log_info "Verify ZIP code is valid US postal code"
         return 1
@@ -104,30 +106,53 @@ find_nearby() {
         gym*)
             osm_query='leisure="fitness_centre"'
             ;;
+        librar*)
+            osm_query='amenity="library"'
+            ;;
+        museum*)
+            osm_query='tourism="museum"'
+            ;;
+        zoo*)
+            osm_query='tourism="zoo"'
+            ;;
+        playground*)
+            osm_query='leisure="playground"'
+            ;;
         *)
             osm_query="name~\"$query\""
             ;;
     esac
     
-    # Overpass query
-    local overpass_query="[out:json];node[${osm_query}](around:${radius},${lat},${lon});out;"
-    local output
-    
-    # Respect Overpass rate limit (1 req/sec)
-    if ! output=$(curl -fsSL \
-        --connect-timeout 15 \
-        --max-time 45 \
-        --data "data=${overpass_query}" \
-        "https://overpass-api.de/api/interpreter" 2>&1); then
+    # nwr: buildings and areas (most libraries, parks, stores) are ways, not
+    # nodes; "out center" gives them a point.
+    local overpass_query="[out:json][timeout:40];nwr[${osm_query}](around:${radius},${lat},${lon});out center tags;"
+    local output="" server
+
+    # One request per server (rate limit: 1 req/sec); the main server is
+    # often slow or answers 502/504, so a mirror is tried next.
+    for server in https://overpass-api.de/api/interpreter https://overpass.kumi.systems/api/interpreter; do
+        if output=$(curl -fsSL -A "$UA" \
+            --connect-timeout 15 \
+            --max-time 90 \
+            --data-urlencode "data=${overpass_query}" \
+            "$server" 2>/dev/null); then
+            break
+        fi
+        output=""
+    done
+    if [[ -z "$output" ]]; then
         log_error "Overpass API request failed"
         log_info "Check network connectivity or try again (rate limit: 1 req/sec)"
         return 1
     fi
-    
-    if ! echo "$output" | jq -r '.elements[] | "\(.tags.name // "Unnamed") | \(.lat),\(.lon) | \(.tags.address // "")"' 2>/dev/null | head -10; then
+
+    if [[ "$(jq '[.elements[]? | select(.tags.name)] | length' <<< "$output" 2>/dev/null || echo 0)" == 0 ]]; then
         log_warn "No results found for: $query"
         return 1
     fi
+    jq -r '.elements[] | select(.tags.name) | (if .lat then . else .center end) as $p
+      | ([.tags["addr:housenumber"], .tags["addr:street"], .tags["addr:city"]] | map(select(. != null)) | join(" ")) as $addr
+      | "\(.tags.name) | \($p.lat),\($p.lon) | \($addr)"' <<< "$output" | head -10
 }
 
 # Calculate distance between two points (Haversine formula)
@@ -158,15 +183,11 @@ EOF
     echo "$distance"
 }
 
-# Get recommendations for things to do (using EventBrite or similar free APIs)
+# Event calendars of family venues near a place, then their text: see
+# event-sources.py and event-pages.py (Python stdlib, no API key).
 get_local_events() {
-    local lat="$1"
-    local lon="$2"
-    local radius_km="${3:-10}"
-    
-    # Use Eventbrite public API (limited, no key needed for basic queries)
-    # Or fall back to scraping public event calendars
-    echo "Feature coming soon: event discovery"
+    local lat="$1" lon="$2" radius_km="${3:-10}"
+    python3 "$SCRIPT_DIR/event-sources.py" --lat "$lat" --lon "$lon" --radius-m "$((radius_km * 1000))"
 }
 
 # Main command router
@@ -192,6 +213,16 @@ case "${1:-help}" in
     events)
         get_local_events "$2" "$3" "${4:-10}"
         ;;
+
+    event-sources)
+        # Usage: location-helper.sh event-sources --zip 94102 [--radius-m 20000]
+        shift; exec python3 "$SCRIPT_DIR/event-sources.py" "$@"
+        ;;
+
+    event-pages)
+        # Usage: location-helper.sh event-sources ... | jq .sources | location-helper.sh event-pages
+        shift; exec python3 "$SCRIPT_DIR/event-pages.py" "$@"
+        ;;
     
     help|*)
         cat <<HELP
@@ -212,7 +243,14 @@ Usage:
         Calculate distance between two points (meters)
     
     location-helper.sh events <lat> <lon> [radius_km]
-        Find local events (default: 10km radius)
+        Event calendars of family venues nearby (default: 10km radius)
+
+    location-helper.sh event-sources --zip <zip> [--radius-m M] [--max-venues N]
+        Libraries, museums, zoos, nature reserves... near a ZIP and the
+        events-calendar page of each (JSON; LibNet/CivicPlus labelled)
+
+    location-helper.sh event-pages [--date D] [--days N] < sources.json
+        Read those calendars as compact text (JSON), for a model to extract
 
 Examples:
     # Find coffee shops near user's location
