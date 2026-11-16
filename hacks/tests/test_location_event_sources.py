@@ -82,6 +82,7 @@ class EventSourcesTest(unittest.TestCase):
     def test_discover(self):
         web = FakeWeb()
         out = sources.discover(33.04, -97.03, 20000, 10, fetch=web)
+        self.assertEqual(out["version"], 1)
         self.assertEqual([(s["venue"], s["platform"], s["url"]) for s in out["sources"]], [
             ("Town Library", "civicplus", "https://lib.example/calendar.aspx?CID=26"),
             ("Branch Library", "libnet", "https://branch.libnet.info/events"),

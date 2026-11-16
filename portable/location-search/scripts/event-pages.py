@@ -10,7 +10,7 @@ Input (stdin): a JSON array of sources, as event-sources.py prints them under
     html       the page, as text (scripts, styles and markup removed)
 
 Output (stdout, JSON):
-    {"pages": [{"venue", "url", "platform", "ok": true, "text"} |
+    {"version": 1, "pages": [{"venue", "url", "platform", "ok": true, "text"} |
                {"venue", "url", "platform", "ok": false, "error"}]}
 
 Usage:
@@ -31,7 +31,9 @@ import urllib.request
 from datetime import date
 from html.parser import HTMLParser
 
-BROWSER_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) location-search-skill/0.4"
+# Bumped when the output's fields change incompatibly; callers check it.
+FORMAT_VERSION = 1
+BROWSER_UA ="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) location-search-skill/0.4"
 # An event is dropped when every age group it lists matches this.
 ADULT_ONLY = re.compile(r"adult|teen|senior|18\+|21\+", re.IGNORECASE)
 # LibNet age groups carry no numbers; a model given only "Tweens" often leaves
@@ -166,7 +168,7 @@ def main(argv: list[str] | None = None) -> int:
         print("event-pages: stdin is neither a JSON array nor URLs", file=sys.stderr)
         return 1
     pages = [read_source(s, args.date, args.days, args.max_chars) for s in sources if s.get("url")]
-    json.dump({"pages": pages}, sys.stdout)
+    json.dump({"version": FORMAT_VERSION, "pages": pages}, sys.stdout)
     print()
     return 0
 

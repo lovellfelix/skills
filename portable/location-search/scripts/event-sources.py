@@ -13,7 +13,7 @@ read them the best way:
     html       anything else
 
 Output (JSON on stdout):
-    {"center": {"lat", "lon"},
+    {"version": 1, "center": {"lat", "lon"},
      "sources": [{"venue", "kind", "distance_km", "url", "platform"}],
      "skipped": [{"venue", "reason"}]}
 
@@ -37,7 +37,9 @@ import urllib.parse
 import urllib.request
 from html.parser import HTMLParser
 
-USER_AGENT = "location-search-skill/0.4 (personal assistant; event discovery)"
+# Bumped when the output's fields change incompatibly; callers check it.
+FORMAT_VERSION = 1
+USER_AGENT ="location-search-skill/0.4 (personal assistant; event discovery)"
 BROWSER_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) location-search-skill/0.4"
 # Public Overpass instances, tried in order (the main one returns 502/504 under load).
 OVERPASS_URLS = ("https://overpass-api.de/api/interpreter",
@@ -217,7 +219,8 @@ def discover(lat: float, lon: float, radius_m: int, max_venues: int, fetch=http_
             sources.append({"venue": venue["venue"], "kind": venue["kind"],
                             "distance_km": venue["distance_km"], "url": url,
                             "platform": platform_of(url)})
-    return {"center": {"lat": lat, "lon": lon}, "sources": sources, "skipped": skipped}
+    return {"version": FORMAT_VERSION, "center": {"lat": lat, "lon": lon},
+            "sources": sources, "skipped": skipped}
 
 
 def main(argv: list[str] | None = None) -> int:
