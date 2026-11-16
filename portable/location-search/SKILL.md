@@ -2,7 +2,7 @@
 name: location-search
 description: Use when planning trips, finding nearby places, or integrating location features with a no-API-key default flow, including ZIP or postal-code lookup.
 metadata:
-  version: 0.3.1
+  version: 0.4.0
   portable: true
   tags: [maps, geocode, location, search, routing, navigation, places]
   applies_to: [personal-assistant, workflow, automation]
@@ -52,7 +52,37 @@ bash scripts/location-helper.sh current-location
 bash scripts/location-helper.sh location-from-zip 94102
 bash scripts/location-helper.sh find-nearby "coffee" 37.7749 -122.4194 2500
 bash scripts/location-helper.sh distance 37.7749 -122.4194 37.7849 -122.4094
+bash scripts/location-helper.sh event-sources --zip 94102 --radius-m 20000
+bash scripts/location-helper.sh event-sources --zip 94102 | jq .sources \
+  | bash scripts/location-helper.sh event-pages --days 8
 ```
+
+`find-nearby` maps library, museum, zoo, playground, park, coffee, restaurant,
+gas, hospital, pharmacy, atm and gym to OSM tags (fast, indexed); anything else
+is a name match, which Overpass serves slowly.
+
+## Local Events (no API key)
+
+For "what's on for kids near me" style work (the kids-events job uses this):
+
+1. `event-sources` finds libraries, museums, zoos, aquariums, nature reserves,
+   arts and community centres near a ZIP that publish a website, then the
+   events-calendar link on each site (one per venue, nearest first). Output is
+   JSON: `sources` (`venue`, `kind`, `distance_km`, `url`, `platform`) and
+   `skipped` (with the reason: blocked, unreachable, no events link).
+2. `event-pages` reads those sources as compact text for a model:
+   - `libnet` (Communico/LibNet library calendars render in JavaScript): the
+     `/eeventcaldata` JSON feed, one line per event with its age group;
+     adult/teen/senior-only events are dropped.
+   - `civicplus` (`/calendar.aspx`) and `html`: the page as text, scripts and
+     styles removed, starting near the first date when the page is long.
+
+Pages are fetched with Python's HTTP client: some city sites (Akamai) refuse
+curl. A site that still refuses or renders its calendar only in JavaScript
+yields little text; add that venue's direct calendar URL to the caller's own
+source list instead. Overpass is slow or returns 502/504 under load; both the
+helper and `event-sources` fall back to `overpass.kumi.systems`. Cache the
+discovered sources (a week is plenty): venues and calendar links rarely change.
 
 ## ZIP and Postal Code Model
 
