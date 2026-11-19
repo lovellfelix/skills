@@ -1,11 +1,11 @@
 ---
 name: homelab-gitops-flux-operations
-description: Use when deploying, upgrading, reconciling, or debugging Flux-managed workloads on the personal homelab cluster, especially HelmRelease or Kustomization changes, Flux reconcile failures, app-template apps, CrashLoopBackOff or ImagePullBackOff pods, Home Assistant issues, kubectl exec troubleshooting, SOPS secret updates, or GitHub PR creation.
+description: Use when deploying, upgrading, reconciling, or debugging Flux-managed workloads on the personal homelab cluster, especially HelmRelease or Kustomization changes, Flux reconcile failures, app-template apps, CrashLoopBackOff or ImagePullBackOff pods, the Home Assistant ingress or metrics scrape, kubectl exec troubleshooting, SOPS secret updates, or GitHub PR creation.
 metadata:
-  version: 0.1.0
+  version: 0.2.0
   portable: true
   personal_machine_only: true
-  tags: [homelab, flux, gitops, kubernetes, helmrelease, home-assistant, sops, troubleshooting]
+  tags: [homelab, flux, gitops, kubernetes, helmrelease, sops, troubleshooting]
 ---
 
 # Homelab GitOps Flux Operations
@@ -16,14 +16,14 @@ This skill is for workload operations inside the homelab cluster managed from:
 
 - `/Users/lovellfelix/projects/gitops-homelab`
 
-It covers Flux, HelmRelease edits, Kustomizations, app-template usage, Home Assistant debugging, pod exec sessions, and PR-based delivery.
+It covers Flux, HelmRelease edits, Kustomizations, app-template usage, pod exec sessions, and PR-based delivery.
 
 ## Use when
 
 - Adding or updating a HelmRelease under `cluster/homelab/...`.
 - Deploying a new app through Flux.
 - Debugging pods, events, container logs, PVCs, services, or ingress.
-- Troubleshooting Home Assistant.
+- Changing how the cluster fronts Home Assistant (ingress, ScrapeConfig). Home Assistant itself runs on an LXC: use `home-assistant-operations`.
 - Reconciling broken Flux Kustomizations or HelmReleases.
 - Creating a Git branch, commit, and PR for workload changes.
 - Handling `CrashLoopBackOff`, `ImagePullBackOff`, failed Flux health checks, substitution errors, SOPS decryption problems, ingress misroutes, PVC mount issues, or container startup failures.
@@ -36,14 +36,16 @@ It covers Flux, HelmRelease edits, Kustomizations, app-template usage, Home Assi
 
 ## Cluster Access Rules
 
-- Always use: `export KUBECONFIG=$HOME/.kubeconfig.homelab-cluster`
+- The kubeconfig is in pass as `agent/kubeconfig-homelab` (multi-line, so `--full`), not on disk. Each `pass-run.sh` call prompts once, so batch read-only checks into one script that writes `$KCFG` to a mode-600 temp file, exports `KUBECONFIG`, and deletes it on exit:
+  `pass-run.sh --secret agent/kubeconfig-homelab --full --as KCFG -- bash script.sh` (scripts in the `pass-secrets-management` skill).
+- Some machines also have `~/.kubeconfig.homelab-cluster`; use it when present.
 - Required context: `homelab-admin@homelab`
 - If errors mention `10.0.10.49:6443`, the command hit the legacy cluster and must be corrected.
+- The `flux` binary on the Mac is not the Flux CLI. Without it, suspend/resume with `kubectl patch <kind> <name> --type merge -p '{"spec":{"suspend":true}}'` and request a reconcile with `kubectl annotate --overwrite <kind>/<name> reconcile.fluxcd.io/requestedAt="$(date -u +%FT%TZ)"`.
 
-Validate before cluster work:
+Validate before cluster work (inside that script):
 
 ```bash
-export KUBECONFIG=$HOME/.kubeconfig.homelab-cluster
 kubectl config current-context
 kubectl cluster-info
 kubectl get nodes
@@ -66,7 +68,8 @@ kubectl get nodes
 - Use existing examples before inventing new structure:
   - app-template 4.x example: `cluster/homelab/default/atuin/atuin-helm-release.yaml`
   - app-template 4.x multi-replica example: `cluster/homelab/remote/openssh/helm-release-openssh.yaml`
-  - Home Assistant legacy app-template 2.x example: `cluster/homelab/default/home-assistant/ha/app/home-assistant-helm-release.yaml`
+  - legacy app-template 2.x example: `cluster/homelab/default/mosquitto/mosquitto-helm-release.yaml`
+  - external backend (Service + Endpoints + Ingress to a host outside the cluster): `cluster/homelab/default/home-assistant/ha/app/lxc-backend.yaml`
 
 ## Working Rules
 
@@ -142,34 +145,27 @@ kubectl get nodes
 
 8. When done, create PR with the validation steps and reconciliation commands you ran (copy/paste from terminal). See reference/runbook.md for quick operator one-liners for SOPS, PVC backup/restore, controller troubleshooting, Helm/Kustomize local validation, CRD checks, image pull debugging, and pre-commit guidance.
 
-## Home Assistant Defaults
+## Home Assistant (cluster side only)
 
-- Path: `cluster/homelab/default/home-assistant/ha/`
-- Flux Kustomization: `home-assistant`
-- HelmRelease: `home-assistant`
-- Namespace: `default`
-- Host: `ha.${SECRET_DOMAIN}`
-- Main PVC: `hass-config`
-- Backup PVC: `nfs-bkup-hass`
-- Uses `hostNetwork: true`
-- Probes are disabled
-- `hass-postgres-connection` currently sets `POSTGRES_URI: sqlite:////config/home-assistant_v2.db`
+Home Assistant moved off the cluster on 2026-11-16 to the `jarvis-home` LXC (10.0.10.44); there is no HA pod or HelmRelease. Operating HA itself: `home-assistant-operations`. What the cluster still owns, under `cluster/homelab/default/home-assistant/ha/app/` (Flux Kustomization `home-assistant`):
 
-That means Home Assistant troubleshooting should check the mounted config volume and sqlite path first, not assume live Postgres usage.
+- `lxc-backend.yaml`: Service + Endpoints (`${HOME_ASSISTANT_ADDR}` in `cluster-settings`) + Ingress `ha.${SECRET_DOMAIN}` on nginx-external, and the `ScrapeConfig` for `/api/prometheus` (bearer from `home-assistant-secrets/prometheus_token`, which needs a valid HA token: gitops-homelab #5160).
+- `static.yaml`: PVC `hass-config`, kept as the rollback copy until removal (#5161). Rollback = revert #5156.
+- HA can't reach cluster-only names (`*.svc`) any more; Radarr/Sonarr/Lidarr ingresses sit behind oauth2-proxy (#5158), Mosquitto is ClusterIP-only (#5159).
 
 ## Key Files
 
 - `reference/runbook.md` — operator playbooks and one-liners (SOPS, reconcile/pause/resume, PVC backup/restore, controller troubleshooting, Helm/Kustomize validation, CRD checks, image pull debugging, pre-commit).
-- `reference/home-assistant.md` — HA-specific notes and PVC details.
 - `/Users/lovellfelix/projects/gitops-homelab/AGENTS.md`
 - `/Users/lovellfelix/projects/gitops-homelab/docs/app-template-guide.md`
 
 ## Common Mistakes
 
-- Using the default kubeconfig instead of `~/.kubeconfig.homelab-cluster`.
+- Using the default kubeconfig instead of the homelab one (pass `agent/kubeconfig-homelab`).
 - Editing app YAML without updating the owning parent `kustomization.yaml` or `ks.yaml`.
 - Assuming every app uses app-template 4.x.
-- Debugging Home Assistant like a stateless web app when it is volume-backed and running with `hostNetwork` and no probes.
+- Looking for Home Assistant in the cluster: it runs on the jarvis-home LXC (`home-assistant-operations`).
+- Removing a HelmRelease while it is suspended and expecting Flux to uninstall it: check for leftover Deployment/Service/Ingress objects with the same names afterwards.
 - Forgetting to reconcile Flux or inspect controller errors after a Git change.
 
 ## Personal Machine Activation

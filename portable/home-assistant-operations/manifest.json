@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "name": "home-assistant-operations",
+  "description": "Use when operating, debugging, or changing the homelab Home Assistant (jarvis-home LXC, CT 244): writing or fixing automations and scripts, deploying config changes, checking why an automation didn't run, reading entity state or history without an API token, restarting or upgrading HA, HA backups, the Miracle home facade routines, or filing HA follow-up issues.",
+  "version": "0.1.0",
+  "portable": true,
+  "entrypoint": "SKILL.md",
+  "tags": [
+    "homelab",
+    "home-assistant",
+    "automations",
+    "lxc",
+    "podman",
+    "troubleshooting"
+  ],
+  "adapters": {
+    "opencode": {
+      "path": "SKILL.md",
+      "mode": "native"
+    },
+    "claude": {
+      "path": "SKILL.md",
+      "mode": "include"
+    },
+    "pi": {
+      "path": "SKILL.md",
+      "mode": "include"
+    }
+  },
+  "compatibility": {
+    "runtimes": {
+      "opencode": {
+        "min_version": "*"
+      },
+      "claude": {
+        "min_version": "*"
+      },
+      "pi": {
+        "min_version": "*"
+      }
+    }
+  },
+  "local_overlay_only": false,
+  "personal_machine_only": true
+}
