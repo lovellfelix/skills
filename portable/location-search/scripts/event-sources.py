@@ -52,6 +52,18 @@ VENUE_FILTERS = (
     ('tourism', 'museum|zoo|aquarium|theme_park'),
     ('leisure', 'nature_reserve'),
 )
+# Venues are ranked by distance plus a penalty in km by kind, so a library or
+# zoo a little further away beats the nearest history or art museum (live
+# test 2026-11-19: downtown, the 12 nearest venues were mostly adult museums
+# and no library). A name that speaks to children takes the penalty off.
+KIND_PENALTY_KM = {"library": 0, "zoo": 0, "aquarium": 0, "nature_reserve": 0, "theme_park": 3,
+                   "community_centre": 3, "museum": 12, "arts_centre": 12}
+CHILD_NAME = re.compile(r"child|kid|discovery|science|nature|play", re.IGNORECASE)
+# University and research collections are tagged libraries too, but run no
+# family programs.
+ACADEMIC_NAME = re.compile(r"universit|college|campus|collection|archive|research|law library|map",
+                           re.IGNORECASE)
+ACADEMIC_PENALTY_KM = 20
 EVENT_WORDS = re.compile(r"event|calendar|storytime|story-time|story time|programs?\b|kids|children|family",
                          re.IGNORECASE)
 STRONG_WORDS = re.compile(r"event|calendar", re.IGNORECASE)
@@ -89,8 +101,18 @@ def distance_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
     return 6371.0 * 2 * math.asin(math.sqrt(a))
 
 
+def family_rank(venue: dict) -> float:
+    """Distance in km plus the venue kind's penalty; lower is better."""
+    penalty = KIND_PENALTY_KM.get(venue["kind"], 12)
+    if CHILD_NAME.search(venue["venue"]):
+        penalty = 0
+    elif venue.get("academic") or ACADEMIC_NAME.search(venue["venue"]):
+        penalty += ACADEMIC_PENALTY_KM
+    return venue["distance_km"] + penalty
+
+
 def venues_from_overpass(data: dict, lat: float, lon: float) -> list[dict]:
-    """Named venues with a website, nearest first, one per website."""
+    """Named venues with a website, best for families first, one per website."""
     out, seen = [], set()
     for el in data.get("elements", []):
         tags = el.get("tags") or {}
@@ -105,9 +127,11 @@ def venues_from_overpass(data: dict, lat: float, lon: float) -> list[dict]:
             continue
         seen.add(key)
         kind = tags.get("amenity") or tags.get("tourism") or tags.get("leisure") or ""
-        out.append({"venue": name, "kind": kind, "website": website,
+        academic = (tags.get("library") in ("academic", "university", "research")
+                    or bool(ACADEMIC_NAME.search(tags.get("operator") or "")))
+        out.append({"venue": name, "kind": kind, "website": website, "academic": academic,
                     "distance_km": round(distance_km(lat, lon, here["lat"], here["lon"]), 1)})
-    return sorted(out, key=lambda v: v["distance_km"])
+    return sorted(out, key=family_rank)
 
 
 class _Links(HTMLParser):

@@ -2,7 +2,7 @@
 name: location-search
 description: Use when planning trips, finding nearby places, or integrating location features with a no-API-key default flow, including ZIP or postal-code lookup.
 metadata:
-  version: 0.4.0
+  version: 0.4.1
   portable: true
   tags: [maps, geocode, location, search, routing, navigation, places]
   applies_to: [personal-assistant, workflow, automation]
@@ -67,7 +67,10 @@ For "what's on for kids near me" style work (the kids-events job uses this):
 
 1. `event-sources` finds libraries, museums, zoos, aquariums, nature reserves,
    arts and community centres near a ZIP that publish a website, then the
-   events-calendar link on each site (one per venue, nearest first). Output is
+   events-calendar link on each site (one per venue). Venues for families come
+   first: distance plus a penalty by kind, so libraries, zoos and nature
+   reserves beat the nearest museum, and university or research libraries go
+   last. Output is
    JSON: `sources` (`venue`, `kind`, `distance_km`, `url`, `platform`) and
    `skipped` (with the reason: blocked, unreachable, no events link).
 2. `event-pages` reads those sources as compact text for a model:
