@@ -1,137 +1,57 @@
 ---
 name: session-memory-mcp
-description: Use when preserving cross-session workflow context, tracking in-flight tasks, recording decisions/blockers/conventions/preferences, or promoting durable handoff artifacts across agent runs via the session_memory MCP or its CLI fallback.
+description: Use when preserving cross-session context, recording decisions, blockers, conventions or preferences, or writing a handoff. Durable memory is plain files in ~/.agents/memory; the session_memory MCP and its SQLite store are legacy and only used when explicitly present.
 metadata:
-  version: 0.5.0
+  version: 0.6.0
   portable: true
   tags: [mcp, memory, workflow, continuity]
 ---
 
-# Session Memory MCP
+# Session Memory
 
 A small durable context layer so sessions resume without re-discovery. Store decisions, not transcripts.
 
-Related: `handoff-resume` (resume/handoff workflow built on this), `llm-wiki-workflow` (human-readable export layer).
+Related: `handoff-resume` (resume/handoff workflow), `llm-wiki-workflow` (human-readable archive).
 
-## Backend depends on the harness
+## Status
 
-Confirm which applies before treating a store as authoritative:
+The `session_memory` MCP server and its SQLite store (`~/.agents/memory/session.db`) are **legacy**: no harness registers them by default, and `session.db` is not written to any more. Durable memory is plain files:
 
-| Harness            | `session_memory` backend                                               | Tasks                                       |
-| ------------------ | ---------------------------------------------------------------------- | ------------------------------------------- |
-| Claude Code        | Standalone MCP server on SQLite `~/.agents/memory/session.db` (primary) | `create_task` / `get_tasks` / `update_task` |
-| Pi                 | `~/.agents/memory` files for durable facts                              | `workflow_tasks` → local JSON store         |
-| OpenCode           | Check the active MCP config                                             | same as backend                             |
-| Cursor, Copilot, shell | No MCP; use `scripts/smem.sh` (SQLite)                              | CLI                                         |
+| Harness     | Where memory lives                                                                 |
+| ----------- | ---------------------------------------------------------------------------------- |
+| Claude Code | Auto-memory directory (`~/.agents/memory/projects/<repo>/` when the repo sets it) + `global/` |
+| Pi          | `agent_memory` tool over `~/.agents/memory`; `workflow_tasks` for tasks             |
+| OpenCode, others | Read and write the same files directly                                        |
 
-Claude Code uses the direct SQLite server. Re-check the live MCP config if behavior looks different.
-
-Tool and argument names differ by harness. Claude Code exposes separate tools (`store_session_context`, `retrieve_session_context`, …). Pi exposes one `session_memory` tool with an `action` (`store_context`, `retrieve_context`, `assemble_context`, …). Examples below use the action form; map to the tool name your harness lists, and check the live schema before calling.
+Check `claude mcp list` / the harness MCP config before assuming a `session_memory` tool exists. Without one, use the files below. Pending in-session work goes in the harness todo list or a plan file.
 
 ## Store or skip
 
 **Never store** secrets, tokens, credentials, or private personal data.
 
-Store only when the record:
+Store only when the fact changes a future decision, captures a blocker or assumption, records a non-obvious convention, or lets a later session restart without repeating discovery. Skip raw command output, redundant status, and temporary reasoning.
 
-- changes a future decision,
-- captures a blocker, assumption, or dependency,
-- records a non-obvious project convention, or
-- lets a later session restart without repeating discovery.
+## Where facts go
 
-Skip raw command output, redundant status, and temporary reasoning.
-
-## Record shape
-
-- `key`: stable and specific: `task:auth-refactor`, `decision:path-layout`, `blocker:api-migration:missing-scope`.
-- `contextType`: `workflow` · `decision` · `blocker` · `convention` · `handoff` · `interaction`.
-- `value`: three lines: `Situation:` / `Decision:` / `Next:`.
-- `metadataJson` (optional): owner, due date, links, confidence.
-
-Stable patterns (naming, commit style, test commands) go in **conventions**, not per-session context.
-
-```json
-{
-  "action": "store_context",
-  "contextType": "blocker",
-  "key": "api:migration:blocker:missing-scope",
-  "value": "Situation: OAuth scope missing for write endpoint.\nDecision: pause write-tool rollout.\nNext: request scope update and re-test.",
-  "metadataJson": "{\"owner\":\"platform\",\"priority\":\"high\"}"
-}
-```
-
-## IDs
-
-- `project_id` = git repo basename (`dotfiles`).
-- `session_id` = repo basename for project work; `personal-assistant` for conversational sessions.
-- `assemble_active_context` searches across all harnesses regardless of `session_id`.
-
-## Session flow
-
-**Start** (silently, no announcements):
-
-1. Load preferences and project conventions.
-2. List open tasks and blockers.
-3. Retrieve specific keys only when prior context points to them; use `assemble_active_context` when continuity is unclear.
-4. Fall back to `durable_memory` / `~/.agents/memory/` files only if the above has nothing for this project.
-
-**During**: re-query only when context changes or uncertainty rises. Narrow queries over broad dumps. Track user corrections and new conventions silently.
-
-**Handoff**: write one `handoff` record pointing at key context keys and file paths; keep `projects/<project>/current.md` aligned. Full workflow: `handoff-resume`.
-
-## Core tools (keep the surface small)
-
-The server exposes 60+ actions. Normal sessions need only:
-
-| Tool                                                 | Purpose                                   |
-| ---------------------------------------------------- | ----------------------------------------- |
-| `store_session_context` / `update_session_context`   | Write or append a record                  |
-| `retrieve_session_context`                           | Read by key or type                       |
-| `assemble_active_context`                            | Pull active context to resume             |
-| `track_user_preference` / `get_user_preferences`     | Style and workflow preferences            |
-| `learn_project_convention` / `get_project_conventions` | Stable project patterns                 |
-| `create_task` / `get_tasks` / `update_task`          | Task lifecycle                            |
-| `search_memories`                                    | Full-text search                          |
-| `server_health`                                      | Availability check                        |
-
-Skip API-spec, analytics, routing-pattern, batch, and dashboard tools at runtime; they are maintenance surfaces.
-
-## CLI (hooks, scripts, debugging, no-MCP harnesses)
-
-```bash
-# SQLite store (Claude Code's primary; bundled helper)
-scripts/smem.sh sessions | list [sid] | get <key> [sid] | search <q> [sid]
-scripts/smem.sh set <type> <key> <value> [sid]
-scripts/smem.sh tasks [workflow_id] | prefs | conventions [project_id] | dump [sid]
-SESSION_DB=/path/to/session.db scripts/smem.sh list   # override DB path
-# Without [sid], smem.sh uses $SMEM_SESSION or "default", not the repo basename.
-# Pass the sid explicitly, or: export SMEM_SESSION="$(basename "$(git rev-parse --show-toplevel)")"
-```
-
-Last resort: `sqlite3 ~/.agents/memory/session.db` (read-only queries).
-
-## Durable files
+One fact per file, with `name` / `description` / `type` frontmatter, and one line per fact in the folder's `MEMORY.md` index. Save a fact in exactly one place:
 
 ```text
-~/.agents/memory/projects/<project>/  # project state; artifacts/*-latest.md read first
-~/.agents/memory/promoted/            # promoted exports, *-compact.md
-~/.agents/memory/handoffs/YYYY/MM/    # handoff packets
-~/.agents/memory/profile/             # identity and preferences
-~/.agents/memory/people/              # local-only people context
+~/.agents/memory/global/            # applies in every repo (preferences, corrections)
+~/.agents/memory/projects/<repo>/   # about one repo; project_id = git repo basename
+~/.agents/memory/handoffs/YYYY/MM/  # handoff packets (see handoff-resume)
+~/llm-wiki                          # long-form archive, promoted via llm-wiki-workflow
 ```
 
-Promotion is explicit, never automatic: `scripts/promote-session-memory.sh --session-id <id> --dry-run` to preview, then rerun without `--dry-run`.
+Facts are `user`, `feedback` (rule + **Why** + **How to apply**), `project`, or `reference`. Merge overlapping facts instead of adding near-duplicates; delete ones that turn out wrong.
 
-## Verify after writing
+## Legacy store (only if a `session.db` is present and you need old records)
 
-1. Read the key back; confirm Situation/Decision/Next.
-2. If task-tracked, confirm the task exists with the right state.
-3. For promotions, confirm the file landed under `~/.agents/memory/`.
+```bash
+scripts/smem.sh sessions | list [sid] | get <key> [sid] | search <q> [sid] | tasks | prefs | conventions
+SESSION_DB=/path/to/session.db scripts/smem.sh list
+scripts/promote-session-memory.sh --session-id <id> --dry-run   # promote old records to files
+```
 
-## Hygiene
-
-- Merge overlapping records instead of adding near-duplicate keys.
-- Prune records that no longer inform decisions.
-- Each record should be scannable in five seconds.
+`smem.sh` needs `sqlite3`. Read old records, then re-save what is still true as files.
 
 More: `examples/memory-record-patterns.md`, `reference/storage-decision-matrix.md`.

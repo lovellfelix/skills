@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "name": "session-memory-mcp",
-  "description": "Use when preserving cross-session workflow context, tracking in-flight tasks, recording decisions/blockers/conventions/preferences, or promoting durable handoff artifacts across agent runs via the session_memory MCP or its CLI fallback.",
-  "version": "0.5.0",
+  "description": "Use when preserving cross-session context, recording decisions, blockers, conventions or preferences, or writing a handoff. Durable memory is plain files in ~/.agents/memory; the session_memory MCP and its SQLite store are legacy and only used when explicitly present.",
+  "version": "0.6.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [

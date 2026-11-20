@@ -111,13 +111,9 @@ Guidance:
 - If the first lookup fails, retry with city + country context.
 - Store non-US values as `postal_code` or country-qualified text.
 
-## Session Memory
+## Saved location
 
-Reuse stored postal/ZIP preferences for future "near me" flows.
-
-```text
-session_memory action=track_user_preference category=workflow key=zip_code value=94102 confidence=1.0
-```
+Reuse a saved postal/ZIP preference for future "near me" flows. If the user gives one to keep, save it as a `user` fact under `~/.agents/memory/global/`.
 
 ## Provider and API Key Rules
 
