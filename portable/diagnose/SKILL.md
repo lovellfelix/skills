@@ -47,4 +47,4 @@ Use debugger first, then targeted logs. Tag temporary logs with a unique marker 
 
 - Remove temporary instrumentation and throwaway debug artifacts.
 - Record root cause and why the fix works.
-- If no good seam exists, flag architecture debt and hand off to `improve-codebase-architecture`.
+- If no good seam exists, flag architecture debt and hand off to `grill-with-docs` (architecture review mode).

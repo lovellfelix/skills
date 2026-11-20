@@ -211,51 +211,6 @@
           }
         }
       },
-      "description": "Use when exploring a large or unfamiliar codebase, handling long tool or log output, approaching context limits, or optimizing a session for token cost and context bloat.",
-      "entrypoint": "SKILL.md",
-      "local_overlay_only": false,
-      "location": "portable/context-optimization/",
-      "name": "context-optimization",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "performance",
-        "optimization",
-        "context",
-        "tokens",
-        "efficiency"
-      ],
-      "version": "0.2.1"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
       "description": "Use when performing a comprehensive codebase health assessment before major refactoring, migration, production readiness review, or ownership transfer.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
@@ -316,52 +271,6 @@
         "portable"
       ],
       "version": "0.1.1"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Use when writing or updating engineering documentation and want it grounded in runtime behavior rather than aspirational prose.",
-      "entrypoint": "SKILL.md",
-      "local_overlay_only": false,
-      "location": "portable/documentation/",
-      "name": "documentation",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "documentation",
-        "engineering",
-        "runbook",
-        "operations",
-        "architecture",
-        "writing"
-      ],
-      "version": "0.3.0"
     },
     {
       "adapters": {
@@ -453,54 +362,6 @@
         "portable"
       ],
       "version": "0.1.1"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Use when setting up git worktrees, writing or installing git hooks, recovering from a bad merge/rebase/reset, untangling history, or automating multi-branch workflows beyond routine commit/push. Not for commit message wording (see commit-messages).",
-      "entrypoint": "SKILL.md",
-      "local_overlay_only": false,
-      "location": "portable/git-workflow/",
-      "name": "git-workflow",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "git",
-        "automation",
-        "worktrees",
-        "hooks",
-        "rebase",
-        "recovery",
-        "version-control",
-        "workflow"
-      ],
-      "version": "0.2.1"
     },
     {
       "adapters": {
@@ -721,7 +582,7 @@
           }
         }
       },
-      "description": "Use when stress-testing a plan against existing domain language and decisions while capturing clarified terms and trade-offs in docs.",
+      "description": "Use when stress-testing a plan or design against existing domain language and decisions, or when reviewing architecture for deep-module, test-seam and locality opportunities, capturing clarified terms and trade-offs in docs.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/grill-with-docs/",
@@ -734,9 +595,11 @@
         "domain-language",
         "adr",
         "documentation",
+        "architecture",
+        "refactoring",
         "portable"
       ],
-      "version": "0.1.0"
+      "version": "0.2.0"
     },
     {
       "adapters": {
@@ -921,51 +784,6 @@
         "kubeadm",
         "ceph",
         "infrastructure"
-      ],
-      "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Use when reviewing architecture for deep-module opportunities, better test seams, and stronger locality/leverage across modules.",
-      "entrypoint": "SKILL.md",
-      "local_overlay_only": false,
-      "location": "portable/improve-codebase-architecture/",
-      "name": "improve-codebase-architecture",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "architecture",
-        "refactoring",
-        "testability",
-        "modularity",
-        "portable"
       ],
       "version": "0.1.0"
     },
@@ -1755,50 +1573,6 @@
         "personal-assistant"
       ],
       "version": "0.1.1"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Use when you have a spec, requirements, or an agreed design for a multi-step task and need an implementation or action plan before touching code, or when a plan needs owners, estimates, dependencies, and success criteria.",
-      "entrypoint": "SKILL.md",
-      "local_overlay_only": false,
-      "location": "portable/writing-plans/",
-      "name": "writing-plans",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "planning",
-        "workflow",
-        "tdd",
-        "portable"
-      ],
-      "version": "0.2.1"
     },
     {
       "adapters": {

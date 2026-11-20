@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "name": "grill-with-docs",
-  "description": "Use when stress-testing a plan against existing domain language and decisions while capturing clarified terms and trade-offs in docs.",
-  "version": "0.1.0",
+  "description": "Use when stress-testing a plan or design against existing domain language and decisions, or when reviewing architecture for deep-module, test-seam and locality opportunities, capturing clarified terms and trade-offs in docs.",
+  "version": "0.2.0",
   "portable": true,
   "entrypoint": "SKILL.md",
   "tags": [
@@ -10,6 +10,8 @@
     "domain-language",
     "adr",
     "documentation",
+    "architecture",
+    "refactoring",
     "portable"
   ],
   "adapters": {

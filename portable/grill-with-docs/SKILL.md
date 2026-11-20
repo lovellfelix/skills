@@ -1,10 +1,10 @@
 ---
 name: grill-with-docs
-description: Use when stress-testing a plan against existing domain language and decisions while capturing clarified terms and trade-offs in docs.
+description: Use when stress-testing a plan or design against existing domain language and decisions, or when reviewing architecture for deep-module, test-seam and locality opportunities, capturing clarified terms and trade-offs in docs.
 metadata:
-  version: 0.1.0
+  version: 0.2.0
   portable: true
-  tags: [planning, domain-language, adr, documentation, portable]
+  tags: [planning, domain-language, adr, documentation, architecture, refactoring, portable]
 ---
 
 # Grill with Docs
@@ -34,6 +34,16 @@ Run a disciplined grilling loop before implementation.
 - Replace fuzzy terms with canonical names.
 - Pressure-test with concrete scenarios and edge cases.
 - Surface code-vs-stated-behavior mismatches explicitly.
+
+## Architecture review mode
+
+When asked to find structural improvements rather than test a specific plan:
+
+- Read context docs and ADRs if present; otherwise use code, tests and history.
+- Look for shallow modules, pass-through abstractions, poor test seams, coupling across seams.
+- Deletion test: if removing a module just moves complexity into callers, it earned its place; if nothing changes, it was shallow.
+- Per candidate: modules involved, current friction, proposed deepening, locality and leverage gained, test-seam improvement, ADR conflict (only if worth reopening).
+- Do not implement. Ask which candidate to drill into, then run the core loop on its seam and interface.
 
 ## Output
 
