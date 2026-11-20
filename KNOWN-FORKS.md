@@ -8,29 +8,23 @@ must reconcile them separately when the corresponding portable skill changes.
 
 | Portable skill | Fork repository | Fork path | Last-synced state |
 | --- | --- | --- | --- |
-| `lean-ctx` | `lovellfelix/dotfiles` | `opencode/.config/opencode/skills/lean-ctx/SKILL.md` | **Drifted.** The last explicit portable-metadata sync was `dotfiles@28cf831` (2026-08-14). The portable source is now `skills@b95c7bc` (`metadata.version: 0.2.0`), while the fork was subsequently regenerated through `dotfiles@8a61a91` and no longer carries the tracked `metadata.version` and `metadata.tags` fields. |
+| _(none)_ | | | The `lean-ctx` fork in `lovellfelix/dotfiles` was retired along with the skill (2026-11-19). |
 
 ## Manual sync
 
-The `lean-ctx` fork has OpenCode-specific content, so review and reconcile the
-two files rather than replacing the fork blindly. After updating the portable
-skill, use this workflow:
+When a fork is registered, compare it with the portable source and reconcile it
+by hand, then verify frontmatter with `hacks/check-fork-drift.sh`:
 
 ```bash
 SKILLS_ROOT="${SKILLS_ROOT:-$HOME/projects/skills}"
-DOTFILES_ROOT="${DOTFILES_ROOT:-$HOME/.dotfiles}"
 
 git diff --no-index -- \
-  "$SKILLS_ROOT/portable/lean-ctx/SKILL.md" \
-  "$DOTFILES_ROOT/opencode/.config/opencode/skills/lean-ctx/SKILL.md" || true
-
-# Reconcile the fork, including metadata.version and metadata.tags, then verify:
-bash "$SKILLS_ROOT/hacks/check-fork-drift.sh" lean-ctx \
-  "$DOTFILES_ROOT/opencode/.config/opencode/skills/lean-ctx"
+  "$SKILLS_ROOT/portable/<skill>/SKILL.md" "<fork-path>/SKILL.md" || true
+bash "$SKILLS_ROOT/hacks/check-fork-drift.sh" <skill> "<fork-path>"
 ```
 
-Do not use `hacks/sync-skill-runtime-links.sh` for this copy. That script
-materializes runtime symlinks and does not update the flat OpenCode fork above.
+Do not use `hacks/sync-skill-runtime-links.sh` for forks. That script
+materializes runtime symlinks and does not update flat git-tracked copies.
 
 ## Adding a fork
 
