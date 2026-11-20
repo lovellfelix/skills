@@ -29,7 +29,7 @@ Structured review focused on bugs, risk, and actionable improvements — not sty
 - `github` for fetching PR context, checks, and CI data via `gh`.
 - `communication-style` for concise review writeups with low friction.
 - Language standards to apply alongside the checklist: `python`, `go-standards`, `mobile-android-design` (Compose UI).
-- `deep-audit` for whole-codebase health; `improve-codebase-architecture` for structural refactoring candidates.
+- `deep-audit` for whole-codebase health; `grill-with-docs` (architecture review mode) for structural refactoring candidates.
 
 ## Review structure
 
