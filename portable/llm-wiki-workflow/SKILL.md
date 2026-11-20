@@ -1,15 +1,15 @@
 ---
 name: llm-wiki-workflow
-description: Use when searching, reading, ingesting, or exporting ~/llm-wiki. Wiki is the export/archive layer for LeanCTX-backed project knowledge; session-memory is for live in-session context.
+description: Use when searching, reading, ingesting, or exporting ~/llm-wiki. Wiki is the human-readable archive for knowledge kept in ~/.agents/memory; session-memory is for live in-session context.
 metadata:
-  version: 0.3.0
+  version: 0.4.0
   portable: true
   tags: [llm-wiki, memory, workflow, obsidian, markdown]
 ---
 
 # LLM Wiki Workflow
 
-`~/llm-wiki` is the export/archive layer for LeanCTX-backed project knowledge. Use LeanCTX as the runtime source of truth; use the wiki for human-readable project summaries, exported decisions, and immutable imported sources.
+`~/llm-wiki` is the human-readable archive for project knowledge. Use the `~/.agents/memory/` files (global facts in `global/`, per-repo facts in `projects/<repo>/`, each folder with a `MEMORY.md` index) as the runtime source of truth; use the wiki for human-readable project summaries, exported decisions, and immutable imported sources.
 
 CLI: `llm-wiki` — standalone bash script (no external dependencies beyond git and coreutils) that defaults to `~/llm-wiki`. Override the vault path with `LLM_WIKI_PATH`.
 
@@ -23,13 +23,13 @@ This skill is personal-machine only.
 
 | Layer | Store | Use for | Lifetime |
 | --- | --- | --- | --- |
-| Live context | `session_memory` / LeanCTX | Active blockers, decisions, task state | Current session |
-| Durable runtime truth | LeanCTX `ctx_knowledge` | Project facts, corrections, reusable knowledge | Long-term |
-| Exported curated notes | `~/llm-wiki/notes/` | Human-readable project synthesis exported from LeanCTX | Long-term |
+| Live context | `session_memory` | Active blockers, decisions, task state | Current session |
+| Durable runtime truth | `~/.agents/memory/` files | Project facts, corrections, reusable knowledge | Long-term |
+| Exported curated notes | `~/llm-wiki/notes/` | Human-readable project synthesis promoted from agent memory | Long-term |
 | Exported raw sources | `~/llm-wiki/sources/` | Immutable imports from session or external sources | Permanent |
-| _(legacy)_ | `~/.agents/memory/projects/` | Old durable_memory artifacts — archive/fallback only | Deprecated |
+| Memory mirror | `~/llm-wiki/sources/agents-memory/` | Weekly fleet job mirrors `~/.agents/memory` here | Permanent |
 
-**Rule:** write durable project knowledge to LeanCTX first. Export or promote to `~/llm-wiki` when you need a human-readable archive.
+**Rule:** write durable project knowledge to `~/.agents/memory/` first. Export or promote to `~/llm-wiki` when you need a human-readable archive.
 
 ## Use when
 
@@ -65,7 +65,7 @@ llm-wiki commit --type notes \
 
 ## Session-start protocol
 
-1. Query LeanCTX project facts and active context first.
+1. Read the project's `MEMORY.md` index under `~/.agents/memory/` (and `global/`) first.
 2. `llm-wiki read notes/projects/<project>.md` when you need the exported human-readable project summary.
 3. `llm-wiki recent` to inspect recent archive changes if context is stale.
 4. Fall back to session-memory `assemble_active_context` for transient state not yet promoted.
@@ -77,9 +77,9 @@ llm-wiki recent
 
 ## Session-end / milestone protocol
 
-After completing significant work, promote LeanCTX-backed insights into the wiki archive:
+After completing significant work, promote insights from `~/.agents/memory` into the wiki archive:
 
-1. Confirm the durable fact or decision already exists in LeanCTX.
+1. Confirm the durable fact or decision already exists in `~/.agents/memory/`.
 2. Update the project note with exported decisions and status.
 3. Pull and reconcile remote wiki changes (e.g. `git -C ~/llm-wiki pull --rebase` or `git -C ~/llm-wiki pull`) and resolve any conflicts; then commit vault changes locally and push the branch to publish the exported note.
 4. If the insight is reusable, add to `notes/workflows/`.
@@ -109,13 +109,14 @@ git -C ~/llm-wiki push
     decisions/      — ADRs and principles
     workflows/      — reusable process notes
   sources/
+    agents-memory/ — weekly mirror of ~/.agents/memory (fleet job)
     durable/        — imported from durable_memory (immutable)
     session/        — promoted session-memory snapshots (immutable)
 ```
 
 ## Project note pattern
 
-`notes/projects/<project>.md` is the human-readable export/archive note for a project. LeanCTX (`ctx_knowledge`) remains the canonical source of truth for runtime facts, corrections, and durable project knowledge. This replaces the old `durable_memory` `current.md` pattern as the preferred archive format.
+`notes/projects/<project>.md` is the human-readable export/archive note for a project. The `~/.agents/memory/` files remain the canonical source of truth for runtime facts, corrections, and durable project knowledge. This replaces the old `durable_memory` `current.md` pattern as the preferred archive format.
 
 ```yaml
 ---
@@ -223,9 +224,10 @@ One commit per logical batch. Do this immediately after the write step, not at s
 
 ## Relationship to session-memory-mcp
 
-- session-memory / LeanCTX: fast lookup, current blockers, live task state, cross-session conventions, durable project facts.
+- session-memory: fast lookup, current blockers, live task state, cross-session conventions.
+- `~/.agents/memory/` files: durable project and global facts.
 - llm-wiki: exported synthesis, project history, decision records, workflow notes.
 
-Promote from LeanCTX-backed session/runtime knowledge to the wiki at session end or milestone. Query the wiki when you need the exported human-readable summary, not as the primary runtime store.
+Promote from `~/.agents/memory` to the wiki at session end or milestone. Query the wiki when you need the exported human-readable summary, not as the primary runtime store.
 
 See also: `session-memory-mcp` skill. The legacy `knowledgebase-workflow` skill is archived.

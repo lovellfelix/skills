@@ -2,7 +2,7 @@
 name: context-optimization
 description: Use when exploring a large or unfamiliar codebase, handling long tool or log output, approaching context limits, or optimizing a session for token cost and context bloat.
 metadata:
-  version: 0.2.0
+  version: 0.2.1
   portable: true
   tags: [performance, optimization, context, tokens, efficiency]
   applies_to: [all]
@@ -47,7 +47,7 @@ session_memory action=store_context key=explored:auth-flow contextType=workflow 
 - Prefer dedicated tools over shell for file discovery and file reading.
 - If shell is necessary, keep output narrow and machine-friendly (`| head`, `--json --jq`, `-q`).
 - Avoid `find`, `cat`, and broad `ls` for routine exploration.
-- Where `lean-ctx` is installed, route reads and shell output through it (see `lean-ctx`).
+- Search before reading, and read with `offset`/`limit` rather than whole files.
 
 ## Delegate Wide Searches
 

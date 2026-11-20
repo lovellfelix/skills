@@ -226,7 +226,7 @@
         "tokens",
         "efficiency"
       ],
-      "version": "0.2.0"
+      "version": "0.2.1"
     },
     {
       "adapters": {
@@ -781,7 +781,7 @@
         "resume",
         "portable"
       ],
-      "version": "0.2.1"
+      "version": "0.2.2"
     },
     {
       "adapters": {
@@ -1042,7 +1042,7 @@
           }
         }
       },
-      "description": "Use when operating or coordinating the Jarvis fleet across the Mac orchestrator, remote Jarvis hosts, managed agents, or the jarvis-claude worker and you need the correct transport, queue, scheduler, or off-LAN access path.",
+      "description": "Use when operating or coordinating the Jarvis fleet across the Mac orchestrator, remote Jarvis hosts, managed agents, or the `jarvis-worker` task worker and you need the correct transport, queue, scheduler, or off-LAN access path.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/jarvis-workflows/",
@@ -1054,7 +1054,7 @@
         "jarvis",
         "fleet",
         "managed-agents",
-        "claude-worker",
+        "worker",
         "delegation",
         "workflow",
         "tailscale",
@@ -1062,7 +1062,7 @@
         "queue",
         "portable"
       ],
-      "version": "0.2.0"
+      "version": "0.3.0"
     },
     {
       "adapters": {
@@ -1107,49 +1107,6 @@
         "migration"
       ],
       "version": "0.1.0"
-    },
-    {
-      "adapters": {
-        "claude": {
-          "mode": "include",
-          "path": "SKILL.md"
-        },
-        "opencode": {
-          "mode": "native",
-          "path": "SKILL.md"
-        },
-        "pi": {
-          "mode": "include",
-          "path": "SKILL.md"
-        }
-      },
-      "compatibility": {
-        "runtimes": {
-          "claude": {
-            "min_version": "*"
-          },
-          "opencode": {
-            "min_version": "*"
-          },
-          "pi": {
-            "min_version": "*"
-          }
-        }
-      },
-      "description": "Local context tooling for AI agents. Use it to select, shape, reuse, recover, and inspect context before inference when reading files, running shell commands, searching code, or exploring directories.",
-      "entrypoint": "SKILL.md",
-      "local_overlay_only": false,
-      "location": "portable/lean-ctx/",
-      "name": "lean-ctx",
-      "personal_machine_only": false,
-      "portable": true,
-      "runtime": null,
-      "tags": [
-        "lean-ctx",
-        "compression",
-        "context-efficiency"
-      ],
-      "version": "0.2.0"
     },
     {
       "adapters": {
@@ -1226,7 +1183,7 @@
           }
         }
       },
-      "description": "Use when searching, reading, ingesting, or exporting ~/llm-wiki. Wiki is the export/archive layer for LeanCTX-backed project knowledge; session-memory is for live in-session context.",
+      "description": "Use when searching, reading, ingesting, or exporting ~/llm-wiki. Wiki is the human-readable archive for knowledge kept in ~/.agents/memory; session-memory is for live in-session context.",
       "entrypoint": "SKILL.md",
       "local_overlay_only": false,
       "location": "portable/llm-wiki-workflow/",
@@ -1241,7 +1198,7 @@
         "obsidian",
         "markdown"
       ],
-      "version": "0.3.0"
+      "version": "0.4.0"
     },
     {
       "adapters": {
@@ -1475,7 +1432,7 @@
         "pass-run",
         "pass-store"
       ],
-      "version": "0.6.0"
+      "version": "0.6.1"
     },
     {
       "adapters": {
@@ -1659,10 +1616,9 @@
         "mcp",
         "memory",
         "workflow",
-        "continuity",
-        "leanctx"
+        "continuity"
       ],
-      "version": "0.4.1"
+      "version": "0.5.0"
     },
     {
       "adapters": {

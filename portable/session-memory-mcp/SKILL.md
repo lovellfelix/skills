@@ -2,16 +2,16 @@
 name: session-memory-mcp
 description: Use when preserving cross-session workflow context, tracking in-flight tasks, recording decisions/blockers/conventions/preferences, or promoting durable handoff artifacts across agent runs via the session_memory MCP or its CLI fallback.
 metadata:
-  version: 0.4.1
+  version: 0.5.0
   portable: true
-  tags: [mcp, memory, workflow, continuity, leanctx]
+  tags: [mcp, memory, workflow, continuity]
 ---
 
 # Session Memory MCP
 
 A small durable context layer so sessions resume without re-discovery. Store decisions, not transcripts.
 
-Related: `handoff-resume` (resume/handoff workflow built on this), `llm-wiki-workflow` (human-readable export layer), `lean-ctx` (LeanCTX tooling).
+Related: `handoff-resume` (resume/handoff workflow built on this), `llm-wiki-workflow` (human-readable export layer).
 
 ## Backend depends on the harness
 
@@ -20,13 +20,13 @@ Confirm which applies before treating a store as authoritative:
 | Harness            | `session_memory` backend                                               | Tasks                                       |
 | ------------------ | ---------------------------------------------------------------------- | ------------------------------------------- |
 | Claude Code        | Standalone MCP server on SQLite `~/.agents/memory/session.db` (primary) | `create_task` / `get_tasks` / `update_task` |
-| Pi                 | LeanCTX (`ctx_session`, `ctx_knowledge`)                                | `workflow_tasks` → `ctx_task`/`ctx_workflow` |
-| OpenCode           | Check the active MCP config; treat like Pi if LeanCTX-backed            | same as backend                             |
-| Cursor, Copilot, shell | No MCP; use `scripts/smem.sh` (SQLite) or `lean-ctx` CLI            | CLI                                         |
+| Pi                 | `~/.agents/memory` files for durable facts                              | `workflow_tasks` → local JSON store         |
+| OpenCode           | Check the active MCP config                                             | same as backend                             |
+| Cursor, Copilot, shell | No MCP; use `scripts/smem.sh` (SQLite)                              | CLI                                         |
 
-Status as of the 2026-07-09 update in `dotfiles`' `docs/plans/2026-06-04-session-memory-leanctx-migration.md`: Claude Code deliberately kept the direct SQLite server. Re-check that doc if behavior looks different.
+Claude Code uses the direct SQLite server. Re-check the live MCP config if behavior looks different.
 
-Tool and argument names differ by harness. Claude Code exposes separate tools (`store_session_context`, `retrieve_session_context`, …). Pi and LeanCTX-backed harnesses expose one `session_memory` tool with an `action` (`store_context`, `retrieve_context`, `assemble_context`, …). Examples below use the action form; map to the tool name your harness lists, and check the live schema before calling.
+Tool and argument names differ by harness. Claude Code exposes separate tools (`store_session_context`, `retrieve_session_context`, …). Pi exposes one `session_memory` tool with an `action` (`store_context`, `retrieve_context`, `assemble_context`, …). Examples below use the action form; map to the tool name your harness lists, and check the live schema before calling.
 
 ## Store or skip
 
@@ -106,11 +106,6 @@ scripts/smem.sh tasks [workflow_id] | prefs | conventions [project_id] | dump [s
 SESSION_DB=/path/to/session.db scripts/smem.sh list   # override DB path
 # Without [sid], smem.sh uses $SMEM_SESSION or "default", not the repo basename.
 # Pass the sid explicitly, or: export SMEM_SESSION="$(basename "$(git rev-parse --show-toplevel)")"
-
-# LeanCTX store (Pi's primary)
-lean-ctx knowledge export --format json
-lean-ctx task list          # requires `lean-ctx serve`
-lean-ctx session status
 ```
 
 Last resort: `sqlite3 ~/.agents/memory/session.db` (read-only queries).

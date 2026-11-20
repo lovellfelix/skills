@@ -2,7 +2,7 @@
 name: handoff-resume
 description: Use when resuming interrupted work across sessions, handing off to another agent or teammate, or creating a restart-ready status snapshot.
 metadata:
-  version: 0.2.1
+  version: 0.2.2
   portable: true
   tags: [workflow, continuity, handoff, resume, portable]
 ---
@@ -27,7 +27,7 @@ Resume work quickly from prior session state, then leave a crisp handoff for the
 ## Resume workflow
 
 1. Pull session memory first (backend depends on the harness; see `session-memory-mcp`). Use `durable_memory` / `~/.agents/memory/` files only as a fallback for handoffs not yet in the store.
-2. Check task state: `get_tasks` (Claude Code) or `workflow_tasks action=list` (Pi/LeanCTX).
+2. Check task state: `get_tasks` (Claude Code) or `workflow_tasks action=list` (Pi).
 3. Retrieve recent decisions and blockers: `assemble_active_context`, or `retrieve_context` for known keys.
 4. Validate stale assumptions before implementing (drift between memory and repo state).
 5. Build status snapshot (see template below).
@@ -37,7 +37,7 @@ Resume work quickly from prior session state, then leave a crisp handoff for the
 
 At session end or before transfer:
 
-1. Write a summary record with type `handoff` via session memory. Where LeanCTX `ctx_handoff` is available, prefer it for structured handoff artifacts.
+1. Write a summary record with type `handoff` via session memory.
 2. Promote the session to durable artifacts: `./scripts/autodream-memory.sh --session-id <id>` to preview, then add `--apply`.
 3. Leave a handoff file at `~/.agents/memory/handoffs/YYYY/MM/` using the template below (`./scripts/new-memory-handoff.sh` scaffolds it).
 

@@ -2,7 +2,7 @@
 name: pass-secrets-management
 description: Use when an agent needs to use or store an API key, token, password, or other credential backed by the pass CLI (pass-run.sh / pass-store.sh), or when a human operator is provisioning, rotating, or backing up credentials in ~/.password-store.
 metadata:
-  version: 0.6.0
+  version: 0.6.1
   portable: true
   tags:
     [
@@ -24,7 +24,7 @@ metadata:
 
 # Pass Secrets Management
 
-Secrets live in `pass` (GPG-encrypted, `~/.password-store/`). **Agents never run `pass` or `gpg`.** Both are blocked by the shell allowlist (lean-ctx, shared across Claude Code/OpenCode/Pi) and `sensitive-file-guard.sh`. That's structural, not a gap to work around.
+Secrets live in `pass` (GPG-encrypted, `~/.password-store/`). **Agents never run `pass` or `gpg`.** Direct use is blocked by `sensitive-file-guard.sh` and the harness permission rules; that's structural, not a gap to work around. Use the wrappers.
 
 Agents get two wrappers, both restricted to the `agent/` subtree:
 
@@ -101,6 +101,6 @@ Scope: <read-only? which environment?>
 
 ## Cross-harness notes
 
-- The wrappers ship in this skill, so every harness that links the skill has them. Both must be on the lean-ctx shell allowlist by basename; `pass`/`gpg` never should be.
-- Claude Code adds `sensitive-file-guard.sh`, which blocks reads of `.password-store`/`.gpg`/`.gnupg-agent` paths. Pi has no hook layer: its enforcement is the allowlist plus its `secrets.md` rule.
+- The wrappers ship in this skill, so every harness that links the skill has them. `pass`/`gpg` themselves are never allowlisted for agents.
+- Claude Code adds `sensitive-file-guard.sh`, which blocks reads of `.password-store`/`.gpg`/`.gnupg-agent` paths. Pi has no hook layer: its enforcement is its `secrets.md` rule.
 - `agent/` uses a separate `GNUPGHOME` (`~/.gnupg-agent`) with a zero-TTL cache, so even a wrapper bypass can't decrypt without a human clicking pinentry. See `reference/operator-guide.md`.

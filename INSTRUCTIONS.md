@@ -37,17 +37,18 @@ Progressive discovery: glob → grep → targeted read with limit. Don't dump en
 
 | Layer                  | Store                             | Use for                                                | Lifetime        |
 | ---------------------- | --------------------------------- | ------------------------------------------------------ | --------------- |
-| Live context           | `session_memory` (LeanCTX-backed) | Active blockers, task state, conventions, preferences  | Current session |
-| Durable runtime truth  | LeanCTX `ctx_knowledge`           | Project facts, decisions, reusable knowledge           | Long-term       |
-| Exported curated notes | `~/llm-wiki/notes/`               | Human-readable project synthesis exported from LeanCTX | Long-term       |
+| Live context           | `session_memory`                  | Active blockers, task state, conventions, preferences  | Current session |
+| Durable runtime truth  | `~/.agents/memory/` files         | Project facts, decisions, reusable knowledge           | Long-term       |
+| Exported curated notes | `~/llm-wiki/notes/`               | Human-readable project synthesis promoted from memory  | Long-term       |
 | Exported raw sources   | `~/llm-wiki/sources/`             | Immutable imports from session or external sources     | Permanent       |
 | Preferences            | `~/.claude/projects/.../memory/`  | Claude-local preference sync/cache only                | Persistent      |
-| _(deprecated)_         | `~/.agents/memory/projects/`      | Old durable_memory artifacts — archive/fallback only   | Deprecated      |
 
-- For project knowledge: write to LeanCTX first. Export/promote to `~/llm-wiki` when you want a human-readable archive.
+`~/.agents/memory/` holds plain files: `global/` for facts that apply in every repo, `projects/<repo>/` for per-repo facts. Each folder has a `MEMORY.md` index (one line per memory) and one markdown file per fact with `name`/`description`/`type` frontmatter.
+
+- For project knowledge: write to `~/.agents/memory` files first. Export/promote to `~/llm-wiki` when you want a human-readable archive.
 - `llm-wiki` defaults to `~/llm-wiki`; set `LLM_WIKI_PATH` only when you intentionally need a different vault.
-- At session start for a known project: prefer LeanCTX-backed context first; read `llm-wiki` project notes when you need the exported summary.
-- At session end / milestone: promote curated insights with `llm-wiki append` + `llm-wiki commit` after the durable knowledge exists in LeanCTX.
+- At session start for a known project: read the memory index for the project first; read `llm-wiki` project notes when you need the exported summary.
+- At session end / milestone: promote curated insights with `llm-wiki append` + `llm-wiki commit` after the durable knowledge exists in `~/.agents/memory/`.
 
 ## Reliability Bias
 

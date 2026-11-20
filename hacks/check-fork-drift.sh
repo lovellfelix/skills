@@ -24,7 +24,7 @@ Usage:
   check-fork-drift.sh --help
 
 Arguments:
-  skill-name    Portable skill name under portable/ (e.g. "lean-ctx")
+  skill-name    Portable skill name under portable/ (e.g. "llm-wiki-workflow")
   fork-path     Path to a non-symlinked fork directory (or its SKILL.md)
 
 Compared fields:

@@ -1,11 +1,11 @@
 ---
 name: jarvis-workflows
-description: Use when operating or coordinating the Jarvis fleet across the Mac orchestrator, remote Jarvis hosts, managed agents, or the jarvis-claude worker and you need the correct transport, queue, scheduler, or off-LAN access path.
+description: Use when operating or coordinating the Jarvis fleet across the Mac orchestrator, remote Jarvis hosts, managed agents, or the `jarvis-worker` task worker and you need the correct transport, queue, scheduler, or off-LAN access path.
 metadata:
-  version: 0.2.0
+  version: 0.3.0
   portable: true
   tags:
-    [jarvis, fleet, managed-agents, claude-worker, delegation, workflow, tailscale, researcher, queue, portable]
+    [jarvis, fleet, managed-agents, worker, delegation, workflow, tailscale, researcher, queue, portable]
 ---
 
 # Jarvis Workflows
@@ -15,7 +15,7 @@ Use one operating model for Jarvis work regardless of harness. The goal is to ch
 ## Use when
 
 - Work involves the Jarvis fleet rather than only the current machine.
-- You need to decide between local execution, A2A, managed agents, or the Claude worker.
+- You need to decide between local execution, A2A, managed agents, or the worker.
 - You need off-LAN operator access to the fleet.
 - The task should survive the current harness or session.
 - You need deterministic enqueue, replay, scheduling, or result lookup.
@@ -28,7 +28,7 @@ Use one operating model for Jarvis work regardless of harness. The goal is to ch
 ## Authoritative files
 
 - Fleet registry: `jarvis/schedules.json`
-- Claude worker helper: `jarvis/scripts/claude-task.sh`
+- Task queue helper: `jarvis/scripts/fleet-task.sh` (old name `claude-task.sh` is a stub that runs it)
 - Fleet board: `jarvis/scripts/fleet-status.sh`
 - Fleet bootstrap entrypoint: `jarvis/scripts/bootstrap-fleet.sh`
 - Tailscale rollout helper: `jarvis/scripts/fleet-tailscale.sh`
@@ -45,7 +45,7 @@ Read `jarvis/schedules.json` first when the question is about what exists, what 
 | Immediate work on this machine                                              | Local Jarvis / current harness | execute inline                                            |
 | One-off remote Jarvis question or action on `jarvis-infra` / `jarvis-synth` | A2A request                    | remote `:8010/a2a/tasks`                                  |
 | Recurring remote operational job                                            | Managed agent                  | `managed-agents.template.json` + `sync-managed-agents.py` |
-| Long-running planning, analysis, or detached Claude reasoning               | `jarvis-claude` worker         | `claude-task.sh` / `claude-tasks` queue                   |
+| Long-running planning, analysis, or detached agent reasoning                | `jarvis-worker` (LXC 248)      | `fleet-task.sh` / `tasks` queue (ledger kq store)         |
 | Off-LAN SSH or service reachability to the fleet                            | Tailscale access plane         | `bootstrap-fleet.sh tailscale` + `tailscale-runbook.md`   |
 
 ## Routing decision table
@@ -57,15 +57,15 @@ Use this table before choosing a Jarvis path.
 | Private/local-only data, current machine context, or immediate operator work                | local Jarvis / current harness       | avoids unnecessary fleet hops                                    |
 | Quick one-off check on `jarvis-infra` or `jarvis-synth`                                     | A2A                                  | direct remote execution without creating durable scheduler state |
 | Repeating remote maintenance or monitoring                                                  | managed agent                        | gives schedule, drift control, and fleet visibility              |
-| Detached repo planning, bounded analysis, or long-running reasoning                         | `jarvis-claude` queue                | durable queue plus asynchronous result pickup                    |
-| Off-LAN operator access to `jarvis-hub`, `jarvis-infra`, `jarvis-synth`, or `jarvis-claude` | Tailscale                            | preserves LAN defaults while adding a second management plane    |
+| Detached repo planning, bounded analysis, or long-running reasoning                         | `jarvis-worker` queue                | durable queue plus asynchronous result pickup                    |
+| Off-LAN operator access to `jarvis-hub`, `jarvis-infra`, `jarvis-synth`, or `jarvis-coder` | Tailscale                            | preserves LAN defaults while adding a second management plane    |
 | "What is scheduled, live, or already running?"                                              | `fleet-status.sh` + `schedules.json` | avoids guessing                                                  |
 
 ## Core rules
 
-1. Do not treat `jarvis-claude` like a normal A2A managed agent.
+1. Do not treat the `jarvis-worker` (LXC 248, `jarvis-coder`) like a normal A2A managed agent.
 2. Do not create recurring work ad hoc; put it in `jarvis/schedules.json` and reconcile the managed-agent seed.
-3. For Claude worker delegation, do not invent harness-specific transports when the queue helper is available.
+3. For worker delegation, do not invent harness-specific transports when `fleet-task.sh` is available.
 4. Check the fleet board before claiming what is scheduled or live.
 5. Treat Tailscale as an operator access path, not as a replacement for the current LAN hostnames or in-fleet routing.
 
@@ -135,15 +135,17 @@ bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/check-proxmo
 bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/fleet-status.sh
 ```
 
-## Claude worker delegation
+## Worker delegation
 
-Use this for detached planning or analysis that should run on `jarvis-claude` and return through the hub queue.
+Use this for detached planning or analysis that should run on the `jarvis-worker` (LXC 248, host `jarvis-coder`) and return through the ledger queue.
 
-For Jarvis Claude worker delegation, the canonical transport is the lean-ctx hub knowledge queue:
+The canonical transport is the ledger's kq store (the old hub queue on :8787 is retired):
 
-- pending queue: `claude-tasks`
-- results queue: `claude-results`
-- preferred helper: `jarvis/scripts/claude-task.sh`
+- pending queue: category `tasks`
+- results queue: category `results`
+- legacy `claude-tasks` / `claude-results` are still read during the ADR 008 transition; do not write them
+- helper: `jarvis/scripts/fleet-task.sh` (`claude-task.sh` is a stub that runs it)
+- credential: the ledger write credential (`LEDGER_TOKEN`, else the file named by `LEDGER_TOKEN_FILE`, default under `/etc/jarvis/`); endpoint via `KQ_URL` (default `http://10.0.10.45:8765`)
 
 ## Deterministic task contract
 
@@ -165,36 +167,27 @@ Good key patterns:
 
 ## Preferred enqueue path
 
-From any harness with shell access, prefer the helper:
+From the Mac (or any harness with shell access), use the helper:
 
 ```bash
-bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/claude-task.sh add --key <task-id> "<prompt>"
+bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/fleet-task.sh add --key <task-id> "<prompt>"
+# optional: --priority P0|P1|P2|P3 (prefixes the prompt with [P#])
 ```
 
 Inspect state with:
 
 ```bash
-bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/claude-task.sh list
-bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/claude-task.sh results
+bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/fleet-task.sh list
+bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/fleet-task.sh results
 ```
 
-Remove a stuck queued item with:
+Remove a stuck queued item (or a result with `--results`) with:
 
 ```bash
-bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/claude-task.sh rm <task-id>
+bash ${AGENTIC_FLEET_ROOT:-~/projects/agentic-fleet}/jarvis/scripts/fleet-task.sh rm [--results] <task-id>
 ```
 
-## Fallback enqueue path
-
-If the helper is unavailable but the harness can call lean-ctx tools directly, enqueue with `ctx_knowledge remember`:
-
-```text
-category = claude-tasks
-key      = <task-id>
-value    = <full prompt text>
-```
-
-Read results from `claude-results` with the same key.
+`add` fails non-zero if the ledger is unreachable; there is no other enqueue path, so fix reachability or the credential instead of inventing one.
 
 ## Prompt template
 
@@ -220,13 +213,13 @@ Done when:
 
 ### Planning
 
-Use for bounded repo or system planning on `jarvis-claude`:
+Use for bounded repo or system planning on the worker:
 
 ```text
 Objective: Produce one implementation plan for <target>.
 Context:
 - Target: <repo or system>
-- Why now: need a queueable plan from jarvis-claude.
+- Why now: need a queueable plan from the worker.
 Constraints:
 - Do not write code.
 - Keep to at most 5 actionable tasks.
@@ -254,40 +247,29 @@ Done when:
 
 ## On-demand researcher
 
-For "go learn X and write it up" work — a sourced brief or documentation
-draft — use the `researcher` package
+For "go learn X and write it up" work (a sourced brief or documentation
+draft) use the `researcher` package
 (`agentic-fleet/agent-loops/packages/researcher/`), not a generic
-`claude-task.sh` prompt. It has its own enqueue wrapper that targets the same
-`claude-tasks` queue but builds a bounded, package-specific instruction
-(decompose → collect from repo/wiki/web → synthesize → write), rather than a
+`fleet-task.sh` prompt. Its `research.sh` front-end enqueues onto the same
+`tasks` queue but builds a bounded, package-specific instruction
+(decompose, collect from repo/wiki/web, synthesize, write), rather than a
 free-form prompt.
 
-- Fastest path: the `/research` slash command (any harness) — pass the topic
+- Fastest path: the `/research` skill (any harness). Pass the topic
   as arguments, e.g. `/research how does the ledger dashboard cache reads`.
-- Manual path — no SSH required, enqueueing is one HTTP call to the hub:
-  - Already on jarvis-coder/jarvis-hub: `researcher --topic '<topic>' [--mode research|document] [--sources repo,wiki,web] [--publish owner/repo:path]`
-  - From any other machine (e.g. a Mac): the same command via a local
-    `agentic-fleet` checkout, with `RESEARCHER_SH`, `HUB_URL`, and
-    `TOKEN_FILE` overrides — see the `/research` command's own file
-    (`agents/commands/portable/research.md`) for the exact invocation and
-    why those three overrides are required (the script's own auto-detected
-    defaults are jarvis-coder-shaped and silently wrong off-fleet).
-  - Either way, default `--enqueue` hands it to the same worker as
-    everything else in this skill; `--direct` runs it inline instead
-    (blocks, costs a live model+search run — reserve for testing).
-- Sources: `repo` (read-only checkout), `wiki` (llm-wiki grep), `web`
-  (SearXNG, routed via `https://search.lab.${SECRET_DOMAIN}` behind an
-  nginx-internal ingress — deployed and verified live). Default in the
-  script itself is conservative (`repo,wiki`); the `/research` command
-  defaults to all three since web is live.
-- Same safety rule as any `claude-tasks` item: the topic text becomes part of
-  a prompt another agent executes — no secrets or private raw data in it.
+- Manual path: `research.sh --topic '<topic>' [--mode research|document] [--sources repo,wiki,web] [--publish owner/repo:path]`
+  from the package's `scripts/` (or `researcher` on the worker host). Off-fleet
+  it needs the ledger credential, as `fleet-task.sh` does. `--direct` runs it
+  inline instead of enqueueing (blocks, costs a live model+search run;
+  reserve for testing).
+- Same safety rule as any `tasks` item: the topic text becomes part of
+  a prompt another agent executes, so no secrets or private raw data in it.
 
 ## Safety checks
 
 - Never queue secrets, tokens, or private raw data that should not leave the current machine.
 - Never assume immediate execution; the worker polls on an interval.
-- Treat queue text as executable instructions for Claude. Keep it explicit and bounded.
+- Treat queue text as executable instructions for an agent. Keep it explicit and bounded.
 - If the task must be idempotent, say so in the prompt.
 
 ## Verification
@@ -304,12 +286,12 @@ free-form prompt.
 2. Confirm remote shell access with `tailscale ssh`.
 3. Fall back to the LAN or Proxmox `pct exec` path if Tailscale is degraded.
 
-### For Claude worker tasks
+### For worker tasks
 
 After enqueue:
 
-1. Confirm the task appears in `claude-task.sh list`.
-2. Later, confirm a matching result appears in `claude-task.sh results`.
+1. Confirm the task appears in `fleet-task.sh list`.
+2. Later, confirm a matching result appears in `fleet-task.sh results`.
 3. If no result appears, check whether the worker is disabled or proxy/auth is broken before re-enqueueing.
 
 ## Failure triage
@@ -320,8 +302,8 @@ Use this first-pass table before deeper debugging.
 | --------------------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------------ |
 | A2A request returns 401 or unauthorized             | wrong A2A token                                  | validate `JARVIS_A2A_AUTH_TOKEN` source and rerun `check-proxmox-agents.sh`    |
 | `/v1/managed-agents` returns 401 or invalid API key | wrong `OPENJARVIS_API_KEY`                       | inspect remote `jarvis.service` env and rerun `check-proxmox-agents.sh`        |
-| Claude task stays pending                           | worker disabled or cannot reach hub              | check `CLAUDE_WORKER_ENABLED`, worker timer/service, and hub token             |
-| Claude task retries and never completes             | Claude auth/proxy path broken                    | inspect `jarvis-claude` worker logs and current Claude/proxy env               |
+| Task stays pending                                  | worker disabled or cannot reach the ledger       | check `WORKER_ENABLED` in the worker env file, the `jarvis-worker` timer/service, and the ledger credential |
+| Task retries and never completes                    | engine auth or proxy path broken                 | inspect `journalctl -u jarvis-worker` on 248 and the routed engine/proxy env   |
 | Dry-run sync keeps showing UPDATE                   | live config drift (model, instruction, schedule) | compare template vs live `/v1/managed-agents` JSON                             |
 | Dry-run sync shows EXTRA                            | stale live managed agent                         | rerun with `--apply --prune` after confirming template intent                  |
 | Fleet board disagrees with expected jobs            | registry/template/live mismatch                  | reconcile in the order defined in Drift reconciliation policy                  |
@@ -330,20 +312,20 @@ Use this first-pass table before deeper debugging.
 
 ## Red flags
 
-- Using ad hoc harness-native task APIs for the same Jarvis Claude worker.
+- Using ad hoc harness-native task APIs for the same worker.
 - Queueing vague prompts without done criteria.
 - Re-enqueueing with a new random key when the original task is still pending.
-- Treating `jarvis-claude` like a normal A2A managed agent.
+- Treating the `jarvis-worker` like a normal A2A managed agent.
 - Creating recurring remote jobs without updating the registry and managed-agent seed.
 
 ## Backlog
 
 High-value follow-ups for this skill:
 
-- Add canonical task templates for A2A asks, managed-agent instructions, and Claude worker planning/investigation tasks.
+- Add canonical task templates for A2A asks, managed-agent instructions, and worker planning/investigation tasks.
 - Add result-handling rules per execution surface so post-run behavior is standardized.
 - Add deterministic naming conventions for queue task IDs, managed-agent names, and ledger/report job IDs.
-- Add lightweight state-machine diagrams for A2A, managed agents, and Claude queue flows.
+- Add lightweight state-machine diagrams for A2A, managed agents, and worker queue flows.
 - Add stronger guardrails around locality classes (`local-only`, `private-ok`, `cloud-ok`).
 - Add a concise operational command quick reference for the most common Jarvis workflows.
 - Add worked end-to-end examples for recurring jobs, detached planning, and one-off remote asks.
