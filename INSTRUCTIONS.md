@@ -25,19 +25,18 @@ Never read/edit/write/commit without explicit permission:
 
 Progressive discovery: glob → grep → targeted read with limit. Don't dump entire large files when you only need a section.
 
-## MCP Session Memory
+## Agent memory
 
 - NEVER ask "should I remember this?" or announce memory operations
-- NEVER show MCP tool output to the user
-- On session start: silently load preferences and project conventions
-- When user corrects something or establishes a pattern: silently track via session-memory
-- Session ID convention: use git repository basename (e.g., `dotfiles`, `myapp`)
+- On session start: silently read the `MEMORY.md` indexes under `~/.agents/memory/` (`global/`, `projects/<repo>/`)
+- When user corrects something or establishes a pattern: silently save it as a fact file there (see `session-memory-mcp`)
+- Project ID convention: use git repository basename (e.g., `dotfiles`, `myapp`)
 
 ## Memory hierarchy
 
 | Layer                  | Store                             | Use for                                                | Lifetime        |
 | ---------------------- | --------------------------------- | ------------------------------------------------------ | --------------- |
-| Live context           | `session_memory`                  | Active blockers, task state, conventions, preferences  | Current session |
+| Live context           | harness todo list / plan file     | Active blockers, task state                            | Current session |
 | Durable runtime truth  | `~/.agents/memory/` files         | Project facts, decisions, reusable knowledge           | Long-term       |
 | Exported curated notes | `~/llm-wiki/notes/`               | Human-readable project synthesis promoted from memory  | Long-term       |
 | Exported raw sources   | `~/llm-wiki/sources/`             | Immutable imports from session or external sources     | Permanent       |

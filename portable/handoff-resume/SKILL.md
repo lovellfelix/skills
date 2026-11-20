@@ -26,9 +26,9 @@ Resume work quickly from prior session state, then leave a crisp handoff for the
 
 ## Resume workflow
 
-1. Pull session memory first (backend depends on the harness; see `session-memory-mcp`). Use `durable_memory` / `~/.agents/memory/` files only as a fallback for handoffs not yet in the store.
-2. Check task state: `get_tasks` (Claude Code) or `workflow_tasks action=list` (Pi).
-3. Retrieve recent decisions and blockers: `assemble_active_context`, or `retrieve_context` for known keys.
+1. Read the project's `MEMORY.md` index and latest handoff under `~/.agents/memory/` (see `session-memory-mcp`). If a legacy `session_memory` tool exists in this harness, query it too.
+2. Check task state: the harness todo list, `workflow_tasks action=list` (Pi), or the plan file.
+3. Retrieve recent decisions and blockers from the handoff and project facts.
 4. Validate stale assumptions before implementing (drift between memory and repo state).
 5. Build status snapshot (see template below).
 6. Execute next concrete step; record outcomes for future resume.
@@ -37,7 +37,7 @@ Resume work quickly from prior session state, then leave a crisp handoff for the
 
 At session end or before transfer:
 
-1. Write a summary record with type `handoff` via session memory.
+1. Write the handoff summary file (step 3) before anything else.
 2. Promote the session to durable artifacts: `./scripts/autodream-memory.sh --session-id <id>` to preview, then add `--apply`.
 3. Leave a handoff file at `~/.agents/memory/handoffs/YYYY/MM/` using the template below (`./scripts/new-memory-handoff.sh` scaffolds it).
 

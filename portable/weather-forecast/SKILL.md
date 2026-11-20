@@ -52,13 +52,9 @@ bash scripts/weather.sh forecast --zip 75077 --days 5 --json
 bash scripts/weather.sh today --lat 32.9919 --lon -97.0700 --json
 ```
 
-## Session Memory
+## Saved location
 
-If the user often asks for local weather, reuse a saved ZIP value.
-
-```text
-session_memory action=track_user_preference category=workflow key=zip_code value=75077 confidence=1.0
-```
+If the user often asks for local weather, reuse a saved ZIP value from `~/.agents/memory/global/`; save one there when they ask you to remember it.
 
 ## Provider Rules
 

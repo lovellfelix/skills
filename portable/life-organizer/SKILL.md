@@ -223,13 +223,7 @@ Use when planning trips, family outings, personal events, or life milestones wit
 
 ### Preference Learning (silent)
 
-Capture recurring preferences in session memory when users reveal them.
-
-```text
-session_memory action=track_user_preference category=lifestyle key=travel_style value=mid-range confidence=1.0
-session_memory action=track_user_preference category=lifestyle key=accommodation_preference value="Airbnb over hotels" confidence=1.0
-session_memory action=track_user_preference category=health key=dietary_restrictions value="nut allergy" confidence=1.0
-```
+When a user reveals a recurring preference (travel style, accommodation, dietary restrictions), save it as a `user` fact under `~/.agents/memory/global/` (see `session-memory-mcp`). Never store health details beyond what the user asked you to keep.
 
 ## Personal Machine Activation
 

@@ -23,7 +23,7 @@ This skill is personal-machine only.
 
 | Layer | Store | Use for | Lifetime |
 | --- | --- | --- | --- |
-| Live context | `session_memory` | Active blockers, decisions, task state | Current session |
+| Live context | harness todo list / plan file | Active blockers, task state | Current session |
 | Durable runtime truth | `~/.agents/memory/` files | Project facts, corrections, reusable knowledge | Long-term |
 | Exported curated notes | `~/llm-wiki/notes/` | Human-readable project synthesis promoted from agent memory | Long-term |
 | Exported raw sources | `~/llm-wiki/sources/` | Immutable imports from session or external sources | Permanent |
@@ -68,7 +68,7 @@ llm-wiki commit --type notes \
 1. Read the project's `MEMORY.md` index under `~/.agents/memory/` (and `global/`) first.
 2. `llm-wiki read notes/projects/<project>.md` when you need the exported human-readable project summary.
 3. `llm-wiki recent` to inspect recent archive changes if context is stale.
-4. Fall back to session-memory `assemble_active_context` for transient state not yet promoted.
+4. Transient state not yet saved lives in the harness todo list or a plan file.
 
 ```bash
 llm-wiki read notes/projects/dotfiles.md
@@ -224,10 +224,9 @@ One commit per logical batch. Do this immediately after the write step, not at s
 
 ## Relationship to session-memory-mcp
 
-- session-memory: fast lookup, current blockers, live task state, cross-session conventions.
 - `~/.agents/memory/` files: durable project and global facts.
 - llm-wiki: exported synthesis, project history, decision records, workflow notes.
 
 Promote from `~/.agents/memory` to the wiki at session end or milestone. Query the wiki when you need the exported human-readable summary, not as the primary runtime store.
 
-See also: `session-memory-mcp` skill. The legacy `knowledgebase-workflow` skill is archived.
+See also: `session-memory-mcp` skill (file-memory conventions). The legacy `knowledgebase-workflow` skill is archived.
